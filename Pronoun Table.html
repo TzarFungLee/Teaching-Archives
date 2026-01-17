@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pronouns - Teaching Archive</title>
+<style>
+    :root {
+        --primary: #0b3d91;
+        --primary-2: #062b6e;
+        --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%);
+        --surface: #ffffff;
+        --text: #083344;
+        --border: rgba(8,51,68,0.08);
+    }
+    body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        background: var(--bg);
+        color: var(--text);
+        padding: 28px;
+        line-height: 1.65;
+        user-select: none;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 30px; }
+    h1 { color: var(--primary); }
+    h3 { color: var(--primary); text-align: center; }
+
+    .content {
+        background: var(--surface);
+        padding: 30px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    /* Tabs */
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+    .tabs button {
+        padding: 10px 18px;
+        border: none;
+        background: linear-gradient(90deg,var(--primary),var(--primary-2));
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        min-width: 80px;
+        box-shadow: 0 8px 20px rgba(2,30,80,0.06);
+    }
+    .tabs button:hover { opacity: 0.9; }
+
+    /* Pronoun grid */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .pronoun-box {
+        background: var(--surface);
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        margin-top: 10px;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        text-align: center;
+    }
+    .label { font-weight: bold; padding: 8px; }
+    .value { padding: 8px; font-size: 1.1rem; }
+    .blue { color: #2563eb; }
+    .yellow { color: #ca8a04; }
+    .green { color: #15803d; }
+    .purple { color: #7e22ce; }
+
+    /* Practice section */
+    .practice {
+        margin-top: 25px;
+        padding: 15px;
+        background: var(--surface);
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .practice h4 { color: var(--primary); margin-bottom: 10px; }
+    input[type="text"] {
+        padding: 6px;
+        width: 150px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-left: 10px;
+    }
+    .feedback { margin-left: 10px; font-weight: bold; }
+    .correct { color: #15803d; }
+    .incorrect { color: #dc2626; }
+    .btn-small {
+        margin-left: 8px;
+        padding: 5px 10px;
+        font-size: 0.85rem;
+        border: none;
+        background: #2563eb;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-small:hover { background: #1d4ed8; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="nav-bar">
+        <a href="index.html" class="back-btn">← Back to the Archive</a>
+<div class="container">
+    <header>
+        <h1>Pronouns</h1>
+    </header>
+
+    <div class="content">
+        <h3>Click a Pronoun</h3>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button onclick="showTab('I')">I</button>
+            <button onclick="showTab('You')">You</button>
+            <button onclick="showTab('He')">He</button>
+            <button onclick="showTab('She')">She</button>
+            <button onclick="showTab('It')">It</button>
+            <button onclick="showTab('We')">We</button>
+            <button onclick="showTab('They')">They</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="I" class="tab-content active">
+            <div class="pronoun-box">
+                <div class="grid">
+                    <div class="label blue">Subject</div>
+                    <div class="label yellow">Object</div>
+                    <div class="label green">Possessive Adj.</div>
+                    <div class="label green">Possessive Pronoun</div>
+                    <div class="label purple">Reflexive</div>
+
+                    <div class="value">I</div>
+                    <div class="value">me</div>
+                    <div class="value">my</div>
+                    <div class="value">mine</div>
+                    <div class="value">myself</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="You" class="tab-content">
+            <div class="pronoun-box">
+                <div class="grid">
+                    <div class="label blue">Subject</div>
+                    <div class="label yellow">Object</div>
+                    <div class="label green">Possessive Adj.</div>
+                    <div class="label green">Possessive Pronoun</div>
+                    <div class="label purple">Reflexive</div>
+
+                    <div class="value">You</div>
+                    <div class="value">you</div>
+                    <div class="value">your</div>
+                    <div class="value">yours</div>
+                    <div class="value">yourself</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="He" class="tab-content">
+            <div class="pronoun-box">
+                <div class="grid">
+                    <div class="label blue">Subject</div>
+                    <div class="label yellow">Object</div>
+                    <div class="label green">Possessive Adj.</div>
+                    <div class="label green">Possessive Pronoun</div>
+                    <div class="label purple">Reflexive</div>
+
+                    <div class="value">He</div>
+                    <div class="value">him</div>
+                    <div class="value">his</div>
+                    <div class="value">his</div>
+                    <div class="value">himself</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="She" class="tab-content">
+            <div class="pronoun-box">
+                <div class="grid">
+                    <div class="label blue">Subject</div>
+                    <div class="label yellow">Object</div>
+                    <div class="label green">Possessive Adj.</div>
+                    <div class="label green">Possessive Pronoun</div>
+                    <div class="label purple">Reflexive</div>
+
+                    <div class="value">She</div>
+                    <div class="value">her</div>
+                    <div class="value">her</div>
+                    <div class="value">hers</div>
+                    <div class="value">herself</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="It" class="tab-content">
+            <div class="pronoun-box">
+                <div class="grid">
+                    <div class="label blue">Subject</div>
+                    <div class="label yellow">Object</div>
+                    <div class="label green">Possessive Adj.</div>
+                    <div class="label green">Possessive Pronoun</div>
+                    <div class="label purple">Reflexive</div>
+
+                    <div class="value">It</div>
+                    <div class="value">it</div>
+                    <div class="value">its</div>
+                    <div class="value">(its)</div>
+                    <div class="value">itself</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="We" class="tab-content">
+            <div class="pronoun-box">
+                <div class="grid">
+                    <div class="label blue">Subject</div>
+                    <div class="label yellow">Object</div>
+                    <div class="label green">Possessive Adj.</div>
+                    <div class="label green">Possessive Pronoun</div>
+                    <div class="label purple">Reflexive</div>
+
+                    <div class="value">We</div>
+                    <div class="value">us</div>
+                    <div class="value">our</div>
+                    <div class="value">ours</div>
+                    <div class="value">ourselves</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="They" class="tab-content">
+            <div class="pronoun-box">
+                <div class="grid">
+                    <div class="label blue">Subject</div>
+                    <div class="label yellow">Object</div>
+                    <div class="label green">Possessive Adj.</div>
+                    <div class="label green">Possessive Pronoun</div>
+                    <div class="label purple">Reflexive</div>
+
+                    <div class="value">They</div>
+                    <div class="value">them</div>
+                    <div class="value">their</div>
+                    <div class="value">theirs</div>
+                    <div class="value">themselves</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div class="practice">
+            <h4>Fill-in-the-Blank Practice</h4>
+            <ol>
+                <li>This book belongs to me. It is <input type="text" id="q1">
+                    <button class="btn-small" onclick="checkAnswer('q1','my')">Check</button>
+                    <button class="btn-small" onclick="showAnswer('q1','my')">Show Answer</button>
+                    <span id="f1" class="feedback"></span>
+                </li>
+                <li>She hurt <input type="text" id="q2">
+                    <button class="btn-small" onclick="checkAnswer('q2','herself')">Check</button>
+                    <button class="btn-small" onclick="showAnswer('q2','herself')">Show Answer</button>
+                    <span id="f2" class="feedback"></span>
+                </li>
+                <li>Is this pen <input type="text" id="q3">
+                    <button class="btn-small" onclick="checkAnswer('q3','yours')">Check</button>
+                    <button class="btn-small" onclick="showAnswer('q3','yours')">Show Answer</button>
+                    <span id="f3" class="feedback"></span>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<script>
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+}
+
+function checkAnswer(inputId, correctAnswer) {
+    const userAnswer = document.getElementById(inputId).value.trim().toLowerCase();
+    const feedbackElement = document.getElementById('f' + inputId.slice(1));
+    if (userAnswer === correctAnswer) {
+        feedbackElement.textContent = "✔ Correct!";
+        feedbackElement.className = "feedback correct";
+    } else {
+        feedbackElement.textContent = "✘ Try again!";
+        feedbackElement.className = "feedback incorrect";
+    }
+}
+
+function showAnswer(inputId, correctAnswer) {
+    document.getElementById(inputId).value = correctAnswer;
+    const feedbackElement = document.getElementById('f' + inputId.slice(1));
+    feedbackElement.textContent = "Answer shown: " + correctAnswer;
+    feedbackElement.className = "feedback correct";
+}
+</script>
+
+</body>
+</html>
