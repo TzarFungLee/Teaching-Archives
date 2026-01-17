@@ -48,6 +48,30 @@
         mark.red { background-color: #fecaca; }
     </style>
 </head>
+
+<style>
+  /* Disable text selection */
+  body {
+    user-select: none;
+  }
+</style>
+
+<script>
+  // Disable right-click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Disable common copy shortcuts (Ctrl+C / Cmd+C)
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+      e.preventDefault();
+      alert('Copying is disabled on this page.');
+    }
+  });
+
+  // Optional: Disable text drag
+  document.addEventListener('dragstart', event => event.preventDefault());
+</script>
+
 <body>
 
 <div class="container">
@@ -68,7 +92,7 @@
             <li><strong>Active voice:</strong> Subject <em>performs</em> the action (<mark class="cyan">The teacher</mark> <mark class="red">explains</mark> <mark class="yellow">the rule</mark>).</li>
             <li><strong>Passive voice:</strong> Subject <em>receives</em> the action (<mark class="yellow">The rule</mark> <mark class="green">is explained</mark> <mark class="cyan">by the teacher</mark>).</li>
             <li><strong>When to use:</strong> Emphasize the action, unknown agent, or formal writing</li>
-            <li><strong>Structure:</strong> Subject + <mark class="green">BE verb + past participle</mark> + <mark class="cyan">(by + agent)</mark></li>
+            <li><strong>Structure:</strong> <mark class="yellow">Subject</mark> + <mark class="green">BE verb + past participle</mark> + <mark class="cyan">(by + agent)</mark></li>
         </ul>
         
         <hr>
@@ -125,14 +149,24 @@
             </tr>
         </table>
         
-        <hr>
-        <h3>📊 Presentation Slides</h3>
-        <p>Replace the file ID below with your Google Drive PowerPoint ID:</p>
-        <iframe src="https://docs.google.com/presentation/d/1U1O7sBzP5yS2S0agRDvVM1r0ZEqcQviE/embed" 
-                width="100%" height="500" frameborder="0" allowfullscreen="true" 
-                mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-    </div>
-</div>
+ 
+
+<hr>
+<h3>📊 Teaching Slides</h3>
+<iframe 
+    src="https://bwwtceduhk-my.sharepoint.com/personal/tflee_bwwtc_edu_hk/_layouts/15/Doc.aspx?sourcedoc={ac54359c-04f5-4242-8cfc-361887771400}&action=embedview&wdAr=1.4444444444444444" 
+    width="100%" 
+    height="500px" 
+    frameborder="0" 
+    style="max-width: 100%; border: none;" 
+    allowfullscreen="true" 
+    mozallowfullscreen="true" 
+    webkitallowfullscreen="true">
+    This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.
+</iframe>
+
+
+
 
 </body>
 </html>
