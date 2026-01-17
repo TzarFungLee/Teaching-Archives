@@ -12,99 +12,79 @@
         /* Navigation */
         .nav-bar { margin-bottom: 20px; }
         .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
-        .back-btn:hover { text-decoration: underline; }
-
+        
         /* Headers */
         header { text-align: center; margin-bottom: 30px; }
         h1 { color: var(--primary); margin-bottom: 5px; }
-        .subtitle { color: #64748b; font-size: 0.95rem; }
 
-        /* TABS - NEW ADDITION */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .tab-btn {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 8px 24px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 500;
-            color: #64748b;
-            transition: all 0.2s;
-        }
+        /* TABS (Main Page) */
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { background: white; border: 1px solid var(--border); padding: 8px 24px; border-radius: 20px; cursor: pointer; font-weight: 500; color: #64748b; transition: all 0.2s; }
         .tab-btn:hover { background: #f1f5f9; }
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
-        }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
         /* Search & List */
         .search-wrapper { margin-bottom: 25px; }
         input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
         
         .resource-card {
-            background: var(--surface);
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: transform 0.2s;
+            background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+            cursor: pointer; transition: transform 0.2s;
         }
         .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; background: #e0e7ff; color: #3730a3; margin-right: 8px; }
         
-        /* SUBPAGE STYLES */
-        .subpage-content { background: var(--surface); padding: 30px; border-radius: 8px; border: 1px solid var(--border); }
-        .subpage-header { border-bottom: 2px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; }
-        
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            background: #eee;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        /* Tags */
+        .tags-row { display: flex; gap: 6px; margin-bottom: 4px; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+        .tag-level { background: #e0e7ff; color: #3730a3; }
+        .tag-subject { background: #f1f5f9; color: #475569; }
 
-        .essay-box {
-            background: #fdfbf7;
-            border-left: 4px solid var(--primary);
-            padding: 20px;
-            font-family: "Georgia", serif;
-            color: #333;
-            white-space: pre-wrap;
-            margin-bottom: 20px;
+        /* SUBPAGE GRID SYSTEM (New!) */
+        .text-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
+        .text-type-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .text-type-card:hover { border-color: var(--primary); background: #eff6ff; }
+        .text-type-card.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .text-type-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+
+        /* Content Areas */
+        .subpage-content { background: var(--surface); padding: 30px; border-radius: 8px; border: 1px solid var(--border); min-height: 400px;}
+        .content-section { display: none; animation: fadeIn 0.3s; } /* Hidden by default */
+        .content-section.show { display: block; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #eee; border-radius: 8px; margin-bottom: 25px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .essay-box { background: #fdfbf7; border-left: 4px solid var(--primary); padding: 20px; white-space: pre-wrap; font-family: "Georgia", serif; }
 
         .hidden { display: none !important; }
-        .btn { background-color: var(--primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; display: inline-block; font-size: 0.9rem; border: none; cursor: pointer; }
+        .btn { background-color: var(--primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; border: none; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
 <div class="container">
     
-    <!-- VIEW 1: THE LIST -->
     <div id="listView">
         <header>
             <h1>📂 Course Materials</h1>
-            <div class="subtitle">Select your form to filter resources</div>
+            <div style="color: #64748b">Filter by form level</div>
         </header>
 
-        <!-- NEW TABS SECTION -->
         <div class="tabs">
             <button class="tab-btn active" onclick="filterTab('All', this)">All</button>
             <button class="tab-btn" onclick="filterTab('S1', this)">S1</button>
@@ -117,19 +97,14 @@
             <input type="text" id="search" placeholder="🔍 Search resources..." onkeyup="renderList()">
         </div>
 
-        <div id="list" class="resource-list">
-            <!-- Items injected by JS -->
-        </div>
+        <div id="list" class="resource-list"></div>
     </div>
 
-    <!-- VIEW 2: THE SUBPAGE -->
     <div id="detailView" class="hidden">
         <div class="nav-bar">
             <button onclick="showList()" class="back-btn">← Back to List</button>
         </div>
-        <div id="detailContent" class="subpage-content">
-            <!-- Content injected by JS -->
-        </div>
+        <div id="detailContent" class="subpage-content"></div>
     </div>
 
 </div>
@@ -137,76 +112,145 @@
 <script>
     // ==========================================
     // DATA CONFIGURATION
-    // Note: 'level' field matches the Tab names (S1, S2, etc.)
     // ==========================================
     const resources = [
         {
             id: 1,
-            title: "Intro to Past Tense",
+            title: "English Writing Text Types", // Renamed as requested
             subject: "English",
-            level: "S1", 
-            notes: "Week 1 Grammar",
-            link: "https://google.com" 
-        },
-        {
-            id: 2,
-            title: "Linear Equations",
-            subject: "Math",
-            level: "S2",
-            notes: "Chapter 5",
-            link: "https://google.com"
-        },
-        {
-            id: 3,
-            title: "Essay Writing Structures",
-            subject: "English",
-            level: "DSE",
-            notes: "Argumentative essays",
+            level: ["S3", "DSE"],
+            notes: "8 Main Genres",
+            
+            // This huge string contains the "Mini App" for the writing types
             htmlContent: `
-                <div class="subpage-header">
-                    <h2>Argumentative Essay Writing (DSE)</h2>
-                    <p>Focus: Structure, counter-arguments, and topic sentences.</p>
-                </div>
-
-                <h3>1. Lecture Slides</h3>
-                <p>Review the slide deck from Tuesday's lesson below.</p>
+                <h2 style="margin-top:0">Writing Text Types Dashboard</h2>
+                <p>Select a text type below to view structure, samples, and useful phrases.</p>
                 
-                <div class="video-container">
-                    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR6x_dD-sKq-tAPFqI6LzQ8V_V7V8zL4F6kX-pQ/embed?start=false&loop=false&delayms=3000" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                <!-- GRID MENU -->
+                <div class="text-type-grid">
+                    <div class="text-type-card active" onclick="switchTextType('arg', this)">
+                        <span class="text-type-icon">⚖️</span> Argumentative
+                    </div>
+                    <div class="text-type-card" onclick="switchTextType('letter', this)">
+                        <span class="text-type-icon">✉️</span> Letter to Ed.
+                    </div>
+                    <div class="text-type-card" onclick="switchTextType('proposal', this)">
+                        <span class="text-type-icon">📋</span> Proposal
+                    </div>
+                    <div class="text-type-card" onclick="switchTextType('report', this)">
+                        <span class="text-type-icon">📊</span> Report
+                    </div>
+                    <div class="text-type-card" onclick="switchTextType('article', this)">
+                        <span class="text-type-icon">📰</span> Article
+                    </div>
+                    <div class="text-type-card" onclick="switchTextType('speech', this)">
+                        <span class="text-type-icon">🎤</span> Speech
+                    </div>
+                    <div class="text-type-card" onclick="switchTextType('story', this)">
+                        <span class="text-type-icon">📖</span> Story
+                    </div>
+                    <div class="text-type-card" onclick="switchTextType('blog', this)">
+                        <span class="text-type-icon">💻</span> Blog
+                    </div>
                 </div>
 
-                <h3>2. Sample Essay</h3>
-                <div class="essay-box">
-Topic: Should school uniforms be abolished?
+                <!-- CONTENT SECTIONS (Only one shows at a time) -->
+                
+                <!-- 1. Argumentative -->
+                <div id="arg" class="content-section show">
+                    <h3>⚖️ Argumentative Essay</h3>
+                    <p><strong>Tone:</strong> Formal, Objective, Persuasive</p>
+                    <div class="video-container">
+                        <!-- Argumentative PPT Embed -->
+                        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR6x_dD-sKq-tAPFqI6LzQ8V_V7V8zL4F6kX-pQ/embed?start=false&loop=false&delayms=3000"></iframe>
+                    </div>
+                    <h4>Sample Opening</h4>
+                    <div class="essay-box">"Recent debates concerning X have sparked controversy. While some argue that..., others believe..."</div>
+                </div>
 
-The debate surrounding mandatory school uniforms has persisted for decades...
-[ Teacher text here ]
+                <!-- 2. Letter to Editor -->
+                <div id="letter" class="content-section">
+                    <h3>✉️ Letter to the Editor</h3>
+                    <p><strong>Tone:</strong> Formal, Critical but polite</p>
+                    <h4>Structure Guide</h4>
+                    <ul>
+                        <li><strong>Salutation:</strong> Dear Editor,</li>
+                        <li><strong>Opening:</strong> I am writing to express my views on...</li>
+                        <li><strong>Body:</strong> 3 clear points with evidence.</li>
+                        <li><strong>Closing:</strong> I hope the government will take action...</li>
+                        <li><strong>Sign-off:</strong> Yours faithfully, Chris Wong</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Proposal -->
+                <div id="proposal" class="content-section">
+                    <h3>📋 Proposal</h3>
+                    <p><strong>Tone:</strong> Persuasive, Solution-oriented</p>
+                    <div class="essay-box">
+Title: Proposal on Improving School Facilities
+To: The Principal
+From: Chris Wong, Head Prefect
+Date: 18 Jan 2026
+
+1. Introduction
+The purpose of this proposal is to suggest upgrades to...
+                    </div>
+                </div>
+
+                <!-- 4. Report -->
+                <div id="report" class="content-section">
+                    <h3>📊 Report</h3>
+                    <p><strong>Tone:</strong> Factual, Past Tense, Passive Voice</p>
+                    <p>Remember to use headings like <strong>Findings</strong>, <strong>Analysis</strong>, and <strong>Recommendations</strong>.</p>
+                </div>
+
+                <!-- 5. Article -->
+                <div id="article" class="content-section">
+                    <h3>📰 Feature Article</h3>
+                    <p><strong>Tone:</strong> Engaging, Semi-formal, Catchy Title needed.</p>
+                </div>
+
+                <!-- 6. Speech -->
+                <div id="speech" class="content-section">
+                    <h3>🎤 Speech</h3>
+                    <p><strong>Tone:</strong> Engaging, Rhetorical questions, Direct address ("You")</p>
+                    <div class="essay-box">"Good morning Principal, teachers and fellow students. Today, I would like to talk about..."</div>
+                </div>
+
+                <!-- 7. Story -->
+                <div id="story" class="content-section">
+                    <h3>📖 Short Story</h3>
+                    <p><strong>Focus:</strong> Imagery, Descriptive adjectives, Show don't tell.</p>
+                </div>
+
+                <!-- 8. Blog -->
+                <div id="blog" class="content-section">
+                    <h3>💻 Blog Post</h3>
+                    <p><strong>Tone:</strong> Chatty, Personal, "Comment below!"</p>
                 </div>
             `
         },
+        // ... Other resources ...
         {
-            id: 4,
-            title: "Science: Photosynthesis",
-            subject: "Science",
-            level: "S3",
-            notes: "Biology Unit",
-            link: "https://google.com"
+            id: 2,
+            title: "Math: Geometry Basics",
+            subject: "Math",
+            level: ["S1"],
+            notes: "Angles and Lines",
+            link: "#"
         }
     ];
 
     // ==========================================
-    // APP LOGIC
+    // LOGIC
     // ==========================================
-    
     let currentTab = 'All';
 
+    // 1. Filter Logic (Main Page)
     function filterTab(tabName, btnElement) {
         currentTab = tabName;
-        
-        // Update visual tabs
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btnElement.classList.add('active');
-
         renderList();
     }
 
@@ -216,38 +260,31 @@ The debate surrounding mandatory school uniforms has persisted for decades...
         container.innerHTML = '';
 
         const filtered = resources.filter(item => {
-            // 1. Check Search Text
-            const matchesSearch = item.title.toLowerCase().includes(query) || 
-                                  item.subject.toLowerCase().includes(query);
-            
-            // 2. Check Tab Filter
-            // If tab is All, we show everything.
-            // If tab is S1/S2/S3/DSE, we check if the item's level includes that text.
-            // Example: item level "F.4 (DSE)" would match the "DSE" tab.
-            const matchesTab = currentTab === 'All' || item.level.includes(currentTab);
-
-            return matchesSearch && matchesTab;
+            const itemLevels = Array.isArray(item.level) ? item.level : [item.level];
+            const searchMatch = item.title.toLowerCase().includes(query) || item.subject.toLowerCase().includes(query);
+            const tabMatch = currentTab === 'All' || itemLevels.includes(currentTab);
+            return searchMatch && tabMatch;
         });
 
         if (filtered.length === 0) {
-            container.innerHTML = `<div style="text-align:center; padding:40px; color:#94a3b8">No resources found for ${currentTab}.</div>`;
+            container.innerHTML = `<div style="text-align:center; padding:40px; color:#94a3b8">No resources found.</div>`;
             return;
         }
 
         filtered.forEach(item => {
             const div = document.createElement('div');
             div.className = 'resource-card';
+            const levels = Array.isArray(item.level) ? item.level : [item.level];
+            const badgesHTML = levels.map(lvl => `<span class="tag tag-level">${lvl}</span>`).join('');
             const action = item.htmlContent ? `onclick="openPage(${item.id})"` : `onclick="window.open('${item.link}', '_blank')"`;
-            const btnText = item.htmlContent ? "View Page" : "Open Link ↗";
-
+            
             div.innerHTML = `
                 <div onclick="event.stopPropagation(); ${action}" style="flex-grow:1">
+                    <div class="tags-row">${badgesHTML}<span class="tag tag-subject">${item.subject}</span></div>
                     <h3 style="margin:0 0 5px 0">${item.title}</h3>
-                    <div style="font-size:0.85rem; color:#64748b">
-                        <span class="tag">${item.level}</span> <span class="tag" style="background:#f1f5f9; color:#475569">${item.subject}</span> ${item.notes}
-                    </div>
+                    <div style="font-size:0.85rem; color:#64748b">${item.notes}</div>
                 </div>
-                <button class="btn" ${action}>${btnText}</button>
+                <button class="btn" ${action}>View</button>
             `;
             container.appendChild(div);
         });
@@ -256,11 +293,23 @@ The debate surrounding mandatory school uniforms has persisted for decades...
     function openPage(id) {
         const item = resources.find(r => r.id === id);
         if(!item || !item.htmlContent) return;
-
         document.getElementById('listView').classList.add('hidden');
         document.getElementById('detailView').classList.remove('hidden');
         document.getElementById('detailContent').innerHTML = item.htmlContent;
         window.scrollTo(0,0);
+        
+        // IMPORTANT: Re-attach the switching logic since we just injected new HTML
+        window.switchTextType = function(typeId, btn) {
+            // 1. Reset all buttons
+            document.querySelectorAll('.text-type-card').forEach(b => b.classList.remove('active'));
+            // 2. Activate clicked button
+            btn.classList.add('active');
+            
+            // 3. Hide all content
+            document.querySelectorAll('.content-section').forEach(c => c.classList.remove('show'));
+            // 4. Show selected content
+            document.getElementById(typeId).classList.add('show');
+        }
     }
 
     function showList() {
