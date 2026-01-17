@@ -5,24 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Resources</title>
     <style>
+        /* [Previous CSS remains the same] */
         :root { --primary: #2563eb; --bg: #f8fafc; --surface: #ffffff; --text: #1e293b; --border: #e2e8f0; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
         .container { max-width: 900px; margin: 0 auto; }
         
-        /* Navigation */
         .nav-bar { margin-bottom: 20px; }
         .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
         
-        /* Headers */
         header { text-align: center; margin-bottom: 30px; }
         h1 { color: var(--primary); margin-bottom: 5px; }
 
-        /* TABS */
         .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .tab-btn { background: white; border: 1px solid var(--border); padding: 8px 24px; border-radius: 20px; cursor: pointer; font-weight: 500; color: #64748b; transition: all 0.2s; }
+        .tab-btn:hover { background: #f1f5f9; }
         .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Search & List */
         .search-wrapper { margin-bottom: 25px; }
         input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
         
@@ -32,60 +30,42 @@
             cursor: pointer; transition: transform 0.2s;
         }
         .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        
         .tags-row { display: flex; gap: 6px; margin-bottom: 4px; }
         .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
         .tag-level { background: #e0e7ff; color: #3730a3; }
         .tag-subject { background: #f1f5f9; color: #475569; }
 
-        /* SUBPAGE */
-        .subpage-content { background: var(--surface); padding: 30px; border-radius: 8px; border: 1px solid var(--border); min-height: 600px; }
+        .subpage-content { background: var(--surface); padding: 30px; border-radius: 8px; border: 1px solid var(--border); min-height: 400px;}
         .hidden { display: none !important; }
         .btn { background-color: var(--primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; border: none; font-size: 0.9rem; }
 
-        /* === NEW VOCAB UI === */
-        .vocab-tools { display: flex; gap: 10px; margin-bottom: 20px; }
-        .vocab-search { flex-grow: 1; padding: 10px; border: 1px solid var(--border); border-radius: 6px; }
+        /* VOCAB STYLES */
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
         
-        .vocab-list-container { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
-            gap: 12px; 
-            max-height: 70vh; 
-            overflow-y: auto; 
-            padding-right: 5px;
-        }
-        
-        .vocab-item {
+        .vocab-card {
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 12px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fff;
             position: relative;
         }
-        .vocab-item:hover { border-color: var(--primary); background: #f0f9ff; }
-        .vocab-item.expanded { grid-column: 1 / -1; background: #f8fafc; border-color: var(--primary); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-
-        .v-word { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
-        .v-cn { color: #d946ef; font-size: 0.95rem; font-weight: 600; margin-top: 2px; }
+        .vocab-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+        .vocab-word { color: var(--primary); font-size: 1.3rem; font-weight: 700; margin: 0; }
+        .vocab-cn { font-size: 1.1rem; color: #d946ef; font-weight: 600; } /* Pink for Chinese */
         
-        /* AI Details Section (Hidden until clicked) */
-        .v-details { display: none; margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 10px; animation: fadeIn 0.3s; }
-        .vocab-item.expanded .v-details { display: block; }
+        .vocab-meta { font-size: 0.85rem; color: #64748b; margin-bottom: 8px; font-style: italic; }
+        .vocab-def { font-size: 0.95rem; margin-bottom: 10px; line-height: 1.4; color: #334155; }
+        .vocab-synonyms { font-size: 0.85rem; color: #475569; background: #f1f5f9; padding: 8px; border-radius: 6px; }
         
-        .v-meta { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
-        .v-def { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.5; }
-        .v-syn { font-size: 0.85rem; color: #475569; background: #e2e8f0; padding: 5px 10px; border-radius: 4px; display: inline-block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .skeleton { height: 20px; background: #f1f5f9; margin-bottom: 8px; border-radius: 4px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
     </style>
 </head>
 <body>
 
 <div class="container">
     
-    <!-- MAIN LIST VIEW -->
     <div id="listView">
         <header>
             <h1>📂 Course Materials</h1>
@@ -101,13 +81,12 @@
         </div>
 
         <div class="search-wrapper">
-            <input type="text" id="search" placeholder="🔍 Search general resources..." onkeyup="renderList()">
+            <input type="text" id="search" placeholder="🔍 Search resources..." onkeyup="renderList()">
         </div>
 
         <div id="list" class="resource-list"></div>
     </div>
 
-    <!-- DETAIL SUBPAGE VIEW -->
     <div id="detailView" class="hidden">
         <div class="nav-bar">
             <button onclick="showList()" class="back-btn">← Back to List</button>
@@ -119,62 +98,55 @@
 
 <script>
     // ==========================================
-    // 500+ DSE VOCABULARY DATABASE (Compressed)
-    // Format: "English|Chinese"
+    // 1. TEACHER: EDIT VOCAB LIST HERE
+    // format: { w: "english_word", cn: "chinese_translation" }
     // ==========================================
-    const rawVocabData = [
-        "abandon|拋棄","abbreviate|縮寫","ability|能力","abolish|廢除","abrupt|突然的","absence|缺席","absolute|絕對的","absorb|吸收","abstract|抽象的","abundant|豐富的","abuse|濫用","academic|學術的","accelerate|加速","accent|口音","accept|接受","access|途徑/存取","accessible|易接近的","accident|意外","accommodate|容納","accommodation|住宿","accompany|陪伴","accomplish|完成","account|帳戶/解釋","accumulate|積累","accurate|準確的","accuse|指控","achieve|達成","acknowledge|承認","acquire|獲得","adapt|適應","addiction|上癮","adequate|足夠的","adjust|調整","administration|行政","admire|欣賞","admission|入場/承認","adolescent|青少年","adopt|收養/採納","advance|前進","advantage|優勢","adventure|冒險","adverse|不利的","advocate|提倡","affect|影響","affection|喜愛","afford|負擔得起","agency|代理機構","agenda|議程","aggressive|侵略性的","agriculture|農業","aid|援助","alarm|警報","alien|外星人/陌生的","alike|相似的","allegedly|據稱","alleviate|減輕","allocate|分配","allowance|津貼","alter|改變","alternative|替代的","amateur|業餘的","ambazing|驚人的","ambiguous|模稜兩可的","ambition|野心","ambulance|救護車","amount|數量","amuse|娛樂","analysis|分析","analyze|分析","ancestor|祖先","ancient|古代的","anger|憤怒","angle|角度","announce|宣佈","annual|年度的","anonymous|匿名的","anxiety|焦慮","apologize|道歉","apparent|明顯的","appeal|呼籲/吸引","appear|出現","appetite|食慾","applaud|鼓掌","applicant|申請人","appoint|任命","appreciate|感激/欣賞","approach|接近/方法","appropriate|適當的","approve|批准","approximate|大約的","architect|建築師","architecture|建築","argue|爭論","arise|出現","arithmetic|算術","arouse|喚起","arrange|安排","arrest|逮捕","arrogant|傲慢的","artificial|人造的","artist|藝術家","ashamed|羞愧的","aspect|方面","assemble|集合","assess|評估","asset|資產","assign|分配","assist|協助","associate|聯想/交往","assume|假設","assure|向…保證","atmosphere|氣氛","attach|貼上/附上","attack|攻擊","attain|獲得","attempt|嘗試","attend|出席","attention|注意","attitude|態度","attract|吸引","attribute|歸因於","audience|觀眾","authentic|真實的","author|作者","authority|權威","automatic|自動的","available|可用的","average|平均","avoid|避免","award|獎品","aware|意識到的","awful|糟糕的","awkward|尷尬的",
-        "background|背景","bacteria|細菌","balance|平衡","ban|禁止","bankruptcy|破產","barely|僅僅","bargain|討價還價","barrier|障礙","basic|基本的","basis|基礎","bear|忍受","beat|擊敗","behave|表現","belief|信念","belong|屬於","beneficial|有益的","benefit|利益","betray|背叛","bias|偏見","bid|出價","bind|捆綁","bitter|苦的/痛苦的","blame|責怪","blank|空白的","blind|瞎的","block|阻礙","blood|血液","board|董事會/上車","boast|自誇","bold|大膽的","bond|紐帶/債券","boost|促進","border|邊界","bored|無聊的","borrow|借入","bother|打擾","bound|受約束的","boundary|邊界","brain|大腦","brand|品牌","brave|勇敢的","breach|違背","breakthrough|突破","breathe|呼吸","breed|品種/繁殖","bribe|賄賂","brief|簡短的","brilliant|傑出的","broad|寬闊的","broadcast|廣播","budget|預算","burden|負擔","bureaucracy|官僚","burst|爆裂","bury|埋葬",
-        "calculate|計算","campaign|活動","cancel|取消","candidate|候選人","capable|有能力的","capacity|容量","capital|資本/首都","capture|捕獲","career|職業","careful|小心的","carry|攜帶","cast|投射","casual|隨便的","category|類別","cause|原因","caution|謹慎","cease|停止","celebrate|慶祝","cell|細胞","censor|審查","ceremony|儀式","certain|確定的","certificate|證書","challenge|挑戰","champion|冠軍","channel|頻道","chaos|混亂","character|性格/角色","charity|慈善","charm|魅力","chart|圖表","chase|追逐","chat|聊天","cheat|欺騙","check|檢查","cheer|歡呼","chemical|化學的","cherish|珍惜","chief|首領/主要的","childhood|童年","choice|選擇","choose|選擇","chronic|慢性的","circuit|電路","circulate|循環","circumstance|情況","cite|引用","citizen|公民","civil|公民的","claim|聲稱","clarify|澄清","classic|經典的","classify|分類","clause|條款","clear|清楚的","clerk|職員","clever|聰明的","client|客戶","climate|氣候","climb|攀爬","clinic|診所","clue|線索","cluster|簇/群","coach|教練","coalition|聯盟","coast|海岸","code|代碼","coexist|共存","cognitive|認知的","coherent|連貫的","coincide|巧合","collapse|倒塌","colleague|同事","collect|收集","collective|集體的","collision|碰撞","colony|殖民地","combine|結合","comfort|舒適","command|命令","commence|開始","comment|評論","commerce|商業","commission|委員會","commit|承諾/犯罪","committee|委員會","commodity|商品","common|常見的","communicate|溝通","community|社區","commute|通勤","company|公司/陪伴","compare|比較","compatible|兼容的","compel|強迫","compensate|補償","compete|競爭","competent|有能力的","compile|編制","complain|投訴","complement|補充","complete|完成","complex|複雜的","complicate|使複雜","component|組件","compose|組成/作曲","compound|化合物","comprehensive|全面的","comprise|包含","compromise|妥協","compulsory|強制的","compute|計算","conceal|隱藏","concede|承認","conceive|構想","concentrate|集中","concept|概念","concern|關心","concert|音樂會","conclude|總結","concrete|具體的/混凝土","condemn|譴責","condition|條件","conduct|行為/傳導","confer|授予","conference|會議","confess|承認","confidence|信心","confine|限制","confirm|確認","conflict|衝突","conform|遵守","confront|面對","confuse|使困惑","congested|擁擠的","congratulate|祝賀","congress|國會","connect|連接","conquer|征服","conscience|良心","conscious|有意識的","consensus|共識","consent|同意","consequence|後果","conserve|保存","consider|考慮","consist|組成","consistent|一致的","console|安慰","consolidate|鞏固","conspicuous|顯眼的","conspiracy|陰謀","constant|持續的","constitute|構成","constitution|憲法","construct|建造","consult|諮詢","consume|消耗","contact|接觸","contain|包含","contaminate|污染","contemporary|當代的","contend|競爭","content|內容/滿意的","contest|比賽","context|語境","continent|大陸","continue|繼續","contract|合約","contradict|反駁","contrary|相反的","contrast|對比","contribute|貢獻","control|控制","controversial|有爭議的","convenience|便利","convention|大會/習俗","convert|轉換","convey|傳達","convict|定罪","convince|說服","cooperate|合作","coordinate|協調","cop|警察","cope|應付","copy|複製","core|核心","corn|玉米","corner|角落","corporation|公司","correct|正確的","correspond|符合/通信","corrupt|腐敗的","cost|成本","costume|服裝","cottage|小屋","council|委員會","counsel|建議","count|計算","counter|櫃檯/反擊","counterpart|對應的人/物","courage|勇氣","course|課程/過程","court|法庭","cover|覆蓋","coward|懦夫","crack|裂縫","craft|工藝","crash|崩潰/撞碎","crawl|爬行","crazy|瘋狂的","create|創造","creature|生物","credit|信用","creep|爬行","crew|全體船員","crime|罪行","criminal|罪犯","crisis|危機","criteria|標準","critic|評論家","critical|批評的/關鍵的","criticize|批評","crop|莊稼","cross|交叉","crowd|人群","crucial|關鍵的","cruel|殘忍的","cruise|巡航","crush|壓碎","cry|哭","cultivate|耕作/培養","cultural|文化的","culture|文化","cup|杯子","cure|治癒","curious|好奇的","current|當前的","curriculum|課程","curtail|削減","custom|習俗","customer|顧客","cut|切","cycle|循環","cynical|憤世嫉俗的"
+    const vocabDatabase = [
+        { w: "abundant", cn: "豐富的" },
+        { w: "benevolent", cn: "仁慈的" },
+        { w: "candid", cn: "率直的" },
+        { w: "diligent", cn: "勤勉的" },
+        { w: "empathy", cn: "同理心" },
+        { w: "feasible", cn: "可行的" },
+        { w: "gratitude", cn: "感激" },
+        { w: "inevitable", cn: "不可避免的" },
+        { w: "optimistic", cn: "樂觀的" },
+        { w: "scrutinize", cn: "詳細檢查" }
     ];
 
-    // Convert raw strings into objects and SORT A-Z immediately
-    const vocabDatabase = rawVocabData.map(str => {
-        const parts = str.split('|');
-        return { w: parts[0], cn: parts[1] };
-    }).sort((a, b) => a.w.localeCompare(b.w));
-
-
     // ==========================================
-    // RESOURCE LIST
+    // DATA RESOURCES
     // ==========================================
     const resources = [
         {
-            id: 888, 
-            title: "Commonly Seen Words", // Renamed
+            id: 999, 
+            title: "Smart Vocabulary List (S4-S6)",
             subject: "English",
             level: ["S4", "S5", "DSE"],
-            notes: "500+ High Frequency Vocab",
+            notes: "Definitions + Chinese",
             htmlContent: `
                 <div style="border-bottom:1px solid #e2e8f0; padding-bottom:15px; margin-bottom:20px">
-                    <h2 style="margin:0; color:#2563eb">Commonly Seen Words (DSE)</h2>
-                    <p style="margin:5px 0 15px 0; color:#64748b">Click any word to load its AI definition. Sorted A-Z.</p>
-                    
-                    <div class="vocab-tools">
-                        <input type="text" class="vocab-search" id="vocabSearch" 
-                               placeholder="🔎 Search 500+ words..." onkeyup="filterVocab()">
-                        <div style="align-self:center; font-size:0.9rem; color:#64748b" id="countDisplay"></div>
-                    </div>
+                    <h2 style="margin:0">DSE High Frequency Words</h2>
+                    <p style="margin:5px 0 0 0; color:#64748b">English definitions loaded automatically.</p>
                 </div>
-
-                <div id="vocab-container" class="vocab-list-container">
-                    <!-- Words injected here -->
+                <div id="vocab-container" class="vocab-grid">
+                    <div style="text-align:center; width:100%; grid-column: 1/-1;">Loading words...</div>
                 </div>
             `
         },
-        // ... Keep your other resources ...
+        // ... Other resources ...
         {
             id: 1,
             title: "English Writing Text Types", 
             subject: "English",
             level: ["S3", "DSE"],
             notes: "8 Main Genres",
-            htmlContent: `<h2>Writing Text Types</h2><p>Select a text type...</p>` 
+            htmlContent: `<h2>Writing Text Types</h2><p>Select a text type...</p>`
         }
     ];
 
     // ==========================================
-    // MAIN APP LOGIC
+    // APP LOGIC
     // ==========================================
     let currentTab = 'All';
 
@@ -196,6 +168,11 @@
             const matchesTab = currentTab === 'All' || itemLevels.includes(currentTab);
             return matchesSearch && matchesTab;
         });
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="text-align:center; padding:40px; color:#94a3b8">No resources found.</div>`;
+            return;
+        }
 
         filtered.forEach(item => {
             const div = document.createElement('div');
@@ -224,12 +201,7 @@
         document.getElementById('detailContent').innerHTML = item.htmlContent;
         window.scrollTo(0,0);
 
-        if(id === 888) {
-            // Wait 1ms for the DOM to update then render words
-            setTimeout(() => {
-                renderVocabList(vocabDatabase); 
-            }, 10);
-        }
+        if(id === 999) loadVocab();
     }
 
     function showList() {
@@ -239,83 +211,66 @@
     }
 
     // ==========================================
-    // VOCABULARY ENGINE (Lazy Loading)
+    // HYBRID DICTIONARY LOGIC
     // ==========================================
-    
-    function filterVocab() {
-        const query = document.getElementById('vocabSearch').value.toLowerCase();
-        const filtered = vocabDatabase.filter(v => 
-            v.w.toLowerCase().includes(query) || v.cn.includes(query)
-        );
-        renderVocabList(filtered);
-    }
-
-    function renderVocabList(list) {
+    async function loadVocab() {
         const container = document.getElementById('vocab-container');
-        const countDisplay = document.getElementById('countDisplay');
-        
-        container.innerHTML = '';
-        countDisplay.textContent = `${list.length} words`;
+        container.innerHTML = ''; 
 
-        // Render visible items
-        list.forEach(item => {
-            const el = document.createElement('div');
-            el.className = 'vocab-item';
-            // We store the word in a data attribute to fetch later
-            el.dataset.word = item.w; 
-            el.onclick = function() { toggleWordDetails(this, item.w); };
-            
-            el.innerHTML = `
-                <div class="v-word">${item.w}</div>
-                <div class="v-cn">${item.cn}</div>
-                <div class="v-details" id="details-${item.w}">
-                    <div class="v-meta">Loading AI Definition...</div>
+        for (const item of vocabDatabase) {
+            const word = item.w;
+            const chinese = item.cn;
+
+            // 1. Create card with Chinese ALREADY visible (Instant!)
+            const card = document.createElement('div');
+            card.className = 'vocab-card';
+            // We show the Chinese immediately, but put skeletons for English
+            card.innerHTML = `
+                <div class="vocab-header">
+                    <div class="vocab-word">${word}</div>
+                    <div class="vocab-cn">${chinese}</div>
                 </div>
+                <div class="skeleton" style="width:60%"></div>
+                <div class="skeleton"></div>
             `;
-            container.appendChild(el);
-        });
-    }
+            container.appendChild(card);
 
-    async function toggleWordDetails(element, word) {
-        // Close if already open
-        if(element.classList.contains('expanded')) {
-            element.classList.remove('expanded');
-            return;
-        }
+            try {
+                // 2. Fetch English details in background
+                const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+                const data = await response.json();
 
-        // Close all others
-        document.querySelectorAll('.vocab-item.expanded').forEach(el => el.classList.remove('expanded'));
+                if(Array.isArray(data)) {
+                    const entry = data[0];
+                    const meaning = entry.meanings[0];
+                    const def = meaning.definitions[0].definition;
+                    const pos = meaning.partOfSpeech;
+                    const synonyms = meaning.synonyms.slice(0, 3).join(", ") || "No direct synonyms";
 
-        // Open this one
-        element.classList.add('expanded');
-        
-        const detailsBox = document.getElementById(`details-${word}`);
-        
-        // If we already fetched it, don't fetch again
-        if(detailsBox.dataset.loaded === "true") return;
+                    // 3. Update card with English data
+                    card.innerHTML = `
+                        <div class="vocab-header">
+                            <div class="vocab-word">${word}</div>
+                            <div class="vocab-cn">${chinese}</div>
+                        </div>
+                        <div class="vocab-meta">${pos}</div>
+                        <div class="vocab-def">${def}</div>
+                        <div class="vocab-synonyms"><strong>Syn:</strong> ${synonyms}</div>
+                    `;
+                } else {
+                    // Keep Chinese, just show error for English
+                    card.innerHTML = `
+                         <div class="vocab-header">
+                            <div class="vocab-word">${word}</div>
+                            <div class="vocab-cn">${chinese}</div>
+                        </div>
+                        <div style="color:red; font-size:0.9rem">Eng definition not found.</div>
+                    `;
+                }
 
-        try {
-            const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-            const data = await response.json();
-
-            if(Array.isArray(data)) {
-                const entry = data[0];
-                const meaning = entry.meanings[0];
-                const def = meaning.definitions[0].definition;
-                const pos = meaning.partOfSpeech;
-                const synonyms = meaning.synonyms.slice(0, 4).join(", ");
-
-                detailsBox.innerHTML = `
-                    <div class="v-meta">${pos}</div>
-                    <div class="v-def">${def}</div>
-                    ${synonyms ? `<div class="v-syn">Synonyms: ${synonyms}</div>` : ''}
-                `;
-                detailsBox.dataset.loaded = "true";
-            } else {
-                detailsBox.innerHTML = `<div style="color:red">Definition not found.</div>`;
+            } catch (err) {
+                console.error(err);
             }
-        } catch(err) {
-            detailsBox.innerHTML = `<div style="color:red">Network error. Check internet.</div>`;
         }
     }
 
