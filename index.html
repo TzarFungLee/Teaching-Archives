@@ -1,439 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Resources</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --surface: #ffffff; --text: #1e293b; --border: #e2e8f0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        /* Navigation */
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
+        
+        /* Headers */
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+
+        /* TABS */
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { background: white; border: 1px solid var(--border); padding: 8px 24px; border-radius: 20px; cursor: pointer; font-weight: 500; color: #64748b; transition: all 0.2s; }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Search & List */
+        .search-wrapper { margin-bottom: 25px; }
+        input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+        
+        .resource-card {
+            background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .tags-row { display: flex; gap: 6px; margin-bottom: 4px; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+        .tag-level { background: #e0e7ff; color: #3730a3; }
+        .tag-subject { background: #f1f5f9; color: #475569; }
+
+        /* SUBPAGE */
+        .subpage-content { background: var(--surface); padding: 30px; border-radius: 8px; border: 1px solid var(--border); min-height: 600px; }
+        .hidden { display: none !important; }
+        .btn { background-color: var(--primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; border: none; font-size: 0.9rem; }
+
+        /* === NEW VOCAB UI === */
+        .vocab-tools { display: flex; gap: 10px; margin-bottom: 20px; }
+        .vocab-search { flex-grow: 1; padding: 10px; border: 1px solid var(--border); border-radius: 6px; }
+        
+        .vocab-list-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 12px; 
+            max-height: 70vh; 
+            overflow-y: auto; 
+            padding-right: 5px;
+        }
+        
+        .vocab-item {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .vocab-item:hover { border-color: var(--primary); background: #f0f9ff; }
+        .vocab-item.expanded { grid-column: 1 / -1; background: #f8fafc; border-color: var(--primary); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+        .v-word { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+        .v-cn { color: #d946ef; font-size: 0.95rem; font-weight: 600; margin-top: 2px; }
+        
+        /* AI Details Section (Hidden until clicked) */
+        .v-details { display: none; margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 10px; animation: fadeIn 0.3s; }
+        .vocab-item.expanded .v-details { display: block; }
+        
+        .v-meta { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .v-def { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.5; }
+        .v-syn { font-size: 0.85rem; color: #475569; background: #e2e8f0; padding: 5px 10px; border-radius: 4px; display: inline-block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- MAIN LIST VIEW -->
+    <div id="listView">
+        <header>
+            <h1>📂 Course Materials</h1>
+            <div style="color: #64748b">Filter by form level</div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="filterTab('All', this)">All</button>
+            <button class="tab-btn" onclick="filterTab('S1', this)">S1</button>
+            <button class="tab-btn" onclick="filterTab('S2', this)">S2</button>
+            <button class="tab-btn" onclick="filterTab('S3', this)">S3</button>
+            <button class="tab-btn" onclick="filterTab('DSE', this)">DSE</button>
+        </div>
+
+        <div class="search-wrapper">
+            <input type="text" id="search" placeholder="🔍 Search general resources..." onkeyup="renderList()">
+        </div>
+
+        <div id="list" class="resource-list"></div>
+    </div>
+
+    <!-- DETAIL SUBPAGE VIEW -->
+    <div id="detailView" class="hidden">
+        <div class="nav-bar">
+            <button onclick="showList()" class="back-btn">← Back to List</button>
+        </div>
+        <div id="detailContent" class="subpage-content"></div>
+    </div>
+
+</div>
+
+<script>
     // ==========================================
-    // 500+ DSE VOCABULARY (Format: English|Chinese|Simple English Def)
+    // 500+ DSE VOCABULARY DATABASE (Compressed)
+    // Format: "English|Chinese"
     // ==========================================
     const rawVocabData = [
-        "abandon|拋棄|to leave a place, thing, or person, usually forever",
-        "ability|能力|the physical or mental power or skill needed to do something",
-        "abolish|廢除|to end an activity or custom officially",
-        "abrupt|突然的|sudden and unexpected, often in an unpleasant way",
-        "absence|缺席|the fact of not being where you are usually expected to be",
-        "absolute|絕對的|very great or to the largest degree possible",
-        "absorb|吸收|to take something in, especially gradually",
-        "abstract|抽象的|existing as an idea, feeling, or quality, not as a material object",
-        "abundant|豐富的|more than enough",
-        "abuse|濫用|to use something for the wrong purpose in a way that is harmful",
-        "academic|學術的|relating to schools, colleges, and universities",
-        "accelerate|加速|to happen or make something happen sooner or faster",
-        "access|途徑/存取|the method or possibility of getting near to a place or person",
-        "accommodate|容納|to provide with a place to live or to be stored in",
-        "accomplish|完成|to finish something successfully or to achieve something",
-        "accumulate|積累|to collect a large number of things over a long period of time",
-        "accurate|準確的|correct, exact, and without any mistakes",
-        "achieve|達成|to succeed in finishing something or reaching an aim",
-        "acknowledge|承認|to accept, admit, or recognize something, or the truth of something",
-        "acquire|獲得|to get or buy something",
-        "adapt|適應|to change, or to change something, to suit different conditions",
-        "adequate|足夠的|enough or satisfactory for a particular purpose",
-        "adjust|調整|to change something slightly to make it more correct or effective",
-        "administration|行政|the arrangements and tasks needed to control the operation of a plan or organization",
-        "admire|欣賞|to find someone or something attractive and pleasant to look at",
-        "admission|入場/承認|the act of agreeing that something is true",
-        "adopt|收養/採納|to accept or start to use something new",
-        "advance|前進|to go or move something forward",
-        "advantage|優勢|a condition giving a greater chance of success",
-        "advocate|提倡|to publicly support or suggest an idea, development, or way of doing something",
-        "affect|影響|to have an influence on someone or something",
-        "afford|負擔得起|to be able to buy or do something because you have enough money or time",
-        "agency|代理機構|a business that represents one group of people when dealing with another group",
-        "aggressive|侵略性的|behaving in an angry and violent way towards another person",
-        "agriculture|農業|farming",
-        "aid|援助|help or support",
-        "alarm|警報|a warning of danger, usually a loud noise or flashing light",
-        "alien|外星人/陌生的|coming from a different country, race, or group",
-        "alleviate|減輕|to make something bad such as pain or problems less severe",
-        "allocate|分配|to give something to someone as their share of a total amount",
-        "alter|改變|to change something, usually slightly",
-        "alternative|替代的|an alternative plan or method is one that you can use if you do not want to use another one",
-        "amateur|業餘的|taking part in an activity for pleasure, not as a job",
-        "ambiguous|模稜兩可的|having or expressing more than one possible meaning, sometimes intentionally",
-        "ambition|野心|a strong wish to achieve something",
-        "amount|數量|a collection or mass, especially of something that cannot be counted",
-        "analysis|分析|the act of studying or examining something in detail",
-        "ancient|古代的|of or from a long time ago, having lasted for a very long time",
-        "announce|宣佈|to make something known or tell people about something officially",
-        "annual|年度的|happening once every year",
-        "anonymous|匿名的|made or done by someone whose name is not known or not made public",
-        "anxiety|焦慮|an uncomfortable feeling of nervousness or worry about something",
-        "apologize|道歉|to tell someone that you are sorry for having done something that has caused problems or unhappiness",
-        "apparent|明顯的|able to be seen or understood",
-        "appeal|呼籲/吸引|a request to the public for money, information, or help",
-        "appetite|食慾|the feeling that you want to eat food",
-        "applicant|申請人|a person who formally requests something, especially a job",
-        "appoint|任命|to choose someone officially for a job or responsibility",
-        "appreciate|感激/欣賞|to recognize how good someone or something is and to value him, her, or it",
-        "approach|接近/方法|to come near or nearer to something or someone in space, time, quality, or amount",
-        "appropriate|適當的|suitable or right for a particular situation or occasion",
-        "approve|批准|to have a positive opinion of someone or something",
-        "approximate|大約的|not completely accurate but close",
-        "architecture|建築|the art and practice of designing and constructing buildings",
-        "argue|爭論|to speak angrily to someone, telling that person that you disagree with them",
-        "arise|出現|to happen",
-        "arouse|喚起|to cause someone to have a particular feeling",
-        "arrange|安排|to plan, prepare for, or organize something",
-        "arrest|逮捕|if the police arrest someone, they take them away to ask them about a crime that they might have committed",
-        "arrogant|傲慢的|unpleasantly proud and behaving as if you are more important than, or know more than, other people",
-        "artificial|人造的|made by people, often as a copy of something natural",
-        "aspect|方面|one part of a situation, problem, subject, etc.",
-        "assemble|集合|to come together in a single place or bring parts together in a single group",
-        "assess|評估|to judge or decide the amount, value, quality, or importance of something",
-        "asset|資產|a useful or valuable quality, skill, or person",
-        "assign|分配|to give a particular job or piece of work to someone",
-        "assist|協助|to help",
-        "associate|聯想/交往|to connect someone or something in your mind with someone or something else",
-        "assume|假設|to accept something to be true without question or proof",
-        "assure|向…保證|to tell someone confidently that something is true, especially so that they do not worry",
-        "atmosphere|氣氛|the character, feeling, or mood of a place or situation",
-        "attach|貼上/附上|to fasten, join, or connect something",
-        "attain|獲得|to reach or succeed in getting something",
-        "attempt|嘗試|to try to do something, especially something difficult",
-        "attend|出席|to go to an event, place, etc.",
-        "attitude|態度|a feeling or opinion about something or someone",
-        "attract|吸引|to pull or draw someone or something towards them",
-        "attribute|歸因於|to say or think that something is the result of a particular thing",
-        "audience|觀眾|the group of people together in one place to watch or listen to a play, film, someone speaking, etc.",
-        "authentic|真實的|if something is authentic, it is real, true, or what people say it is",
-        "authority|權威|the moral or legal right or ability to control",
-        "automatic|自動的|an automatic machine or device is able to operate independently of human control",
-        "available|可用的|able to be bought or used",
-        "average|平均|the result you get by adding two or more amounts together and dividing the total by the number of amounts",
-        "avoid|避免|to stay away from someone or something",
-        "aware|意識到的|knowing that something exists, or having knowledge or experience of a particular thing",
-        "awkward|尷尬的|difficult to use, do, or deal with",
-        "background|背景|the things that can be seen behind the main things or people in a picture",
-        "balance|平衡|a state where things are of equal weight or force",
-        "ban|禁止|to forbid (= refuse to allow) something, especially officially",
-        "barrier|障礙|a long pole, fence, wall, or natural feature, such as a mountain or sea, that stops people from going somewhere",
-        "basic|基本的|simple and not complicated, so able to provide the starting point from which something can develop",
-        "basis|基礎|the most important facts, ideas, etc. from which something is developed",
-        "bear|忍受|to accept, tolerate, or endure something, especially something unpleasant",
-        "behave|表現|to act in a particular way",
-        "belief|信念|the feeling of being certain that something exists or is true",
-        "beneficial|有益的|helpful, useful, or good",
-        "benefit|利益|a helpful or good effect, or something intended to help",
-        "betray|背叛|to not be loyal to your country or a person, often by doing something harmful such as helping their enemies",
-        "bias|偏見|the action of supporting or opposing a particular person or thing in an unfair way",
-        "bitter|苦的/痛苦的|someone who is bitter is angry and unhappy because they cannot forget bad things that happened in the past",
-        "blame|責怪|to say or think that someone or something did something wrong or is responsible for something bad happening",
-        "block|阻礙|to prevent movement through something",
-        "board|董事會/上車|the group of people who are responsible for controlling and organizing a company or organization",
-        "bold|大膽的|not frightened of danger",
-        "bond|紐帶/債券|a close connection joining two or more people",
-        "boost|促進|to improve or increase something",
-        "border|邊界|a line that has been agreed to divide one country from another",
-        "bored|無聊的|feeling unhappy because something is not interesting or because you have nothing to do",
-        "bother|打擾|to make the effort to do something",
-        "bound|受約束的|certain or extremely likely to happen",
-        "boundary|邊界|a real or imagined line that marks the edge or limit of something",
-        "brand|品牌|a type of product made by a particular company",
-        "brave|勇敢的|showing no fear of dangerous or difficult things",
-        "breach|違背|an act of breaking a law, promise, agreement, or relationship",
-        "breakthrough|突破|an important discovery or event that helps to improve a situation or provide an answer to a problem",
-        "breathe|呼吸|to move air into and out of the lungs",
-        "breed|品種/繁殖|to keep animals for the purpose of producing young animals in a controlled way",
-        "brief|簡短的|lasting only a short time or containing few words",
-        "brilliant|傑出的|extremely intelligent or skilled",
-        "broad|寬闊的|very wide",
-        "broadcast|廣播|to send out a programme on television or radio",
-        "budget|預算|a plan to show how much money a person or organization will earn and how much they will need or be able to spend",
-        "burden|負擔|a heavy load that you carry",
-        "campaign|活動|a planned group of especially political, business, or military activities that are intended to achieve a particular aim",
-        "cancel|取消|to decide that an organized event will not happen or stop an order for goods or services that you no longer want",
-        "candidate|候選人|a person who is competing to get a job or elected position",
-        "capable|有能力的|able to do things effectively and skilfully, and to achieve results",
-        "capacity|容量|the total amount that can be contained or produced",
-        "capital|資本/首都|a city that is the centre of government of a country or smaller political area",
-        "capture|捕獲|to take someone as a prisoner, or to take something into your possession, especially by force",
-        "career|職業|the job or series of jobs that you do during your working life",
-        "careful|小心的|giving a lot of attention to what you are doing so that you do not have an accident, make a mistake, or damage something",
-        "casual|隨便的|not formal or not suitable for special occasions",
-        "category|類別|a type, or a group of things having some features that are the same",
-        "cause|原因|the reason why something, especially something bad, happens",
-        "caution|謹慎|great care and attention",
-        "cease|停止|to stop something",
-        "celebrate|慶祝|to take part in special enjoyable activities in order to show that a particular occasion is important",
-        "ceremony|儀式|formal acts, often fixed and traditional, performed on important social or religious occasions",
-        "certain|確定的|having no doubt or knowing exactly that something is true, or known to be true, correct, exact, or effective",
-        "certificate|證書|an official document that states that the information on it is true",
-        "challenge|挑戰|something that needs great mental or physical effort in order to be done successfully and therefore tests a person's ability",
-        "champion|冠軍|someone or something, especially a person or animal, that has beaten all other competitors in a competition",
-        "channel|頻道|a television station",
-        "chaos|混亂|a state of total confusion with no order",
-        "character|性格/角色|the particular combination of qualities in a person or place that makes them different from others",
-        "charity|慈善|a system of giving money, food, or help free to those who are in need because they are ill, poor, or have no home",
-        "charm|魅力|a quality that makes you like or feel attracted to someone or something",
-        "chase|追逐|to hurry after someone or something in order to catch him, her, or it",
-        "cheat|欺騙|to behave in a dishonest way in order to get what you want",
-        "check|檢查|to make certain that something or someone is correct, safe, or suitable by looking at it, examining it, or asking questions",
-        "chemical|化學的|any basic substance that is used in or produced by a reaction involving changes to atoms or molecules",
-        "cherish|珍惜|to love, protect, and care for someone or something that is important to you",
-        "chief|首領/主要的|most important or main",
-        "childhood|童年|the time when someone is a child",
-        "choice|選擇|an act or the possibility of choosing",
-        "choose|選擇|to decide what you want from two or more things or possibilities",
-        "chronic|慢性的|(especially of a disease or something bad) continuing for a long time",
-        "circumstance|情況|a fact or event that makes a situation the way it is",
-        "cite|引用|to mention something as proof for a theory or as a reason why something has happened",
-        "citizen|公民|a person who is a member of a particular country and who has rights because of being born there or because of being given rights",
-        "civil|公民的|not military or religious, or relating to the ordinary people of a country",
-        "claim|聲稱|to say that something is true or is a fact, although you cannot prove it and other people might not believe it",
-        "clarify|澄清|to make something clear or easier to understand by giving more details or a simpler explanation",
-        "classic|經典的|having a high quality or standard against which other things are judged",
-        "classify|分類|to divide things into groups according to their type",
-        "clause|條款|a particular part of a written legal document, for example a law passed by Parliament or a contract",
-        "clear|清楚的|easy to understand, hear, read, or see",
-        "client|客戶|a customer or someone who receives services",
-        "climate|氣候|the general weather conditions usually found in a particular place",
-        "clue|線索|a sign or some information that helps you to find the answer to a problem, question, or mystery",
-        "cluster|簇/群|a group of similar things that are close together, sometimes surrounding something",
-        "coach|教練|someone whose job is to teach people to improve at a sport, skill, or school subject",
-        "coalition|聯盟|the joining together of different political parties or groups for a particular purpose, usually for a limited time",
-        "code|代碼|a system of words, letters, or signs used to represent a message in secret form",
-        "cognitive|認知的|connected with thinking or conscious mental processes",
-        "coherent|連貫的|if an argument, set of ideas, or a plan is coherent, it is clear and carefully considered",
-        "coincide|巧合|to happen at or near the same time",
-        "collapse|倒塌|to fall down suddenly because of pressure or having no strength or support",
-        "colleague|同事|one of a group of people who work together",
-        "collect|收集|to get things from different places and bring them together",
-        "collective|集體的|of or shared by every member of a group of people",
-        "collision|碰撞|an accident that happens when two vehicles hit each other with force",
-        "colony|殖民地|a country or area controlled politically by a more powerful country that is often far away",
-        "combine|結合|to cause to exist together, or join together to make a single thing or group",
-        "comfort|舒適|a pleasant feeling of being relaxed and free from pain",
-        "command|命令|an order, especially one given by a soldier",
-        "commence|開始|to begin something",
-        "comment|評論|something that you say or write that expresses your opinion",
-        "commerce|商業|the activities involved in buying and selling things",
-        "commission|委員會|a group of people who have been formally chosen to discover information about a problem or examine the reasons why the problem exists",
-        "commit|承諾/犯罪|to do something illegal or something that is considered wrong",
-        "committee|委員會|a small group of people chosen to represent a larger organization and either make decisions or collect information for it",
-        "commodity|商品|a substance or product that can be traded, bought, or sold",
-        "common|常見的|the same in a lot of places or for a lot of people",
-        "communicate|溝通|to share information with others by speaking, writing, moving your body, or using other signals",
-        "community|社區|the people living in one particular area or people who are considered as a unit because of their common interests, social group, or nationality",
-        "company|公司/陪伴|an organization that sells goods or services in order to make money",
-        "compare|比較|to examine or look for the difference between two or more things",
-        "compatible|兼容的|able to exist, live, or work successfully with something or someone else",
-        "compel|強迫|to force someone to do something",
-        "compensate|補償|to pay someone money in exchange for something that has been lost or damaged or for some problem",
-        "compete|競爭|to try to be more successful than someone or something else",
-        "competent|有能力的|able to do something well",
-        "compile|編制|to collect information from different places and arrange it in a book, report, or list",
-        "complain|投訴|to say that something is wrong or not satisfactory",
-        "complement|補充|to make something else seem better or more attractive when combining with it",
-        "complete|完成|to make whole or perfect",
-        "complex|複雜的|involving a lot of different but related parts",
-        "complicate|使複雜|to make something more difficult to deal with, do, or understand",
-        "component|組件|a part that combines with other parts to form something bigger",
-        "compose|組成/作曲|to produce music, poetry, or formal writing",
-        "compound|化合物|something consisting of two or more different parts",
-        "comprehensive|全面的|complete and including everything that is necessary",
-        "comprise|包含|to consist of",
-        "compromise|妥協|an agreement in an argument in which the people involved reduce their demands or change their opinion in order to agree",
-        "compulsory|強制的|if something is compulsory, you must do it because of a rule or law",
-        "conceal|隱藏|to prevent something from being seen or known about",
-        "concede|承認|to admit, often unwillingly, that something is true",
-        "concentrate|集中|to direct your attention or your efforts towards a particular activity, subject, or problem",
-        "concept|概念|a principle or idea",
-        "concern|關心|to cause worry to someone",
-        "conclude|總結|to end a speech, meeting, or piece of writing",
-        "concrete|具體的/混凝土|clear and certain, or real and existing in a form that can be seen or felt",
-        "condemn|譴責|to criticize something or someone strongly, usually for moral reasons",
-        "condition|條件|the particular state that something or someone is in",
-        "conduct|行為/傳導|to organize and perform a particular activity",
-        "conference|會議|an event, sometimes lasting a few days, at which there is a group of talks on a particular subject",
-        "confess|承認|to admit that you have done something wrong or something that you feel guilty or bad about",
-        "confidence|信心|the quality of being certain of your abilities or of having trust in people, plans, or the future",
-        "confine|限制|to limit an activity, person, or problem in some way",
-        "confirm|確認|to make an arrangement or meeting certain, often by phone or writing",
-        "conflict|衝突|an active disagreement between people with opposing opinions or principles",
-        "conform|遵守|to behave according to the usual standards of behaviour that are expected by a group or society",
-        "confront|面對|to face, meet, or deal with a difficult situation or person",
-        "confuse|使困惑|to mix up someone's mind or ideas, or to make something difficult to understand",
-        "congested|擁擠的|too blocked or crowded and causing difficulties",
-        "congratulate|祝賀|to praise someone and say that you approve of or are pleased about a special or unusual achievement",
-        "connect|連接|to join or be joined with something else",
-        "conquer|征服|to take control or possession of foreign land, or a group of people, by force",
-        "conscience|良心|the part of you that judges how moral your own actions are and makes you feel guilty about bad things that you have done",
-        "conscious|有意識的|to notice that a particular event or situation is happening",
-        "consensus|共識|a generally accepted opinion or decision among a group of people",
-        "consent|同意|permission or agreement",
-        "consequence|後果|a result of a particular action or situation, often one that is bad or not convenient",
-        "conserve|保存|to keep and protect something from damage, change, or waste",
-        "consider|考慮|to spend time thinking about a possibility or making a decision",
-        "consist|組成|to be something that is made or formed of various specific things",
-        "consistent|一致的|always behaving or happening in a similar, especially positive, way",
-        "console|安慰|to make someone who is sad or disappointed feel better by giving them comfort or sympathy",
-        "consolidate|鞏固|to become, or cause something to become, stronger, and more certain",
-        "conspicuous|顯眼的|very noticeable or attracting attention, often in a way that is not wanted",
-        "conspiracy|陰謀|the activity of secretly planning with other people to do something bad or illegal",
-        "constant|持續的|happening a lot or all the time",
-        "constitute|構成|to be or be considered as something",
-        "constitution|憲法|the set of political principles by which a state or organization is governed",
-        "construct|建造|to build something or put together different parts to form something whole",
-        "consult|諮詢|to get information or advice from a person, book, etc. with special knowledge on a particular subject",
-        "consume|消耗|to use fuel, energy, or time, especially in large amounts",
-        "contact|接觸|communication with someone, especially by speaking or writing to them regularly",
-        "contain|包含|to have something inside or include something as a part",
-        "contaminate|污染|to make something less pure or make it poisonous",
-        "contemporary|當代的|existing or happening now",
-        "contend|競爭|to compete in order to win something",
-        "content|內容/滿意的|pleased with your situation and not hoping for change or improvement",
-        "contest|比賽|a competition to do better than other people, usually in which prizes are given",
-        "context|語境|the situation within which something exists or happens, and that can help explain it",
-        "continent|大陸|one of the seven large land masses on the earth's surface, surrounded, or mainly surrounded, by sea and usually consisting of various countries",
-        "continue|繼續|to keep happening, existing, or doing something, or to cause something or someone to do this",
-        "contract|合約|a legal document that states and explains a formal agreement between two different people or groups, or the agreement itself",
-        "contradict|反駁|to say the opposite of what someone else has said, or (of one fact or statement) to be so different from another fact or statement that one of them must be wrong",
-        "contrary|相反的|the opposite",
-        "contrast|對比|an obvious difference between two or more things",
-        "contribute|貢獻|to give something, especially money, in order to provide or achieve something together with other people",
-        "control|控制|to order, limit, or rule something, or someone's actions or behaviour",
-        "controversial|有爭議的|causing disagreement or discussion",
-        "convenience|便利|the state of being convenient",
-        "convention|大會/習俗|a large formal meeting of people who do a particular job or have a similar interest, or a large meeting for a political party",
-        "convert|轉換|to (cause something or someone to) change in form or character",
-        "convey|傳達|to express a thought, feeling, or idea so that it is understood by other people",
-        "convict|定罪|to decide officially in a law court that someone is guilty of a crime",
-        "convince|說服|to persuade someone or make them certain",
-        "cooperate|合作|to act or work together for a particular purpose, or to be helpful by doing what someone asks you to do",
-        "coordinate|協調|to make many different things work effectively as a whole",
-        "cop|警察|a police officer",
-        "cope|應付|to deal successfully with a difficult situation",
-        "copy|複製|to produce something so that it is the same as an original piece of work",
-        "core|核心|the basic and most important part of something",
-        "corner|角落|the point, area, or line that is formed by the meeting of two lines, surfaces, roads, etc.",
-        "corporation|公司|a large company or group of companies that is controlled together as a single organization",
-        "correct|正確的|in agreement with the true facts or with what is generally accepted",
-        "correspond|符合/通信|to match or be similar or equal",
-        "corrupt|腐敗的|dishonestly using your position or power to get an advantage, especially for money",
-        "cost|成本|the amount of money needed to buy, do, or make something",
-        "council|委員會|the group of people elected to govern a particular area, town, or city, and organize services for it",
-        "counsel|建議|to give advice, especially on social or personal problems",
-        "count|計算|to say numbers one after the other in order, or to calculate the number of people or things in a group",
-        "counter|櫃檯/反擊|a long, flat, narrow surface or table in a shop, bank, restaurant, etc. at which people are served",
-        "counterpart|對應的人/物|a person or thing that has the same purpose as another one in a different place or organization",
-        "courage|勇氣|the ability to control your fear in a dangerous or difficult situation",
-        "course|課程/過程|a set of classes or a plan of study on a particular subject, usually leading to an exam or qualification",
-        "court|法庭|a place where trials and other legal cases happen, or the people present in such a place, especially the officials and those deciding if someone is guilty",
-        "cover|覆蓋|to put or spread something over something, or to lie on the surface of something",
-        "coward|懦夫|a person who is not brave and is too eager to avoid danger, difficulty, or pain",
-        "crack|裂縫|to break something so that it does not separate, but very thin lines appear on its surface, or to become broken in this way",
-        "craft|工藝|skill and experience, especially in relation to making objects; a job or activity that needs skill and experience, or something produced using skill and experience",
-        "crash|崩潰/撞碎|if a vehicle crashes or someone crashes it, it is involved in an accident, usually a serious one",
-        "crawl|爬行|to move along on hands and knees or with your body stretched out along a surface",
-        "crazy|瘋狂的|stupid or not reasonable",
-        "create|創造|to make something new, or invent something",
-        "creature|生物|any large or small living thing that can move independently",
-        "credit|信用|praise, approval, or honour",
-        "creep|爬行|to move slowly, quietly, and carefully, usually in order to avoid being noticed",
-        "crew|全體船員|a group of people who work together, especially they who work on a ship, aircraft, etc.",
-        "crime|罪行|illegal activities",
-        "criminal|罪犯|someone who commits a crime",
-        "crisis|危機|a time of great disagreement, confusion, or suffering",
-        "criteria|標準|a standard by which you judge, decide about, or deal with something",
-        "critic|評論家|someone who says that they do not approve of someone or something",
-        "critical|批評的/關鍵的|saying that someone or something is bad or wrong",
-        "criticize|批評|to express disapproval of someone or something",
-        "crop|莊稼|plant such as a grain, fruit, or vegetable grown in large amounts",
-        "cross|交叉|to go across from one side of something to the other",
-        "crowd|人群|a large group of people who have come together",
-        "crucial|關鍵的|extremely important or necessary",
-        "cruel|殘忍的|extremely unkind and unpleasant and causing pain to people or animals intentionally",
-        "crush|壓碎|to press something very hard so that it is broken or its shape is destroyed",
-        "cry|哭|to produce tears as the result of a strong emotion, such as unhappiness or pain",
-        "cultivate|耕作/培養|to prepare land and grow crops on it, or to grow crops",
-        "cultural|文化的|relating to the habits, traditions, and beliefs of a society",
-        "culture|文化|the way of life, especially the general customs and beliefs, of a particular group of people at a particular time",
-        "cure|治癒|to make someone with an illness healthy again",
-        "curious|好奇的|interested in learning about people or things around you",
-        "current|當前的|of the present time",
-        "custom|習俗|a way of behaving or a belief that has been established for a long time",
-        "customer|顧客|a person who buys goods or a service",
-        "cut|切|to break the surface of something, or to divide or make something smaller, using a sharp tool, especially a knife",
-        "cycle|循環|a group of events that happen in a particular order, one following the other, and are often repeated",
-        "cynical|憤世嫉俗的|believing that people are only interested in themselves and are not sincere"
+        "abandon|拋棄","abbreviate|縮寫","ability|能力","abolish|廢除","abrupt|突然的","absence|缺席","absolute|絕對的","absorb|吸收","abstract|抽象的","abundant|豐富的","abuse|濫用","academic|學術的","accelerate|加速","accent|口音","accept|接受","access|途徑/存取","accessible|易接近的","accident|意外","accommodate|容納","accommodation|住宿","accompany|陪伴","accomplish|完成","account|帳戶/解釋","accumulate|積累","accurate|準確的","accuse|指控","achieve|達成","acknowledge|承認","acquire|獲得","adapt|適應","addiction|上癮","adequate|足夠的","adjust|調整","administration|行政","admire|欣賞","admission|入場/承認","adolescent|青少年","adopt|收養/採納","advance|前進","advantage|優勢","adventure|冒險","adverse|不利的","advocate|提倡","affect|影響","affection|喜愛","afford|負擔得起","agency|代理機構","agenda|議程","aggressive|侵略性的","agriculture|農業","aid|援助","alarm|警報","alien|外星人/陌生的","alike|相似的","allegedly|據稱","alleviate|減輕","allocate|分配","allowance|津貼","alter|改變","alternative|替代的","amateur|業餘的","ambazing|驚人的","ambiguous|模稜兩可的","ambition|野心","ambulance|救護車","amount|數量","amuse|娛樂","analysis|分析","analyze|分析","ancestor|祖先","ancient|古代的","anger|憤怒","angle|角度","announce|宣佈","annual|年度的","anonymous|匿名的","anxiety|焦慮","apologize|道歉","apparent|明顯的","appeal|呼籲/吸引","appear|出現","appetite|食慾","applaud|鼓掌","applicant|申請人","appoint|任命","appreciate|感激/欣賞","approach|接近/方法","appropriate|適當的","approve|批准","approximate|大約的","architect|建築師","architecture|建築","argue|爭論","arise|出現","arithmetic|算術","arouse|喚起","arrange|安排","arrest|逮捕","arrogant|傲慢的","artificial|人造的","artist|藝術家","ashamed|羞愧的","aspect|方面","assemble|集合","assess|評估","asset|資產","assign|分配","assist|協助","associate|聯想/交往","assume|假設","assure|向…保證","atmosphere|氣氛","attach|貼上/附上","attack|攻擊","attain|獲得","attempt|嘗試","attend|出席","attention|注意","attitude|態度","attract|吸引","attribute|歸因於","audience|觀眾","authentic|真實的","author|作者","authority|權威","automatic|自動的","available|可用的","average|平均","avoid|避免","award|獎品","aware|意識到的","awful|糟糕的","awkward|尷尬的",
+        "background|背景","bacteria|細菌","balance|平衡","ban|禁止","bankruptcy|破產","barely|僅僅","bargain|討價還價","barrier|障礙","basic|基本的","basis|基礎","bear|忍受","beat|擊敗","behave|表現","belief|信念","belong|屬於","beneficial|有益的","benefit|利益","betray|背叛","bias|偏見","bid|出價","bind|捆綁","bitter|苦的/痛苦的","blame|責怪","blank|空白的","blind|瞎的","block|阻礙","blood|血液","board|董事會/上車","boast|自誇","bold|大膽的","bond|紐帶/債券","boost|促進","border|邊界","bored|無聊的","borrow|借入","bother|打擾","bound|受約束的","boundary|邊界","brain|大腦","brand|品牌","brave|勇敢的","breach|違背","breakthrough|突破","breathe|呼吸","breed|品種/繁殖","bribe|賄賂","brief|簡短的","brilliant|傑出的","broad|寬闊的","broadcast|廣播","budget|預算","burden|負擔","bureaucracy|官僚","burst|爆裂","bury|埋葬",
+        "calculate|計算","campaign|活動","cancel|取消","candidate|候選人","capable|有能力的","capacity|容量","capital|資本/首都","capture|捕獲","career|職業","careful|小心的","carry|攜帶","cast|投射","casual|隨便的","category|類別","cause|原因","caution|謹慎","cease|停止","celebrate|慶祝","cell|細胞","censor|審查","ceremony|儀式","certain|確定的","certificate|證書","challenge|挑戰","champion|冠軍","channel|頻道","chaos|混亂","character|性格/角色","charity|慈善","charm|魅力","chart|圖表","chase|追逐","chat|聊天","cheat|欺騙","check|檢查","cheer|歡呼","chemical|化學的","cherish|珍惜","chief|首領/主要的","childhood|童年","choice|選擇","choose|選擇","chronic|慢性的","circuit|電路","circulate|循環","circumstance|情況","cite|引用","citizen|公民","civil|公民的","claim|聲稱","clarify|澄清","classic|經典的","classify|分類","clause|條款","clear|清楚的","clerk|職員","clever|聰明的","client|客戶","climate|氣候","climb|攀爬","clinic|診所","clue|線索","cluster|簇/群","coach|教練","coalition|聯盟","coast|海岸","code|代碼","coexist|共存","cognitive|認知的","coherent|連貫的","coincide|巧合","collapse|倒塌","colleague|同事","collect|收集","collective|集體的","collision|碰撞","colony|殖民地","combine|結合","comfort|舒適","command|命令","commence|開始","comment|評論","commerce|商業","commission|委員會","commit|承諾/犯罪","committee|委員會","commodity|商品","common|常見的","communicate|溝通","community|社區","commute|通勤","company|公司/陪伴","compare|比較","compatible|兼容的","compel|強迫","compensate|補償","compete|競爭","competent|有能力的","compile|編制","complain|投訴","complement|補充","complete|完成","complex|複雜的","complicate|使複雜","component|組件","compose|組成/作曲","compound|化合物","comprehensive|全面的","comprise|包含","compromise|妥協","compulsory|強制的","compute|計算","conceal|隱藏","concede|承認","conceive|構想","concentrate|集中","concept|概念","concern|關心","concert|音樂會","conclude|總結","concrete|具體的/混凝土","condemn|譴責","condition|條件","conduct|行為/傳導","confer|授予","conference|會議","confess|承認","confidence|信心","confine|限制","confirm|確認","conflict|衝突","conform|遵守","confront|面對","confuse|使困惑","congested|擁擠的","congratulate|祝賀","congress|國會","connect|連接","conquer|征服","conscience|良心","conscious|有意識的","consensus|共識","consent|同意","consequence|後果","conserve|保存","consider|考慮","consist|組成","consistent|一致的","console|安慰","consolidate|鞏固","conspicuous|顯眼的","conspiracy|陰謀","constant|持續的","constitute|構成","constitution|憲法","construct|建造","consult|諮詢","consume|消耗","contact|接觸","contain|包含","contaminate|污染","contemporary|當代的","contend|競爭","content|內容/滿意的","contest|比賽","context|語境","continent|大陸","continue|繼續","contract|合約","contradict|反駁","contrary|相反的","contrast|對比","contribute|貢獻","control|控制","controversial|有爭議的","convenience|便利","convention|大會/習俗","convert|轉換","convey|傳達","convict|定罪","convince|說服","cooperate|合作","coordinate|協調","cop|警察","cope|應付","copy|複製","core|核心","corn|玉米","corner|角落","corporation|公司","correct|正確的","correspond|符合/通信","corrupt|腐敗的","cost|成本","costume|服裝","cottage|小屋","council|委員會","counsel|建議","count|計算","counter|櫃檯/反擊","counterpart|對應的人/物","courage|勇氣","course|課程/過程","court|法庭","cover|覆蓋","coward|懦夫","crack|裂縫","craft|工藝","crash|崩潰/撞碎","crawl|爬行","crazy|瘋狂的","create|創造","creature|生物","credit|信用","creep|爬行","crew|全體船員","crime|罪行","criminal|罪犯","crisis|危機","criteria|標準","critic|評論家","critical|批評的/關鍵的","criticize|批評","crop|莊稼","cross|交叉","crowd|人群","crucial|關鍵的","cruel|殘忍的","cruise|巡航","crush|壓碎","cry|哭","cultivate|耕作/培養","cultural|文化的","culture|文化","cup|杯子","cure|治癒","curious|好奇的","current|當前的","curriculum|課程","curtail|削減","custom|習俗","customer|顧客","cut|切","cycle|循環","cynical|憤世嫉俗的"
     ];
 
     // Convert raw strings into objects and SORT A-Z immediately
     const vocabDatabase = rawVocabData.map(str => {
         const parts = str.split('|');
-        return { w: parts[0], cn: parts[1], def: parts[2] || "" };
+        return { w: parts[0], cn: parts[1] };
     }).sort((a, b) => a.w.localeCompare(b.w));
 
 
-    function toggleWordDetails(element, word, manualDef) {
-        // [Existing Toggle Logic...]
-        if(element.classList.contains('expanded')) {
-            element.classList.remove('expanded');
-            return;
+    // ==========================================
+    // RESOURCE LIST
+    // ==========================================
+    const resources = [
+        {
+            id: 888, 
+            title: "Commonly Seen Words", // Renamed
+            subject: "English",
+            level: ["S4", "S5", "DSE"],
+            notes: "500+ High Frequency Vocab",
+            htmlContent: `
+                <div style="border-bottom:1px solid #e2e8f0; padding-bottom:15px; margin-bottom:20px">
+                    <h2 style="margin:0; color:#2563eb">Commonly Seen Words (DSE)</h2>
+                    <p style="margin:5px 0 15px 0; color:#64748b">Click any word to load its AI definition. Sorted A-Z.</p>
+                    
+                    <div class="vocab-tools">
+                        <input type="text" class="vocab-search" id="vocabSearch" 
+                               placeholder="🔎 Search 500+ words..." onkeyup="filterVocab()">
+                        <div style="align-self:center; font-size:0.9rem; color:#64748b" id="countDisplay"></div>
+                    </div>
+                </div>
+
+                <div id="vocab-container" class="vocab-list-container">
+                    <!-- Words injected here -->
+                </div>
+            `
+        },
+        // ... Keep your other resources ...
+        {
+            id: 1,
+            title: "English Writing Text Types", 
+            subject: "English",
+            level: ["S3", "DSE"],
+            notes: "8 Main Genres",
+            htmlContent: `<h2>Writing Text Types</h2><p>Select a text type...</p>` 
         }
-        document.querySelectorAll('.vocab-item.expanded').forEach(el => el.classList.remove('expanded'));
-        element.classList.add('expanded');
-        
-        const detailsBox = document.getElementById(`details-${word}`);
-        
-        // 1. Show Manual Definition IMMEDIATELY (if exists)
-        if(manualDef) {
-            detailsBox.innerHTML = `
-                <div class="v-meta">Teacher's Note</div>
-                <div class="v-def" style="font-weight:500; color:#333">${manualDef}</div>
-                <div class="v-meta" style="margin-top:10px">Synonyms (Loading...)</div>
-            `;
-            detailsBox.style.display = 'block';
-        }
+    ];
 
-        if(detailsBox.dataset.loaded === "true") return;
+    // ==========================================
+    // MAIN APP LOGIC
+    // ==========================================
+    let currentTab = 'All';
 
-        // 2. Fetch Synonyms/Pos from AI as backup
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-            .then(res => res.json())
-            .then(data => {
-                if(Array.isArray(data)) {
-                    const entry = data[0];
-                    const pos = entry.meanings[0].partOfSpeech;
-                    const aiDef = entry.meanings[0].definitions[0].definition;
-                    const synonyms = entry.meanings[0].synonyms.slice(0, 5).join(", ");
-
-                    // If we have a manual def, just append synonyms. If not, show AI def.
-                    if(manualDef) {
-                         detailsBox.innerHTML += `
-                            <div class="v-syn">${synonyms || "None found"}</div>
-                         `;
-                    } else {
-                        detailsBox.innerHTML = `
-                            <div class="v-meta">${pos}</div>
-                            <div class="v-def">${aiDef}</div>
-                            ${synonyms ? `<div class="v-syn">Synonyms: ${synonyms}</div>` : ''}
-                        `;
-                    }
-                    detailsBox.dataset.loaded = "true";
-                }
-            })
-            .catch(() => {
-                 if(!manualDef) detailsBox.innerHTML = `<div style="color:red">Definition not found.</div>`;
-            });
+    function filterTab(tabName, btnElement) {
+        currentTab = tabName;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btnElement.classList.add('active');
+        renderList();
     }
 
-    // UPDATE RENDER FUNCTION TO PASS THE MANUAL DEF
+    function renderList() {
+        const query = document.getElementById('search').value.toLowerCase();
+        const container = document.getElementById('list');
+        container.innerHTML = '';
+
+        const filtered = resources.filter(item => {
+            const itemLevels = Array.isArray(item.level) ? item.level : [item.level];
+            const matchesSearch = item.title.toLowerCase().includes(query) || item.subject.toLowerCase().includes(query);
+            const matchesTab = currentTab === 'All' || itemLevels.includes(currentTab);
+            return matchesSearch && matchesTab;
+        });
+
+        filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'resource-card';
+            const levels = Array.isArray(item.level) ? item.level : [item.level];
+            const badgesHTML = levels.map(lvl => `<span class="tag tag-level">${lvl}</span>`).join('');
+            const action = item.htmlContent ? `onclick="openPage(${item.id})"` : `onclick="window.open('${item.link}', '_blank')"`;
+            
+            div.innerHTML = `
+                <div onclick="event.stopPropagation(); ${action}" style="flex-grow:1">
+                    <div class="tags-row">${badgesHTML}<span class="tag tag-subject">${item.subject}</span></div>
+                    <h3 style="margin:0 0 5px 0">${item.title}</h3>
+                    <div style="font-size:0.85rem; color:#64748b">${item.notes}</div>
+                </div>
+                <button class="btn" ${action}>View</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function openPage(id) {
+        const item = resources.find(r => r.id === id);
+        if(!item || !item.htmlContent) return;
+        document.getElementById('listView').classList.add('hidden');
+        document.getElementById('detailView').classList.remove('hidden');
+        document.getElementById('detailContent').innerHTML = item.htmlContent;
+        window.scrollTo(0,0);
+
+        if(id === 888) {
+            // Wait 1ms for the DOM to update then render words
+            setTimeout(() => {
+                renderVocabList(vocabDatabase); 
+            }, 10);
+        }
+    }
+
+    function showList() {
+        document.getElementById('detailView').classList.add('hidden');
+        document.getElementById('listView').classList.remove('hidden');
+        document.getElementById('detailContent').innerHTML = ''; 
+    }
+
+    // ==========================================
+    // VOCABULARY ENGINE (Lazy Loading)
+    // ==========================================
+    
+    function filterVocab() {
+        const query = document.getElementById('vocabSearch').value.toLowerCase();
+        const filtered = vocabDatabase.filter(v => 
+            v.w.toLowerCase().includes(query) || v.cn.includes(query)
+        );
+        renderVocabList(filtered);
+    }
+
     function renderVocabList(list) {
         const container = document.getElementById('vocab-container');
         const countDisplay = document.getElementById('countDisplay');
+        
         container.innerHTML = '';
         countDisplay.textContent = `${list.length} words`;
 
+        // Render visible items
         list.forEach(item => {
             const el = document.createElement('div');
             el.className = 'vocab-item';
-            // Note: We pass item.def (the manual definition) to the function
-            el.onclick = function() { toggleWordDetails(this, item.w, item.def); };
+            // We store the word in a data attribute to fetch later
+            el.dataset.word = item.w; 
+            el.onclick = function() { toggleWordDetails(this, item.w); };
             
             el.innerHTML = `
                 <div class="v-word">${item.w}</div>
                 <div class="v-cn">${item.cn}</div>
                 <div class="v-details" id="details-${item.w}">
-                    <div class="v-meta">Loading...</div>
+                    <div class="v-meta">Loading AI Definition...</div>
                 </div>
             `;
             container.appendChild(el);
         });
     }
+
+    async function toggleWordDetails(element, word) {
+        // Close if already open
+        if(element.classList.contains('expanded')) {
+            element.classList.remove('expanded');
+            return;
+        }
+
+        // Close all others
+        document.querySelectorAll('.vocab-item.expanded').forEach(el => el.classList.remove('expanded'));
+
+        // Open this one
+        element.classList.add('expanded');
+        
+        const detailsBox = document.getElementById(`details-${word}`);
+        
+        // If we already fetched it, don't fetch again
+        if(detailsBox.dataset.loaded === "true") return;
+
+        try {
+            const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+            const data = await response.json();
+
+            if(Array.isArray(data)) {
+                const entry = data[0];
+                const meaning = entry.meanings[0];
+                const def = meaning.definitions[0].definition;
+                const pos = meaning.partOfSpeech;
+                const synonyms = meaning.synonyms.slice(0, 4).join(", ");
+
+                detailsBox.innerHTML = `
+                    <div class="v-meta">${pos}</div>
+                    <div class="v-def">${def}</div>
+                    ${synonyms ? `<div class="v-syn">Synonyms: ${synonyms}</div>` : ''}
+                `;
+                detailsBox.dataset.loaded = "true";
+            } else {
+                detailsBox.innerHTML = `<div style="color:red">Definition not found.</div>`;
+            }
+        } catch(err) {
+            detailsBox.innerHTML = `<div style="color:red">Network error. Check internet.</div>`;
+        }
+    }
+
+    renderList();
+</script>
+
+</body>
+</html>
