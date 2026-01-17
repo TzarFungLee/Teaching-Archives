@@ -5,13 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teaching Archives</title>
     <style>
-        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#fef9f3 0%,#faf6f1 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
         body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
         .container { max-width: 900px; margin: 0 auto; }
-
-        .nav-bar { margin-bottom: 20px; }
-        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
-        .back-btn:hover { text-decoration: underline; }
 
         header { text-align: center; margin-bottom: 30px; }
         h1 { color: var(--primary); margin-bottom: 5px; }
@@ -27,8 +23,8 @@
 
         .resource-card {
             background: linear-gradient(180deg,#ffffff,#fbffff); padding: 18px; border-radius: 12px; border: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
-            cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease; text-decoration: none; color: inherit; display: block;
+            display: block; margin-bottom: 14px;
+            cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease; text-decoration: none; color: inherit;
             box-shadow: 0 8px 18px rgba(2,30,80,0.04);
         }
         .resource-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(2,30,80,0.08); }
@@ -36,204 +32,46 @@
         .tags-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; }
         .tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.2px; }
         .tag-papers { background: linear-gradient(90deg,#e6eefb,#eaf4ff); color: #042a66; border: 1px solid rgba(6,42,111,0.08); }
-        .tag-subject { background: #f7fafc; color: #475569; }
 
-        .subpage-content { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); min-height: 420px; }
-        .hidden { display: none !important; }
         .btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 9px 16px; border-radius: 8px; text-decoration: none; border: none; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(2,30,80,0.06); }
-
-        /* Writing Text Types */
-        .text-type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .text-type-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; }
-        .text-type-card:hover { border-color: var(--primary); background: #eff6ff; }
-        .text-type-card.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        .content-section { display: none; animation: fadeIn 0.3s; }
-        .content-section.show { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <header>
+        <h1>LTF Teaching Archives</h1>
+    </header>
 
-    <!-- MAIN LIST VIEW -->
-    <div id="listView">
-        <header>
-            <h1>LTF Teaching Archives</h1>
-        </header>
-
-        <div class="tabs">
-            <button class="tab-btn active" onclick="filterTab('All', this)">All</button>
-            <button class="tab-btn" onclick="filterTab('Grammar', this)">Grammar</button>
-            <button class="tab-btn" onclick="filterTab('Reading', this)">Reading</button>
-            <button class="tab-btn" onclick="filterTab('Writing', this)">Writing</button>
-            <button class="tab-btn" onclick="filterTab('Listening', this)">Listening</button>
-        </div>
-
-        <div class="search-wrapper">
-            <input type="text" id="search" placeholder="🔍 Search resources..." onkeyup="renderList()">
-        </div>
-
-        <div id="list" class="resource-list"></div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="filterTab('All', this)">All</button>
+        <button class="tab-btn" onclick="filterTab('Grammar', this)">Grammar</button>
+        <button class="tab-btn" onclick="filterTab('Reading', this)">Reading</button>
+        <button class="tab-btn" onclick="filterTab('Writing', this)">Writing</button>
+        <button class="tab-btn" onclick="filterTab('Listening', this)">Listening</button>
     </div>
 
-    <!-- RESOURCE PAGE VIEW -->
-    <div id="pageView" class="hidden">
-        <div class="nav-bar">
-            <button onclick="goBack()" class="back-btn">← Back to List</button>
-        </div>
-        <div id="pageContent" class="subpage-content"></div>
+    <div class="search-wrapper">
+        <input type="text" id="search" placeholder="🔍 Search resources..." onkeyup="renderList()">
     </div>
 
+    <div id="list" class="resource-list"></div>
 </div>
 
 <script>
-    // Only keep resources you want – vocab database removed
     const resources = [
         {
             id: 1,
-            title: "English Writing Text Types",
+            title: "Text Types",
             subject: "Writing",
             papers: ["Writing"],
-            htmlContent: `
-                <h2 style="margin-top:0">Writing Text Types Dashboard</h2>
-                <div class="text-type-grid">
-                    <div class="text-type-card active" onclick="switchTextType('arg', this)">⚖️ Argumentative</div>
-                    <div class="text-type-card" onclick="switchTextType('letter', this)">✉️ Letter to Editor</div>
-                    <div class="text-type-card" onclick="switchTextType('proposal', this)">📋 Proposal</div>
-                    <div class="text-type-card" onclick="switchTextType('report', this)">📊 Report</div>
-                    <div class="text-type-card" onclick="switchTextType('article', this)">📰 Article</div>
-                    <div class="text-type-card" onclick="switchTextType('speech', this)">🎤 Speech</div>
-                    <div class="text-type-card" onclick="switchTextType('story', this)">📖 Story</div>
-                    <div class="text-type-card" onclick="switchTextType('blog', this)">💻 Blog</div>
-                </div>
-
-                <div id="arg" class="content-section show">
-                    <h3>⚖️ Argumentative Essay</h3>
-                    <ul>
-                        <li>Clear thesis in introduction.</li>
-                        <li>2–3 body paragraphs with topic sentences and examples.</li>
-                        <li>Include at least one counter-argument + refutation.</li>
-                    </ul>
-                </div>
-
-                <div id="letter" class="content-section">
-                    <h3>✉️ Letter to the Editor</h3>
-                    <ul>
-                        <li>Start with “Dear Editor,” and a clear purpose sentence.</li>
-                        <li>Formal, polite but critical tone.</li>
-                        <li>Close with “Yours faithfully,” + full name.</li>
-                    </ul>
-                </div>
-
-                <div id="proposal" class="content-section">
-                    <h3>📋 Proposal</h3>
-                    <ul>
-                        <li>Sections: Purpose, Background, Suggestions, Expected Benefits.</li>
-                        <li>Use bullet points for suggestions.</li>
-                        <li>Emphasize feasibility and benefits to school / students.</li>
-                    </ul>
-                </div>
-
-                <div id="report" class="content-section">
-                    <h3>📊 Report</h3>
-                    <ul>
-                        <li>Headings: Introduction, Findings, Analysis, Recommendations.</li>
-                        <li>Formal, objective tone; often past tense.</li>
-                        <li>Use data or survey results if given.</li>
-                    </ul>
-                </div>
-
-                <div id="article" class="content-section">
-                    <h3>📰 Magazine / School Article</h3>
-                    <ul>
-                        <li>Catchy title and engaging hook in first paragraph.</li>
-                        <li>Semi-formal tone with clear paragraphs.</li>
-                        <li>End with a message, suggestion, or reflection.</li>
-                    </ul>
-                </div>
-
-                <div id="speech" class="content-section">
-                    <h3>🎤 Speech</h3>
-                    <ul>
-                        <li>Opening: greeting + purpose (“Good morning teachers and fellow students…”).</li>
-                        <li>Use rhetorical questions and direct address (“you / all of you”).</li>
-                        <li>Strong call to action in conclusion.</li>
-                    </ul>
-                </div>
-
-                <div id="story" class="content-section">
-                    <h3>📖 Short Story</h3>
-                    <ul>
-                        <li>Clear setting, characters, and problem.</li>
-                        <li>Use descriptive details (show, don’t tell).</li>
-                        <li>Finish with a resolution or twist ending.</li>
-                    </ul>
-                </div>
-
-                <div id="blog" class="content-section">
-                    <h3>💻 Blog Post</h3>
-                    <ul>
-                        <li>Chatty, personal tone; can use “I” and “you”.</li>
-                        <li>Share opinions, experiences, and questions to readers.</li>
-                        <li>End with a quick reflection or invitation to comment.</li>
-                    </ul>
-                </div>
-            `
+            file: "Text Types.html"
         },
         {
             id: 2,
             title: "Passive Voice",
             papers: ["Grammar"],
-            htmlContent: `
-                <h2 style="margin-top:0">Passive Voice Guide</h2>
-                
-                <h3>💡 Key Concepts</h3>
-                <ul>
-                    <li><strong>Active voice:</strong> Subject performs the action (The teacher explains the rule)</li>
-                    <li><strong>Passive voice:</strong> Subject receives the action (The rule is explained by the teacher)</li>
-                    <li><strong>When to use:</strong> Emphasize the action, unknown agent, or formal writing</li>
-                    <li><strong>Structure:</strong> Subject + BE verb + past participle + (by + agent)</li>
-                </ul>
-                
-                <h3>📖 Examples</h3>
-                <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
-                    <tr style="background: #eff6ff;">
-                        <th style="padding: 10px; border: 1px solid #e2e8f0; text-align: left;">Active Voice</th>
-                        <th style="padding: 10px; border: 1px solid #e2e8f0; text-align: left;">Passive Voice</th>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #e2e8f0;">She wrote the report</td>
-                        <td style="padding: 10px; border: 1px solid #e2e8f0;">The report was written by her</td>
-                    </tr>
-                    <tr style="background: #f8fafc;">
-                        <td style="padding: 10px; border: 1px solid #e2e8f0;">They completed the project</td>
-                        <td style="padding: 10px; border: 1px solid #e2e8f0;">The project was completed by them</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #e2e8f0;">The news shocked everyone</td>
-                        <td style="padding: 10px; border: 1px solid #e2e8f0;">Everyone was shocked by the news</td>
-                    </tr>
-                </table>
-
-                <h3>📊 Presentation Slides</h3>
-                <p>Replace the file ID below with your Google Drive PowerPoint ID:</p>
-                <iframe src="https://docs.google.com/presentation/d/YOUR_FILE_ID/embed" 
-                        width="100%" height="500" frameborder="0" allowfullscreen="true" 
-                        mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-                
-                <hr style="margin: 30px 0; border: none; border-top: 1px solid #e2e8f0;">
-                
-                <h3>📚 Resources</h3>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
-                    <a href="https://drive.google.com/uc?export=download&id=YOUR_PDF_FILE_ID" class="btn">📄 Download Study Guide</a>
-                    <a href="https://drive.google.com/uc?export=download&id=YOUR_WORKSHEET_ID" class="btn">✏️ Download Worksheet</a>
-                </div>
-                
-
-            `
+            file: "Passive Voice.html"
         }
     ];
 
@@ -266,11 +104,7 @@
         filtered.forEach(item => {
             const link = document.createElement('a');
             link.className = 'resource-card';
-            link.href = `?resource=${item.id}`;
-            link.onclick = (e) => {
-                e.preventDefault();
-                openResourcePage(item.id);
-            };
+            link.href = item.file;
             
             const papers = Array.isArray(item.papers) ? item.papers : [item.papers];
             const badges = papers.map(l => `<span class="tag tag-papers">${l}</span>`).join('');
@@ -285,44 +119,7 @@
         });
     }
 
-    function openResourcePage(id) {
-        const item = resources.find(r => r.id === id);
-        if (!item) return;
-
-        document.getElementById('listView').classList.add('hidden');
-        document.getElementById('pageView').classList.remove('hidden');
-        document.getElementById('pageContent').innerHTML = item.htmlContent;
-        window.scrollTo(0, 0);
-
-        // Attach the text type switcher after HTML is injected
-        window.switchTextType = function(typeId, btn) {
-            document.querySelectorAll('.text-type-card').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('show'));
-            const target = document.getElementById(typeId);
-            if (target) target.classList.add('show');
-        };
-    }
-
-    function goBack() {
-        document.getElementById('pageView').classList.add('hidden');
-        document.getElementById('listView').classList.remove('hidden');
-        document.getElementById('pageContent').innerHTML = '';
-        window.history.pushState({}, '', window.location.pathname);
-    }
-
-    // Check if page is loaded with a resource ID
-    function checkPageLoad() {
-        const params = new URLSearchParams(window.location.search);
-        const resourceId = params.get('resource');
-        
-        if (resourceId) {
-            openResourcePage(parseInt(resourceId));
-        }
-    }
-
     renderList();
-    checkPageLoad();
 </script>
 
 </body>
