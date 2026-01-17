@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Resources</title>
+    <style>
+        /* Keeping the clean style from before */
+        :root { --primary: #2563eb; --bg: #f8fafc; --surface: #ffffff; --text: #1e293b; --border: #e2e8f0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { color: var(--primary); margin-bottom: 10px; }
+        
+        /* Search Bar */
+        .search-wrapper { margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+
+        /* Card Layout for Mobile Friendliness */
+        .resource-list { display: grid; gap: 15px; }
+        
+        .resource-card {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .resource-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .info h3 { margin: 0 0 5px 0; font-size: 1.1rem; }
+        .meta { font-size: 0.85rem; color: #64748b; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; background: #e0e7ff; color: #3730a3; margin-right: 8px; }
+        .tag.Math { background: #dcfce7; color: #166534; }
+        .tag.English { background: #dbeafe; color: #1e40af; }
+
+        .download-btn {
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+        .download-btn:hover { opacity: 0.9; }
+
+        @media (max-width: 600px) {
+            .resource-card { flex-direction: column; align-items: flex-start; }
+            .download-btn { margin-left: 0; margin-top: 15px; width: 100%; text-align: center; box-sizing: border-box;}
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>📂 Course Materials</h1>
+        <div>Download your lesson slides below</div>
+    </header>
+
+    <div class="search-wrapper">
+        <input type="text" id="search" placeholder="🔍 Search for topic, level, or subject..." onkeyup="renderList()">
+    </div>
+
+    <div id="list" class="resource-list">
+        <!-- Javascript will put the items here -->
+    </div>
+</div>
+
+<script>
+    // ==========================================
+    // TEACHER: EDIT THIS LIST TO ADD FILES
+    // ==========================================
+    const resources = [
+        {
+            title: "Intro to Past Tense",
+            subject: "English",
+            level: "F.1",
+            link: "https://docs.google.com/presentation/d/xg7...", // Example Google Drive Link
+            notes: "Week 1 Grammar"
+        },
+        {
+            title: "Linear Equations",
+            subject: "Math",
+            level: "F.2",
+            link: "./files/math_w1.pptx", // Example: File stored inside the GitHub folder
+            notes: "Chapter 5"
+        },
+        {
+            title: "Essay Writing Structures",
+            subject: "English",
+            level: "F.4",
+            link: "#",
+            notes: "Argumentative essays"
+        }
+        // COPY AND PASTE THE BLOCK ABOVE TO ADD MORE ROWS
+    ];
+    // ==========================================
+
+    function renderList() {
+        const query = document.getElementById('search').value.toLowerCase();
+        const container = document.getElementById('list');
+        container.innerHTML = '';
+
+        const filtered = resources.filter(item => 
+            item.title.toLowerCase().includes(query) || 
+            item.subject.toLowerCase().includes(query) || 
+            item.level.toLowerCase().includes(query)
+        );
+
+        if(filtered.length === 0) {
+            container.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px;">No matching files found.</div>';
+            return;
+        }
+
+        filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'resource-card';
+            div.innerHTML = `
+                <div class="info">
+                    <h3>${item.title}</h3>
+                    <div class="meta">
+                        <span class="tag ${item.subject}">${item.subject}</span>
+                        <span>${item.level}</span> • <span>${item.notes}</span>
+                    </div>
+                </div>
+                <a href="${item.link}" target="_blank" class="download-btn">View File</a>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // Initial Load
+    renderList();
+</script>
+
+</body>
+</html>
