@@ -5,22 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Resources</title>
     <style>
-        /* [Previous CSS remains the same] */
         :root { --primary: #2563eb; --bg: #f8fafc; --surface: #ffffff; --text: #1e293b; --border: #e2e8f0; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 20px; line-height: 1.6; }
         .container { max-width: 900px; margin: 0 auto; }
         
+        /* Navigation */
         .nav-bar { margin-bottom: 20px; }
         .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
         
+        /* Headers */
         header { text-align: center; margin-bottom: 30px; }
         h1 { color: var(--primary); margin-bottom: 5px; }
 
+        /* TABS (Main Page) */
         .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .tab-btn { background: white; border: 1px solid var(--border); padding: 8px 24px; border-radius: 20px; cursor: pointer; font-weight: 500; color: #64748b; transition: all 0.2s; }
         .tab-btn:hover { background: #f1f5f9; }
         .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
+        /* Search & List */
         .search-wrapper { margin-bottom: 25px; }
         input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
         
@@ -31,16 +34,18 @@
         }
         .resource-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         
+        /* Tags */
         .tags-row { display: flex; gap: 6px; margin-bottom: 4px; }
         .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
         .tag-level { background: #e0e7ff; color: #3730a3; }
         .tag-subject { background: #f1f5f9; color: #475569; }
 
+        /* SUBPAGE GENERAL */
         .subpage-content { background: var(--surface); padding: 30px; border-radius: 8px; border: 1px solid var(--border); min-height: 400px;}
         .hidden { display: none !important; }
         .btn { background-color: var(--primary); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; border: none; font-size: 0.9rem; }
 
-        /* VOCAB STYLES */
+        /* --- VOCABULARY APP STYLES --- */
         .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
         
         .vocab-card {
@@ -48,18 +53,28 @@
             border-radius: 8px;
             padding: 15px;
             background: #fff;
-            position: relative;
+            transition: all 0.2s;
         }
-        .vocab-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
-        .vocab-word { color: var(--primary); font-size: 1.3rem; font-weight: 700; margin: 0; }
-        .vocab-cn { font-size: 1.1rem; color: #d946ef; font-weight: 600; } /* Pink for Chinese */
-        
-        .vocab-meta { font-size: 0.85rem; color: #64748b; margin-bottom: 8px; font-style: italic; }
-        .vocab-def { font-size: 0.95rem; margin-bottom: 10px; line-height: 1.4; color: #334155; }
+        .vocab-card h3 { margin: 0 0 5px 0; color: var(--primary); font-size: 1.2rem; }
+        .vocab-meta { font-size: 0.85rem; color: #64748b; margin-bottom: 10px; font-style: italic; }
+        .vocab-def { font-size: 0.95rem; margin-bottom: 10px; line-height: 1.4; }
         .vocab-synonyms { font-size: 0.85rem; color: #475569; background: #f1f5f9; padding: 8px; border-radius: 6px; }
         
-        .skeleton { height: 20px; background: #f1f5f9; margin-bottom: 8px; border-radius: 4px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        .translate-btn {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #2563eb;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid #2563eb;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .translate-btn:hover { background: #eff6ff; }
+        
+        /* Loading State */
+        .skeleton { height: 20px; background: #eee; margin-bottom: 8px; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -98,20 +113,11 @@
 
 <script>
     // ==========================================
-    // 1. TEACHER: EDIT VOCAB LIST HERE
-    // format: { w: "english_word", cn: "chinese_translation" }
+    // 1. TEACHER: LIST YOUR WORDS HERE
     // ==========================================
-    const vocabDatabase = [
-        { w: "abundant", cn: "豐富的" },
-        { w: "benevolent", cn: "仁慈的" },
-        { w: "candid", cn: "率直的" },
-        { w: "diligent", cn: "勤勉的" },
-        { w: "empathy", cn: "同理心" },
-        { w: "feasible", cn: "可行的" },
-        { w: "gratitude", cn: "感激" },
-        { w: "inevitable", cn: "不可避免的" },
-        { w: "optimistic", cn: "樂觀的" },
-        { w: "scrutinize", cn: "詳細檢查" }
+    const myVocabList = [
+        "abundant", "benevolent", "candid", "diligent", "empathy", 
+        "feasible", "gratitude", "hypothetical", "inevitable", "juxtapose"
     ];
 
     // ==========================================
@@ -119,29 +125,27 @@
     // ==========================================
     const resources = [
         {
-            id: 999, 
+            id: 999, // Unique ID for Vocab
             title: "Smart Vocabulary List (S4-S6)",
             subject: "English",
             level: ["S4", "S5", "DSE"],
-            notes: "Definitions + Chinese",
+            notes: "Auto-generated definitions",
             htmlContent: `
-                <div style="border-bottom:1px solid #e2e8f0; padding-bottom:15px; margin-bottom:20px">
-                    <h2 style="margin:0">DSE High Frequency Words</h2>
-                    <p style="margin:5px 0 0 0; color:#64748b">English definitions loaded automatically.</p>
-                </div>
+                <h2>DSE High Frequency Words</h2>
+                <p>These definitions are loaded live from the dictionary.</p>
                 <div id="vocab-container" class="vocab-grid">
                     <div style="text-align:center; width:100%; grid-column: 1/-1;">Loading words...</div>
                 </div>
             `
         },
-        // ... Other resources ...
+        // ... Your existing resources ...
         {
             id: 1,
             title: "English Writing Text Types", 
             subject: "English",
             level: ["S3", "DSE"],
             notes: "8 Main Genres",
-            htmlContent: `<h2>Writing Text Types</h2><p>Select a text type...</p>`
+            htmlContent: `<h2>Writing Text Types</h2><p>Select a text type...</p>` // (Simplified for brevity)
         }
     ];
 
@@ -201,7 +205,10 @@
         document.getElementById('detailContent').innerHTML = item.htmlContent;
         window.scrollTo(0,0);
 
-        if(id === 999) loadVocab();
+        // If this is the Vocab Page, trigger the AI loader
+        if(id === 999) {
+            loadVocab();
+        }
     }
 
     function showList() {
@@ -211,32 +218,21 @@
     }
 
     // ==========================================
-    // HYBRID DICTIONARY LOGIC
+    // DICTIONARY "AI" LOGIC
     // ==========================================
     async function loadVocab() {
         const container = document.getElementById('vocab-container');
-        container.innerHTML = ''; 
+        container.innerHTML = ''; // Clear loading text
 
-        for (const item of vocabDatabase) {
-            const word = item.w;
-            const chinese = item.cn;
-
-            // 1. Create card with Chinese ALREADY visible (Instant!)
+        for (const word of myVocabList) {
+            // Create a skeleton card first (UI trick for perceived speed)
             const card = document.createElement('div');
             card.className = 'vocab-card';
-            // We show the Chinese immediately, but put skeletons for English
-            card.innerHTML = `
-                <div class="vocab-header">
-                    <div class="vocab-word">${word}</div>
-                    <div class="vocab-cn">${chinese}</div>
-                </div>
-                <div class="skeleton" style="width:60%"></div>
-                <div class="skeleton"></div>
-            `;
+            card.innerHTML = `<h3>${word}</h3><div class="skeleton" style="width:60%"></div><div class="skeleton"></div>`;
             container.appendChild(card);
 
             try {
-                // 2. Fetch English details in background
+                // Fetch data from Free Dictionary API
                 const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
                 const data = await response.json();
 
@@ -245,31 +241,24 @@
                     const meaning = entry.meanings[0];
                     const def = meaning.definitions[0].definition;
                     const pos = meaning.partOfSpeech;
+                    // Get up to 3 synonyms
                     const synonyms = meaning.synonyms.slice(0, 3).join(", ") || "No direct synonyms";
 
-                    // 3. Update card with English data
+                    // Update the card with real data
                     card.innerHTML = `
-                        <div class="vocab-header">
-                            <div class="vocab-word">${word}</div>
-                            <div class="vocab-cn">${chinese}</div>
-                        </div>
+                        <h3>${word}</h3>
                         <div class="vocab-meta">${pos}</div>
                         <div class="vocab-def">${def}</div>
                         <div class="vocab-synonyms"><strong>Syn:</strong> ${synonyms}</div>
+                        <a href="https://translate.google.com/?sl=en&tl=zh-TW&text=${word}&op=translate" target="_blank" class="translate-btn">See Chinese Translation ↗</a>
                     `;
                 } else {
-                    // Keep Chinese, just show error for English
-                    card.innerHTML = `
-                         <div class="vocab-header">
-                            <div class="vocab-word">${word}</div>
-                            <div class="vocab-cn">${chinese}</div>
-                        </div>
-                        <div style="color:red; font-size:0.9rem">Eng definition not found.</div>
-                    `;
+                    card.innerHTML = `<h3>${word}</h3><div style="color:red">Definition not found.</div>`;
                 }
 
             } catch (err) {
                 console.error(err);
+                card.innerHTML = `<h3>${word}</h3><div style="color:red">Error loading.</div>`;
             }
         }
     }
