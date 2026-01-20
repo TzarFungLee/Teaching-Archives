@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Conditional</title>
+    <style>
+        /* HIGHLIGHTING SCHEME FOR SECOND CONDITIONAL TEACHING
+           Cyan (#a5f3fc): If clause / condition
+           Green (#bbf7d0): Past simple verbs in if clause
+           Yellow (#fef3c7): Main clause / result
+           Red (#fecaca): Would + base verb / modal verbs
+        */
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
+        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
+        .back-btn:hover { text-decoration: underline; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+        h2 { color: var(--primary); margin-top: 0; }
+        h3 { color: var(--primary); }
+
+        .content { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
+        th { background: #eff6ff; font-weight: 600; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        .btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 9px 16px; border-radius: 8px; text-decoration: none; border: none; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(2,30,80,0.06); display: inline-block; margin-right: 10px; }
+        .btn:hover { text-decoration: none; opacity: 0.9; }
+
+        .resources { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+
+        ul { line-height: 1.8; }
+        li { margin-bottom: 10px; }
+
+        hr { margin: 30px 0; border: none; border-top: 1px solid #e2e8f0; }
+
+        mark { background-color: #fef3c7; padding: 2px 6px; border-radius: 3px; }
+        mark.cyan { background-color: #a5f3fc; }
+        mark.green { background-color: #bbf7d0; }
+        mark.yellow { background-color: #fef3c7; }
+        mark.red { background-color: #fecaca; }
+    </style>
+</head>
+
+<style>
+  /* Disable text selection */
+  body {
+    user-select: none;
+  }
+</style>
+
+<script>
+  // Disable right-click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Disable common copy shortcuts (Ctrl+C / Cmd+C)
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+      e.preventDefault();
+      alert('Copying is disabled on this page.');
+    }
+  });
+
+  // Optional: Disable text drag
+  document.addEventListener('dragstart', event => event.preventDefault());
+</script>
+
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="back-btn">← Back to the Archives</a>
+    </div>
+
+    <header>
+        <h1>Second Conditional</h1>
+    </header>
+
+    <div class="content">
+
+        <h3>💡 Key Concepts</h3>
+        <ul>
+            <li><strong>When to use:</strong> Talk about unreal, imaginary, or unlikely situations in the present or future</li>
+            <li><strong>Structure:</strong> <mark class="cyan">If + past simple</mark>, <mark class="red">would + base verb</mark></li>
+            <ul>
+                <li><strong>If clause (condition):</strong> Uses <mark class="green">past simple</mark> to describe an imaginary or unlikely situation</li>
+                <li><strong>Main clause (result):</strong> Uses <mark class="red">would + base verb</mark> to describe the imaginary result</li>
+                <li><strong>Example:</strong> <mark class="cyan">If I <mark class="green">had</mark> a million dollars</mark>, <mark class="yellow">I <mark class="red">would travel</mark> the world</mark>.</li>
+            </ul>
+            <li><strong>Reminders:</strong> 
+                <ul>
+                    <li>Uses past simple, but talks about present/future (not past!)</li>
+                    <li>Use "were" for all persons with the verb "to be" (I/he/she/it were)</li>
+                    <li>Use a comma when the if-clause comes first</li>
+                    <li>Can use other modals (could, might) instead of "would"</li>
+                </ul>
+            </li>
+        </ul>
+
+        <hr>
+
+        <h3>📋 Formation Rules</h3>
+        <table>
+            <tr>
+                <th>Clause Type</th>
+                <th>Structure</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>If Clause</strong></td>
+                <td>If + subject + past simple</td>
+                <td><mark class="cyan">If I <mark class="green">won</mark> the lottery</mark></td>
+            </tr>
+            <tr>
+                <td><strong>Main Clause</strong></td>
+                <td>subject + would + base verb</td>
+                <td><mark class="yellow">I <mark class="red">would buy</mark> a house</mark></td>
+            </tr>
+            <tr>
+                <td><strong>Complete Sentence</strong></td>
+                <td>If + past simple, would + base verb</td>
+                <td><mark class="cyan">If I <mark class="green">won</mark> the lottery</mark>, <mark class="yellow">I <mark class="red">would buy</mark> a house</mark>.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>🔑 Special Rule: "Were" for All Persons</h3>
+        <p>When using the verb "to be" in the if-clause, we use <strong>"were"</strong> for all subjects (I, you, he, she, it, we, they).</p>
+        <ul>
+            <li><mark class="cyan">If I <mark class="green">were</mark> rich</mark>, <mark class="yellow">I <mark class="red">would help</mark> more people</mark>. ✅</li>
+            <li><del>If I was rich...</del> ❌ (informal/less formal)</li>
+            <li><mark class="cyan">If he <mark class="green">were</mark> taller</mark>, <mark class="yellow">he <mark class="red">could play</mark> basketball</mark>. ✅</li>
+            <li><mark class="cyan">If she <mark class="green">were</mark> here</mark>, <mark class="yellow">she <mark class="red">would know</mark> what to do</mark>. ✅</li>
+        </ul>
+
+        <hr>
+
+        <h3>📖 Examples by Category</h3>
+
+        <h4>Imaginary Situations (Present/Future)</h4>
+        <ul>
+            <li><mark class="cyan">If I <mark class="green">had</mark> more time</mark>, <mark class="yellow">I <mark class="red">would learn</mark> to play guitar</mark>.</li>
+            <li><mark class="cyan">If we <mark class="green">lived</mark> near the beach</mark>, <mark class="yellow">we <mark class="red">would swim</mark> every day</mark>.</li>
+            <li><mark class="cyan">If she <mark class="green">spoke</mark> French</mark>, <mark class="yellow">she <mark class="red">would move</mark> to Paris</mark>.</li>
+        </ul>
+
+        <h4>Unlikely Situations</h4>
+        <ul>
+            <li><mark class="cyan">If I <mark class="green">met</mark> the president</mark>, <mark class="yellow">I <mark class="red">would ask</mark> him many questions</mark>.</li>
+            <li><mark class="cyan">If aliens <mark class="green">visited</mark> Earth</mark>, <mark class="yellow">it <mark class="red">would be</mark> amazing</mark>.</li>
+            <li><mark class="cyan">If I <mark class="green">found</mark> a treasure</mark>, <mark class="yellow">I <mark class="red">would share</mark> it with my family</mark>.</li>
+        </ul>
+
+        <h4>Hypothetical Advice</h4>
+        <ul>
+            <li><mark class="cyan">If I <mark class="green">were</mark> you</mark>, <mark class="yellow">I <mark class="red">would apologize</mark></mark>.</li>
+            <li><mark class="cyan">If I <mark class="green">were</mark> in your position</mark>, <mark class="yellow">I <mark class="red">would think</mark> carefully</mark>.</li>
+            <li><mark class="cyan">If I <mark class="green">were</mark> her</mark>, <mark class="yellow">I <mark class="red">would take</mark> the job</mark>.</li>
+        </ul>
+
+        <h4>Dreams and Wishes</h4>
+        <ul>
+            <li><mark class="cyan">If I <mark class="green">could fly</mark></mark>, <mark class="yellow">I <mark class="red">would visit</mark> every country</mark>.</li>
+            <li><mark class="cyan">If life <mark class="green">were</mark> a movie</mark>, <mark class="yellow">I <mark class="red">would be</mark> the hero</mark>.</li>
+            <li><mark class="cyan">If I <mark class="green">didn't have to work</mark></mark>, <mark class="yellow">I <mark class="red">would travel</mark> all year</mark>.</li>
+        </ul>
+
+        <hr>
+
+        <h3>🔄 Using Other Modal Verbs</h3>
+        <table>
+            <tr>
+                <th>Modal Verb</th>
+                <th>Meaning</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>could</strong></td>
+                <td>ability/possibility</td>
+                <td><mark class="cyan">If I <mark class="green">had</mark> a car</mark>, <mark class="yellow">I <mark class="red">could drive</mark> to work</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>might</strong></td>
+                <td>possibility (less certain)</td>
+                <td><mark class="cyan">If it <mark class="green">were</mark> cheaper</mark>, <mark class="yellow">I <mark class="red">might buy</mark> it</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>should</strong></td>
+                <td>expectation</td>
+                <td><mark class="cyan">If he <mark class="green">studied</mark> harder</mark>, <mark class="yellow">he <mark class="red">should pass</mark> easily</mark>.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>🆚 First vs Second Conditional</h3>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Structure</th>
+                <th>Meaning</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>First</strong></td>
+                <td>If + present simple, will + base verb</td>
+                <td>Real & possible</td>
+                <td><mark class="cyan">If it <mark class="green">rains</mark></mark>, <mark class="yellow">I <mark class="red">will stay</mark> home</mark>. (likely to happen)</td>
+            </tr>
+            <tr>
+                <td><strong>Second</strong></td>
+                <td>If + past simple, would + base verb</td>
+                <td>Unreal & imaginary</td>
+                <td><mark class="cyan">If it <mark class="green">rained</mark> chocolate</mark>, <mark class="yellow">I <mark class="red">would be</mark> happy</mark>. (impossible)</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>📖 Practice</h3>
+        <table>
+            <tr>
+                <th>Situation</th>
+                <th>Second Conditional Sentence</th>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Complete Sentences (Example)</strong></td>
+            </tr>
+            <tr>
+                <td>Have more money / buy a car</td>
+                <td><mark class="cyan">If I <mark class="green">had</mark> more money</mark>, <mark class="yellow">I <mark class="red">would buy</mark> a car</mark>.</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Your Turn - Fill in the Blanks</strong></td>
+            </tr>
+            <tr>
+                <td>Be rich / travel the world</td>
+                <td><mark class="cyan">If I __________ rich</mark>, <mark class="yellow">I __________ the world</mark>.</td>
+            </tr>
+            <tr>
+                <td>Speak Spanish / move to Spain</td>
+                <td><mark class="cyan">If she __________ Spanish</mark>, <mark class="yellow">she __________ to Spain</mark>.</td>
+            </tr>
+            <tr>
+                <td>Have wings / fly everywhere</td>
+                <td><mark class="cyan">If I __________ wings</mark>, <mark class="yellow">I __________ everywhere</mark>.</td>
+            </tr>
+            <tr>
+                <td>Live in the city / not need a car</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>Know the answer / tell you</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Using "Were" for All Persons</strong></td>
+            </tr>
+            <tr>
+                <td>I / be you / study harder</td>
+                <td><mark class="cyan">If I <mark class="green">were</mark> you</mark>, <mark class="yellow">I <mark class="red">would study</mark> harder</mark>.</td>
+            </tr>
+            <tr>
+                <td>He / be taller / play basketball</td>
+                <td><mark class="cyan">If he __________ taller</mark>, <mark class="yellow">he __________ basketball</mark>.</td>
+            </tr>
+            <tr>
+                <td>She / be here / help us</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>It / be sunny / go to the park</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Using Different Modal Verbs</strong></td>
+            </tr>
+            <tr>
+                <td>Have a bike / ride to school (could)</td>
+                <td><mark class="cyan">If I <mark class="green">had</mark> a bike</mark>, <mark class="yellow">I <mark class="red">could ride</mark> to school</mark>.</td>
+            </tr>
+            <tr>
+                <td>Be cheaper / buy it (might)</td>
+                <td><mark class="cyan">If it __________ cheaper</mark>, <mark class="yellow">I __________ it</mark>.</td>
+            </tr>
+            <tr>
+                <td>Win the lottery / quit my job (might)</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>Have superpowers / help people (could)</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Reversed Order (Main clause first)</strong></td>
+            </tr>
+            <tr>
+                <td>Help you / know how</td>
+                <td><mark class="yellow">I <mark class="red">would help</mark> you</mark> <mark class="cyan">if I <mark class="green">knew</mark> how</mark>.</td>
+            </tr>
+            <tr>
+                <td>Be happier / have more free time</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>Move abroad / speak the language</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>⚠️ Common Mistakes</h3>
+        <table>
+            <tr>
+                <th>❌ Incorrect</th>
+                <th>✅ Correct</th>
+            </tr>
+            <tr>
+                <td>If I <mark class="red">would have</mark> money, I would buy a car.</td>
+                <td><mark class="cyan">If I <mark class="green">had</mark> money</mark>, <mark class="yellow">I <mark class="red">would buy</mark> a car</mark>.</td>
+            </tr>
+            <tr>
+                <td>If I <mark class="green">have</mark> time, I would help. (First conditional structure)</td>
+                <td><mark class="cyan">If I <mark class="green">had</mark> time</mark>, <mark class="yellow">I <mark class="red">would help</mark></mark>.</td>
+            </tr>
+            <tr>
+                <td>If I <mark class="green">was</mark> rich, I would travel.</td>
+                <td><mark class="cyan">If I <mark class="green">were</mark> rich</mark>, <mark class="yellow">I <mark class="red">would travel</mark></mark>.</td>
+            </tr>
+            <tr>
+                <td>If she studied harder, she <span style="text-decoration: line-through;">will pass</span>.</td>
+                <td><mark class="cyan">If she <mark class="green">studied</mark> harder</mark>, <mark class="yellow">she <mark class="red">would pass</mark></mark>.</td>
+            </tr>
+            <tr>
+                <td>If I <mark class="green">win</mark> the lottery, I would quit. (First conditional tense)</td>
+                <td><mark class="cyan">If I <mark class="green">won</mark> the lottery</mark>, <mark class="yellow">I <mark class="red">would quit</mark></mark>.</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
