@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Types</title>
     <style>
+        /* HIGHLIGHTING SCHEME FOR TEXT TYPES TEACHING
+           Cyan (#a5f3fc): Text type name / format element
+           Green (#bbf7d0): Key characteristics / structural components
+           Yellow (#fef3c7): Examples / content requirements
+           Red (#fecaca): Do's and Don'ts / important rules
+        */
         :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
         body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
         .container { max-width: 900px; margin: 0 auto; }
@@ -20,8 +26,8 @@
 
         .content { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
 
-        .text-type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .text-type-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .text-type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-bottom: 30px; }
+        .text-type-card { background: white; border: 2px solid var(--border); border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 0.95rem; }
         .text-type-card:hover { border-color: var(--primary); background: #eff6ff; }
         .text-type-card.active { background: var(--primary); color: white; border-color: var(--primary); }
 
@@ -30,10 +36,45 @@
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
+        th { background: #eff6ff; font-weight: 600; }
+        tr:nth-child(even) { background: #f8fafc; }
+
         ul { line-height: 1.8; }
         li { margin-bottom: 10px; }
+
+        hr { margin: 30px 0; border: none; border-top: 1px solid #e2e8f0; }
+
+        mark { background-color: #fef3c7; padding: 2px 6px; border-radius: 3px; }
+        mark.cyan { background-color: #a5f3fc; }
+        mark.green { background-color: #bbf7d0; }
+        mark.yellow { background-color: #fef3c7; }
+        mark.red { background-color: #fecaca; }
+
+        .structure-box { background: #f0f9ff; border-left: 4px solid #0b3d91; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        .example-box { background: #edf2f7; border-left: 4px solid #48bb78; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        .tips-box { background: #fff5f5; border-left: 4px solid #f56565; padding: 15px; margin: 15px 0; border-radius: 5px; }
+
+        .format-item { margin: 15px 0; padding: 12px; background: #f8fafc; border-radius: 5px; }
     </style>
 </head>
+
+<style>
+  body { user-select: none; }
+</style>
+
+<script>
+  document.addEventListener('contextmenu', event => event.preventDefault());
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+      e.preventDefault();
+      alert('Copying is disabled on this page.');
+    }
+  });
+  document.addEventListener('dragstart', event => event.preventDefault());
+</script>
+
 <body>
 
 <div class="container">
@@ -43,10 +84,11 @@
 
     <header>
         <h1>English Writing Text Types</h1>
+        <p style="color: #5b6b70; margin-top: 5px;">Comprehensive Format Guides for 8 Essential Text Types</p>
     </header>
 
     <div class="content">
-        <h2>Writing Text Types Dashboard</h2>
+        <h2>Select a Text Type</h2>
         <div class="text-type-grid">
             <div class="text-type-card active" onclick="switchTextType('arg', this)">⚖️ Argumentative</div>
             <div class="text-type-card" onclick="switchTextType('letter', this)">✉️ Letter to Editor</div>
@@ -58,77 +100,549 @@
             <div class="text-type-card" onclick="switchTextType('blog', this)">💻 Blog</div>
         </div>
 
+        <!-- ARGUMENTATIVE ESSAY -->
         <div id="arg" class="content-section show">
-            <h3>⚖️ Argumentative Essay</h3>
+            <h3>💡 ⚖️ Argumentative Essay</h3>
+            
+            <h4>Purpose</h4>
+            <p>To present a <mark class="cyan">clear position on a debatable issue</mark> and support it with <mark class="green">logical reasoning and credible evidence</mark>.</p>
+
+            <h4>Structure & Format</h4>
+            <div class="structure-box">
+                <strong>1. Introduction (1 paragraph)</strong>
+                <ul>
+                    <li><mark class="cyan">Hook</mark>: Start with an engaging question, fact, or statement</li>
+                    <li><mark class="cyan">Background</mark>: Brief context about the issue</li>
+                    <li><mark class="cyan">Thesis Statement</mark>: <mark class="green">Your clear position</mark> on the topic ("This essay argues that...")</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>2. Body Paragraphs (2-3 paragraphs)</strong>
+                <ul>
+                    <li><mark class="cyan">Topic Sentence</mark>: State <mark class="green">one main supporting argument</mark></li>
+                    <li><mark class="cyan">Evidence</mark>: Use <mark class="yellow">facts, statistics, examples, or quotes</mark></li>
+                    <li><mark class="cyan">Explanation</mark>: Show how evidence <mark class="green">supports your argument</mark></li>
+                    <li><mark class="cyan">Link</mark>: Connect back to your thesis</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>3. Counter-Argument & Refutation (1 paragraph)</strong>
+                <ul>
+                    <li><mark class="cyan">Acknowledge</mark>: "Some argue that..." or "It could be said that..."</li>
+                    <li><mark class="cyan">Refute</mark>: Explain <mark class="red">why this opposing view is weak or incorrect</mark></li>
+                    <li><mark class="cyan">Strengthen Position</mark>: Show how <mark class="green">your argument is stronger</mark></li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>4. Conclusion (1 paragraph)</strong>
+                <ul>
+                    <li><mark class="cyan">Restate Thesis</mark>: Remind readers of your <mark class="green">main position</mark></li>
+                    <li><mark class="cyan">Summary</mark>: Briefly recap your <mark class="yellow">key arguments</mark></li>
+                    <li><mark class="cyan">Call to Action</mark>: End with impact ("Therefore, we must...")</li>
+                </ul>
+            </div>
+
+            <h4>Key Features</h4>
             <ul>
-                <li>Clear thesis in introduction.</li>
-                <li>2–3 body paragraphs with topic sentences and examples.</li>
-                <li>Include at least one counter-argument + refutation.</li>
+                <li><mark class="green">Tone</mark>: Formal, logical, and confident</li>
+                <li><mark class="green">Tense</mark>: Present tense for statements; past tense for examples</li>
+                <li><mark class="green">Language</mark>: "In my view," "Research shows," "This evidence demonstrates," "It is clear that..."</li>
+                <li><mark class="red">AVOID</mark>: Emotional language, "I think," generalizations without evidence</li>
             </ul>
+
+            <div class="example-box">
+                <h4>Example Opening (Thesis)</h4>
+                <p><mark class="yellow">"Schools should require uniforms because they reduce bullying, improve focus, and prepare students for professional environments."</mark></p>
+            </div>
         </div>
 
+        <!-- LETTER TO EDITOR -->
         <div id="letter" class="content-section">
-            <h3>✉️ Letter to the Editor</h3>
+            <h3>💡 ✉️ Letter to the Editor</h3>
+            
+            <h4>Purpose</h4>
+            <p>To <mark class="cyan">respond to a recent news article or issue</mark> and <mark class="green">persuade readers and editors</mark> to consider your viewpoint.</p>
+
+            <h4>Structure & Format</h4>
+            <div class="structure-box">
+                <strong>Formatting (Physical Layout)</strong>
+                <ul>
+                    <li>Your address (top left)</li>
+                    <li>Date</li>
+                    <li>Publication address</li>
+                    <li><mark class="cyan">Salutation</mark>: "Dear Editor," or "Dear Sir/Madam,"</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>1. Opening (1 paragraph)</strong>
+                <ul>
+                    <li><mark class="cyan">Reference</mark>: "In response to the article 'Your Article Title' published on [date]..."</li>
+                    <li><mark class="cyan">Your Position</mark>: State your <mark class="green">clear stance</mark> immediately</li>
+                    <li><mark class="cyan">Tone</mark>: Polite but <mark class="green">firm and direct</mark></li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>2. Body (1-2 paragraphs)</strong>
+                <ul>
+                    <li><mark class="cyan">Reasoning</mark>: Explain <mark class="yellow">why you agree or disagree</mark></li>
+                    <li><mark class="cyan">Evidence</mark>: Support with <mark class="yellow">relevant facts or personal experience</mark></li>
+                    <li><mark class="cyan">Impact</mark>: Show how <mark class="green">this issue affects the community</mark></li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>3. Closing (1 paragraph)</strong>
+                <ul>
+                    <li><mark class="cyan">Action</mark>: Call for readers/officials to "Consider," "Act on," or "Reconsider"</li>
+                    <li><mark class="cyan">Sign-off</mark>: "Yours faithfully," or "Sincerely,"</li>
+                    <li><mark class="cyan">Full Name, Address, Contact</mark> (Required by publications)</li>
+                </ul>
+            </div>
+
+            <h4>Key Features</h4>
             <ul>
-                <li>Start with "Dear Editor," and a clear purpose sentence.</li>
-                <li>Formal, polite but critical tone.</li>
-                <li>Close with "Yours faithfully," + full name.</li>
+                <li><mark class="green">Tone</mark>: Formal, polite, but persuasive and critical</li>
+                <li><mark class="green">Length</mark>: 150-250 words (concise!)</li>
+                <li><mark class="green">Language</mark>: "I am writing to express concern," "I strongly believe," "It is imperative that..."</li>
+                <li><mark class="red">AVOID</mark>: Emotional outbursts, insults, offensive language</li>
             </ul>
+
+            <div class="example-box">
+                <h4>Example Structure</h4>
+                <p><strong>Opening:</strong> "In response to 'Schools Cut Sports Programs' (March 15), I must express my disagreement with this policy."</p>
+                <p><strong>Body:</strong> "Physical activity is essential for student health and mental wellness. Studies show..."</p>
+                <p><strong>Closing:</strong> "I urge the school board to reconsider this decision."</p>
+            </div>
         </div>
 
+        <!-- PROPOSAL -->
         <div id="proposal" class="content-section">
-            <h3>📋 Proposal</h3>
+            <h3>💡 📋 Proposal</h3>
+            
+            <h4>Purpose</h4>
+            <p>To <mark class="cyan">suggest a solution to a problem</mark> and convince decision-makers that your <mark class="green">idea is practical and beneficial</mark>.</p>
+
+            <h4>Structure & Format</h4>
+            <div class="structure-box">
+                <strong>1. Title & Introduction</strong>
+                <ul>
+                    <li><mark class="cyan">Title</mark>: Clear and specific (e.g., "Proposal: Implementing a School Recycling Program")</li>
+                    <li><mark class="cyan">Opening</mark>: <mark class="green">Identify the problem</mark> concisely</li>
+                    <li><mark class="cyan">Purpose Statement</mark>: "This proposal suggests..."</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>2. Background/Rationale</strong>
+                <ul>
+                    <li><mark class="cyan">Why it matters</mark>: Explain the <mark class="yellow">importance and impact of solving this problem</mark></li>
+                    <li><mark class="cyan">Current situation</mark>: Describe what's happening now</li>
+                    <li><mark class="cyan">Need</mark>: Why <mark class="green">change is necessary</mark></li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>3. Proposed Solutions (Main Section)</strong>
+                <ul>
+                    <li><mark class="cyan">Use bullet points</mark> for clarity</li>
+                    <li><mark class="cyan">Be specific</mark>: "We will establish 5 recycling stations in key locations"</li>
+                    <li><mark class="cyan">Include timeline</mark>: "Implementation begins in April"</li>
+                    <li><mark class="cyan">Assign responsibility</mark>: "The Environmental Club will manage..."</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>4. Expected Benefits</strong>
+                <ul>
+                    <li><mark class="cyan">Advantages</mark>: List <mark class="yellow">positive outcomes (environmental, financial, educational)</mark></li>
+                    <li><mark class="cyan">Feasibility</mark>: Explain why <mark class="green">this solution is realistic</mark></li>
+                    <li><mark class="cyan">Measurable results</mark>: "We expect to reduce waste by 40%"</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>5. Cost & Resources</strong>
+                <ul>
+                    <li><mark class="cyan">Budget breakdown</mark>: Specific costs if required</li>
+                    <li><mark class="cyan">Resources needed</mark>: Materials, personnel, funding</li>
+                    <li><mark class="cyan">Funding sources</mark>: How to pay for it</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>6. Conclusion</strong>
+                <ul>
+                    <li><mark class="cyan">Summary</mark>: Reiterate <mark class="green">the problem and solution</mark></li>
+                    <li><mark class="cyan">Call to Action</mark>: "We respectfully request approval to proceed..."</li>
+                </ul>
+            </div>
+
+            <h4>Key Features</h4>
             <ul>
-                <li>Sections: Purpose, Background, Suggestions, Expected Benefits.</li>
-                <li>Use bullet points for suggestions.</li>
-                <li>Emphasize feasibility and benefits to school / students.</li>
+                <li><mark class="green">Tone</mark>: Professional, optimistic, persuasive</li>
+                <li><mark class="green">Format</mark>: Headings, bullet points, organized layout</li>
+                <li><mark class="green">Audience</mark>: Decision-makers (principal, committee, etc.)</li>
+                <li><mark class="red">AVOID</mark>: Vague ideas, unrealistic timelines, ignoring costs</li>
             </ul>
         </div>
 
+        <!-- REPORT -->
         <div id="report" class="content-section">
-            <h3>📊 Report</h3>
+            <h3>💡 📊 Report</h3>
+            
+            <h4>Purpose</h4>
+            <p>To <mark class="cyan">present factual information</mark> about a topic or investigation in a <mark class="green">clear, objective, and organized manner</mark>.</p>
+
+            <h4>Structure & Format</h4>
+            <div class="structure-box">
+                <strong>1. Title Page / Introduction</strong>
+                <ul>
+                    <li><mark class="cyan">Title</mark>: Descriptive title</li>
+                    <li><mark class="cyan">Author, Date, Subject</mark></li>
+                    <li><mark class="cyan">Purpose</mark>: Why this report was written</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>2. Introduction (Overview)</strong>
+                <ul>
+                    <li><mark class="cyan">Background</mark>: Context and relevance</li>
+                    <li><mark class="cyan">Objectives</mark>: What <mark class="green">the report aims to discover or explain</mark></li>
+                    <li><mark class="cyan">Methods</mark>: How <mark class="yellow">information was gathered</mark> (survey, observation, research)</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>3. Findings / Results</strong>
+                <ul>
+                    <li><mark class="cyan">Organized by topic or theme</mark></li>
+                    <li><mark class="cyan">Use data, statistics, tables, charts</mark></li>
+                    <li><mark class="cyan">Present facts objectively</mark> - no opinion here</li>
+                    <li><mark class="green">Example:</mark> "78% of students prefer online homework submissions."</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>4. Analysis / Discussion</strong>
+                <ul>
+                    <li><mark class="cyan">Interpret the findings</mark></li>
+                    <li><mark class="cyan">What do the results mean?</mark></li>
+                    <li><mark class="cyan">Identify patterns</mark> and <mark class="yellow">connections between data</mark></li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>5. Recommendations</strong>
+                <ul>
+                    <li><mark class="cyan">Suggest actions based on findings</mark></li>
+                    <li><mark class="cyan">Prioritize recommendations</mark></li>
+                    <li><mark class="green">Example:</mark> "The school should consider implementing digital submission for assignments."</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>6. Conclusion</strong>
+                <ul>
+                    <li><mark class="cyan">Summarize key findings</mark></li>
+                    <li><mark class="cyan">Restate importance</mark></li>
+                    <li><mark class="cyan">No new information</mark></li>
+                </ul>
+            </div>
+
+            <h4>Key Features</h4>
             <ul>
-                <li>Headings: Introduction, Findings, Analysis, Recommendations.</li>
-                <li>Formal, objective tone; often past tense.</li>
-                <li>Use data or survey results if given.</li>
+                <li><mark class="green">Tone</mark>: Formal, objective, impartial</li>
+                <li><mark class="green">Tense</mark>: Past tense for methods and findings; present for analysis</li>
+                <li><mark class="green">Language</mark>: "The data shows," "The survey revealed," "It was found that..."</li>
+                <li><mark class="red">AVOID</mark>: Personal opinions in findings, emotional language, bias</li>
             </ul>
+
+            <div class="example-box">
+                <h4>Sample Format</h4>
+                <p><strong>Title:</strong> "Student Satisfaction Survey Report - January 2026"</p>
+                <p><strong>Findings:</strong> "Out of 150 students surveyed, 65% reported satisfaction with school meals."</p>
+                <p><strong>Recommendation:</strong> "Expand vegetarian menu options to improve overall satisfaction."</p>
+            </div>
         </div>
 
+        <!-- ARTICLE -->
         <div id="article" class="content-section">
-            <h3>📰 Magazine / School Article</h3>
+            <h3>💡 📰 Magazine / School Article</h3>
+            
+            <h4>Purpose</h4>
+            <p>To <mark class="cyan">inform and engage readers</mark> about a topic of interest in an <mark class="green">accessible and entertaining way</mark>.</p>
+
+            <h4>Structure & Format</h4>
+            <div class="structure-box">
+                <strong>1. Headline (Title)</strong>
+                <ul>
+                    <li><mark class="cyan">Catchy and attention-grabbing</mark></li>
+                    <li><mark class="cyan">Clearly indicates the topic</mark></li>
+                    <li><mark class="green">Examples:</mark> "Teens Master Online Learning," "New Café Opens on School Grounds"
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>2. Introduction (Hook Paragraph)</strong>
+                <ul>
+                    <li><mark class="cyan">Opening sentence</mark>: Start with <mark class="yellow">a question, quote, or surprising fact</mark></li>
+                    <li><mark class="cyan">Engage immediately</mark>: Make readers want to continue</li>
+                    <li><mark class="cyan">Introduce topic</mark>: Briefly explain what the article is about</li>
+                    <li><mark class="green">Example:</mark> "Did you know the school library is about to go digital?"</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>3. Body (Main Content - 2-3 paragraphs)</strong>
+                <ul>
+                    <li><mark class="cyan">Clear paragraphs</mark>: Each covers one main idea</li>
+                    <li><mark class="cyan">Information + Interest</mark>: Balance facts with <mark class="yellow">engaging details and quotes</mark></li>
+                    <li><mark class="cyan">Subheadings</mark> (optional): Break up text</li>
+                    <li><mark class="cyan">Visual elements</mark>: Mention images, statistics, quotes from people</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>4. Conclusion</strong>
+                <ul>
+                    <li><mark class="cyan">Reflect on importance</mark>: Why <mark class="green">this topic matters</mark></li>
+                    <li><mark class="cyan">Call to action/invitation</mark>: "Join us for..." or "Think about..."</li>
+                    <li><mark class="cyan">Leave readers thinking</mark>: End with impact</li>
+                </ul>
+            </div>
+
+            <h4>Key Features</h4>
             <ul>
-                <li>Catchy title and engaging hook in first paragraph.</li>
-                <li>Semi-formal tone with clear paragraphs.</li>
-                <li>End with a message, suggestion, or reflection.</li>
+                <li><mark class="green">Tone</mark>: Semi-formal, engaging, accessible</li>
+                <li><mark class="green">Audience</mark>: General readers (not experts)</li>
+                <li><mark class="green">Language</mark>: Clear vocabulary, varied sentence length</li>
+                <li><mark class="green">Style</mark>: Can include quotes and personal touches</li>
+                <li><mark class="red">AVOID</mark>: Overly academic language, too formal or too casual</li>
             </ul>
+
+            <div class="example-box">
+                <h4>Example Opening</h4>
+                <p><strong>Headline:</strong> "Environmental Club's Tree-Planting Initiative Bears Fruit"</p>
+                <p><strong>Hook:</strong> "Fifty native trees now stand on school grounds—all planted by student volunteers in just three months. Here's how they did it."</p>
+            </div>
         </div>
 
+        <!-- SPEECH -->
         <div id="speech" class="content-section">
-            <h3>🎤 Speech</h3>
+            <h3>💡 🎤 Speech</h3>
+            
+            <h4>Purpose</h4>
+            <p>To <mark class="cyan">deliver a message to an audience</mark> that is <mark class="green">engaging, memorable, and designed to be spoken aloud</mark>.</p>
+
+            <h4>Structure & Format</h4>
+            <div class="structure-box">
+                <strong>1. Opening / Greeting</strong>
+                <ul>
+                    <li><mark class="cyan">Address your audience</mark>: "Good morning, teachers and fellow students..."</li>
+                    <li><mark class="cyan">Thank them</mark>: Show respect for their time</li>
+                    <li><mark class="cyan">Introduce your topic</mark>: State <mark class="green">what you'll discuss</mark></li>
+                    <li><mark class="green">Examples:</mark> "Today I want to talk about...," "I'm here to inspire you to..."
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>2. Main Body (2-3 sections)</strong>
+                <ul>
+                    <li><mark class="cyan">Use signposting</mark>: "First," "Secondly," "Finally" to guide listeners</li>
+                    <li><mark class="cyan">Tell stories or examples</mark>: Speeches are <mark class="yellow">more engaging with personal anecdotes</mark></li>
+                    <li><mark class="cyan">Use rhetorical devices</mark>: Repetition, rhetorical questions ("Have you ever...?"), direct address ("You can...")</li>
+                    <li><mark class="cyan">Keep it conversational</mark>: As if <mark class="green">speaking to friends, not reading</mark></li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>3. Rhetorical Techniques (Essential for Speeches!)</strong>
+                <ul>
+                    <li><mark class="cyan">Rhetorical Questions</mark>: "Did you know...? How many of you...?" (Make audience think)</li>
+                    <li><mark class="cyan">Repetition</mark>: Repeat key phrases for emphasis</li>
+                    <li><mark class="cyan">Direct Address</mark>: Use "you" and "we" to connect with audience</li>
+                    <li><mark class="cyan">Inclusive Language</mark>: "Together we can..." instead of "You should..."</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>4. Conclusion & Call to Action</strong>
+                <ul>
+                    <li><mark class="cyan">Powerful closing</mark>: Restate your <mark class="green">main message</mark></li>
+                    <li><mark class="cyan">Inspire action</mark>: "I urge you to..." or "Let's all commit to..."</li>
+                    <li><mark class="cyan">End memorably</mark>: Strong final sentence</li>
+                    <li><mark class="cyan">Thank audience</mark>: Show gratitude</li>
+                </ul>
+            </div>
+
+            <h4>Key Features</h4>
             <ul>
-                <li>Opening: greeting + purpose ("Good morning teachers and fellow students…").</li>
-                <li>Use rhetorical questions and direct address ("you / all of you").</li>
-                <li>Strong call to action in conclusion.</li>
+                <li><mark class="green">Tone</mark>: Confident, conversational, inspiring</li>
+                <li><mark class="green">Language</mark>: Short sentences (easier to say aloud), active verbs</li>
+                <li><mark class="green">Format</mark>: Write for speaking - use contractions ("don't," "it's")</li>
+                <li><mark class="green">Devices</mark>: Rhetorical questions, repetition, direct address</li>
+                <li><mark class="red">AVOID</mark>: Long, complicated sentences; reading directly from paper; filler words ("um," "like")</li>
             </ul>
+
+            <div class="example-box">
+                <h4>Example Opening</h4>
+                <p><strong>"Good morning everyone. I'm [Name], and today I want to talk to you about something I'm passionate about: mental health. How many of you have felt stressed or overwhelmed? If you're raising your hand right now—you're not alone. And that's exactly why we need to talk about this."</strong></p>
+            </div>
         </div>
 
+        <!-- SHORT STORY -->
         <div id="story" class="content-section">
-            <h3>📖 Short Story</h3>
+            <h3>💡 📖 Short Story</h3>
+            
+            <h4>Purpose</h4>
+            <p>To <mark class="cyan">entertain and engage readers</mark> through <mark class="green">narrative, character development, and vivid descriptions</mark>.</p>
+
+            <h4>Structure & Format</h4>
+            <div class="structure-box">
+                <strong>1. Introduction - Setting & Characters</strong>
+                <ul>
+                    <li><mark class="cyan">Establish setting</mark>: When? Where? <mark class="yellow">Use descriptive language</mark></li>
+                    <li><mark class="cyan">Introduce main character</mark>: Who? What do they want?</li>
+                    <li><mark class="cyan">Create mood/atmosphere</mark>: Is it happy, tense, mysterious?</li>
+                    <li><mark class="green">Example:</mark> "The abandoned house loomed in the fog, its broken windows like hollow eyes watching the street below."</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>2. Rising Action - Build Tension</strong>
+                <ul>
+                    <li><mark class="cyan">Introduce the problem/conflict</mark>: What challenge does the character face?</li>
+                    <li><mark class="cyan">Show don't tell</mark>: Describe actions and dialogue, not emotions</li>
+                    <li><mark class="cyan">Add obstacles</mark>: Make the problem more complicated</li>
+                    <li><mark class="red">DON'T write:</mark> "She was afraid." <mark class="green">DO write:</mark> "Her hands trembled as she opened the door."</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>3. Climax - Peak of Action</strong>
+                <ul>
+                    <li><mark class="cyan">The turning point</mark>: The <mark class="yellow">moment of highest tension or decision</mark></li>
+                    <li><mark class="cyan">Character makes crucial choice</mark></li>
+                    <li><mark class="cyan">Action unfolds quickly</mark></li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>4. Falling Action & Resolution</strong>
+                <ul>
+                    <li><mark class="cyan">Consequences unfold</mark>: What happens after the climax?</li>
+                    <li><mark class="cyan">Resolve the conflict</mark>: Problem is solved or accepted</li>
+                    <li><mark class="cyan">End clearly</mark>: Wrap up loose ends</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>5. Conclusion - Ending</strong>
+                <ul>
+                    <li><mark class="cyan">Satisfying or thought-provoking</mark></li>
+                    <li><mark class="cyan">Can be happy, sad, ironic, or surprising</mark></li>
+                    <li><mark class="cyan">Often includes a twist or lesson</mark></li>
+                    <li><mark class="green">Options:</mark> Resolution, twist ending, cliffhanger, or reflection</li>
+                </ul>
+            </div>
+
+            <h4>Key Features</h4>
             <ul>
-                <li>Clear setting, characters, and problem.</li>
-                <li>Use descriptive details (show, don't tell).</li>
-                <li>Finish with a resolution or twist ending.</li>
+                <li><mark class="green">Tone</mark>: Varies by genre (thriller, romance, fantasy, mystery)</li>
+                <li><mark class="green">Tense</mark>: Usually past tense ("She walked," "He said")</li>
+                <li><mark class="green">Perspective</mark>: First person (I) or third person (she/he)</li>
+                <li><mark class="green">Description</mark>: Use the five senses - sight, sound, smell, taste, touch</li>
+                <li><mark class="red">AVOID</mark>: Tell don't show; one-dimensional characters; explaining every emotion</li>
             </ul>
+
+            <div class="example-box">
+                <h4>Example (Show Don't Tell)</h4>
+                <p><strong>❌ WEAK:</strong> "Marco was worried about the test and didn't study."</p>
+                <p><strong>✅ STRONG:</strong> "Marco stared at the blank test paper, his mind a fog. The equations might as well have been written in a foreign language. He should have opened his textbook last night instead of scrolling through videos."</p>
+            </div>
         </div>
 
+        <!-- BLOG POST -->
         <div id="blog" class="content-section">
-            <h3>💻 Blog Post</h3>
+            <h3>💡 💻 Blog Post</h3>
+            
+            <h4>Purpose</h4>
+            <p>To <mark class="cyan">share personal thoughts, experiences, and opinions</mark> in a <mark class="green">conversational and approachable way</mark>.</p>
+
+            <h4>Structure & Format</h4>
+            <div class="structure-box">
+                <strong>1. Catchy Title</strong>
+                <ul>
+                    <li><mark class="cyan">Engaging and personal</mark></li>
+                    <li><mark class="cyan">Can use questions or humor</mark></li>
+                    <li><mark class="green">Examples:</mark> "Why I Stopped Procrastinating (And Why You Should Too)," "5 Things No One Tells You About High School"
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>2. Introduction</strong>
+                <ul>
+                    <li><mark class="cyan">Personal touch</mark>: Start with <mark class="yellow">a personal story, question, or observation</mark></li>
+                    <li><mark class="cyan">Why you're writing</mark>: Share your motivation</li>
+                    <li><mark class="cyan">Conversational tone</mark>: Talk <mark class="green">directly to the reader (use "you")</mark></li>
+                    <li><mark class="green">Example:</mark> "So I had this moment last week where I realized..."</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>3. Main Content (Multiple Sections)</strong>
+                <ul>
+                    <li><mark class="cyan">Short paragraphs</mark>: Easier to read on screen</li>
+                    <li><mark class="cyan">Personal experiences</mark>: Share <mark class="yellow">stories and examples</mark></li>
+                    <li><mark class="cyan">Use subheadings</mark>: Organize your thoughts</li>
+                    <li><mark class="cyan">Include humor or emotion</mark>: <mark class="green">Connect with readers</mark></li>
+                    <li><mark class="cyan">Mix fact and opinion</mark>: Research + personal take</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>4. Voice & Language</strong>
+                <ul>
+                    <li><mark class="cyan">Use "I" and "you"</mark>: Personal pronouns are expected</li>
+                    <li><mark class="cyan">Contractions</mark>: "don't," "it's" (informal style)</li>
+                    <li><mark class="cyan">Conversational phrases</mark>: "Anyway," "To be honest," "Here's the thing..."</li>
+                    <li><mark class="cyan">Emoji or formatting</mark> (optional): Break up text visually</li>
+                </ul>
+            </div>
+
+            <div class="structure-box">
+                <strong>5. Conclusion & Call to Action</strong>
+                <ul>
+                    <li><mark class="cyan">Wrap up your thoughts</mark></li>
+                    <li><mark class="cyan">Invite engagement</mark>: "What do you think?" or "Drop a comment below!"</li>
+                    <li><mark class="cyan">Question for readers</mark>: Encourage discussion</li>
+                    <li><mark class="green">Example:</mark> "I'd love to hear about your experience with this. Comment below—I'll definitely respond!"</li>
+                </ul>
+            </div>
+
+            <h4>Key Features</h4>
             <ul>
-                <li>Chatty, personal tone; can use "I" and "you".</li>
-                <li>Share opinions, experiences, and questions to readers.</li>
-                <li>End with a quick reflection or invitation to comment.</li>
+                <li><mark class="green">Tone</mark>: Casual, personal, friendly</li>
+                <li><mark class="green">Audience</mark>: Readers interested in your perspective</li>
+                <li><mark class="green">Structure</mark>: Flexible - can be list-based, narrative, or reflective</li>
+                <li><mark class="green">Engagement</mark>: Comment prompts, questions, personal connection</li>
+                <li><mark class="red">AVOID</mark>: Overly formal language; hiding your opinion; ignoring reader interaction</li>
             </ul>
+
+            <div class="example-box">
+                <h4>Example Structure</h4>
+                <p><strong>Title:</strong> "The Day I Realized Failure Isn't the End"</p>
+                <p><strong>Opening:</strong> "So I didn't get into my first-choice college. Yeah, that sentence took me three days to write without getting emotional."</p>
+                <p><strong>Body:</strong> Share personal experience, reflection, lessons learned</p>
+                <p><strong>Closing:</strong> "If you're reading this and feeling disappointed about something—you're not alone. And it's not the end. What's your story? Tell me in the comments!"</p>
+            </div>
         </div>
+
     </div>
 </div>
 
