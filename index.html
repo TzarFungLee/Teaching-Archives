@@ -101,14 +101,18 @@
         renderList();
     }
 
-    function renderList() {
+        function renderList() {
         const query = document.getElementById('search').value.toLowerCase();
         const container = document.getElementById('list');
         container.innerHTML = '';
 
         const filtered = resources.filter(item => {
             const papers = Array.isArray(item.papers) ? item.papers : [item.papers];
-            const matchSearch = item.title.toLowerCase().includes(query) || item.subject.toLowerCase().includes(query);
+            
+            // FIX: Removed 'item.subject' and added check for 'papers'
+            const matchSearch = item.title.toLowerCase().includes(query) || 
+                              papers.some(p => p.toLowerCase().includes(query));
+            
             const matchTab = currentTab === 'All' || papers.includes(currentTab);
             return matchSearch && matchTab;
         });
@@ -135,6 +139,7 @@
             container.appendChild(link);
         });
     }
+
 
     renderList();
 </script>
