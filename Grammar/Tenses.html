@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Tenses</title>
+    <style>
+        /* HIGHLIGHTING SCHEME FOR TENSE TEACHING
+           Cyan (#a5f3fc): Subject
+           Red (#fecaca): Verb form
+           Yellow (#fef3c7): Object/Complement
+           Green (#bbf7d0): Time markers/adverbs
+        */
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
+        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
+        .back-btn:hover { text-decoration: underline; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+        p { color: #5b6b70; margin-top: 5px; text-align: center; }
+
+        .content { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+
+        .tense-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
+            gap: 12px; 
+            margin-bottom: 30px; 
+        }
+        
+        .tense-card { 
+            background: white; 
+            border: 2px solid var(--border); 
+            border-radius: 8px; 
+            padding: 14px 10px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            line-height: 1.3; 
+            min-height: 65px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .tense-card:hover { 
+            border-color: var(--primary); 
+            background: #eff6ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(11, 61, 145, 0.1);
+        }
+        
+        .tense-card.active { 
+            background: var(--primary); 
+            color: white; 
+            border-color: var(--primary);
+            box-shadow: 0 6px 12px rgba(11, 61, 145, 0.2);
+        }
+
+        .content-section { display: none; animation: fadeIn 0.3s; }
+        .content-section.show { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
+        th { background: #eff6ff; font-weight: 600; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        ul { line-height: 1.8; }
+        li { margin-bottom: 10px; }
+
+        hr { margin: 30px 0; border: none; border-top: 1px solid #e2e8f0; }
+
+        mark { background-color: #fef3c7; padding: 2px 6px; border-radius: 3px; }
+        mark.cyan { background-color: #a5f3fc; }
+        mark.green { background-color: #bbf7d0; }
+        mark.yellow { background-color: #fef3c7; }
+        mark.red { background-color: #fecaca; }
+
+        .pdf-embed {
+            position: relative; 
+            width: 100%; 
+            padding-bottom: 56.25%; 
+            height: 0; 
+            overflow: hidden; 
+            background: #f1f5f9; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 400px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<style>
+  /* Disable text selection */
+  body {
+    user-select: none;
+  }
+</style>
+
+<script>
+  // Disable right-click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Disable common copy shortcuts (Ctrl+C / Cmd+C)
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+      e.preventDefault();
+      alert('Copying is disabled on this page.');
+    }
+  });
+
+  // Optional: Disable text drag
+  document.addEventListener('dragstart', event => event.preventDefault());
+</script>
+
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="back-btn">← Back to the Archives</a>
+    </div>
+
+    <header>
+        <h1>English Grammar Tenses</h1>
+        <p>Master the 5 essential English tenses with guides and practice</p>
+    </header>
+
+    <div class="content">
+        <h2>Select a Tense</h2>
+        <div class="tense-grid">
+            <div class="tense-card active" onclick="switchTense('present', this)">☀️ Simple Present</div>
+            <div class="tense-card" onclick="switchTense('past', this)">🕰️ Simple Past</div>
+            <div class="tense-card" onclick="switchTense('future', this)">🚀 Simple Future</div>
+            <div class="tense-card" onclick="switchTense('pres-cont', this)">⏳ Present Continuous</div>
+            <div class="tense-card" onclick="switchTense('past-cont', this)">⏮️ Past Continuous</div>
+        </div>
+
+        <!-- SIMPLE PRESENT TENSE -->
+        <div id="present" class="content-section show">
+            <h3>💡 Simple Present Tense</h3>
+            
+            <ul>
+                <li><strong>When to use:</strong> Habits, routines, general truths, permanent situations, scheduled events</li>
+                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">verb (base form / +s for 3rd person singular)</mark> + <mark class="yellow">object/complement</mark></li>
+                <li><strong>Examples:</strong>
+                    <ul>
+                        <li><mark class="cyan">I</mark> <mark class="red">study</mark> <mark class="yellow">English</mark> <mark class="green">every day</mark>.</li>
+                        <li><mark class="cyan">She</mark> <mark class="red">works</mark> <mark class="yellow">at a hospital</mark>.</li>
+                        <li><mark class="cyan">The sun</mark> <mark class="red">rises</mark> <mark class="yellow">in the east</mark>.</li>
+                    </ul>
+                </li>
+                <li><strong>Time markers:</strong> <mark class="green">always, usually, often, sometimes, never, every day/week/month, on Mondays</mark></li>
+            </ul>
+
+            <hr>
+            <h3>📊 Teaching Slides</h3>
+            <div class="pdf-embed">
+                <iframe src="https://drive.google.com/file/d/YOUR_FILE_ID_HERE/preview" 
+                  frameborder="0" 
+                  allowfullscreen="true" 
+                  style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                </iframe>
+            </div>
+
+            <hr>
+            <h3>📖 Practice</h3>
+            <table>
+                <tr>
+                    <th>Exercise Type</th>
+                    <th>Practice Sentence</th>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Affirmative Sentences</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">drink</mark> <mark class="yellow">coffee</mark> <mark class="green">every morning</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">She</mark> <mark class="red">__________ (go)</mark> <mark class="yellow">to school</mark> <mark class="green">by bus</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">They</mark> <mark class="red">__________ (play)</mark> <mark class="yellow">soccer</mark> <mark class="green">on weekends</mark>.</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Negative Sentences</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">do not (don't) like</mark> <mark class="yellow">spicy food</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">He</mark> <mark class="red">__________ (not/watch)</mark> <mark class="yellow">TV</mark> <mark class="green">at night</mark>.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SIMPLE PAST TENSE -->
+        <div id="past" class="content-section">
+            <h3>💡 Simple Past Tense</h3>
+            
+            <ul>
+                <li><strong>When to use:</strong> Completed actions in the past, past habits, historical events</li>
+                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">verb (past form / -ed or irregular)</mark> + <mark class="yellow">object/complement</mark></li>
+                <li><strong>Examples:</strong>
+                    <ul>
+                        <li><mark class="cyan">I</mark> <mark class="red">visited</mark> <mark class="yellow">London</mark> <mark class="green">last year</mark>.</li>
+                        <li><mark class="cyan">She</mark> <mark class="red">wrote</mark> <mark class="yellow">a letter</mark> <mark class="green">yesterday</mark>.</li>
+                        <li><mark class="cyan">They</mark> <mark class="red">lived</mark> <mark class="yellow">in Japan</mark> <mark class="green">in 2010</mark>.</li>
+                    </ul>
+                </li>
+                <li><strong>Time markers:</strong> <mark class="green">yesterday, last (week/month/year), ago, in (year), when I was young</mark></li>
+            </ul>
+
+            <hr>
+            <h3>📊 Teaching Slides</h3>
+            <div class="pdf-embed">
+                <iframe src="https://drive.google.com/file/d/YOUR_FILE_ID_HERE/preview" 
+                  frameborder="0" 
+                  allowfullscreen="true" 
+                  style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                </iframe>
+            </div>
+
+            <hr>
+            <h3>📖 Practice</h3>
+            <table>
+                <tr>
+                    <th>Exercise Type</th>
+                    <th>Practice Sentence</th>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Regular Verbs (+ ed)</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">watched</mark> <mark class="yellow">a movie</mark> <mark class="green">last night</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">She</mark> <mark class="red">__________ (cook)</mark> <mark class="yellow">dinner</mark> <mark class="green">two hours ago</mark>.</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Irregular Verbs</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">He</mark> <mark class="red">went</mark> <mark class="yellow">to Paris</mark> <mark class="green">in 2019</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">__________ (buy)</mark> <mark class="yellow">a new phone</mark> <mark class="green">yesterday</mark>.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SIMPLE FUTURE TENSE -->
+        <div id="future" class="content-section">
+            <h3>💡 Simple Future Tense</h3>
+            
+            <ul>
+                <li><strong>When to use:</strong> Future plans, predictions, promises, spontaneous decisions</li>
+                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">will + base verb</mark> + <mark class="yellow">object/complement</mark></li>
+                <li><strong>Alternative:</strong> <mark class="cyan">Subject</mark> + <mark class="red">be going to + base verb</mark> (for planned actions)</li>
+                <li><strong>Examples:</strong>
+                    <ul>
+                        <li><mark class="cyan">I</mark> <mark class="red">will travel</mark> <mark class="yellow">to Japan</mark> <mark class="green">next year</mark>.</li>
+                        <li><mark class="cyan">She</mark> <mark class="red">is going to study</mark> <mark class="yellow">medicine</mark>.</li>
+                        <li><mark class="cyan">They</mark> <mark class="red">will arrive</mark> <mark class="green">tomorrow</mark>.</li>
+                    </ul>
+                </li>
+                <li><strong>Time markers:</strong> <mark class="green">tomorrow, next (week/month/year), soon, in the future, later</mark></li>
+            </ul>
+
+            <hr>
+            <h3>📊 Teaching Slides</h3>
+            <div class="pdf-embed">
+                <iframe src="https://drive.google.com/file/d/YOUR_FILE_ID_HERE/preview" 
+                  frameborder="0" 
+                  allowfullscreen="true" 
+                  style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                </iframe>
+            </div>
+
+            <hr>
+            <h3>📖 Practice</h3>
+            <table>
+                <tr>
+                    <th>Exercise Type</th>
+                    <th>Practice Sentence</th>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Using 'will'</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">will call</mark> <mark class="yellow">you</mark> <mark class="green">later</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">She</mark> <mark class="red">__________ (help)</mark> <mark class="yellow">us</mark> <mark class="green">tomorrow</mark>.</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Using 'be going to'</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">am going to visit</mark> <mark class="yellow">my grandparents</mark> <mark class="green">this weekend</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">He</mark> <mark class="red">__________ (buy)</mark> <mark class="yellow">a new car</mark> <mark class="green">next month</mark>.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- PRESENT CONTINUOUS TENSE -->
+        <div id="pres-cont" class="content-section">
+            <h3>💡 Present Continuous Tense</h3>
+            
+            <ul>
+                <li><strong>When to use:</strong> Actions happening now, temporary situations, future arrangements</li>
+                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">am/is/are + verb-ing</mark> + <mark class="yellow">object/complement</mark></li>
+                <li><strong>Examples:</strong>
+                    <ul>
+                        <li><mark class="cyan">I</mark> <mark class="red">am studying</mark> <mark class="yellow">English</mark> <mark class="green">right now</mark>.</li>
+                        <li><mark class="cyan">She</mark> <mark class="red">is working</mark> <mark class="yellow">on a project</mark>.</li>
+                        <li><mark class="cyan">They</mark> <mark class="red">are playing</mark> <mark class="yellow">soccer</mark> <mark class="green">at the moment</mark>.</li>
+                    </ul>
+                </li>
+                <li><strong>Spelling rules:</strong> drop final 'e' (make→making), double consonant (run→running), change 'ie' to 'y' (lie→lying)</li>
+                <li><strong>Time markers:</strong> <mark class="green">now, right now, at the moment, currently, today, this week</mark></li>
+            </ul>
+
+            <hr>
+            <h3>📊 Teaching Slides</h3>
+            <div class="pdf-embed">
+                <iframe src="https://drive.google.com/file/d/YOUR_FILE_ID_HERE/preview" 
+                  frameborder="0" 
+                  allowfullscreen="true" 
+                  style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                </iframe>
+            </div>
+
+            <hr>
+            <h3>📖 Practice</h3>
+            <table>
+                <tr>
+                    <th>Exercise Type</th>
+                    <th>Practice Sentence</th>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Affirmative Sentences</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">am reading</mark> <mark class="yellow">a book</mark> <mark class="green">right now</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">She</mark> <mark class="red">__________ (cook)</mark> <mark class="yellow">dinner</mark> <mark class="green">at the moment</mark>.</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Spelling Changes</strong></td>
+                </tr>
+                <tr>
+                    <td>Drop 'e'</td>
+                    <td><mark class="cyan">He</mark> <mark class="red">is making</mark> <mark class="yellow">breakfast</mark>. (make → making)</td>
+                </tr>
+                <tr>
+                    <td>Double consonant</td>
+                    <td><mark class="cyan">She</mark> <mark class="red">is running</mark> <mark class="yellow">in the park</mark>. (run → running)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- PAST CONTINUOUS TENSE -->
+        <div id="past-cont" class="content-section">
+            <h3>💡 Past Continuous Tense</h3>
+            
+            <ul>
+                <li><strong>When to use:</strong> Actions in progress at a specific time in the past, interrupted actions, parallel actions</li>
+                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">was/were + verb-ing</mark> + <mark class="yellow">object/complement</mark></li>
+                <li><strong>Examples:</strong>
+                    <ul>
+                        <li><mark class="cyan">I</mark> <mark class="red">was studying</mark> <mark class="green">at 8pm last night</mark>.</li>
+                        <li><mark class="cyan">She</mark> <mark class="red">was reading</mark> <mark class="yellow">a book</mark> when <mark class="cyan">I</mark> called.</li>
+                        <li><mark class="cyan">They</mark> <mark class="red">were playing</mark> <mark class="yellow">soccer</mark> while <mark class="cyan">we</mark> <mark class="red">were watching</mark>.</li>
+                    </ul>
+                </li>
+                <li><strong>Common with:</strong> when (for interruption) and while (for parallel actions)</li>
+                <li><strong>Time markers:</strong> <mark class="green">at (time) yesterday, while, when, as, all day/night/morning</mark></li>
+            </ul>
+
+            <hr>
+            <h3>📊 Teaching Slides</h3>
+            <div class="pdf-embed">
+                <iframe src="https://drive.google.com/file/d/YOUR_FILE_ID_HERE/preview" 
+                  frameborder="0" 
+                  allowfullscreen="true" 
+                  style="position:absolute; top:0; left:0; width:100%; height:100%;">
+                </iframe>
+            </div>
+
+            <hr>
+            <h3>📖 Practice</h3>
+            <table>
+                <tr>
+                    <th>Exercise Type</th>
+                    <th>Practice Sentence</th>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Basic Affirmative</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">was sleeping</mark> <mark class="green">at midnight</mark>.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">She</mark> <mark class="red">__________ (cook)</mark> <mark class="yellow">dinner</mark> <mark class="green">at 6pm yesterday</mark>.</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Interrupted Actions (with 'when')</strong></td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td><mark class="cyan">I</mark> <mark class="red">was walking</mark> <mark class="yellow">home</mark> when <mark class="cyan">it</mark> started to rain.</td>
+                </tr>
+                <tr>
+                    <td>Fill in the blank</td>
+                    <td><mark class="cyan">She</mark> <mark class="red">__________ (study)</mark> when <mark class="cyan">her friend</mark> called.</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function switchTense(tenseId, btn) {
+        // Remove active class from all buttons and content sections
+        document.querySelectorAll('.tense-card').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('show'));
+        
+        // Add active class to clicked button and target content section
+        btn.classList.add('active');
+        const target = document.getElementById(tenseId);
+        if (target) target.classList.add('show');
+    }
+</script>
+
+</body>
+</html>
