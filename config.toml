@@ -1,0 +1,6 @@
+base_url = "https://teaching-archives.pages.dev"
+title = "LTF Teaching Archives"
+description = "A teaching archive for grammar, reading, and writing."
+
+[markdown]
+highlight_code = true
