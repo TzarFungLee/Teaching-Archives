@@ -41,11 +41,34 @@
         .resource-card p { margin: 0; color: #5b6b70; font-size: 1rem; }
 
         .no-results { text-align: center; padding: 60px 20px; color: #94a3b8; font-size: 1.1rem; }
+        
+        /* Password Protection Styles */
+        #password-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+        #password-box { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 400px; width: 90%; text-align: center; }
+        #password-box h2 { margin: 0 0 10px 0; color: #1e293b; font-size: 1.8rem; }
+        #password-box p { color: #64748b; margin-bottom: 25px; }
+        #password-input { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; box-sizing: border-box; margin-bottom: 15px; }
+        #password-input:focus { border-color: #667eea; outline: none; }
+        #password-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+        #password-btn:hover { transform: translateY(-2px); }
+        #password-error { color: #dc2626; margin-top: 15px; font-size: 0.9rem; display: none; }
+        .content-hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<!-- Password Protection -->
+<div id="password-overlay">
+    <div id="password-box">
+        <h2>🔒 Protected Content</h2>
+        <p>Please enter the password to access the teaching archives</p>
+        <input type="password" id="password-input" placeholder="Enter password" onkeypress="if(event.key==='Enter') checkPassword()">
+        <button id="password-btn" onclick="checkPassword()">Unlock</button>
+        <div id="password-error">Incorrect password. Please try again.</div>
+    </div>
+</div>
+
+<div class="container content-hidden">
     <header>
         <h1>📚 LTF Teaching Archives</h1>
     </header>
@@ -66,10 +89,32 @@
 </div>
 
 <script>
+    // Password Protection
+    const CORRECT_PASSWORD = 'i will cry if you do not pass'; // Change this to your desired password
+    
+    function checkPassword() {
+        const input = document.getElementById('password-input').value;
+        if (input === CORRECT_PASSWORD) {
+            document.getElementById('password-overlay').style.display = 'none';
+            document.querySelector('.container').classList.remove('content-hidden');
+            sessionStorage.setItem('authenticated', 'true');
+        } else {
+            document.getElementById('password-error').style.display = 'block';
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-input').focus();
+        }
+    }
+    
+    // Check if already authenticated in this session
+    if (sessionStorage.getItem('authenticated') === 'true') {
+        document.getElementById('password-overlay').style.display = 'none';
+        document.querySelector('.container').classList.remove('content-hidden');
+    }
+    
     const resources = [
         {
             id: 1,
-            title: "Text Types - Writing Formats",
+            title: "Paper 2 - Writing Formats",
             category: "Writing",
             file: "Writing/Text Types.html"
         },
