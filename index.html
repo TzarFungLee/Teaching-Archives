@@ -70,14 +70,12 @@
         {
             id: 1,
             title: "Text Types - Writing Formats",
-            description: "Learn different ways to write in English: argumentative essays, letters, proposals, reports, articles, speeches, stories, and blogs.",
             category: "Writing",
             file: "Writing/Text Types.html"
         },
         {
             id: 2,
             title: "First Conditional - IF Sentences",
-            description: "Learn to make sentences with IF. Used for things that might happen in the future.",
             category: "Grammar",
             Grade: "S2",
             file: "Grammar/First Conditional.html"
@@ -85,31 +83,27 @@
         {
             id: 3,
             title: "Second Conditional - Imaginary IF",
-            description: "Learn to imagine situations that are not real. Use IF + past tense.",
             Grade: "S2",
             category: "Grammar",
             file: "Grammar/Second Conditional.html"
         },
         {
             id: 4,
-            title: "Passive Voice - Object Focus",
-            description: "Learn to write sentences about actions when you do not know or do not care who did the action.",
+            title: "Passive Voice",
             Grade: ["S2", "S3"],
             category: "Grammar",
             file: "Grammar/Passive Voice.html"
         },
         {
             id: 5,
-            title: "Pronouns Table - Who, What, Where",
-            description: "Quick reference table for pronouns like I, you, he, she, it, we, they and how to use them.",
+            title: "Pronouns Table",
             Grade: ["S1", "S2", "S3"],
             category: "Grammar",
             file: "Grammar/Pronoun Table.html"
         },
         {
             id: 6,
-            title: "English Tenses - All Times",
-            description: "Complete guide to present, past, and future tenses with simple explanations.",
+            title: "Tenses",
             Grade: ["S1", "S2", "S3"],            
             category: "Grammar",
             file: "Grammar/Tenses.html"
@@ -117,7 +111,6 @@
         {
             id: 7,
             title: "So, So That, and So As To",
-            description: "Learn to express purpose, reason, and result using 'so', 'so that', and 'so as to'. Understand when to use each structure.",
             category: "Grammar",
             Grade: ["S2", "S3"],
             file: "Grammar/So That So As To.html"
@@ -125,51 +118,92 @@
         {
             id: 8,
             title: "Defining and Non-Defining Relative Clauses",
-            description: "Master relative clauses with who, which, that, where, and when. Learn the difference between essential and extra information.",
             category: "Grammar",
             Grade: ["S2", "S3"],
             file: "Grammar/Defining Non-Defining Relative Clauses.html"
         },
         {
             id: 9,
-            title: "HKDSE Listening - Test Strategies",
-            description: "Tips and tricks for the HKDSE Listening Paper (Paper 1). Learn prediction techniques, note-taking strategies, and how to handle different accents.",
-            category: "Listening",
-            file: "Listening/Listening Strategies.html"
+            title: "Unless",
+            category: "Grammar",
+            Grade: "S3",
+            file: "Grammar/Unless.html"
         },
         {
             id: 10,
-            title: "HKDSE Listening - Key Vocabulary",
-            description: "Common words and phrases used in HKDSE Listening tests. Build your vocabulary bank to improve listening comprehension.",
-            category: "Listening",
-            file: "Listening/Listening Vocabulary.html"
+            title: "Comparative and Superlative Adjectives",
+            category: "Grammar",
+            Grade: "S2",
+            file: "Grammar/Comparative and Superlative Adjectives.html"
         },
         {
             id: 11,
-            title: "HKDSE Listening - Understanding Different Accents",
-            description: "Learn to understand different English accents (British, American, Australian). Practice recognizing common pronunciation patterns.",
-            category: "Listening",
-            file: "Listening/Accents.html"
+            title: "Connectives: Because, Since, So",
+            category: "Grammar",
+            Grade: "S2",
+            file: "Grammar/Connectives Because Since So.html"
         },
         {
             id: 12,
-            title: "HKDSE Reading - Tips & Strategies",
-            description: "Master skimming and scanning techniques, and learn effective time management strategies for Paper 2. Complete guide to finishing all 3 passages in 75 minutes.",
-            category: "Reading",
-            file: "Reading/Tips.html"
+            title: "Connectives: So, Therefore, As a result",
+            category: "Grammar",
+            Grade: "S2",
+            file: "Grammar/Connectives So Therefore As a result.html"
         },
         {
             id: 13,
-            title: "HKDSE Reading - Vocabulary Building",
-            description: "Build your reading vocabulary with words commonly found in HKDSE Reading papers. Learn context clues and word families.",
-            category: "Reading",
-            file: "Reading/Reading Vocabulary.html"
+            title: "Adverbs of Sequence",
+            category: "Grammar",
+            Grade: "S2",
+            file: "Grammar/Adverbs of Sequence.html"
         },
         {
             id: 14,
-            title: "HKDSE Reading - Understanding Question Types",
-            description: "Learn the different question types in Paper 2 (multiple choice, matching, gap-filling, short answer). Understand what each question type is asking.",
+            title: "Prepositions of Movement",
+            category: "Grammar",
+            Grade: "S1",
+            file: "Grammar/Prepositions of Movement.html"
+        },
+        {
+            id: 15,
+            title: "Must, Have to, Need to",
+            category: "Grammar",
+            Grade: "S3",
+            file: "Grammar/Must Have to Need to.html"
+        },
+        {
+            id: 16,
+            title: "Paper 3 - Strategies",
+            category: "Listening",
+            Grade: "DSE",
+            file: "Listening/Listening Strategies.html"
+        },
+        {
+            id: 17,
+            title: "Paper 3 - Key Vocabulary",
+            category: "Listening",
+            Grade: "DSE",
+            file: "Listening/Listening Vocabulary.html"
+        },
+        {
+            id: 18,
+            title: "Paper 1 - Strategies",
             category: "Reading",
+            Grade: "DSE",
+            file: "Reading/Tips.html"
+        },
+        {
+            id: 19,
+            title: "Paper 1 - Vocabulary Building",
+            category: "Reading",
+            Grade: "DSE",
+            file: "Reading/Reading Vocabulary.html"
+        },
+        {
+            id: 20,
+            title: "Paper 1 - Understanding Question Types",
+            category: "Reading",
+            Grade: "DSE",
             file: "Reading/Question Types.html"
         }
     ];
@@ -190,7 +224,6 @@
 
         const filtered = resources.filter(item => {
             const matchSearch = item.title.toLowerCase().includes(query) || 
-                              item.description.toLowerCase().includes(query) ||
                               item.category.toLowerCase().includes(query) ||
                               (item.Grade && (Array.isArray(item.Grade) 
                                 ? item.Grade.some(tag => tag.toLowerCase().includes(query))
@@ -223,7 +256,6 @@
                 <div>
                     <div class="tags-row"><span class="tag ${tagClass}">${tagLabel}</span>${secondaryTagHTML}</div>
                     <h3>${item.title}</h3>
-                    <p>${item.description}</p>
                 </div>
             `;
             container.appendChild(link);
