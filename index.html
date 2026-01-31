@@ -6,53 +6,60 @@
     <title>LTF Teaching Archives</title>
     <style>
         :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#fef9f3 0%,#faf6f1 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
-        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
+        body { font-family: 'Segoe UI', Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); padding: 28px; padding-bottom: 140px; line-height: 1.8; font-size: 18px; }
         .container { max-width: 900px; margin: 0 auto; }
 
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { color: var(--primary); margin-bottom: 5px; }
-        .subtitle { color: #64748b; font-size: 0.95rem; }
+        header { text-align: center; margin-bottom: 20px; padding: 20px; }
+        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.5em; font-weight: 700; }
+        .subtitle { color: #64748b; font-size: 1.2rem; margin: 10px 0; }
+        .instructions { background: #f0f9ff; border-left: 5px solid var(--primary); padding: 15px 20px; margin: 20px 0; border-radius: 5px; font-size: 1rem; }
 
-        .tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
-        .tab-btn { background: transparent; border: 1px solid transparent; padding: 9px 26px; border-radius: 999px; cursor: pointer; font-weight: 600; color: var(--muted); transition: all 0.18s ease; box-shadow: none; }
-        .tab-btn:hover { background: rgba(11,61,145,0.07); color: var(--primary); transform: translateY(-2px); }
-        .tab-btn.active { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; border-color: transparent; box-shadow: 0 8px 20px rgba(6,22,23,0.08); }
+        .tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tab-btn { background: transparent; border: 2px solid var(--border); padding: 12px 28px; border-radius: 8px; cursor: pointer; font-weight: 600; color: var(--muted); transition: all 0.18s ease; font-size: 1rem; }
+        .tab-btn:hover { background: rgba(11,61,145,0.1); color: var(--primary); border-color: var(--primary); }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 8px 20px rgba(6,22,23,0.15); }
 
-        .search-wrapper { margin-bottom: 25px; }
-        input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+        .search-wrapper { margin-bottom: 30px; }
+        input { width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: 8px; font-size: 1.1rem; box-sizing: border-box; transition: border-color 0.2s; }
+        input:focus { border-color: var(--primary); outline: none; }
 
         .resource-card {
-            background: linear-gradient(180deg,#ffffff,#fbffff); padding: 18px; border-radius: 12px; border: 1px solid var(--border);
-            display: block; margin-bottom: 14px;
-            cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease; text-decoration: none; color: inherit;
+            background: linear-gradient(180deg,#ffffff,#fbffff); padding: 24px; border-radius: 12px; border: 2px solid var(--border);
+            display: block; margin-bottom: 18px;
+            cursor: pointer; transition: all 0.2s ease; text-decoration: none; color: inherit;
             box-shadow: 0 8px 18px rgba(2,30,80,0.04);
         }
-        .resource-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(2,30,80,0.08); }
+        .resource-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(2,30,80,0.12); border-color: var(--primary); }
 
-        .tags-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; }
-        .tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.2px; }
-        .tag-papers { background: linear-gradient(90deg,#e6eefb,#eaf4ff); color: #042a66; border: 1px solid rgba(6,42,111,0.08); }
+        .tags-row { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; flex-wrap: wrap; }
+        .tag { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.3px; }
+        .tag-grammar { background: #e6f3ff; color: #0a3d7a; border: 2px solid #b3d9ff; }
+        .tag-writing { background: #fff4e6; color: #7a4a0a; border: 2px solid #ffd9b3; }
+        .tag-secondary { background: #fce7f3; color: #831843; border: 2px solid #fbcfe8; }
 
-        .btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 9px 16px; border-radius: 8px; text-decoration: none; border: none; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(2,30,80,0.06); }
+        .resource-card h3 { margin: 0 0 8px 0; font-size: 1.5em; color: var(--primary); }
+        .resource-card p { margin: 0; color: #5b6b70; font-size: 1rem; }
+
+        .no-results { text-align: center; padding: 60px 20px; color: #94a3b8; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>LTF Teaching Archives</h1>
+        <h1>📚 LTF Teaching Archives</h1>
     </header>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="filterTab('All', this)">All</button>
-        <button class="tab-btn" onclick="filterTab('Grammar', this)">Grammar</button>
+        <button class="tab-btn active" onclick="filterTab('All', this)">All Topics</button>
         <button class="tab-btn" onclick="filterTab('Reading', this)">Reading</button>
+        <button class="tab-btn" onclick="filterTab('Grammar', this)">Grammar</button>
         <button class="tab-btn" onclick="filterTab('Writing', this)">Writing</button>
         <button class="tab-btn" onclick="filterTab('Listening', this)">Listening</button>
     </div>
 
     <div class="search-wrapper">
-        <input type="text" id="search" placeholder="🔍 Search resources..." onkeyup="renderList()">
+        <input type="text" id="search" placeholder="🔍 Search for a resource..." onkeyup="renderList()">
     </div>
 
     <div id="list" class="resource-list"></div>
@@ -62,39 +69,108 @@
     const resources = [
         {
             id: 1,
-            title: "Text Types",
-            papers: ["Writing"],
+            title: "Text Types - Writing Formats",
+            description: "Learn different ways to write in English: argumentative essays, letters, proposals, reports, articles, speeches, stories, and blogs.",
+            category: "Writing",
             file: "Writing/Text Types.html"
         },
         {
             id: 2,
-            title: "First Conditional",
-            papers: ["Grammar"],
+            title: "First Conditional - IF Sentences",
+            description: "Learn to make sentences with IF. Used for things that might happen in the future.",
+            category: "Grammar",
+            Grade: "S2",
             file: "Grammar/First Conditional.html"
         },
         {
             id: 3,
-            title: "Second Conditional",
-            papers: ["Grammar"],
+            title: "Second Conditional - Imaginary IF",
+            description: "Learn to imagine situations that are not real. Use IF + past tense.",
+            Grade: "S2",
+            category: "Grammar",
             file: "Grammar/Second Conditional.html"
         },
         {
             id: 4,
-            title: "Passive Voice",
-            papers: ["Grammar"],
+            title: "Passive Voice - Object Focus",
+            description: "Learn to write sentences about actions when you do not know or do not care who did the action.",
+            Grade: ["S2", "S3"],
+            category: "Grammar",
             file: "Grammar/Passive Voice.html"
         },
         {
             id: 5,
-            title: "Pronoun Table",
-            papers: ["Grammar"],
+            title: "Pronouns Table - Who, What, Where",
+            description: "Quick reference table for pronouns like I, you, he, she, it, we, they and how to use them.",
+            Grade: ["S1", "S2", "S3"],
+            category: "Grammar",
             file: "Grammar/Pronoun Table.html"
         },
         {
             id: 6,
-            title: "Tenses",
-            papers: ["Grammar"],
+            title: "English Tenses - All Times",
+            description: "Complete guide to present, past, and future tenses with simple explanations.",
+            Grade: ["S1", "S2", "S3"],            
+            category: "Grammar",
             file: "Grammar/Tenses.html"
+        },
+        {
+            id: 7,
+            title: "So, So That, and So As To",
+            description: "Learn to express purpose, reason, and result using 'so', 'so that', and 'so as to'. Understand when to use each structure.",
+            category: "Grammar",
+            Grade: ["S2", "S3"],
+            file: "Grammar/So That So As To.html"
+        },
+        {
+            id: 8,
+            title: "Defining and Non-Defining Relative Clauses",
+            description: "Master relative clauses with who, which, that, where, and when. Learn the difference between essential and extra information.",
+            category: "Grammar",
+            Grade: ["S2", "S3"],
+            file: "Grammar/Defining Non-Defining Relative Clauses.html"
+        },
+        {
+            id: 9,
+            title: "HKDSE Listening - Test Strategies",
+            description: "Tips and tricks for the HKDSE Listening Paper (Paper 1). Learn prediction techniques, note-taking strategies, and how to handle different accents.",
+            category: "Listening",
+            file: "Listening/Listening Strategies.html"
+        },
+        {
+            id: 10,
+            title: "HKDSE Listening - Key Vocabulary",
+            description: "Common words and phrases used in HKDSE Listening tests. Build your vocabulary bank to improve listening comprehension.",
+            category: "Listening",
+            file: "Listening/Listening Vocabulary.html"
+        },
+        {
+            id: 11,
+            title: "HKDSE Listening - Understanding Different Accents",
+            description: "Learn to understand different English accents (British, American, Australian). Practice recognizing common pronunciation patterns.",
+            category: "Listening",
+            file: "Listening/Accents.html"
+        },
+        {
+            id: 12,
+            title: "HKDSE Reading - Tips & Strategies",
+            description: "Master skimming and scanning techniques, and learn effective time management strategies for Paper 2. Complete guide to finishing all 3 passages in 75 minutes.",
+            category: "Reading",
+            file: "Reading/Tips.html"
+        },
+        {
+            id: 13,
+            title: "HKDSE Reading - Vocabulary Building",
+            description: "Build your reading vocabulary with words commonly found in HKDSE Reading papers. Learn context clues and word families.",
+            category: "Reading",
+            file: "Reading/Reading Vocabulary.html"
+        },
+        {
+            id: 14,
+            title: "HKDSE Reading - Understanding Question Types",
+            description: "Learn the different question types in Paper 2 (multiple choice, matching, gap-filling, short answer). Understand what each question type is asking.",
+            category: "Reading",
+            file: "Reading/Question Types.html"
         }
     ];
 
@@ -107,24 +183,25 @@
         renderList();
     }
 
-        function renderList() {
+    function renderList() {
         const query = document.getElementById('search').value.toLowerCase();
         const container = document.getElementById('list');
         container.innerHTML = '';
 
         const filtered = resources.filter(item => {
-            const papers = Array.isArray(item.papers) ? item.papers : [item.papers];
-            
-            // FIX: Removed 'item.subject' and added check for 'papers'
             const matchSearch = item.title.toLowerCase().includes(query) || 
-                              papers.some(p => p.toLowerCase().includes(query));
+                              item.description.toLowerCase().includes(query) ||
+                              item.category.toLowerCase().includes(query) ||
+                              (item.Grade && (Array.isArray(item.Grade) 
+                                ? item.Grade.some(tag => tag.toLowerCase().includes(query))
+                                : item.Grade.toLowerCase().includes(query)));
             
-            const matchTab = currentTab === 'All' || papers.includes(currentTab);
+            const matchTab = currentTab === 'All' || item.category === currentTab;
             return matchSearch && matchTab;
         });
 
         if (!filtered.length) {
-            container.innerHTML = `<div style="text-align:center; padding:40px; color:#94a3b8">No resources found.</div>`;
+            container.innerHTML = `<div class="no-results">No resources found. Try a different search or choose a different topic.</div>`;
             return;
         }
 
@@ -133,19 +210,25 @@
             link.className = 'resource-card';
             link.href = item.file;
             
-            const papers = Array.isArray(item.papers) ? item.papers : [item.papers];
-            const badges = papers.map(l => `<span class="tag tag-papers">${l}</span>`).join('');
+            const tagClass = item.category === 'Grammar' ? 'tag-grammar' : 'tag-writing';
+            const tagLabel = item.category;
+            
+            let secondaryTagHTML = '';
+            if (item.Grade) {
+                const tags = Array.isArray(item.Grade) ? item.Grade : [item.Grade];
+                secondaryTagHTML = tags.map(tag => `<span class="tag tag-secondary">${tag}</span>`).join('');
+            }
 
             link.innerHTML = `
                 <div>
-                    <div class="tags-row">${badges}</div>
-                    <h3 style="margin:0 0 5px 0">${item.title}</h3>
+                    <div class="tags-row"><span class="tag ${tagClass}">${tagLabel}</span>${secondaryTagHTML}</div>
+                    <h3>${item.title}</h3>
+                    <p>${item.description}</p>
                 </div>
             `;
             container.appendChild(link);
         });
     }
-
 
     renderList();
 </script>

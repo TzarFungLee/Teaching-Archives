@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defining and Non-Defining Relative Clauses</title>
+    <style>
+        /* HIGHLIGHTING SCHEME FOR RELATIVE CLAUSES TEACHING
+           Cyan (#a5f3fc): Main clause / noun being described
+           Green (#bbf7d0): Relative pronouns (who, which, that, where, when, whose)
+           Yellow (#fef3c7): Relative clause / extra information
+           Red (#fecaca): Key differences and commas
+        */
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
+        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
+        .back-btn:hover { text-decoration: underline; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+        h2 { color: var(--primary); margin-top: 0; }
+        h3 { color: var(--primary); }
+
+        .content { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
+        th { background: #eff6ff; font-weight: 600; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        .btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 9px 16px; border-radius: 8px; text-decoration: none; border: none; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(2,30,80,0.06); display: inline-block; margin-right: 10px; }
+        .btn:hover { text-decoration: none; opacity: 0.9; }
+
+        .resources { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+
+        ul { line-height: 1.8; }
+        li { margin-bottom: 10px; }
+
+        hr { margin: 30px 0; border: none; border-top: 1px solid #e2e8f0; }
+
+        mark { background-color: #fef3c7; padding: 2px 6px; border-radius: 3px; }
+        mark.cyan { background-color: #a5f3fc; }
+        mark.green { background-color: #bbf7d0; }
+        mark.yellow { background-color: #fef3c7; }
+        mark.red { background-color: #fecaca; }
+    </style>
+</head>
+
+<style>
+  /* Disable text selection */
+  body {
+    user-select: none;
+  }
+</style>
+
+<script>
+  // Disable right-click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Disable common copy shortcuts (Ctrl+C / Cmd+C)
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+      e.preventDefault();
+      alert('Copying is disabled on this page.');
+    }
+  });
+
+  // Optional: Disable text drag
+  document.addEventListener('dragstart', event => event.preventDefault());
+</script>
+
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="back-btn">← Back to the Archives</a>
+    </div>
+
+    <header>
+        <h1>Defining and Non-Defining Relative Clauses</h1>
+    </header>
+
+    <div class="content">
+
+        <h3>💡 Key Concepts</h3>
+        <ul>
+            <li><strong>What are Relative Clauses:</strong> Sentences that give extra information about a noun using relative pronouns (who, which, that, where, when, whose)</li>
+            <li><strong>Two Types:</strong>
+                <ul>
+                    <li><strong>Defining (Restrictive):</strong> Essential information - tells us which person/thing we're talking about</li>
+                    <li><strong>Non-Defining (Non-Restrictive):</strong> Extra information - adds details but can be removed without changing the meaning</li>
+                </ul>
+            </li>
+            <li><strong>Structure:</strong>
+                <ul>
+                    <li>Defining: <mark class="cyan">Noun</mark> + <mark class="green">relative pronoun</mark> + <mark class="yellow">clause</mark> (no commas)</li>
+                    <li>Non-Defining: <mark class="cyan">Noun</mark><mark class="red">,</mark> <mark class="green">relative pronoun</mark> + <mark class="yellow">clause</mark><mark class="red">,</mark> (with commas)</li>
+                </ul>
+            </li>
+            <li><strong>Key Difference:</strong> 
+                <ul>
+                    <li>Defining: <mark class="red">NO commas</mark>, uses "that" or "who/which"</li>
+                    <li>Non-Defining: <mark class="red">WITH commas</mark>, uses "who/which" (NOT "that")</li>
+                </ul>
+            </li>
+        </ul>
+
+        <hr>
+
+        <h3>📋 Relative Pronouns</h3>
+        <table>
+            <tr>
+                <th>Relative Pronoun</th>
+                <th>Used For</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>who</strong></td>
+                <td>People (subject)</td>
+                <td><mark class="cyan">The woman</mark> <mark class="green">who</mark> <mark class="yellow">lives next door</mark> is a doctor.</td>
+            </tr>
+            <tr>
+                <td><strong>whom</strong></td>
+                <td>People (object - formal)</td>
+                <td><mark class="cyan">The man</mark> <mark class="green">whom</mark> <mark class="yellow">I met</mark> was very kind.</td>
+            </tr>
+            <tr>
+                <td><strong>which</strong></td>
+                <td>Things/Animals</td>
+                <td><mark class="cyan">The book</mark> <mark class="green">which</mark> <mark class="yellow">I bought</mark> is excellent.</td>
+            </tr>
+            <tr>
+                <td><strong>that</strong></td>
+                <td>People/Things (defining only)</td>
+                <td><mark class="cyan">The car</mark> <mark class="green">that</mark> <mark class="yellow">I want</mark> is expensive.</td>
+            </tr>
+            <tr>
+                <td><strong>whose</strong></td>
+                <td>Possession</td>
+                <td><mark class="cyan">The boy</mark> <mark class="green">whose</mark> <mark class="yellow">bike was stolen</mark> is sad.</td>
+            </tr>
+            <tr>
+                <td><strong>where</strong></td>
+                <td>Places</td>
+                <td><mark class="cyan">The park</mark> <mark class="green">where</mark> <mark class="yellow">we met</mark> is beautiful.</td>
+            </tr>
+            <tr>
+                <td><strong>when</strong></td>
+                <td>Time</td>
+                <td><mark class="cyan">The day</mark> <mark class="green">when</mark> <mark class="yellow">I graduated</mark> was special.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>📖 Defining Relative Clauses</h3>
+
+        <h4>Purpose: Essential Information</h4>
+        <ul>
+            <li>Identifies which specific person or thing we're talking about</li>
+            <li>Cannot be removed without changing the meaning</li>
+            <li><mark class="red">NO commas</mark> are used</li>
+            <li>Can use "that" instead of "who/which"</li>
+        </ul>
+
+        <h4>Examples</h4>
+        <ul>
+            <li><mark class="cyan">The students</mark> <mark class="green">who</mark> <mark class="yellow">study hard</mark> pass the exam. <em>(Which students? The ones who study hard)</em></li>
+            <li><mark class="cyan">The book</mark> <mark class="green">that</mark> <mark class="yellow">I'm reading</mark> is interesting. <em>(Which book? The one I'm reading)</em></li>
+            <li><mark class="cyan">The house</mark> <mark class="green">which</mark> <mark class="yellow">has a red door</mark> is mine. <em>(Which house? The one with a red door)</em></li>
+            <li><mark class="cyan">The man</mark> <mark class="green">who</mark> <mark class="yellow">called yesterday</mark> is my uncle. <em>(Which man? The one who called)</em></li>
+        </ul>
+
+        <hr>
+
+        <h3>📖 Non-Defining Relative Clauses</h3>
+
+        <h4>Purpose: Extra Information</h4>
+        <ul>
+            <li>Adds extra details about something already identified</li>
+            <li>Can be removed without changing the main meaning</li>
+            <li><mark class="red">WITH commas</mark> (like parentheses)</li>
+            <li>Cannot use "that" - must use "who/which"</li>
+        </ul>
+
+        <h4>Examples</h4>
+        <ul>
+            <li><mark class="cyan">My brother</mark><mark class="red">,</mark> <mark class="green">who</mark> <mark class="yellow">lives in London</mark><mark class="red">,</mark> is a teacher. <em>(Extra info about my brother)</em></li>
+            <li><mark class="cyan">The Eiffel Tower</mark><mark class="red">,</mark> <mark class="green">which</mark> <mark class="yellow">was built in 1889</mark><mark class="red">,</mark> is in Paris. <em>(Extra info about the tower)</em></li>
+            <li><mark class="cyan">Shakespeare</mark><mark class="red">,</mark> <mark class="green">who</mark> <mark class="yellow">wrote Hamlet</mark><mark class="red">,</mark> was English. <em>(Extra info about Shakespeare)</em></li>
+            <li><mark class="cyan">My car</mark><mark class="red">,</mark> <mark class="green">which</mark> <mark class="yellow">I bought last year</mark><mark class="red">,</mark> is red. <em>(Extra info about my car)</em></li>
+        </ul>
+
+        <hr>
+
+        <h3>🔄 Comparing the Two Types</h3>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Defining</th>
+                <th>Non-Defining</th>
+            </tr>
+            <tr>
+                <td><strong>Purpose</strong></td>
+                <td>Essential - identifies which one</td>
+                <td>Extra - adds bonus information</td>
+            </tr>
+            <tr>
+                <td><strong>Commas</strong></td>
+                <td><mark class="red">NO commas</mark></td>
+                <td><mark class="red">WITH commas</mark></td>
+            </tr>
+            <tr>
+                <td><strong>Can use "that"?</strong></td>
+                <td>Yes ✓</td>
+                <td>No ✗</td>
+            </tr>
+            <tr>
+                <td><strong>Can be removed?</strong></td>
+                <td>No - meaning changes</td>
+                <td>Yes - meaning stays the same</td>
+            </tr>
+            <tr>
+                <td><strong>Example</strong></td>
+                <td>Students <mark class="green">who</mark> are late must sign in.</td>
+                <td>My students<mark class="red">,</mark> <mark class="green">who</mark> are very smart<mark class="red">,</mark> passed.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>🎯 Same Sentence, Different Meanings</h3>
+        <table>
+            <tr>
+                <th>Sentence Type</th>
+                <th>Sentence</th>
+                <th>Meaning</th>
+            </tr>
+            <tr>
+                <td><strong>Defining</strong></td>
+                <td>My sister <mark class="green">who</mark> lives in Paris is a lawyer.</td>
+                <td>I have more than one sister. The one in Paris is a lawyer. (The others may not be)</td>
+            </tr>
+            <tr>
+                <td><strong>Non-Defining</strong></td>
+                <td>My sister<mark class="red">,</mark> <mark class="green">who</mark> lives in Paris<mark class="red">,</mark> is a lawyer.</td>
+                <td>I have one sister. She lives in Paris and is a lawyer. (Extra information)</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background: #f0f9ff;"><strong>Another Example</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Defining</strong></td>
+                <td>The students <mark class="green">who</mark> failed the test must retake it.</td>
+                <td>Only some students failed - those specific students must retake it.</td>
+            </tr>
+            <tr>
+                <td><strong>Non-Defining</strong></td>
+                <td>The students<mark class="red">,</mark> <mark class="green">who</mark> failed the test<mark class="red">,</mark> must retake it.</td>
+                <td>All the students failed the test - all must retake it.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>� Teaching Slides</h3>
+
+<div style="position:relative; width:100%; padding-bottom:56.25%; height:0; overflow:hidden; background:#f8fafc; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+  <p style="color:#64748b;">Teaching slides will be embedded here</p>
+</div>
+
+        <hr>
+
+        <h3>�📖 Practice</h3>
+        <table>
+            <tr>
+                <th>Instructions</th>
+                <th>Complete Sentence</th>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Defining Relative Clauses (Example)</strong></td>
+            </tr>
+            <tr>
+                <td>The teacher / teaches English / is kind</td>
+                <td><mark class="cyan">The teacher</mark> <mark class="green">who</mark> <mark class="yellow">teaches English</mark> is kind.</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Your Turn - Fill in the Blanks (Defining)</strong></td>
+            </tr>
+            <tr>
+                <td>The book / I borrowed / is on the table</td>
+                <td><mark class="cyan">The book</mark> <mark class="green">__________</mark> <mark class="yellow">I borrowed</mark> is on the table.</td>
+            </tr>
+            <tr>
+                <td>The girl / won the prize / is my friend</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>The restaurant / serves pizza / is closed</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>The day / we met / was special</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Non-Defining Relative Clauses (Example)</strong></td>
+            </tr>
+            <tr>
+                <td>My brother / lives in Tokyo / is a doctor</td>
+                <td><mark class="cyan">My brother</mark><mark class="red">,</mark> <mark class="green">who</mark> <mark class="yellow">lives in Tokyo</mark><mark class="red">,</mark> is a doctor.</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Your Turn - Fill in the Blanks (Non-Defining)</strong></td>
+            </tr>
+            <tr>
+                <td>London / is the capital / has many tourists</td>
+                <td><mark class="cyan">London</mark><mark class="red">,</mark> <mark class="green">__________</mark> <mark class="yellow">is the capital</mark><mark class="red">,</mark> has many tourists.</td>
+            </tr>
+            <tr>
+                <td>My teacher / is very patient / helps me a lot</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>The iPhone / was invented by Apple / is popular</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Choose: Defining or Non-Defining?</strong></td>
+            </tr>
+            <tr>
+                <td>I have one car. It's red. (Add: I bought last year)</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>I have many friends. Only some live nearby. (Specify: the ones who live nearby)</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>There's only one Queen of England. (Add: she is 97 years old)</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Omitting Relative Pronouns (Object Position)</strong></td>
+            </tr>
+            <tr>
+                <td>The book which I read was good. (Omit "which")</td>
+                <td>The book I read was good. <em>(Defining clauses only, when pronoun is the object)</em></td>
+            </tr>
+            <tr>
+                <td>The man who I saw was tall. (Omit "who")</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>The film that we watched was boring. (Omit "that")</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>⚠️ Common Mistakes</h3>
+        <table>
+            <tr>
+                <th>❌ Incorrect</th>
+                <th>✅ Correct</th>
+            </tr>
+            <tr>
+                <td>My brother<mark class="red">,</mark> <span style="text-decoration: line-through;">that</span> lives in Paris<mark class="red">,</mark> is a doctor. (can't use "that")</td>
+                <td>My brother<mark class="red">,</mark> <mark class="green">who</mark> lives in Paris<mark class="red">,</mark> is a doctor.</td>
+            </tr>
+            <tr>
+                <td>The book<mark class="red">,</mark> which I'm reading<mark class="red">,</mark> is good. (not extra info - defining)</td>
+                <td>The book <mark class="green">which</mark> I'm reading is good.</td>
+            </tr>
+            <tr>
+                <td>Students who are late must sign in<mark class="red">,</mark>. (no comma in defining)</td>
+                <td>Students <mark class="green">who</mark> are late must sign in.</td>
+            </tr>
+            <tr>
+                <td>The man <mark class="green">who</mark> I saw <span style="text-decoration: line-through;">he</span> was tall. (double subject)</td>
+                <td>The man <mark class="green">who</mark> I saw was tall.</td>
+            </tr>
+            <tr>
+                <td>My sister <mark class="green">which</mark> lives in London is a teacher. (use "who" for people)</td>
+                <td>My sister <mark class="green">who</mark> lives in London is a teacher.</td>
+            </tr>
+            <tr>
+                <td>Shakespeare <mark class="green">who</mark> wrote Hamlet was English. (missing commas)</td>
+                <td>Shakespeare<mark class="red">,</mark> <mark class="green">who</mark> wrote Hamlet<mark class="red">,</mark> was English.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>💡 Quick Reference Guide</h3>
+        <table>
+            <tr>
+                <th>Ask Yourself</th>
+                <th>If YES</th>
+                <th>If NO</th>
+            </tr>
+            <tr>
+                <td>Can I remove this clause without changing who/what I'm talking about?</td>
+                <td><strong>Non-Defining</strong><br>Use commas<br>Don't use "that"</td>
+                <td><strong>Defining</strong><br>No commas<br>Can use "that"</td>
+            </tr>
+            <tr>
+                <td>Does the clause identify which specific person/thing?</td>
+                <td><strong>Defining</strong><br>No commas<br>Essential info</td>
+                <td><strong>Non-Defining</strong><br>Use commas<br>Extra info</td>
+            </tr>
+            <tr>
+                <td>Could I put this clause in parentheses ()?</td>
+                <td><strong>Non-Defining</strong><br>Use commas instead<br>Extra detail</td>
+                <td><strong>Defining</strong><br>Essential identification<br>No commas</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

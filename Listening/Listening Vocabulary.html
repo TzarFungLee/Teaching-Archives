@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Listening - Key Vocabulary</title>
+    <style>
+        :root { 
+            --primary: #0b3d91; 
+            --primary-2: #062b6e; 
+            --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            --surface: #ffffff; 
+            --text: #083344; 
+            --muted: #5b6b70; 
+            --border: rgba(8,51,68,0.1);
+            --accent: #fdb913;
+        }
+        body { 
+            font-family: 'Segoe UI', Roboto, "Helvetica Neue", Arial, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 28px; 
+            line-height: 1.8; 
+            font-size: 18px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .container { max-width: 1000px; margin: 0 auto; background: var(--surface); border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; text-decoration: none; }
+        .back-btn:hover { text-decoration: underline; }
+
+        header { text-align: center; margin-bottom: 30px; padding: 30px 20px; background: linear-gradient(135deg, var(--primary) 0%, #1e5799 100%); color: white; }
+        h1 { color: white; margin-bottom: 10px; font-size: 2.5em; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        h2 { color: var(--primary); margin-top: 0; margin-bottom: 20px; font-size: 1.8em; }
+        h3 { color: var(--primary); font-size: 1.4em; margin-top: 30px; margin-bottom: 15px; }
+
+        .content { background: var(--surface); padding: 40px; border-radius: 0; }
+
+        /* Table of Contents */
+        #toc {
+            position: fixed;
+            left: calc(50% + 560px);
+            top: 245px;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 8px;
+            max-height: 85vh;
+            overflow-y: auto;
+            width: 140px;
+            z-index: 1000;
+            border: 2px solid var(--primary);
+        }
+        
+        @media (max-width: 1400px) {
+            #toc {
+                left: auto;
+                right: 3px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            #toc {
+                width: 120px;
+                font-size: 0.75rem;
+            }
+        }
+
+        #toc h3 {
+            color: var(--primary);
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 4px;
+        }
+
+        #toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #toc li {
+            margin-bottom: 2px;
+        }
+
+        #toc a {
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            line-height: 1.3;
+        }
+
+        #toc a.active {
+            background: var(--primary);
+            color: white;
+            border-left-color: var(--accent);
+            font-weight: 600;
+        }
+
+        #toc a:hover {
+            background: var(--primary);
+            color: white;
+            border-left-color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        #toc::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #toc::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        #toc::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+
+        html {
+            scroll-padding-top: 80px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e5799 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #cbd5e0;
+        }
+
+        td {
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        tr:hover {
+            background: #f0f9ff;
+        }
+
+        .word {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .forms {
+            line-height: 1.8;
+        }
+
+        .form-type {
+            color: #805ad5;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .chinese {
+            color: #2d3748;
+            font-size: 0.95rem;
+        }
+
+        strong { color: #0b3d91; }
+    </style>
+</head>
+
+<body>
+
+<div class="nav-bar">
+    <a href="../index.html" class="back-btn">← Back to the Archives</a>
+</div>
+
+<div class="container">
+    <header>
+        <h1>📚 HKDSE Listening - Key Vocabulary</h1>
+    </header>
+
+    <div class="content">
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Word/Phrase</th>
+                    <th style="width: 35%;">Common Usage in Listening</th>
+                    <th style="width: 40%;">中文意思 / Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- GROUP 1: Time Expressions 時間表達 -->
+                <tr id="cat1" style="background: #e3f2fd;">
+                    <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">時間表達 | Time Expressions</td>
+                </tr>
+                <tr>
+                    <td class="word">3 o'clock / quarter past / half past</td>
+                    <td class="forms">
+                        "Meet me at <strong>3 o'clock sharp</strong>"<br>
+                        "The train leaves at <strong>quarter past two</strong>"<br>
+                        "Let's meet at <strong>half past six</strong>"
+                    </td>
+                    <td class="chinese">三點正 / 兩點十五分 / 六點半<br><em>Listen for exact times in appointments and schedules</em></td>
+                </tr>
+                <tr>
+                    <td class="word">in the morning / afternoon / evening</td>
+                    <td class="forms">
+                        "The meeting is <strong>in the afternoon</strong>"<br>
+                        "Classes start <strong>in the morning</strong>"<br>
+                        "We'll arrive <strong>in the evening</strong>"
+                    </td>
+                    <td class="chinese">早上 / 下午 / 晚上<br><em>Common in daily schedule discussions</em></td>
+                </tr>
+                <tr>
+                    <td class="word">by / before / after / around</td>
+                    <td class="forms">
+                        "Submit <strong>by Friday</strong>"<br>
+                        "Come <strong>before 9am</strong>"<br>
+                        "Call me <strong>after 5pm</strong>"<br>
+                        "I'll be there <strong>around noon</strong>"
+                    </td>
+                    <td class="chinese">在...之前 / 在...之後 / 大約<br><em>Time prepositions - listen carefully!</em></td>
+                </tr>
+                <tr>
+                    <td class="word">postpone / delay / reschedule</td>
+                    <td class="forms">
+                        "We need to <strong>postpone</strong> the event"<br>
+                        "The flight was <strong>delayed</strong> by 2 hours"<br>
+                        "Can we <strong>reschedule</strong> for next week?"
+                    </td>
+                    <td class="chinese">延期；推遲；延誤；改期<br><em>Schedule changes are common</em></td>
+                </tr>
+
+                <!-- GROUP 2: Hong Kong Places & MTR 香港地點與港鐵 -->
+                <tr id="cat2" style="background: #e3f2fd;">
+                    <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">香港地點與港鐵 | HK Places & MTR</td>
+                </tr>
+                <tr>
+                    <td class="word">Central / Admiralty / Tsim Sha Tsui</td>
+                    <td class="forms">
+                        "Let's meet at <strong>Central Station</strong>"<br>
+                        "Transfer at <strong>Admiralty</strong>"<br>
+                        "Get off at <strong>Tsim Sha Tsui</strong>"
+                    </td>
+                    <td class="chinese">中環 / 金鐘 / 尖沙咀<br><em>Major MTR interchange stations</em></td>
+                </tr>
+                <tr>
+                    <td class="word">Mong Kok / Causeway Bay / Wan Chai</td>
+                    <td class="forms">
+                        "The shop is near <strong>Mong Kok</strong>"<br>
+                        "Meet me at <strong>Causeway Bay</strong>"<br>
+                        "Exit at <strong>Wan Chai</strong> station"
+                    </td>
+                    <td class="chinese">旺角 / 銅鑼灣 / 灣仔<br><em>Popular shopping/business districts</em></td>
+                </tr>
+                <tr>
+                    <td class="word">Exit A / Exit B / Platform 1</td>
+                    <td class="forms">
+                        "Use <strong>Exit A</strong> for the mall"<br>
+                        "Meet at <strong>Exit B</strong>"<br>
+                        "Board on <strong>Platform 1</strong>"
+                    </td>
+                    <td class="chinese">A出口 / B出口 / 1號月台<br><em>MTR directions - very common!</em></td>
+                </tr>
+                <tr>
+                    <td class="word">Island Line / Tsuen Wan Line</td>
+                    <td class="forms">
+                        "Take the <strong>Island Line</strong> to Chai Wan"<br>
+                        "Change to <strong>Tsuen Wan Line</strong>"<br>
+                        "The <strong>Kwun Tong Line</strong> is faster"
+                    </td>
+                    <td class="chinese">港島線 / 荃灣線 / 觀塘線<br><em>MTR line names</em></td>
+                </tr>
+
+                <!-- GROUP 3: Numbers & Prices 數字與價錢 -->
+                <tr id="cat3" style="background: #e3f2fd;">
+                    <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">數字與價錢 | Numbers & Prices</td>
+                </tr>
+                <tr>
+                    <td class="word">$50 / $150 / $500</td>
+                    <td class="forms">
+                        "It costs <strong>fifty dollars</strong>"<br>
+                        "The ticket is <strong>one hundred and fifty</strong>"<br>
+                        "Rent is <strong>five hundred</strong> per month"
+                    </td>
+                    <td class="chinese">五十元 / 一百五十元 / 五百元<br><em>Listen for prices carefully</em></td>
+                </tr>
+                <tr>
+                    <td class="word">discount / 20% off / half price</td>
+                    <td class="forms">
+                        "Get a <strong>20% discount</strong>"<br>
+                        "It's <strong>20% off</strong> today"<br>
+                        "Everything is <strong>half price</strong>"
+                    </td>
+                    <td class="chinese">折扣 / 八折 / 半價<br><em>Shopping contexts</em></td>
+                </tr>
+                <tr>
+                    <td class="word">dozen / a couple of / several</td>
+                    <td class="forms">
+                        "Buy <strong>a dozen</strong> eggs" (12)<br>
+                        "<strong>A couple of</strong> days" (2-3)<br>
+                        "<strong>Several</strong> people came" (3-7)
+                    </td>
+                    <td class="chinese">一打（12個）/ 幾個 / 數個<br><em>Quantity expressions</em></td>
+                </tr>
+
+                <!-- GROUP 4: School & Activities 學校與活動 -->
+                <tr id="cat4" style="background: #e3f2fd;">
+                    <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">學校與活動 | School & Activities</td>
+                </tr>
+                <tr>
+                    <td class="word">assignment / deadline / submit</td>
+                    <td class="forms">
+                        "Hand in the <strong>assignment</strong> by Friday"<br>
+                        "The <strong>deadline</strong> is next Monday"<br>
+                        "Please <strong>submit</strong> your work online"
+                    </td>
+                    <td class="chinese">作業；功課 / 截止日期 / 提交<br><em>Academic contexts</em></td>
+                </tr>
+                <tr>
+                    <td class="word">sign up / register / enroll</td>
+                    <td class="forms">
+                        "<strong>Sign up</strong> for the club"<br>
+                        "<strong>Register</strong> before Friday"<br>
+                        "<strong>Enroll</strong> in the course"
+                    </td>
+                    <td class="chinese">報名；登記；註冊<br><em>Activities and courses</em></td>
+                </tr>
+                <tr>
+                    <td class="word">cancel / withdraw / drop</td>
+                    <td class="forms">
+                        "We have to <strong>cancel</strong> the event"<br>
+                        "I need to <strong>withdraw</strong> from the class"<br>
+                        "Can I <strong>drop</strong> this course?"
+                    </td>
+                    <td class="chinese">取消 / 退出 / 放棄<br><em>Changing plans</em></td>
+                </tr>
+
+                <!-- GROUP 5: Directions & Locations 方向與位置 -->
+                <tr id="cat5" style="background: #e3f2fd;">
+                    <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">方向與位置 | Directions & Locations</td>
+                </tr>
+                <tr>
+                    <td class="word">turn left / right / go straight</td>
+                    <td class="forms">
+                        "<strong>Turn left</strong> at the traffic lights"<br>
+                        "<strong>Turn right</strong> after the bank"<br>
+                        "<strong>Go straight</strong> for 2 blocks"
+                    </td>
+                    <td class="chinese">左轉 / 右轉 / 直走<br><em>Basic directions - very common</em></td>
+                </tr>
+                <tr>
+                    <td class="word">opposite / next to / between</td>
+                    <td class="forms">
+                        "It's <strong>opposite</strong> the post office"<br>
+                        "The cafe is <strong>next to</strong> the bank"<br>
+                        "It's <strong>between</strong> the library and park"
+                    </td>
+                    <td class="chinese">對面 / 旁邊 / 之間<br><em>Location prepositions</em></td>
+                </tr>
+                <tr>
+                    <td class="word">on the corner / at the end of</td>
+                    <td class="forms">
+                        "The shop is <strong>on the corner</strong>"<br>
+                        "Walk to the <strong>end of the street</strong>"<br>
+                        "It's <strong>at the end of</strong> the corridor"
+                    </td>
+                    <td class="chinese">在轉角處 / 在...盡頭<br><em>Specific locations</em></td>
+                </tr>
+
+                <!-- GROUP 6: Telephone & Messages 電話與訊息 -->
+                <tr id="cat6" style="background: #e3f2fd;">
+                    <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">電話與訊息 | Telephone & Messages</td>
+                </tr>
+                <tr>
+                    <td class="word">leave a message / call back / get back to</td>
+                    <td class="forms">
+                        "Can I <strong>leave a message</strong>?"<br>
+                        "I'll <strong>call you back</strong> later"<br>
+                        "I'll <strong>get back to you</strong> tomorrow"
+                    </td>
+                    <td class="chinese">留言 / 回電 / 回覆你<br><em>Phone conversations</em></td>
+                </tr>
+                <tr>
+                    <td class="word">hold on / hang up / put through</td>
+                    <td class="forms">
+                        "<strong>Hold on</strong>, please" (wait)<br>
+                        "Don't <strong>hang up</strong>"<br>
+                        "I'll <strong>put you through</strong> to the manager"
+                    </td>
+                    <td class="chinese">請稍等 / 掛斷 / 轉接<br><em>Phone etiquette</em></td>
+                </tr>
+
+                <!-- GROUP 7: Weather & Conditions 天氣與狀況 -->
+                <tr id="cat7" style="background: #e3f2fd;">
+                    <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">天氣與狀況 | Weather & Conditions</td>
+                </tr>
+                <tr>
+                    <td class="word">sunny / cloudy / rainy / typhoon</td>
+                    <td class="forms">
+                        "It'll be <strong>sunny</strong> tomorrow"<br>
+                        "Expect <strong>cloudy</strong> skies"<br>
+                        "It's <strong>rainy</strong> today"<br>
+                        "There's a <strong>typhoon</strong> warning"
+                    </td>
+                    <td class="chinese">晴天 / 多雲 / 下雨 / 颱風<br><em>HK weather - typhoons common!</em></td>
+                </tr>
+                <tr>
+                    <td class="word">degrees / temperature / humid</td>
+                    <td class="forms">
+                        "It's <strong>25 degrees</strong> today"<br>
+                        "The <strong>temperature</strong> will drop"<br>
+                        "It's very <strong>humid</strong> in summer"
+                    </td>
+                    <td class="chinese">度 / 溫度 / 潮濕<br><em>Weather descriptions</em></td>
+                </tr>
+
+                <!-- GROUP 8: Common Verbs in Listening 常見動詞 -->
+                <tr id="cat8" style="background: #e3f2fd;">
+                    <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">常見動詞 | Common Verbs</td>
+                </tr>
+                <tr>
+                    <td class="word">arrange / organize / prepare</td>
+                    <td class="forms">
+                        "I'll <strong>arrange</strong> a meeting"<br>
+                        "Can you <strong>organize</strong> the event?"<br>
+                        "We need to <strong>prepare</strong> for the exam"
+                    </td>
+                    <td class="chinese">安排 / 組織 / 準備<br><em>Planning activities</em></td>
+                </tr>
+                <tr>
+                    <td class="word">confirm / check / make sure</td>
+                    <td class="forms">
+                        "Please <strong>confirm</strong> your booking"<br>
+                        "Let me <strong>check</strong> the schedule"<br>
+                        "<strong>Make sure</strong> you bring your ID"
+                    </td>
+                    <td class="chinese">確認 / 檢查 / 確保<br><em>Verification</em></td>
+                </tr>
+                <tr>
+                    <td class="word">remind / inform / notify</td>
+                    <td class="forms">
+                        "Can you <strong>remind</strong> me tomorrow?"<br>
+                        "I'll <strong>inform</strong> you later"<br>
+                        "We'll <strong>notify</strong> you by email"
+                    </td>
+                    <td class="chinese">提醒 / 通知 / 告知<br><em>Communication</em></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Table of Contents -->
+<div id="toc">
+    <h3>📑 TOC</h3>
+    <ul id="toc-list"></ul>
+</div>
+
+<script>
+    // Generate Table of Contents
+    const categories = [
+        { id: 'cat1', name: 'Time' },
+        { id: 'cat2', name: 'HK Places & MTR' },
+        { id: 'cat3', name: 'Numbers & Prices' },
+        { id: 'cat4', name: 'School' },
+        { id: 'cat5', name: 'Directions' },
+        { id: 'cat6', name: 'Phone & Messages' },
+        { id: 'cat7', name: 'Weather' },
+        { id: 'cat8', name: 'Common Verbs' }
+    ];
+
+    const tocList = document.getElementById('toc-list');
+    categories.forEach((cat, index) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${cat.id}`;
+        a.textContent = `${index + 1}. ${cat.name}`;
+        a.dataset.catId = cat.id;
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetElement = document.getElementById(cat.id);
+            if (targetElement) {
+                const yOffset = -100;
+                const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+                
+                // Update URL hash
+                history.pushState(null, null, `#${cat.id}`);
+            }
+        });
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    // Scroll spy - highlight active section in TOC
+    function updateActiveLink() {
+        const scrollPosition = window.pageYOffset + 150;
+        
+        let currentCat = null;
+        categories.forEach(cat => {
+            const element = document.getElementById(cat.id);
+            if (element) {
+                const elementTop = element.offsetTop;
+                if (scrollPosition >= elementTop) {
+                    currentCat = cat.id;
+                }
+            }
+        });
+        
+        // Remove active class from all links
+        document.querySelectorAll('#toc a').forEach(link => {
+            link.classList.remove('active');
+        });
+        
+        // Add active class to current link
+        if (currentCat) {
+            const activeLink = document.querySelector(`#toc a[data-cat-id="${currentCat}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    }
+
+    // Run on scroll
+    window.addEventListener('scroll', updateActiveLink);
+    // Run on page load
+    updateActiveLink();
+
+    // Disable right-click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    
+    // Disable text selection
+    document.addEventListener('selectstart', event => event.preventDefault());
+    
+    // Disable copy
+    document.addEventListener('copy', event => event.preventDefault());
+    
+    // Disable cut
+    document.addEventListener('cut', event => event.preventDefault());
+    
+    // Disable drag
+    document.addEventListener('dragstart', event => event.preventDefault());
+    
+    // Disable keyboard shortcuts for copying and viewing source
+    document.addEventListener('keydown', event => {
+        // Prevent Ctrl+C, Ctrl+U, F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+        if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'C' || 
+            event.key === 'u' || event.key === 'U')) {
+            event.preventDefault();
+        }
+        if (event.key === 'F12' || 
+            ((event.ctrlKey || event.metaKey) && event.shiftKey && 
+             (event.key === 'I' || event.key === 'i' || 
+              event.key === 'J' || event.key === 'j' || 
+              event.key === 'C' || event.key === 'c'))) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html>

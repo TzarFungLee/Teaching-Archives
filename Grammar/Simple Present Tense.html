@@ -3,74 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Present Tense</title>
+    <title>Simple Present Tense - English Grammar</title>
     <style>
-        /* HIGHLIGHTING SCHEME FOR TENSE TEACHING
-           Cyan (#a5f3fc): Subject
-           Red (#fecaca): Verb (base form)
-           Yellow (#fef3c7): Object/Complement
-           Green (#bbf7d0): Time markers/adverbs
+        /* COLORS FOR EASY UNDERSTANDING
+           Cyan: The person/thing doing the action
+           Red: The action verb
+           Yellow: The object (who/what receives the action)
+           Green: When this happens (time words)
         */
-        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
-        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
-        .container { max-width: 900px; margin: 0 auto; }
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.1); }
+        body { font-family: 'Segoe UI', Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.8; font-size: 18px; }
+        .container { max-width: 1000px; margin: 0 auto; }
 
-        .nav-bar { margin-bottom: 20px; }
+        .nav-bar { margin-bottom: 30px; }
         .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
         .back-btn:hover { text-decoration: underline; }
 
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { color: var(--primary); margin-bottom: 5px; }
-        h2 { color: var(--primary); margin-top: 0; }
-        h3 { color: var(--primary); }
+        header { text-align: center; margin-bottom: 40px; padding: 30px 20px; }
+        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.5em; font-weight: 700; }
+        h2 { color: var(--primary); margin-top: 0; margin-bottom: 20px; font-size: 1.8em; }
+        h3 { color: var(--primary); font-size: 1.4em; margin-top: 30px; margin-bottom: 15px; }
+        h4 { color: var(--primary); font-size: 1.2em; margin: 15px 0 10px 0; }
 
-        .content { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+        .content { background: var(--surface); padding: 40px; border-radius: 12px; border: 2px solid var(--border); }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
-        th { background: #eff6ff; font-weight: 600; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 1rem; }
+        th, td { padding: 15px; border: 2px solid #e2e8f0; text-align: left; }
+        th { background: #eff6ff; font-weight: 700; color: var(--primary); }
         tr:nth-child(even) { background: #f8fafc; }
+        tr:hover { background: #f0f9ff; }
 
-        .btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 9px 16px; border-radius: 8px; text-decoration: none; border: none; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(2,30,80,0.06); display: inline-block; margin-right: 10px; }
+        .btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; border: none; font-size: 1rem; box-shadow: 0 8px 20px rgba(2,30,80,0.06); display: inline-block; margin-right: 10px; margin-top: 10px; }
         .btn:hover { text-decoration: none; opacity: 0.9; }
 
         .resources { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
 
-        ul { line-height: 1.8; }
-        li { margin-bottom: 10px; }
+        ul { line-height: 2; margin: 15px 0; }
+        li { margin-bottom: 15px; font-size: 1.05rem; }
+        p { margin: 15px 0; font-size: 1.05rem; line-height: 1.8; }
 
-        hr { margin: 30px 0; border: none; border-top: 1px solid #e2e8f0; }
+        hr { margin: 40px 0; border: none; border-top: 2px solid #e2e8f0; }
 
-        mark { background-color: #fef3c7; padding: 2px 6px; border-radius: 3px; }
-        mark.cyan { background-color: #a5f3fc; }
-        mark.green { background-color: #bbf7d0; }
-        mark.yellow { background-color: #fef3c7; }
-        mark.red { background-color: #fecaca; }
+        mark { background-color: #fef3c7; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
+        mark.cyan { background-color: #a5f3fc; color: #0369a1; }
+        mark.green { background-color: #bbf7d0; color: #166534; }
+        mark.yellow { background-color: #fef3c7; color: #854d0e; }
+        mark.red { background-color: #fecaca; color: #991b1b; }
+
+        .example-box { background: #edf2f7; border-left: 6px solid #48bb78; padding: 20px; margin: 25px 0; border-radius: 8px; }
+        .rules-box { background: #fff5f5; border-left: 6px solid #f56565; padding: 20px; margin: 25px 0; border-radius: 8px; }
+        .tips-box { background: #ecfdf5; border-left: 6px solid #10b981; padding: 20px; margin: 25px 0; border-radius: 8px; }
+
     </style>
 </head>
-
-<style>
-  /* Disable text selection */
-  body {
-    user-select: none;
-  }
-</style>
-
-<script>
-  // Disable right-click
-  document.addEventListener('contextmenu', event => event.preventDefault());
-
-  // Disable common copy shortcuts (Ctrl+C / Cmd+C)
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
-      e.preventDefault();
-      alert('Copying is disabled on this page.');
-    }
-  });
-
-  // Optional: Disable text drag
-  document.addEventListener('dragstart', event => event.preventDefault());
-</script>
 
 <body>
 
@@ -80,24 +65,96 @@
     </div>
 
     <header>
-        <h1>Simple Present Tense</h1>
+        <h1>🕒 Simple Present Tense</h1>
+        <p style="font-size: 1.2rem; color: #5b6b70; margin-top: 10px;">Learn to talk about habits, routines, and general truths</p>
     </header>
 
     <div class="content">
 
+        <h2>What is Simple Present Tense?</h2>
+        <div class="tips-box">
+            <strong>✓ Use Simple Present to say:</strong>
+            <ul>
+                <li><strong>Habits and routines</strong>: Things you do regularly ("I drink coffee every morning")</li>
+                <li><strong>General facts</strong>: Things that are always true ("The Earth goes around the Sun")</li>
+                <li><strong>Regular actions</strong>: Things that happen again and again ("She works on Mondays")</li>
+                <li><strong>Schedules and plans</strong>: Timetables and fixed plans ("The bus arrives at 8:00")</li>
+            </ul>
+        </div>
+
         <h3>💡 Key Concepts</h3>
-<ul>
-    <li><strong>When to use:</strong> Habits, routines, general truths, permanent situations, scheduled events</li>
-    <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">verb (base form / +s for 3rd person singular)</mark> + <mark class="yellow">object/complement</mark></li>
-    <li><strong>Examples:</strong>
         <ul>
-            <li><mark class="cyan">I</mark> <mark class="red">study</mark> <mark class="yellow">English</mark> <mark class="green">every day</mark>.</li>
-            <li><mark class="cyan">She</mark> <mark class="red">works</mark> <mark class="yellow">at a hospital</mark>.</li>
-            <li><mark class="cyan">The sun</mark> <mark class="red">rises</mark> <mark class="yellow">in the east</mark>.</li>
+            <li><strong>When to use:</strong> Habits, routines, general truths, permanent situations</li>
+            <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">verb (base form / +s for 3rd person singular)</mark> + <mark class="yellow">(object/complement)</mark></li>
         </ul>
-    </li>
-    <li><strong>Time markers:</strong> <mark class="green">always, usually, often, sometimes, never, every day/week/month, on Mondays</mark></li>
-</ul>
+
+        <h3>💡 The Basic Pattern</h3>
+        <table style="margin-top: 20px; margin-bottom: 20px;">
+            <tr>
+                <th style="width: 25%;">Subject <mark class="cyan">(WHO)</mark></th>
+                <th style="width: 25%;">Verb <mark class="red">(ACTION)</mark></th>
+                <th style="width: 25%;">Object <mark class="yellow">(WHAT/WHERE)</mark></th>
+                <th style="width: 25%;">Time <mark class="green">(WHEN)</mark></th>
+            </tr>
+            <tr>
+                <td><mark class="cyan">I, You, We, They</mark></td>
+                <td><mark class="red">study, play, work</mark></td>
+                <td><mark class="yellow">English, soccer, here</mark></td>
+                <td><mark class="green">every day, always, sometimes</mark></td>
+            </tr>
+            <tr>
+                <td><mark class="cyan">He, She, It</mark></td>
+                <td><mark class="red">studies, plays, works</mark> (add -s)</td>
+                <td><mark class="yellow">English, soccer, here</mark></td>
+                <td><mark class="green">every day, always, sometimes</mark></td>
+            </tr>
+        </table>
+
+        <h3>Examples of Simple Present Tense</h3>
+        <div class="example-box">
+            <strong>✓ Correct Sentences:</strong>
+            <ul>
+                <li><mark class="cyan">I</mark> <mark class="red">study</mark> <mark class="yellow">English</mark> <mark class="green">every day</mark>.</li>
+                <li><mark class="cyan">She</mark> <mark class="red">works</mark> <mark class="yellow">at a hospital</mark> <mark class="green">on Mondays</mark>.</li>
+                <li><mark class="cyan">The sun</mark> <mark class="red">rises</mark> <mark class="yellow">in the east</mark>.</li>
+                <li><mark class="cyan">They</mark> <mark class="red">eat</mark> <mark class="yellow">breakfast</mark> <mark class="green">at 7:00</mark>.</li>
+                <li><mark class="cyan">It</mark> <mark class="red">rains</mark> <mark class="yellow">a lot</mark> <mark class="green">in summer</mark>.</li>
+            </ul>
+        </div>
+
+        <h3>⚠️ Important Rule: The -S Ending</h3>
+        <div class="rules-box">
+            <strong>❌ REMEMBER: Add -S for he/she/it!</strong>
+            <table>
+                <tr>
+                    <th>❌ WRONG</th>
+                    <th>✓ CORRECT</th>
+                </tr>
+                <tr style="background: #fee;">
+                    <td>She <mark class="red">go</mark> to school.</td>
+                    <td>She <mark class="red">goes</mark> to school.</td>
+                </tr>
+                <tr style="background: #fee;">
+                    <td>He <mark class="red">play</mark> soccer.</td>
+                    <td>He <mark class="red">plays</mark> soccer.</td>
+                </tr>
+                <tr style="background: #fee;">
+                    <td>It <mark class="red">rain</mark> often.</td>
+                    <td>It <mark class="red">rains</mark> often.</td>
+                </tr>
+            </table>
+        </div>
+
+        <h3>Time Words to Use with Simple Present</h3>
+        <p><strong><mark class="green">These words tell us WHEN something happens:</mark></strong></p>
+        <ul>
+            <li><strong>Always / Never:</strong> "I always drink water." / "He never eats meat."</li>
+            <li><strong>Usually / Rarely:</strong> "She usually arrives early." / "They rarely go out."</li>
+            <li><strong>Often / Sometimes:</strong> "It often rains." / "We sometimes cook together."</li>
+            <li><strong>Every + time:</strong> "I study every day." / "She works every Monday."</li>
+            <li><strong>On + day:</strong> "We have class on Tuesdays."</li>
+            <li><strong>In the morning/afternoon/evening:</strong> "I drink coffee in the morning."</li>
+        </ul>
 
         <hr>
 <h3>📊 Teaching Slides</h3>

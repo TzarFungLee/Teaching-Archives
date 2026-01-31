@@ -1,0 +1,2582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Vocabulary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0b3d91;
+            --secondary: #fc3d21;
+            --accent: #fdb913;
+            --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --surface: #ffffff;
+            --text: #2d3748;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--text);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--surface);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e5799 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .content {
+            padding: 3rem 2.5rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Table of Contents */
+        #toc {
+            position: fixed;
+            left: calc(50% + 610px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 8px;
+            max-height: 85vh;
+            overflow-y: auto;
+            width: 140px;
+            z-index: 1000;
+            border: 2px solid var(--primary);
+        }
+        
+        @media (max-width: 1400px) {
+            #toc {
+                left: auto;
+                right: 3px;
+            }
+        }
+
+        html {
+            scroll-padding-top: 80px;
+        }
+
+        @media (max-width: 1200px) {
+            #toc {
+                width: 120px;
+                font-size: 0.75rem;
+            }
+        }
+
+        .nav-bar {
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        #toc h3 {
+            color: var(--primary);
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 4px;
+        }
+
+        #toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #toc li {
+            margin-bottom: 2px;
+        }
+
+        #toc a {
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            line-height: 1.3;
+        }
+
+        #toc a.active {
+            background: var(--primary);
+            color: white;
+            border-left-color: var(--accent);
+            font-weight: 600;
+        }
+
+        #toc a:hover {
+            background: var(--primary);
+            color: white;
+            border-left-color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        #toc::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #toc::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        #toc::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e5799 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background-color: #f7fafc;
+        }
+
+        .word {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.05rem;
+        }
+
+        .forms {
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .form-type {
+            color: #805ad5;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .chinese {
+            color: #2d3748;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="../index.html" class="back-btn">← Back to the Archives</a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📚 HKDSE Common Vocabulary</h1>
+        </div>
+
+        <div class="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Word</th>
+                        <th style="width: 40%;">Word Forms</th>
+                        <th style="width: 40%;">Chinese Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- GROUP 1: 重要的 (Important/Significant) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">重要的 | Important/Significant</td>
+                    </tr>
+                    <tr>
+                        <td class="word">crucial</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> crucial<br>
+                            <span class="form-type">adv.</span> crucially
+                        </td>
+                        <td class="chinese">關鍵的；極其重要的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">essential</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> essential<br>
+                            <span class="form-type">n.</span> essential, essentials<br>
+                            <span class="form-type">adv.</span> essentially
+                        </td>
+                        <td class="chinese">必要的；本質的；要素</td>
+                    </tr>
+                    <tr>
+                        <td class="word">fundamental</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> fundamental<br>
+                            <span class="form-type">n.</span> fundamental, fundamentals<br>
+                            <span class="form-type">adv.</span> fundamentally
+                        </td>
+                        <td class="chinese">基本的；根本的；基礎</td>
+                    </tr>
+                    <tr>
+                        <td class="word">important</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> important<br>
+                            <span class="form-type">n.</span> importance<br>
+                            <span class="form-type">adv.</span> importantly
+                        </td>
+                        <td class="chinese">重要的；重要性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">necessary</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> necessary, unnecessary<br>
+                            <span class="form-type">n.</span> necessity<br>
+                            <span class="form-type">adv.</span> necessarily, unnecessarily
+                        </td>
+                        <td class="chinese">必要的；必需品</td>
+                    </tr>
+                    <tr>
+                        <td class="word">primary</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> primary<br>
+                            <span class="form-type">adv.</span> primarily
+                        </td>
+                        <td class="chinese">主要的；首要的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">salient</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> salient<br>
+                            <span class="form-type">n.</span> salience
+                        </td>
+                        <td class="chinese">顯著的；突出的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">significant</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> significant<br>
+                            <span class="form-type">n.</span> significance<br>
+                            <span class="form-type">adv.</span> significantly
+                        </td>
+                        <td class="chinese">重要的；顯著的；意義</td>
+                    </tr>
+                    <tr>
+                        <td class="word">vital</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> vital<br>
+                            <span class="form-type">adv.</span> vitally
+                        </td>
+                        <td class="chinese">極其重要的；至關重要的</td>
+                    </tr>
+                    
+                    <!-- GROUP 2: 影響 (Influence/Impact/Effect) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">影響 | Influence/Impact/Effect</td>
+                    </tr>
+                    <tr>
+                        <td class="word">effect</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> effect<br>
+                            <span class="form-type">v.</span> effect<br>
+                            <span class="form-type">adj.</span> effective, ineffective<br>
+                            <span class="form-type">adv.</span> effectively
+                        </td>
+                        <td class="chinese">影響；效果；實現</td>
+                    </tr>
+                    <tr>
+                        <td class="word">impact</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> impact<br>
+                            <span class="form-type">v.</span> impact<br>
+                            <span class="form-type">adj.</span> impactful
+                        </td>
+                        <td class="chinese">影響；衝擊</td>
+                    </tr>
+                    <tr>
+                        <td class="word">influence</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> influence<br>
+                            <span class="form-type">v.</span> influence<br>
+                            <span class="form-type">adj.</span> influential
+                        </td>
+                        <td class="chinese">影響；影響力</td>
+                    </tr>
+                    
+                    <!-- GROUP 3: 解決 (Solve/Resolve/Address) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">解決 | Solve/Resolve/Address</td>
+                    </tr>
+                    <tr>
+                        <td class="word">address</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> address<br>
+                            <span class="form-type">n.</span> address
+                        </td>
+                        <td class="chinese">處理；解決；地址</td>
+                    </tr>
+                    <tr>
+                        <td class="word">overcome</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> overcome, overcame, overcome<br>
+                            <span class="form-type">adj.</span> overcoming
+                        </td>
+                        <td class="chinese">克服；戰勝</td>
+                    </tr>
+                    <tr>
+                        <td class="word">resolve</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> resolve<br>
+                            <span class="form-type">n.</span> resolution, resolve<br>
+                            <span class="form-type">adj.</span> resolved
+                        </td>
+                        <td class="chinese">解決；決心</td>
+                    </tr>
+                    <tr>
+                        <td class="word">solve</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> solve<br>
+                            <span class="form-type">n.</span> solution
+                        </td>
+                        <td class="chinese">解決；答案</td>
+                    </tr>
+                    <tr>
+                        <td class="word">tackle</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> tackle<br>
+                            <span class="form-type">n.</span> tackle
+                        </td>
+                        <td class="chinese">處理；解決（問題）</td>
+                    </tr>
+                    
+                    <!-- GROUP 4: 改善/提高/加強 (Improve/Enhance/Strengthen) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">改善/提高/加強 | Improve/Enhance/Strengthen</td>
+                    </tr>
+                    <tr>
+                        <td class="word">enhance</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> enhance<br>
+                            <span class="form-type">n.</span> enhancement
+                        </td>
+                        <td class="chinese">提高；增強</td>
+                    </tr>
+                    <tr>
+                        <td class="word">improve</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> improve<br>
+                            <span class="form-type">n.</span> improvement<br>
+                            <span class="form-type">adj.</span> improved
+                        </td>
+                        <td class="chinese">改善；提高</td>
+                    </tr>
+                    <tr>
+                        <td class="word">modify</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> modify<br>
+                            <span class="form-type">n.</span> modification<br>
+                            <span class="form-type">adj.</span> modified
+                        </td>
+                        <td class="chinese">修改；調整</td>
+                    </tr>
+                    <tr>
+                        <td class="word">strengthen</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> strengthen<br>
+                            <span class="form-type">n.</span> strength<br>
+                            <span class="form-type">adj.</span> strong
+                        </td>
+                        <td class="chinese">加強；力量</td>
+                    </tr>
+                    <tr>
+                        <td class="word">transform</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> transform<br>
+                            <span class="form-type">n.</span> transformation<br>
+                            <span class="form-type">adj.</span> transformative
+                        </td>
+                        <td class="chinese">轉變；改造</td>
+                    </tr>
+                    
+                    <!-- GROUP 5: 調查/研究/檢查 (Research/Investigate/Examine) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">調查/研究/檢查 | Research/Investigate/Examine</td>
+                    </tr>
+                    <tr>
+                        <td class="word">examine</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> examine<br>
+                            <span class="form-type">n.</span> examination, exam
+                        </td>
+                        <td class="chinese">檢查；調查；考試</td>
+                    </tr>
+                    <tr>
+                        <td class="word">investigate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> investigate<br>
+                            <span class="form-type">n.</span> investigation
+                        </td>
+                        <td class="chinese">調查；研究</td>
+                    </tr>
+                    <tr>
+                        <td class="word">research</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> research<br>
+                            <span class="form-type">v.</span> research<br>
+                            <span class="form-type">n.</span> researcher
+                        </td>
+                        <td class="chinese">研究；調查</td>
+                    </tr>
+                    <tr>
+                        <td class="word">scrutinize</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> scrutinize<br>
+                            <span class="form-type">n.</span> scrutiny
+                        </td>
+                        <td class="chinese">仔細檢查；細查</td>
+                    </tr>
+                    
+                    <!-- GROUP 6: 解釋/說明 (Explain/Interpret/Clarify) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">解釋/說明 | Explain/Interpret/Clarify</td>
+                    </tr>
+                    <tr>
+                        <td class="word">clarify</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> clarify<br>
+                            <span class="form-type">n.</span> clarification
+                        </td>
+                        <td class="chinese">澄清；闡明</td>
+                    </tr>
+                    <tr>
+                        <td class="word">explain</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> explain<br>
+                            <span class="form-type">n.</span> explanation<br>
+                            <span class="form-type">adj.</span> explanatory
+                        </td>
+                        <td class="chinese">解釋；說明</td>
+                    </tr>
+                    <tr>
+                        <td class="word">interpret</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> interpret<br>
+                            <span class="form-type">n.</span> interpretation, interpreter
+                        </td>
+                        <td class="chinese">解釋；詮釋；翻譯</td>
+                    </tr>
+                    
+                    <!-- GROUP 7: 可行的/可能的 (Feasible/Viable/Possible) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">可行的/可能的 | Feasible/Viable/Possible</td>
+                    </tr>
+                    <tr>
+                        <td class="word">feasible</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> feasible<br>
+                            <span class="form-type">n.</span> feasibility
+                        </td>
+                        <td class="chinese">可行的；可能的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">possible</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> possible, impossible<br>
+                            <span class="form-type">n.</span> possibility<br>
+                            <span class="form-type">adv.</span> possibly
+                        </td>
+                        <td class="chinese">可能的；可能性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">viable</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> viable<br>
+                            <span class="form-type">n.</span> viability
+                        </td>
+                        <td class="chinese">可行的；能存活的</td>
+                    </tr>
+                    
+                    <!-- GROUP 8: 有道理的/合理的 (Reasonable/Plausible) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">有道理的/合理的 | Reasonable/Plausible</td>
+                    </tr>
+                    <tr>
+                        <td class="word">plausible</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> plausible, implausible<br>
+                            <span class="form-type">n.</span> plausibility<br>
+                            <span class="form-type">adv.</span> plausibly
+                        </td>
+                        <td class="chinese">似乎合理的；可信的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">rational</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> rational, irrational<br>
+                            <span class="form-type">adv.</span> rationally<br>
+                            <span class="form-type">n.</span> rationality
+                        </td>
+                        <td class="chinese">理性的；合理的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">reasonable</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> reasonable, unreasonable<br>
+                            <span class="form-type">adv.</span> reasonably
+                        </td>
+                        <td class="chinese">合理的；講道理的</td>
+                    </tr>
+                    
+                    <!-- GROUP 9: 促成/貢獻 (Contribute/Promote) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">促成/貢獻 | Contribute/Promote</td>
+                    </tr>
+                    <tr>
+                        <td class="word">contribute</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> contribute<br>
+                            <span class="form-type">n.</span> contribution, contributor<br>
+                            <span class="form-type">adj.</span> contributory
+                        </td>
+                        <td class="chinese">貢獻；促成；捐助</td>
+                    </tr>
+                    <tr>
+                        <td class="word">promote</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> promote<br>
+                            <span class="form-type">n.</span> promotion, promoter<br>
+                            <span class="form-type">adj.</span> promotional
+                        </td>
+                        <td class="chinese">促進；提升；推廣</td>
+                    </tr>
+                    
+                    <!-- GROUP 10: 描述/說明 (Describe/Demonstrate) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">描述/說明/表達 | Describe/Demonstrate/Express</td>
+                    </tr>
+                    <tr>
+                        <td class="word">communicate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> communicate<br>
+                            <span class="form-type">n.</span> communication, communicator<br>
+                            <span class="form-type">adj.</span> communicative<br>
+                            <span class="form-type">adv.</span> communicatively
+                        </td>
+                        <td class="chinese">溝通；交流；傳達</td>
+                    </tr>
+                    <tr>
+                        <td class="word">demonstrate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> demonstrate<br>
+                            <span class="form-type">n.</span> demonstration, demonstrator<br>
+                            <span class="form-type">adj.</span> demonstrative, demonstrable
+                        </td>
+                        <td class="chinese">證明；示範；表明</td>
+                    </tr>
+                    <tr>
+                        <td class="word">describe</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> describe<br>
+                            <span class="form-type">n.</span> description<br>
+                            <span class="form-type">adj.</span> descriptive<br>
+                            <span class="form-type">adv.</span> descriptively
+                        </td>
+                        <td class="chinese">描述；形容；描寫性的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">eloquent</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> eloquent<br>
+                            <span class="form-type">n.</span> eloquence<br>
+                            <span class="form-type">adv.</span> eloquently
+                        </td>
+                        <td class="chinese">雄辯的；口才流利的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">express</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> express<br>
+                            <span class="form-type">n.</span> expression<br>
+                            <span class="form-type">adj.</span> expressive, expressionless<br>
+                            <span class="form-type">adv.</span> expressively
+                        </td>
+                        <td class="chinese">表達；表現；表情</td>
+                    </tr>
+                    <tr>
+                        <td class="word">inform</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> inform<br>
+                            <span class="form-type">n.</span> information<br>
+                            <span class="form-type">adj.</span> informative, informed<br>
+                            <span class="form-type">adv.</span> informatively
+                        </td>
+                        <td class="chinese">通知；告知；資訊</td>
+                    </tr>
+                    
+                    <!-- GROUP 11: 清晰/連貫 (Clear/Coherent/Lucid) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">清晰/連貫/簡潔 | Clear/Coherent/Concise</td>
+                    </tr>
+                    <tr>
+                        <td class="word">coherent</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> coherent, incoherent<br>
+                            <span class="form-type">n.</span> coherence<br>
+                            <span class="form-type">adv.</span> coherently
+                        </td>
+                        <td class="chinese">連貫的；一致的；連貫性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">concise</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> concise<br>
+                            <span class="form-type">n.</span> conciseness<br>
+                            <span class="form-type">adv.</span> concisely
+                        </td>
+                        <td class="chinese">簡潔的；簡明的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">lucid</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> lucid<br>
+                            <span class="form-type">n.</span> lucidity<br>
+                            <span class="form-type">adv.</span> lucidly
+                        </td>
+                        <td class="chinese">清晰的；明白易懂的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">obvious</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> obvious<br>
+                            <span class="form-type">adv.</span> obviously
+                        </td>
+                        <td class="chinese">明顯的；顯然</td>
+                    </tr>
+                    <tr>
+                        <td class="word">subtle</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> subtle<br>
+                            <span class="form-type">n.</span> subtlety<br>
+                            <span class="form-type">adv.</span> subtly
+                        </td>
+                        <td class="chinese">微妙的；細微的</td>
+                    </tr>
+                    
+                    <!-- GROUP 12: 全面/廣泛 (Comprehensive/Diverse) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">全面/廣泛/多樣 | Comprehensive/Diverse/Ubiquitous</td>
+                    </tr>
+                    <tr>
+                        <td class="word">comprehensive</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> comprehensive<br>
+                            <span class="form-type">n.</span> comprehension<br>
+                            <span class="form-type">adv.</span> comprehensively
+                        </td>
+                        <td class="chinese">全面的；綜合的；理解</td>
+                    </tr>
+                    <tr>
+                        <td class="word">diverse</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> diverse<br>
+                            <span class="form-type">n.</span> diversity<br>
+                            <span class="form-type">v.</span> diversify<br>
+                            <span class="form-type">adv.</span> diversely
+                        </td>
+                        <td class="chinese">多樣的；多元化；多樣性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">global</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> global<br>
+                            <span class="form-type">n.</span> globalization<br>
+                            <span class="form-type">v.</span> globalize<br>
+                            <span class="form-type">adv.</span> globally
+                        </td>
+                        <td class="chinese">全球的；全球化</td>
+                    </tr>
+                    <tr>
+                        <td class="word">ubiquitous</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> ubiquitous<br>
+                            <span class="form-type">n.</span> ubiquity<br>
+                            <span class="form-type">adv.</span> ubiquitously
+                        </td>
+                        <td class="chinese">無處不在的；普遍存在的</td>
+                    </tr>
+                    
+                    <!-- GROUP 13: 發展/進化/變化 (Develop/Evolve/Transform) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">發展/進化/變化 | Develop/Evolve/Transform</td>
+                    </tr>
+                    <tr>
+                        <td class="word">adapt</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> adapt<br>
+                            <span class="form-type">n.</span> adaptation, adaptability<br>
+                            <span class="form-type">adj.</span> adaptable, adaptive<br>
+                            <span class="form-type">adv.</span> adaptably
+                        </td>
+                        <td class="chinese">適應；改編；適應力</td>
+                    </tr>
+                    <tr>
+                        <td class="word">develop</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> develop<br>
+                            <span class="form-type">n.</span> development, developer<br>
+                            <span class="form-type">adj.</span> developmental, developed, developing
+                        </td>
+                        <td class="chinese">發展；開發；發展中的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">evolve</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> evolve<br>
+                            <span class="form-type">n.</span> evolution<br>
+                            <span class="form-type">adj.</span> evolutionary, evolved
+                        </td>
+                        <td class="chinese">演變；進化；演化的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">gradual</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> gradual<br>
+                            <span class="form-type">adv.</span> gradually
+                        </td>
+                        <td class="chinese">逐漸的；逐步地</td>
+                    </tr>
+                    <tr>
+                        <td class="word">progress</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> progress<br>
+                            <span class="form-type">n.</span> progress, progression<br>
+                            <span class="form-type">adj.</span> progressive<br>
+                            <span class="form-type">adv.</span> progressively
+                        </td>
+                        <td class="chinese">進步；前進；進展</td>
+                    </tr>
+                    
+                    <!-- GROUP 14: 深刻/新穎/有洞察力 (Profound/Novel/Innovative) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">深刻/新穎/創新 | Profound/Novel/Innovative</td>
+                    </tr>
+                    <tr>
+                        <td class="word">creative</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> creative<br>
+                            <span class="form-type">n.</span> creativity, creation, creator<br>
+                            <span class="form-type">v.</span> create<br>
+                            <span class="form-type">adv.</span> creatively
+                        </td>
+                        <td class="chinese">創造性的；創造力；創作</td>
+                    </tr>
+                    <tr>
+                        <td class="word">innovative</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> innovative<br>
+                            <span class="form-type">n.</span> innovation, innovator<br>
+                            <span class="form-type">v.</span> innovate<br>
+                            <span class="form-type">adv.</span> innovatively
+                        </td>
+                        <td class="chinese">創新的；創新；革新者</td>
+                    </tr>
+                    <tr>
+                        <td class="word">novel</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> novel<br>
+                            <span class="form-type">n.</span> novel, novelty<br>
+                            <span class="form-type">adv.</span> novelly
+                        </td>
+                        <td class="chinese">新穎的；小說；新奇</td>
+                    </tr>
+                    <tr>
+                        <td class="word">profound</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> profound<br>
+                            <span class="form-type">n.</span> profundity<br>
+                            <span class="form-type">adv.</span> profoundly
+                        </td>
+                        <td class="chinese">深刻的；深奧的</td>
+                    </tr>
+                    
+                    <!-- GROUP 15: 分析/評估 (Analyze/Evaluate/Compare) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">分析/評估/比較 | Analyze/Evaluate/Compare</td>
+                    </tr>
+                    <tr>
+                        <td class="word">analyze</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> analyze<br>
+                            <span class="form-type">n.</span> analysis, analyst<br>
+                            <span class="form-type">adj.</span> analytical, analytic
+                        </td>
+                        <td class="chinese">分析；分析師；分析的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">compare</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> compare<br>
+                            <span class="form-type">n.</span> comparison<br>
+                            <span class="form-type">adj.</span> comparable, comparative<br>
+                            <span class="form-type">adv.</span> comparatively
+                        </td>
+                        <td class="chinese">比較；可比的；相對地</td>
+                    </tr>
+                    <tr>
+                        <td class="word">contrast</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> contrast<br>
+                            <span class="form-type">n.</span> contrast<br>
+                            <span class="form-type">adj.</span> contrasting
+                        </td>
+                        <td class="chinese">對比；對照；對比的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">distinguish</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> distinguish<br>
+                            <span class="form-type">adj.</span> distinguished, distinguishable
+                        </td>
+                        <td class="chinese">區分；辨別；傑出的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">evaluate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> evaluate<br>
+                            <span class="form-type">n.</span> evaluation, evaluator<br>
+                            <span class="form-type">adj.</span> evaluative
+                        </td>
+                        <td class="chinese">評估；評價；評估性的</td>
+                    </tr>
+                    
+                    <!-- GROUP 16: 討論/爭論/說服 (Discuss/Argue/Persuade) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">討論/爭論/說服 | Discuss/Argue/Persuade</td>
+                    </tr>
+                    <tr>
+                        <td class="word">argue</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> argue<br>
+                            <span class="form-type">n.</span> argument<br>
+                            <span class="form-type">adj.</span> argumentative<br>
+                            <span class="form-type">adv.</span> arguably
+                        </td>
+                        <td class="chinese">爭論；主張；論點</td>
+                    </tr>
+                    <tr>
+                        <td class="word">discuss</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> discuss<br>
+                            <span class="form-type">n.</span> discussion
+                        </td>
+                        <td class="chinese">討論；商討</td>
+                    </tr>
+                    <tr>
+                        <td class="word">persuade</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> persuade<br>
+                            <span class="form-type">n.</span> persuasion<br>
+                            <span class="form-type">adj.</span> persuasive<br>
+                            <span class="form-type">adv.</span> persuasively
+                        </td>
+                        <td class="chinese">說服；勸說；有說服力的</td>
+                    </tr>
+                    
+                    <!-- GROUP 17: 導致/引發/結果 (Cause/Trigger/Result) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">導致/引發/結果 | Cause/Trigger/Result</td>
+                    </tr>
+                    <tr>
+                        <td class="word">cause</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> cause<br>
+                            <span class="form-type">n.</span> cause<br>
+                            <span class="form-type">adj.</span> causal
+                        </td>
+                        <td class="chinese">導致；原因；因果的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">consequence</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> consequence<br>
+                            <span class="form-type">adj.</span> consequent, consequential<br>
+                            <span class="form-type">adv.</span> consequently
+                        </td>
+                        <td class="chinese">結果；後果；因此</td>
+                    </tr>
+                    <tr>
+                        <td class="word">result</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> result<br>
+                            <span class="form-type">n.</span> result<br>
+                            <span class="form-type">adj.</span> resultant, resulting
+                        </td>
+                        <td class="chinese">導致；結果；結果的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">trigger</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> trigger<br>
+                            <span class="form-type">n.</span> trigger
+                        </td>
+                        <td class="chinese">引發；觸發；扳機</td>
+                    </tr>
+                    
+                    <!-- GROUP 18: 達成/實施 (Achieve/Implement) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">達成/實施/維持 | Achieve/Implement/Maintain</td>
+                    </tr>
+                    <tr>
+                        <td class="word">achieve</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> achieve<br>
+                            <span class="form-type">n.</span> achievement, achiever<br>
+                            <span class="form-type">adj.</span> achievable
+                        </td>
+                        <td class="chinese">達成；成就；可達成的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">conclude</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> conclude<br>
+                            <span class="form-type">n.</span> conclusion<br>
+                            <span class="form-type">adj.</span> conclusive<br>
+                            <span class="form-type">adv.</span> conclusively
+                        </td>
+                        <td class="chinese">總結；得出結論；結論性的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">implement</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> implement<br>
+                            <span class="form-type">n.</span> implementation
+                        </td>
+                        <td class="chinese">實施；執行；實現</td>
+                    </tr>
+                    <tr>
+                        <td class="word">maintain</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> maintain<br>
+                            <span class="form-type">n.</span> maintenance
+                        </td>
+                        <td class="chinese">維持；保養；維護</td>
+                    </tr>
+                    
+                    <!-- GROUP 19: 合作/競爭/參與 (Cooperate/Compete/Participate) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">合作/競爭/參與 | Cooperate/Compete/Participate</td>
+                    </tr>
+                    <tr>
+                        <td class="word">compete</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> compete<br>
+                            <span class="form-type">n.</span> competition, competitor<br>
+                            <span class="form-type">adj.</span> competitive<br>
+                            <span class="form-type">adv.</span> competitively
+                        </td>
+                        <td class="chinese">競爭；比賽；競爭的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">cooperate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> cooperate<br>
+                            <span class="form-type">n.</span> cooperation<br>
+                            <span class="form-type">adj.</span> cooperative<br>
+                            <span class="form-type">adv.</span> cooperatively
+                        </td>
+                        <td class="chinese">合作；協作；合作的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">organize</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> organize<br>
+                            <span class="form-type">n.</span> organization, organizer<br>
+                            <span class="form-type">adj.</span> organized, organizational
+                        </td>
+                        <td class="chinese">組織；安排；組織者</td>
+                    </tr>
+                    <tr>
+                        <td class="word">participate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> participate<br>
+                            <span class="form-type">n.</span> participation, participant<br>
+                            <span class="form-type">adj.</span> participatory
+                        </td>
+                        <td class="chinese">參與；參加；參與者</td>
+                    </tr>
+                    
+                    <!-- GROUP 20: 不同/相似/相等 (Different/Similar/Equivalent) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">不同/相似/相等 | Different/Similar/Equivalent</td>
+                    </tr>
+                    <tr>
+                        <td class="word">alternative</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> alternative<br>
+                            <span class="form-type">n.</span> alternative<br>
+                            <span class="form-type">adv.</span> alternatively
+                        </td>
+                        <td class="chinese">替代的；替代方案</td>
+                    </tr>
+                    <tr>
+                        <td class="word">different</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> different<br>
+                            <span class="form-type">n.</span> difference<br>
+                            <span class="form-type">v.</span> differ<br>
+                            <span class="form-type">adv.</span> differently
+                        </td>
+                        <td class="chinese">不同的；差異；不同地</td>
+                    </tr>
+                    <tr>
+                        <td class="word">equivalent</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> equivalent<br>
+                            <span class="form-type">n.</span> equivalent, equivalence
+                        </td>
+                        <td class="chinese">相等的；等價物；等值</td>
+                    </tr>
+                    <tr>
+                        <td class="word">similar</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> similar<br>
+                            <span class="form-type">n.</span> similarity<br>
+                            <span class="form-type">adv.</span> similarly
+                        </td>
+                        <td class="chinese">相似的；相似性</td>
+                    </tr>
+                    
+                    <!-- GROUP 21: 優越/劣勢/優勢 (Superior/Advantage) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">優越/優勢/挑戰 | Superior/Advantage/Challenge</td>
+                    </tr>
+                    <tr>
+                        <td class="word">advantage</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> advantage, disadvantage<br>
+                            <span class="form-type">adj.</span> advantageous, disadvantageous<br>
+                            <span class="form-type">adv.</span> advantageously
+                        </td>
+                        <td class="chinese">優勢；劣勢；有利的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">challenge</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> challenge<br>
+                            <span class="form-type">n.</span> challenge, challenger<br>
+                            <span class="form-type">adj.</span> challenging, challenged
+                        </td>
+                        <td class="chinese">挑戰；質疑；挑戰性的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">obstacle</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> obstacle
+                        </td>
+                        <td class="chinese">障礙；阻礙</td>
+                    </tr>
+                    <tr>
+                        <td class="word">superior</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> superior, inferior<br>
+                            <span class="form-type">n.</span> superiority, inferiority
+                        </td>
+                        <td class="chinese">優越的；劣等的；優越性</td>
+                    </tr>
+                    
+                    <!-- GROUP 22: 有效率/實用 (Efficient/Practical/Effective) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">有效/實用/靈活 | Efficient/Practical/Flexible</td>
+                    </tr>
+                    <tr>
+                        <td class="word">efficient</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> efficient, inefficient<br>
+                            <span class="form-type">n.</span> efficiency, inefficiency<br>
+                            <span class="form-type">adv.</span> efficiently
+                        </td>
+                        <td class="chinese">有效率的；效率</td>
+                    </tr>
+                    <tr>
+                        <td class="word">flexible</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> flexible, inflexible<br>
+                            <span class="form-type">n.</span> flexibility<br>
+                            <span class="form-type">adv.</span> flexibly
+                        </td>
+                        <td class="chinese">靈活的；彈性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">practical</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> practical, impractical<br>
+                            <span class="form-type">n.</span> practice, practicality<br>
+                            <span class="form-type">v.</span> practice<br>
+                            <span class="form-type">adv.</span> practically
+                        </td>
+                        <td class="chinese">實際的；實用的；實踐</td>
+                    </tr>
+                    
+                    <!-- GROUP 23: 可用/可靠/可持續 (Available/Reliable/Sustainable) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">可用/可靠/可持續 | Available/Reliable/Sustainable</td>
+                    </tr>
+                    <tr>
+                        <td class="word">available</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> available, unavailable<br>
+                            <span class="form-type">n.</span> availability
+                        </td>
+                        <td class="chinese">可用的；可得性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">reliable</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> reliable, unreliable<br>
+                            <span class="form-type">n.</span> reliability<br>
+                            <span class="form-type">v.</span> rely<br>
+                            <span class="form-type">adv.</span> reliably
+                        </td>
+                        <td class="chinese">可靠的；依賴；可靠性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">sustainable</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> sustainable, unsustainable<br>
+                            <span class="form-type">n.</span> sustainability<br>
+                            <span class="form-type">v.</span> sustain<br>
+                            <span class="form-type">adv.</span> sustainably
+                        </td>
+                        <td class="chinese">可持續的；永續性</td>
+                    </tr>
+                    
+                    <!-- GROUP 24: 適當/相關/具體 (Appropriate/Relevant/Specific) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">適當/相關/具體 | Appropriate/Relevant/Specific</td>
+                    </tr>
+                    <tr>
+                        <td class="word">appropriate</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> appropriate, inappropriate<br>
+                            <span class="form-type">v.</span> appropriate<br>
+                            <span class="form-type">adv.</span> appropriately
+                        </td>
+                        <td class="chinese">適當的；佔用；適當地</td>
+                    </tr>
+                    <tr>
+                        <td class="word">relevant</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> relevant, irrelevant<br>
+                            <span class="form-type">n.</span> relevance<br>
+                            <span class="form-type">adv.</span> relevantly
+                        </td>
+                        <td class="chinese">相關的；無關的；相關性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">specific</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> specific, general<br>
+                            <span class="form-type">n.</span> specificity<br>
+                            <span class="form-type">v.</span> specify<br>
+                            <span class="form-type">adv.</span> specifically
+                        </td>
+                        <td class="chinese">具體的；一般的；明確說明</td>
+                    </tr>
+                    
+                    <!-- GROUP 25: 複雜/簡單 (Complex/Simple) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">複雜/簡單/細緻 | Complex/Meticulous</td>
+                    </tr>
+                    <tr>
+                        <td class="word">complex</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> complex, simple<br>
+                            <span class="form-type">n.</span> complexity, simplicity<br>
+                            <span class="form-type">v.</span> complicate, simplify
+                        </td>
+                        <td class="chinese">複雜的；簡單的；複雜性</td>
+                    </tr>
+                    <tr>
+                        <td class="word">meticulous</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> meticulous<br>
+                            <span class="form-type">adv.</span> meticulously
+                        </td>
+                        <td class="chinese">一絲不苟的；細緻的</td>
+                    </tr>
+                    
+                    <!-- GROUP 26: 證據/證明 (Evidence/Demonstrate) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">證據/證明 | Evidence/Demonstrate</td>
+                    </tr>
+                    <tr>
+                        <td class="word">evidence</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> evidence<br>
+                            <span class="form-type">v.</span> evidence<br>
+                            <span class="form-type">adj.</span> evident<br>
+                            <span class="form-type">adv.</span> evidently
+                        </td>
+                        <td class="chinese">證據；明顯的；顯然</td>
+                    </tr>
+                    
+                    <!-- GROUP 27: 概念/理論/原則 (Concept/Theory/Principle) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">概念/理論/原則 | Concept/Theory/Principle</td>
+                    </tr>
+                    <tr>
+                        <td class="word">concept</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> concept<br>
+                            <span class="form-type">adj.</span> conceptual<br>
+                            <span class="form-type">adv.</span> conceptually
+                        </td>
+                        <td class="chinese">概念；觀念；概念性的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">objective</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> objective<br>
+                            <span class="form-type">adj.</span> objective, subjective<br>
+                            <span class="form-type">adv.</span> objectively, subjectively
+                        </td>
+                        <td class="chinese">目標；客觀的；主觀的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">perspective</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> perspective
+                        </td>
+                        <td class="chinese">觀點；視角；遠景</td>
+                    </tr>
+                    <tr>
+                        <td class="word">phenomenon</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> phenomenon, phenomena<br>
+                            <span class="form-type">adj.</span> phenomenal<br>
+                            <span class="form-type">adv.</span> phenomenally
+                        </td>
+                        <td class="chinese">現象；非凡的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">principle</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> principle<br>
+                            <span class="form-type">adj.</span> principled
+                        </td>
+                        <td class="chinese">原則；原理；有原則的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">strategy</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> strategy<br>
+                            <span class="form-type">adj.</span> strategic<br>
+                            <span class="form-type">adv.</span> strategically
+                        </td>
+                        <td class="chinese">策略；戰略；策略性的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">theory</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> theory<br>
+                            <span class="form-type">adj.</span> theoretical<br>
+                            <span class="form-type">adv.</span> theoretically
+                        </td>
+                        <td class="chinese">理論；理論的</td>
+                    </tr>
+                    
+                    <!-- GROUP 28: 社會/環境/文化 (Society/Environment/Culture) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">社會/環境/文化/科技 | Society/Environment/Culture/Technology</td>
+                    </tr>
+                    <tr>
+                        <td class="word">culture</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> culture<br>
+                            <span class="form-type">adj.</span> cultural<br>
+                            <span class="form-type">adv.</span> culturally
+                        </td>
+                        <td class="chinese">文化；文化的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">economy</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> economy<br>
+                            <span class="form-type">adj.</span> economic, economical<br>
+                            <span class="form-type">adv.</span> economically
+                        </td>
+                        <td class="chinese">經濟；經濟的；節約的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">educate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> educate<br>
+                            <span class="form-type">n.</span> education, educator<br>
+                            <span class="form-type">adj.</span> educational, educated<br>
+                            <span class="form-type">adv.</span> educationally
+                        </td>
+                        <td class="chinese">教育；教育的；受教育的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">environment</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> environment<br>
+                            <span class="form-type">adj.</span> environmental<br>
+                            <span class="form-type">adv.</span> environmentally
+                        </td>
+                        <td class="chinese">環境；環保的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">politics</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> politics<br>
+                            <span class="form-type">adj.</span> political<br>
+                            <span class="form-type">adv.</span> politically
+                        </td>
+                        <td class="chinese">政治；政治的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">society</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> society<br>
+                            <span class="form-type">adj.</span> social, societal<br>
+                            <span class="form-type">adv.</span> socially
+                        </td>
+                        <td class="chinese">社會；社交的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">technology</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> technology<br>
+                            <span class="form-type">adj.</span> technological<br>
+                            <span class="form-type">adv.</span> technologically
+                        </td>
+                        <td class="chinese">技術；科技；科技的</td>
+                    </tr>
+                    
+                    <!-- GROUP 29: 時間相關 (Time-related: Ancient/Contemporary/Recent) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">時間相關 | Time-related: Past/Present/Duration</td>
+                    </tr>
+                    <tr>
+                        <td class="word">ancient</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> ancient, modern<br>
+                            <span class="form-type">n.</span> antiquity, modernity
+                        </td>
+                        <td class="chinese">古代的；現代的；古代</td>
+                    </tr>
+                    <tr>
+                        <td class="word">constant</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> constant<br>
+                            <span class="form-type">n.</span> constancy<br>
+                            <span class="form-type">adv.</span> constantly
+                        </td>
+                        <td class="chinese">持續的；恆定；不斷地</td>
+                    </tr>
+                    <tr>
+                        <td class="word">contemporary</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> contemporary<br>
+                            <span class="form-type">n.</span> contemporary
+                        </td>
+                        <td class="chinese">當代的；同時代的人</td>
+                    </tr>
+                    <tr>
+                        <td class="word">ephemeral</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> ephemeral<br>
+                            <span class="form-type">adv.</span> ephemerally
+                        </td>
+                        <td class="chinese">短暫的；瞬息的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">frequent</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> frequent, infrequent<br>
+                            <span class="form-type">n.</span> frequency<br>
+                            <span class="form-type">adv.</span> frequently, infrequently
+                        </td>
+                        <td class="chinese">頻繁的；頻率；常常</td>
+                    </tr>
+                    <tr>
+                        <td class="word">recent</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> recent<br>
+                            <span class="form-type">adv.</span> recently
+                        </td>
+                        <td class="chinese">最近的；近來</td>
+                    </tr>
+                    <tr>
+                        <td class="word">temporary</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> temporary, permanent<br>
+                            <span class="form-type">adv.</span> temporarily, permanently
+                        </td>
+                        <td class="chinese">暫時的；永久的</td>
+                    </tr>
+                    
+                    <!-- GROUP 30: 情緒/態度 (Emotions/Attitudes) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">情緒/態度 | Emotions/Attitudes</td>
+                    </tr>
+                    <tr>
+                        <td class="word">anxious</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> anxious<br>
+                            <span class="form-type">n.</span> anxiety<br>
+                            <span class="form-type">adv.</span> anxiously
+                        </td>
+                        <td class="chinese">焦慮的；擔心的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">confident</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> confident<br>
+                            <span class="form-type">n.</span> confidence<br>
+                            <span class="form-type">adv.</span> confidently
+                        </td>
+                        <td class="chinese">自信的；信心</td>
+                    </tr>
+                    <tr>
+                        <td class="word">determined</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> determined<br>
+                            <span class="form-type">n.</span> determination<br>
+                            <span class="form-type">v.</span> determine<br>
+                            <span class="form-type">adv.</span> determinedly
+                        </td>
+                        <td class="chinese">堅定的；決心</td>
+                    </tr>
+                    <tr>
+                        <td class="word">disappoint</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> disappoint<br>
+                            <span class="form-type">n.</span> disappointment<br>
+                            <span class="form-type">adj.</span> disappointed, disappointing<br>
+                            <span class="form-type">adv.</span> disappointingly
+                        </td>
+                        <td class="chinese">使失望；失望</td>
+                    </tr>
+                    <tr>
+                        <td class="word">enthusiastic</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> enthusiastic<br>
+                            <span class="form-type">n.</span> enthusiasm, enthusiast<br>
+                            <span class="form-type">adv.</span> enthusiastically
+                        </td>
+                        <td class="chinese">熱情的；熱心；狂熱者</td>
+                    </tr>
+                    <tr>
+                        <td class="word">motivate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> motivate<br>
+                            <span class="form-type">n.</span> motivation<br>
+                            <span class="form-type">adj.</span> motivated, motivational<br>
+                            <span class="form-type">adv.</span> motivationally
+                        </td>
+                        <td class="chinese">激勵；動機；有動力的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">optimistic</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> optimistic, pessimistic<br>
+                            <span class="form-type">n.</span> optimism, pessimism<br>
+                            <span class="form-type">adv.</span> optimistically, pessimistically
+                        </td>
+                        <td class="chinese">樂觀的；悲觀的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">satisfied</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> satisfied, unsatisfied, satisfactory<br>
+                            <span class="form-type">n.</span> satisfaction<br>
+                            <span class="form-type">v.</span> satisfy<br>
+                            <span class="form-type">adv.</span> satisfactorily
+                        </td>
+                        <td class="chinese">滿意的；滿足</td>
+                    </tr>
+                    <tr>
+                        <td class="word">tenacious</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> tenacious<br>
+                            <span class="form-type">n.</span> tenacity<br>
+                            <span class="form-type">adv.</span> tenaciously
+                        </td>
+                        <td class="chinese">堅韌的；頑強的</td>
+                    </tr>
+                    
+                    <!-- GROUP 32: 足夠/充分 (Adequate/Sufficient) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">足夠/充分 | Adequate/Sufficient</td>
+                    </tr>
+                    <tr>
+                        <td class="word">adequate</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> adequate, inadequate<br>
+                            <span class="form-type">n.</span> adequacy<br>
+                            <span class="form-type">adv.</span> adequately
+                        </td>
+                        <td class="chinese">足夠的；充分的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">sufficient</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> sufficient, insufficient<br>
+                            <span class="form-type">n.</span> sufficiency<br>
+                            <span class="form-type">adv.</span> sufficiently
+                        </td>
+                        <td class="chinese">充足的；足夠的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">ample</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> ample<br>
+                            <span class="form-type">adv.</span> amply
+                        </td>
+                        <td class="chinese">充足的；豐富的</td>
+                    </tr>
+
+                    <!-- GROUP 33: 建立/確立 (Establish/Found) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">建立/確立 | Establish/Found</td>
+                    </tr>
+                    <tr>
+                        <td class="word">establish</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> establish, establishes, established, establishing<br>
+                            <span class="form-type">n.</span> establishment<br>
+                            <span class="form-type">adj.</span> established
+                        </td>
+                        <td class="chinese">建立；確立；設立</td>
+                    </tr>
+                    <tr>
+                        <td class="word">found</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> found, founds, founded, founding<br>
+                            <span class="form-type">n.</span> foundation, founder<br>
+                            <span class="form-type">adj.</span> foundational
+                        </td>
+                        <td class="chinese">創立；建立；基礎</td>
+                    </tr>
+                    <tr>
+                        <td class="word">constitute</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> constitute, constitutes, constituted, constituting<br>
+                            <span class="form-type">n.</span> constitution<br>
+                            <span class="form-type">adj.</span> constitutional
+                        </td>
+                        <td class="chinese">構成；組成；憲法</td>
+                    </tr>
+
+                    <!-- GROUP 34: 確保/確認 (Ensure/Confirm) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">確保/確認 | Ensure/Confirm</td>
+                    </tr>
+                    <tr>
+                        <td class="word">ensure</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> ensure, ensures, ensured, ensuring
+                        </td>
+                        <td class="chinese">確保；保證</td>
+                    </tr>
+                    <tr>
+                        <td class="word">confirm</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> confirm, confirms, confirmed, confirming<br>
+                            <span class="form-type">n.</span> confirmation<br>
+                            <span class="form-type">adj.</span> confirmed
+                        </td>
+                        <td class="chinese">證實；確認；確定</td>
+                    </tr>
+                    <tr>
+                        <td class="word">verify</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> verify, verifies, verified, verifying<br>
+                            <span class="form-type">n.</span> verification<br>
+                            <span class="form-type">adj.</span> verifiable
+                        </td>
+                        <td class="chinese">核實；驗證；查證</td>
+                    </tr>
+
+                    <!-- GROUP 35: 消除/減少 (Eliminate/Reduce) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">消除/減少 | Eliminate/Reduce</td>
+                    </tr>
+                    <tr>
+                        <td class="word">eliminate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> eliminate, eliminates, eliminated, eliminating<br>
+                            <span class="form-type">n.</span> elimination
+                        </td>
+                        <td class="chinese">消除；排除；淘汰</td>
+                    </tr>
+                    <tr>
+                        <td class="word">reduce</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> reduce, reduces, reduced, reducing<br>
+                            <span class="form-type">n.</span> reduction<br>
+                            <span class="form-type">adj.</span> reduced
+                        </td>
+                        <td class="chinese">減少；降低；縮小</td>
+                    </tr>
+                    <tr>
+                        <td class="word">diminish</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> diminish, diminishes, diminished, diminishing<br>
+                            <span class="form-type">adj.</span> diminished
+                        </td>
+                        <td class="chinese">減少；削弱；縮小</td>
+                    </tr>
+                    <tr>
+                        <td class="word">decline</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> decline, declines, declined, declining<br>
+                            <span class="form-type">n.</span> decline
+                        </td>
+                        <td class="chinese">下降；衰退；拒絕</td>
+                    </tr>
+
+                    <!-- GROUP 36: 出現/發生 (Emerge/Occur) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">出現/發生 | Emerge/Occur</td>
+                    </tr>
+                    <tr>
+                        <td class="word">emerge</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> emerge, emerges, emerged, emerging<br>
+                            <span class="form-type">n.</span> emergence<br>
+                            <span class="form-type">adj.</span> emergent, emerging
+                        </td>
+                        <td class="chinese">出現；浮現；顯露</td>
+                    </tr>
+                    <tr>
+                        <td class="word">occur</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> occur, occurs, occurred, occurring<br>
+                            <span class="form-type">n.</span> occurrence
+                        </td>
+                        <td class="chinese">發生；出現；存在</td>
+                    </tr>
+                    <tr>
+                        <td class="word">arise</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> arise, arises, arose, arisen, arising
+                        </td>
+                        <td class="chinese">出現；產生；起來</td>
+                    </tr>
+
+                    <!-- GROUP 37: 包含/組成 (Comprise/Consist) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">包含/組成 | Comprise/Consist</td>
+                    </tr>
+                    <tr>
+                        <td class="word">comprise</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> comprise, comprises, comprised, comprising
+                        </td>
+                        <td class="chinese">包含；組成；構成</td>
+                    </tr>
+                    <tr>
+                        <td class="word">consist</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> consist, consists, consisted, consisting<br>
+                            <span class="form-type">n.</span> consistency<br>
+                            <span class="form-type">adj.</span> consistent<br>
+                            <span class="form-type">adv.</span> consistently
+                        </td>
+                        <td class="chinese">組成；構成；一致</td>
+                    </tr>
+                    <tr>
+                        <td class="word">component</td>
+                        <td class="forms">
+                            <span class="form-type">n.</span> component, components<br>
+                            <span class="form-type">adj.</span> component
+                        </td>
+                        <td class="chinese">組成部分；成分；組件</td>
+                    </tr>
+
+                    <!-- GROUP 38: 獲得/取得 (Acquire/Obtain) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">獲得/取得 | Acquire/Obtain</td>
+                    </tr>
+                    <tr>
+                        <td class="word">acquire</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> acquire, acquires, acquired, acquiring<br>
+                            <span class="form-type">n.</span> acquisition<br>
+                            <span class="form-type">adj.</span> acquired
+                        </td>
+                        <td class="chinese">獲得；取得；學到</td>
+                    </tr>
+                    <tr>
+                        <td class="word">obtain</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> obtain, obtains, obtained, obtaining<br>
+                            <span class="form-type">adj.</span> obtainable
+                        </td>
+                        <td class="chinese">獲得；得到；買到</td>
+                    </tr>
+                    <tr>
+                        <td class="word">attain</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> attain, attains, attained, attaining<br>
+                            <span class="form-type">n.</span> attainment<br>
+                            <span class="form-type">adj.</span> attainable
+                        </td>
+                        <td class="chinese">達到；獲得；實現</td>
+                    </tr>
+
+                    <!-- GROUP 39: 消費/使用 (Consume/Utilize) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">消費/使用 | Consume/Utilize</td>
+                    </tr>
+                    <tr>
+                        <td class="word">consume</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> consume, consumes, consumed, consuming<br>
+                            <span class="form-type">n.</span> consumption, consumer<br>
+                            <span class="form-type">adj.</span> consumable
+                        </td>
+                        <td class="chinese">消費；消耗；吃喝</td>
+                    </tr>
+                    <tr>
+                        <td class="word">utilize</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> utilize, utilizes, utilized, utilizing<br>
+                            <span class="form-type">n.</span> utilization<br>
+                            <span class="form-type">adj.</span> utilitarian
+                        </td>
+                        <td class="chinese">利用；使用；運用</td>
+                    </tr>
+                    <tr>
+                        <td class="word">exploit</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> exploit, exploits, exploited, exploiting<br>
+                            <span class="form-type">n.</span> exploitation<br>
+                            <span class="form-type">adj.</span> exploitative
+                        </td>
+                        <td class="chinese">開發；利用；剝削</td>
+                    </tr>
+
+                    <!-- GROUP 40: 支配/控制 (Dominate/Control) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">支配/控制 | Dominate/Control</td>
+                    </tr>
+                    <tr>
+                        <td class="word">dominate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> dominate, dominates, dominated, dominating<br>
+                            <span class="form-type">n.</span> dominance, domination<br>
+                            <span class="form-type">adj.</span> dominant
+                        </td>
+                        <td class="chinese">支配；統治；主導</td>
+                    </tr>
+                    <tr>
+                        <td class="word">regulate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> regulate, regulates, regulated, regulating<br>
+                            <span class="form-type">n.</span> regulation, regulator<br>
+                            <span class="form-type">adj.</span> regulatory
+                        </td>
+                        <td class="chinese">管制；調節；規範</td>
+                    </tr>
+                    <tr>
+                        <td class="word">restrict</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> restrict, restricts, restricted, restricting<br>
+                            <span class="form-type">n.</span> restriction<br>
+                            <span class="form-type">adj.</span> restrictive, restricted
+                        </td>
+                        <td class="chinese">限制；約束；限定</td>
+                    </tr>
+
+                    <!-- GROUP 41: 察覺/檢測 (Detect/Perceive) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">察覺/檢測 | Detect/Perceive</td>
+                    </tr>
+                    <tr>
+                        <td class="word">detect</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> detect, detects, detected, detecting<br>
+                            <span class="form-type">n.</span> detection, detector<br>
+                            <span class="form-type">adj.</span> detectable
+                        </td>
+                        <td class="chinese">察覺；發現；偵測</td>
+                    </tr>
+                    <tr>
+                        <td class="word">perceive</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> perceive, perceives, perceived, perceiving<br>
+                            <span class="form-type">n.</span> perception<br>
+                            <span class="form-type">adj.</span> perceptive<br>
+                            <span class="form-type">adv.</span> perceptively
+                        </td>
+                        <td class="chinese">感知；察覺；理解</td>
+                    </tr>
+                    <tr>
+                        <td class="word">recognize</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> recognize, recognizes, recognized, recognizing<br>
+                            <span class="form-type">n.</span> recognition<br>
+                            <span class="form-type">adj.</span> recognizable
+                        </td>
+                        <td class="chinese">認出；識別；承認</td>
+                    </tr>
+
+                    <!-- GROUP 42: 強調/突出 (Emphasize/Highlight) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">強調/突出 | Emphasize/Highlight</td>
+                    </tr>
+                    <tr>
+                        <td class="word">emphasize</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> emphasize, emphasizes, emphasized, emphasizing<br>
+                            <span class="form-type">n.</span> emphasis<br>
+                            <span class="form-type">adj.</span> emphatic<br>
+                            <span class="form-type">adv.</span> emphatically
+                        </td>
+                        <td class="chinese">強調；著重；突出</td>
+                    </tr>
+                    <tr>
+                        <td class="word">highlight</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> highlight, highlights, highlighted, highlighting<br>
+                            <span class="form-type">n.</span> highlight
+                        </td>
+                        <td class="chinese">強調；突出；最精彩部分</td>
+                    </tr>
+                    <tr>
+                        <td class="word">stress</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> stress, stresses, stressed, stressing<br>
+                            <span class="form-type">n.</span> stress<br>
+                            <span class="form-type">adj.</span> stressful, stressed
+                        </td>
+                        <td class="chinese">強調；重視；壓力</td>
+                    </tr>
+
+                    <!-- GROUP 43: 假設/推測 (Assume/Presume) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">假設/推測 | Assume/Presume</td>
+                    </tr>
+                    <tr>
+                        <td class="word">assume</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> assume, assumes, assumed, assuming<br>
+                            <span class="form-type">n.</span> assumption<br>
+                            <span class="form-type">adj.</span> assumed
+                        </td>
+                        <td class="chinese">假設；認為；承擔</td>
+                    </tr>
+                    <tr>
+                        <td class="word">presume</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> presume, presumes, presumed, presuming<br>
+                            <span class="form-type">n.</span> presumption<br>
+                            <span class="form-type">adj.</span> presumptive<br>
+                            <span class="form-type">adv.</span> presumably
+                        </td>
+                        <td class="chinese">假定；推測；可能</td>
+                    </tr>
+                    <tr>
+                        <td class="word">speculate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> speculate, speculates, speculated, speculating<br>
+                            <span class="form-type">n.</span> speculation<br>
+                            <span class="form-type">adj.</span> speculative
+                        </td>
+                        <td class="chinese">推測；猜測；投機</td>
+                    </tr>
+
+                    <!-- GROUP 44: 定義/分類 (Define/Classify) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">定義/分類 | Define/Classify</td>
+                    </tr>
+                    <tr>
+                        <td class="word">define</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> define, defines, defined, defining<br>
+                            <span class="form-type">n.</span> definition<br>
+                            <span class="form-type">adj.</span> definite, definitive<br>
+                            <span class="form-type">adv.</span> definitely
+                        </td>
+                        <td class="chinese">定義；界定；明確</td>
+                    </tr>
+                    <tr>
+                        <td class="word">classify</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> classify, classifies, classified, classifying<br>
+                            <span class="form-type">n.</span> classification<br>
+                            <span class="form-type">adj.</span> classified
+                        </td>
+                        <td class="chinese">分類；歸類；劃分</td>
+                    </tr>
+                    <tr>
+                        <td class="word">categorize</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> categorize, categorizes, categorized, categorizing<br>
+                            <span class="form-type">n.</span> category, categorization<br>
+                            <span class="form-type">adj.</span> categorical
+                        </td>
+                        <td class="chinese">分類；歸類；類別</td>
+                    </tr>
+
+                    <!-- GROUP 45: 估計/評估 (Estimate/Assess) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">估計/評估 | Estimate/Assess</td>
+                    </tr>
+                    <tr>
+                        <td class="word">estimate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> estimate, estimates, estimated, estimating<br>
+                            <span class="form-type">n.</span> estimate, estimation<br>
+                            <span class="form-type">adj.</span> estimated
+                        </td>
+                        <td class="chinese">估計；估算；評估</td>
+                    </tr>
+                    <tr>
+                        <td class="word">assess</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> assess, assesses, assessed, assessing<br>
+                            <span class="form-type">n.</span> assessment<br>
+                            <span class="form-type">adj.</span> assessable
+                        </td>
+                        <td class="chinese">評估；評定；估價</td>
+                    </tr>
+                    <tr>
+                        <td class="word">calculate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> calculate, calculates, calculated, calculating<br>
+                            <span class="form-type">n.</span> calculation, calculator<br>
+                            <span class="form-type">adj.</span> calculated, calculating
+                        </td>
+                        <td class="chinese">計算；估計；打算</td>
+                    </tr>
+
+                    <!-- GROUP 46: 致力/投入 (Devote/Commit) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">致力/投入 | Devote/Commit</td>
+                    </tr>
+                    <tr>
+                        <td class="word">devote</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> devote, devotes, devoted, devoting<br>
+                            <span class="form-type">n.</span> devotion<br>
+                            <span class="form-type">adj.</span> devoted
+                        </td>
+                        <td class="chinese">致力於；獻身於；專心</td>
+                    </tr>
+                    <tr>
+                        <td class="word">commit</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> commit, commits, committed, committing<br>
+                            <span class="form-type">n.</span> commitment<br>
+                            <span class="form-type">adj.</span> committed
+                        </td>
+                        <td class="chinese">承諾；致力；犯罪</td>
+                    </tr>
+                    <tr>
+                        <td class="word">dedicate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> dedicate, dedicates, dedicated, dedicating<br>
+                            <span class="form-type">n.</span> dedication<br>
+                            <span class="form-type">adj.</span> dedicated
+                        </td>
+                        <td class="chinese">奉獻；致力於；專注</td>
+                    </tr>
+
+                    <!-- GROUP 47: 分配/分發 (Distribute/Allocate) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">分配/分發 | Distribute/Allocate</td>
+                    </tr>
+                    <tr>
+                        <td class="word">distribute</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> distribute, distributes, distributed, distributing<br>
+                            <span class="form-type">n.</span> distribution, distributor<br>
+                            <span class="form-type">adj.</span> distributive
+                        </td>
+                        <td class="chinese">分配；分發；散佈</td>
+                    </tr>
+                    <tr>
+                        <td class="word">allocate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> allocate, allocates, allocated, allocating<br>
+                            <span class="form-type">n.</span> allocation
+                        </td>
+                        <td class="chinese">分配；撥出；劃撥</td>
+                    </tr>
+                    <tr>
+                        <td class="word">assign</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> assign, assigns, assigned, assigning<br>
+                            <span class="form-type">n.</span> assignment<br>
+                            <span class="form-type">adj.</span> assigned
+                        </td>
+                        <td class="chinese">分配；指派；佈置</td>
+                    </tr>
+
+                    <!-- GROUP 48: 展示/呈現 (Exhibit/Display) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">展示/呈現 | Exhibit/Display</td>
+                    </tr>
+                    <tr>
+                        <td class="word">exhibit</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> exhibit, exhibits, exhibited, exhibiting<br>
+                            <span class="form-type">n.</span> exhibition, exhibit<br>
+                            <span class="form-type">adj.</span> exhibited
+                        </td>
+                        <td class="chinese">展示；顯示；展覽</td>
+                    </tr>
+                    <tr>
+                        <td class="word">display</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> display, displays, displayed, displaying<br>
+                            <span class="form-type">n.</span> display
+                        </td>
+                        <td class="chinese">陳列；展示；顯示</td>
+                    </tr>
+                    <tr>
+                        <td class="word">reveal</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> reveal, reveals, revealed, revealing<br>
+                            <span class="form-type">n.</span> revelation<br>
+                            <span class="form-type">adj.</span> revealing, revealed
+                        </td>
+                        <td class="chinese">揭示；透露；顯示</td>
+                    </tr>
+
+                    <!-- GROUP 49: 引用/提及 (Cite/Refer) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">引用/提及 | Cite/Refer</td>
+                    </tr>
+                    <tr>
+                        <td class="word">cite</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> cite, cites, cited, citing<br>
+                            <span class="form-type">n.</span> citation
+                        </td>
+                        <td class="chinese">引用；引證；舉例</td>
+                    </tr>
+                    <tr>
+                        <td class="word">refer</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> refer, refers, referred, referring<br>
+                            <span class="form-type">n.</span> reference<br>
+                            <span class="form-type">adj.</span> referential
+                        </td>
+                        <td class="chinese">提到；參考；查閱</td>
+                    </tr>
+                    <tr>
+                        <td class="word">quote</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> quote, quotes, quoted, quoting<br>
+                            <span class="form-type">n.</span> quote, quotation
+                        </td>
+                        <td class="chinese">引用；引述；報價</td>
+                    </tr>
+
+                    <!-- GROUP 50: 排除/省略 (Exclude/Omit) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">排除/省略 | Exclude/Omit</td>
+                    </tr>
+                    <tr>
+                        <td class="word">exclude</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> exclude, excludes, excluded, excluding<br>
+                            <span class="form-type">n.</span> exclusion<br>
+                            <span class="form-type">adj.</span> exclusive<br>
+                            <span class="form-type">adv.</span> exclusively
+                        </td>
+                        <td class="chinese">排除；不包括；獨家的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">omit</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> omit, omits, omitted, omitting<br>
+                            <span class="form-type">n.</span> omission
+                        </td>
+                        <td class="chinese">省略；遺漏；刪除</td>
+                    </tr>
+                    <tr>
+                        <td class="word">neglect</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> neglect, neglects, neglected, neglecting<br>
+                            <span class="form-type">n.</span> neglect<br>
+                            <span class="form-type">adj.</span> neglected, neglectful
+                        </td>
+                        <td class="chinese">忽視；疏忽；忽略</td>
+                    </tr>
+
+                    <!-- GROUP 51: 超過/勝過 (Exceed/Surpass) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">超過/勝過 | Exceed/Surpass</td>
+                    </tr>
+                    <tr>
+                        <td class="word">exceed</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> exceed, exceeds, exceeded, exceeding<br>
+                            <span class="form-type">adv.</span> exceedingly
+                        </td>
+                        <td class="chinese">超過；超出；勝過</td>
+                    </tr>
+                    <tr>
+                        <td class="word">surpass</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> surpass, surpasses, surpassed, surpassing<br>
+                            <span class="form-type">adj.</span> surpassing
+                        </td>
+                        <td class="chinese">超過；勝過；優於</td>
+                    </tr>
+                    <tr>
+                        <td class="word">outweigh</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> outweigh, outweighs, outweighed, outweighing
+                        </td>
+                        <td class="chinese">比...重要；勝過</td>
+                    </tr>
+
+                    <!-- GROUP 52: 遭遇/經歷 (Encounter/Experience) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">遭遇/經歷 | Encounter/Experience</td>
+                    </tr>
+                    <tr>
+                        <td class="word">encounter</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> encounter, encounters, encountered, encountering<br>
+                            <span class="form-type">n.</span> encounter
+                        </td>
+                        <td class="chinese">遭遇；遇到；邂逅</td>
+                    </tr>
+                    <tr>
+                        <td class="word">experience</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> experience, experiences, experienced, experiencing<br>
+                            <span class="form-type">n.</span> experience<br>
+                            <span class="form-type">adj.</span> experienced
+                        </td>
+                        <td class="chinese">經歷；體驗；經驗</td>
+                    </tr>
+                    <tr>
+                        <td class="word">undergo</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> undergo, undergoes, underwent, undergone, undergoing
+                        </td>
+                        <td class="chinese">經歷；經受；遭受</td>
+                    </tr>
+
+                    <!-- GROUP 53: 衍生/源於 (Derive/Originate) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">衍生/源於 | Derive/Originate</td>
+                    </tr>
+                    <tr>
+                        <td class="word">derive</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> derive, derives, derived, deriving<br>
+                            <span class="form-type">n.</span> derivation, derivative<br>
+                            <span class="form-type">adj.</span> derivative
+                        </td>
+                        <td class="chinese">衍生；源於；獲得</td>
+                    </tr>
+                    <tr>
+                        <td class="word">originate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> originate, originates, originated, originating<br>
+                            <span class="form-type">n.</span> origin, origination<br>
+                            <span class="form-type">adj.</span> original<br>
+                            <span class="form-type">adv.</span> originally
+                        </td>
+                        <td class="chinese">起源；發源；創始</td>
+                    </tr>
+                    <tr>
+                        <td class="word">stem</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> stem, stems, stemmed, stemming<br>
+                            <span class="form-type">n.</span> stem
+                        </td>
+                        <td class="chinese">源於；起源於；莖</td>
+                    </tr>
+
+                    <!-- GROUP 54: 使能夠/促進 (Enable/Facilitate) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">使能夠/促進 | Enable/Facilitate</td>
+                    </tr>
+                    <tr>
+                        <td class="word">enable</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> enable, enables, enabled, enabling<br>
+                            <span class="form-type">adj.</span> enabling
+                        </td>
+                        <td class="chinese">使能夠；使可能；促進</td>
+                    </tr>
+                    <tr>
+                        <td class="word">facilitate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> facilitate, facilitates, facilitated, facilitating<br>
+                            <span class="form-type">n.</span> facilitation, facilitator<br>
+                            <span class="form-type">adj.</span> facilitative
+                        </td>
+                        <td class="chinese">促進；使便利；推動</td>
+                    </tr>
+                    <tr>
+                        <td class="word">empower</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> empower, empowers, empowered, empowering<br>
+                            <span class="form-type">n.</span> empowerment<br>
+                            <span class="form-type">adj.</span> empowered
+                        </td>
+                        <td class="chinese">授權；使能夠；賦能</td>
+                    </tr>
+
+                    <!-- GROUP 55: 產生/生成 (Generate/Produce) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">產生/生成 | Generate/Produce</td>
+                    </tr>
+                    <tr>
+                        <td class="word">generate</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> generate, generates, generated, generating<br>
+                            <span class="form-type">n.</span> generation, generator<br>
+                            <span class="form-type">adj.</span> generative
+                        </td>
+                        <td class="chinese">產生；生成；引起</td>
+                    </tr>
+                    <tr>
+                        <td class="word">produce</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> produce, produces, produced, producing<br>
+                            <span class="form-type">n.</span> production, producer, product<br>
+                            <span class="form-type">adj.</span> productive<br>
+                            <span class="form-type">adv.</span> productively
+                        </td>
+                        <td class="chinese">生產；製造；產品</td>
+                    </tr>
+                    <tr>
+                        <td class="word">yield</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> yield, yields, yielded, yielding<br>
+                            <span class="form-type">n.</span> yield
+                        </td>
+                        <td class="chinese">產生；出產；屈服</td>
+                    </tr>
+
+                    <!-- GROUP 56: 潛在/可能 (Potential/Possible) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">潛在/可能 | Potential/Possible</td>
+                    </tr>
+                    <tr>
+                        <td class="word">potential</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> potential<br>
+                            <span class="form-type">n.</span> potential, potentiality<br>
+                            <span class="form-type">adv.</span> potentially
+                        </td>
+                        <td class="chinese">潛在的；可能的；潛力</td>
+                    </tr>
+                    <tr>
+                        <td class="word">probable</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> probable, improbable<br>
+                            <span class="form-type">n.</span> probability<br>
+                            <span class="form-type">adv.</span> probably
+                        </td>
+                        <td class="chinese">可能的；大概的；概率</td>
+                    </tr>
+                    <tr>
+                        <td class="word">likely</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> likely, unlikely<br>
+                            <span class="form-type">n.</span> likelihood<br>
+                            <span class="form-type">adv.</span> likely
+                        </td>
+                        <td class="chinese">可能的；有希望的；可能性</td>
+                    </tr>
+
+                    <!-- GROUP 31: 其他重要詞彙 (Other Important Words) -->
+                    <tr style="background: #e3f2fd;">
+                        <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">其他重要詞彙 | Other Important Words</td>
+                    </tr>
+                    <tr>
+                        <td class="word">implicit</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> implicit, explicit<br>
+                            <span class="form-type">adv.</span> implicitly, explicitly
+                        </td>
+                        <td class="chinese">含蓄的；隱含的；明確的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">prevent</td>
+                        <td class="forms">
+                            <span class="form-type">v.</span> prevent, prevents, prevented, preventing<br>
+                            <span class="form-type">n.</span> prevention<br>
+                            <span class="form-type">adj.</span> preventive, preventable<br>
+                            <span class="form-type">adv.</span> preventively
+                        </td>
+                        <td class="chinese">防止；預防；可預防的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">redundant</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> redundant<br>
+                            <span class="form-type">n.</span> redundancy<br>
+                            <span class="form-type">adv.</span> redundantly
+                        </td>
+                        <td class="chinese">多餘的；冗餘的</td>
+                    </tr>
+                    <tr>
+                        <td class="word">tangible</td>
+                        <td class="forms">
+                            <span class="form-type">adj.</span> tangible, intangible<br>
+                            <span class="form-type">adv.</span> tangibly
+                        </td>
+                        <td class="chinese">有形的；實在的；無形的</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div id="toc">
+        <h3>📑 TOC</h3>
+        <ul id="toc-list"></ul>
+    </div>
+
+    <script>
+        // Add IDs to group headers
+        const groupComments = document.querySelectorAll('tbody tr');
+        const groupIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 31];
+        let groupIndex = 0;
+        
+        groupComments.forEach(tr => {
+            if (tr.querySelector('td[colspan="3"]')) {
+                tr.id = `group${groupIds[groupIndex]}`;
+                groupIndex++;
+            }
+        });
+
+        // Generate Table of Contents
+        const groups = [
+            { id: 1, name: '重要的' },
+            { id: 2, name: '影響' },
+            { id: 3, name: '解決' },
+            { id: 4, name: '改善/提高' },
+            { id: 5, name: '調查/研究' },
+            { id: 6, name: '解釋/說明' },
+            { id: 7, name: '可行的/可能的' },
+            { id: 8, name: '有道理的/合理的' },
+            { id: 9, name: '促成/貢獻' },
+            { id: 10, name: '描述/說明' },
+            { id: 11, name: '清晰/連貫' },
+            { id: 12, name: '全面/廣泛' },
+            { id: 13, name: '發展/進化' },
+            { id: 14, name: '深刻/新穎' },
+            { id: 15, name: '分析/評估' },
+            { id: 16, name: '討論/爭論' },
+            { id: 17, name: '導致/引發' },
+            { id: 18, name: '達成/實施' },
+            { id: 19, name: '合作/競爭' },
+            { id: 20, name: '不同/相似' },
+            { id: 21, name: '優越/優勢' },
+            { id: 22, name: '有效率/實用' },
+            { id: 23, name: '可用/可靠' },
+            { id: 24, name: '適當/相關' },
+            { id: 25, name: '複雜/簡單' },
+            { id: 26, name: '證據/證明' },
+            { id: 27, name: '概念/理論' },
+            { id: 28, name: '社會/環境' },
+            { id: 29, name: '時間相關' },
+            { id: 30, name: '情緒/態度' },
+            { id: 32, name: '足夠/充分' },
+            { id: 33, name: '建立/確立' },
+            { id: 34, name: '確保/確認' },
+            { id: 35, name: '消除/減少' },
+            { id: 36, name: '出現/發生' },
+            { id: 37, name: '包含/組成' },
+            { id: 38, name: '獲得/取得' },
+            { id: 39, name: '消費/使用' },
+            { id: 40, name: '支配/控制' },
+            { id: 41, name: '察覺/檢測' },
+            { id: 42, name: '強調/突出' },
+            { id: 43, name: '假設/推測' },
+            { id: 44, name: '定義/分類' },
+            { id: 45, name: '估計/評估' },
+            { id: 46, name: '致力/投入' },
+            { id: 47, name: '分配/分發' },
+            { id: 48, name: '展示/呈現' },
+            { id: 49, name: '引用/提及' },
+            { id: 50, name: '排除/省略' },
+            { id: 51, name: '超過/勝過' },
+            { id: 52, name: '遭遇/經歷' },
+            { id: 53, name: '衍生/源於' },
+            { id: 54, name: '使能夠/促進' },
+            { id: 55, name: '產生/生成' },
+            { id: 56, name: '潛在/可能' },
+            { id: 31, name: '其他重要詞彙' }
+        ];
+
+        const tocList = document.getElementById('toc-list');
+        groups.forEach(group => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = `#group${group.id}`;
+            a.textContent = `${group.id}. ${group.name}`;
+            a.dataset.groupId = group.id;
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetElement = document.getElementById(`group${group.id}`);
+                if (targetElement) {
+                    const yOffset = -100;
+                    const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                    
+                    // Update URL hash
+                    history.pushState(null, null, `#group${group.id}`);
+                }
+            });
+            li.appendChild(a);
+            tocList.appendChild(li);
+        });
+
+        // Scroll spy - highlight active section in TOC
+        function updateActiveLink() {
+            const scrollPosition = window.pageYOffset + 150;
+            
+            let currentGroup = null;
+            groups.forEach(group => {
+                const element = document.getElementById(`group${group.id}`);
+                if (element) {
+                    const elementTop = element.offsetTop;
+                    if (scrollPosition >= elementTop) {
+                        currentGroup = group.id;
+                    }
+                }
+            });
+            
+            // Remove active class from all links
+            document.querySelectorAll('#toc a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to current link
+            if (currentGroup) {
+                const activeLink = document.querySelector(`#toc a[data-group-id="${currentGroup}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        }
+
+        // Run on scroll
+        window.addEventListener('scroll', updateActiveLink);
+        // Run on page load
+        updateActiveLink();
+    </script>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        
+        // Disable text selection
+        document.addEventListener('selectstart', event => event.preventDefault());
+        
+        // Disable copy
+        document.addEventListener('copy', event => event.preventDefault());
+        
+        // Disable cut
+        document.addEventListener('cut', event => event.preventDefault());
+        
+        // Disable drag
+        document.addEventListener('dragstart', event => event.preventDefault());
+        
+        // Disable keyboard shortcuts for copying and viewing source
+        document.addEventListener('keydown', event => {
+            // Prevent Ctrl+C, Ctrl+U, F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+            if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'C' || 
+                event.key === 'u' || event.key === 'U')) {
+                event.preventDefault();
+            }
+            if (event.key === 'F12' || 
+                ((event.ctrlKey || event.metaKey) && event.shiftKey && 
+                 (event.key === 'I' || event.key === 'i' || 
+                  event.key === 'J' || event.key === 'j' || 
+                  event.key === 'C' || event.key === 'c'))) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>

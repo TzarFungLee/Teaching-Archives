@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>So, So That, So As To</title>
+    <style>
+        /* HIGHLIGHTING SCHEME FOR SO, SO THAT, SO AS TO TEACHING
+           Cyan (#a5f3fc): Main clause / action
+           Green (#bbf7d0): Main verbs
+           Yellow (#fef3c7): Purpose clause / reason
+           Red (#fecaca): Connector words (so, so that, so as to)
+        */
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); }
+        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
+        .back-btn:hover { text-decoration: underline; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+        h2 { color: var(--primary); margin-top: 0; }
+        h3 { color: var(--primary); }
+
+        .content { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
+        th { background: #eff6ff; font-weight: 600; }
+        tr:nth-child(even) { background: #f8fafc; }
+
+        .btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 9px 16px; border-radius: 8px; text-decoration: none; border: none; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(2,30,80,0.06); display: inline-block; margin-right: 10px; }
+        .btn:hover { text-decoration: none; opacity: 0.9; }
+
+        .resources { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+
+        ul { line-height: 1.8; }
+        li { margin-bottom: 10px; }
+
+        hr { margin: 30px 0; border: none; border-top: 1px solid #e2e8f0; }
+
+        mark { background-color: #fef3c7; padding: 2px 6px; border-radius: 3px; }
+        mark.cyan { background-color: #a5f3fc; }
+        mark.green { background-color: #bbf7d0; }
+        mark.yellow { background-color: #fef3c7; }
+        mark.red { background-color: #fecaca; }
+    </style>
+</head>
+
+<style>
+  /* Disable text selection */
+  body {
+    user-select: none;
+  }
+</style>
+
+<script>
+  // Disable right-click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Disable common copy shortcuts (Ctrl+C / Cmd+C)
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+      e.preventDefault();
+      alert('Copying is disabled on this page.');
+    }
+  });
+
+  // Optional: Disable text drag
+  document.addEventListener('dragstart', event => event.preventDefault());
+</script>
+
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="back-btn">← Back to the Archives</a>
+    </div>
+
+    <header>
+        <h1>So, So That, and So As To</h1>
+    </header>
+
+    <div class="content">
+
+        <h3>💡 Key Concepts</h3>
+        <ul>
+            <li><strong>When to use:</strong> Express purpose, reason, or result</li>
+            <li><strong>Three different structures:</strong>
+                <ul>
+                    <li><strong>"so"</strong> - Shows result/consequence (connects two clauses)</li>
+                    <li><strong>"so that"</strong> - Shows purpose/intention (with subject + verb)</li>
+                    <li><strong>"so as to"</strong> - Shows purpose/intention (formal, with infinitive)</li>
+                </ul>
+            </li>
+            <li><strong>Structure:</strong>
+                <ul>
+                    <li><mark class="cyan">Clause 1</mark><mark class="yellow">,</mark> <mark class="red">so</mark> + <mark class="yellow">clause 2</mark> (result)</li>
+                    <li><mark class="cyan">Action</mark> + <mark class="red">so that</mark> + <mark class="yellow">subject + modal + verb</mark> (purpose)</li>
+                    <li><mark class="cyan">Action</mark> + <mark class="red">so as to</mark> + <mark class="yellow">infinitive</mark> (formal purpose)</li>
+                </ul>
+            </li>
+            <li><strong>Reminders:</strong> 
+                <ul>
+                    <li>"So" = result: cause + <mark class="red">so</mark> + result</li>
+                    <li>"So that" = purpose: action + <mark class="red">so that</mark> + purpose (subject + verb)</li>
+                    <li>"So as to" = purpose: action + <mark class="red">so as to</mark> + infinitive (formal)</li>
+                    <li>"So that" can use modal verbs (can, will, could, would)</li>
+                </ul>
+            </li>
+        </ul>
+
+        <hr>
+
+        <h3>📋 Formation Rules</h3>
+        <table>
+            <tr>
+                <th>Structure</th>
+                <th>Pattern</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>SO (result)</strong></td>
+                <td>Clause 1, so + clause 2</td>
+                <td><mark class="cyan">I was <mark class="green">tired</mark></mark>, <mark class="red">so</mark> <mark class="yellow">I <mark class="green">went</mark> to bed early</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>SO THAT (purpose)</strong></td>
+                <td>Clause 1 + so that + subject + verb</td>
+                <td><mark class="cyan">I <mark class="green">study</mark> hard</mark> <mark class="red">so that</mark> <mark class="yellow">I can <mark class="green">pass</mark> the exam</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>SO AS TO (purpose - formal)</strong></td>
+                <td>Clause 1 + so as to + infinitive</td>
+                <td><mark class="cyan">She <mark class="green">arrived</mark> early</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">get</mark> a good seat</mark>.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>📖 Examples by Type</h3>
+
+        <h4>1. "SO" - Showing Result/Consequence</h4>
+        <ul>
+            <li><mark class="cyan">It was <mark class="green">raining</mark></mark>, <mark class="red">so</mark> <mark class="yellow">we <mark class="green">stayed</mark> inside</mark>.</li>
+            <li><mark class="cyan">I <mark class="green">forgot</mark> my wallet</mark>, <mark class="red">so</mark> <mark class="yellow">I couldn't <mark class="green">buy</mark> lunch</mark>.</li>
+            <li><mark class="cyan">The movie was <mark class="green">boring</mark></mark>, <mark class="red">so</mark> <mark class="yellow">we <mark class="green">left</mark> early</mark>.</li>
+            <li><mark class="cyan">He <mark class="green">studied</mark> hard</mark>, <mark class="red">so</mark> <mark class="yellow">he <mark class="green">passed</mark> the test</mark>.</li>
+        </ul>
+
+        <h4>2. "SO THAT" - Showing Purpose/Intention</h4>
+        <ul>
+            <li><mark class="cyan">I <mark class="green">set</mark> an alarm</mark> <mark class="red">so that</mark> <mark class="yellow">I won't <mark class="green">be</mark> late</mark>.</li>
+            <li><mark class="cyan">She <mark class="green">speaks</mark> slowly</mark> <mark class="red">so that</mark> <mark class="yellow">everyone can <mark class="green">understand</mark></mark>.</li>
+            <li><mark class="cyan">They <mark class="green">saved</mark> money</mark> <mark class="red">so that</mark> <mark class="yellow">they could <mark class="green">buy</mark> a car</mark>.</li>
+            <li><mark class="cyan">He <mark class="green">whispered</mark></mark> <mark class="red">so that</mark> <mark class="yellow">nobody would <mark class="green">hear</mark> him</mark>.</li>
+        </ul>
+
+        <h4>3. "SO AS TO" - Showing Purpose (Formal)</h4>
+        <ul>
+            <li><mark class="cyan">She <mark class="green">left</mark> early</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">avoid</mark> traffic</mark>.</li>
+            <li><mark class="cyan">He <mark class="green">took</mark> notes</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">remember</mark> everything</mark>.</li>
+            <li><mark class="cyan">We <mark class="green">booked</mark> in advance</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">get</mark> better prices</mark>.</li>
+            <li><mark class="cyan">They <mark class="green">arrived</mark> early</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">prepare</mark> the room</mark>.</li>
+        </ul>
+
+        <hr>
+
+        <h3>🔄 Comparing the Three Structures</h3>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Meaning</th>
+                <th>Formality</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>so</strong></td>
+                <td>Result/Consequence</td>
+                <td>Informal/Neutral</td>
+                <td><mark class="cyan">I was <mark class="green">hungry</mark></mark>, <mark class="red">so</mark> <mark class="yellow">I <mark class="green">ate</mark> something</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>so that</strong></td>
+                <td>Purpose/Intention</td>
+                <td>Neutral</td>
+                <td><mark class="cyan">I <mark class="green">eat</mark> healthy food</mark> <mark class="red">so that</mark> <mark class="yellow">I can <mark class="green">stay</mark> fit</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>so as to</strong></td>
+                <td>Purpose/Intention</td>
+                <td>Formal</td>
+                <td><mark class="cyan">I <mark class="green">eat</mark> healthy food</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">stay</mark> fit</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>in order to</strong></td>
+                <td>Purpose/Intention</td>
+                <td>Formal (alternative)</td>
+                <td><mark class="cyan">I <mark class="green">eat</mark> healthy food</mark> <mark class="red">in order to</mark> <mark class="yellow"><mark class="green">stay</mark> fit</mark>.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>🎯 "So That" with Modal Verbs</h3>
+        <table>
+            <tr>
+                <th>Modal Verb</th>
+                <th>Meaning</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>can</strong></td>
+                <td>ability/possibility</td>
+                <td><mark class="cyan">I <mark class="green">study</mark> English</mark> <mark class="red">so that</mark> <mark class="yellow">I can <mark class="green">travel</mark> abroad</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>will</strong></td>
+                <td>future certainty</td>
+                <td><mark class="cyan">She <mark class="green">works</mark> hard</mark> <mark class="red">so that</mark> <mark class="yellow">she will <mark class="green">succeed</mark></mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>could</strong></td>
+                <td>past ability/possibility</td>
+                <td><mark class="cyan">He <mark class="green">saved</mark> money</mark> <mark class="red">so that</mark> <mark class="yellow">he could <mark class="green">buy</mark> a bike</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>would</strong></td>
+                <td>past intention</td>
+                <td><mark class="cyan">They <mark class="green">left</mark> early</mark> <mark class="red">so that</mark> <mark class="yellow">they would <mark class="green">arrive</mark> on time</mark>.</td>
+            </tr>
+            <tr>
+                <td><strong>won't</strong></td>
+                <td>future negative</td>
+                <td><mark class="cyan">I <mark class="green">lock</mark> the door</mark> <mark class="red">so that</mark> <mark class="yellow">nobody will <mark class="green">enter</mark></mark>.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>� Teaching Slides</h3>
+
+<div style="position:relative; width:100%; padding-bottom:56.25%; height:0; overflow:hidden; background:#f8fafc; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+  <p style="color:#64748b;">Teaching slides will be embedded here</p>
+</div>
+
+        <hr>
+
+        <h3>�📖 Practice</h3>
+        <table>
+            <tr>
+                <th>Situation</th>
+                <th>Complete Sentence</th>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Using "SO" (result) - Example</strong></td>
+            </tr>
+            <tr>
+                <td>tired / went to bed</td>
+                <td><mark class="cyan">I was <mark class="green">tired</mark></mark>, <mark class="red">so</mark> <mark class="yellow">I <mark class="green">went</mark> to bed</mark>.</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Your Turn - Fill in the Blanks (SO)</strong></td>
+            </tr>
+            <tr>
+                <td>hungry / ate a sandwich</td>
+                <td><mark class="cyan">I was __________</mark>, <mark class="red">so</mark> <mark class="yellow">I __________ a sandwich</mark>.</td>
+            </tr>
+            <tr>
+                <td>missed the bus / was late</td>
+                <td><mark class="cyan">He __________ the bus</mark>, <mark class="red">so</mark> <mark class="yellow">he __________ late</mark>.</td>
+            </tr>
+            <tr>
+                <td>weather was bad / stayed home</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Using "SO THAT" (purpose) - Example</strong></td>
+            </tr>
+            <tr>
+                <td>study hard / can pass</td>
+                <td><mark class="cyan">I <mark class="green">study</mark> hard</mark> <mark class="red">so that</mark> <mark class="yellow">I can <mark class="green">pass</mark> the exam</mark>.</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Your Turn - Fill in the Blanks (SO THAT)</strong></td>
+            </tr>
+            <tr>
+                <td>save money / can buy a car</td>
+                <td><mark class="cyan">She __________ money</mark> <mark class="red">so that</mark> <mark class="yellow">she __________ buy a car</mark>.</td>
+            </tr>
+            <tr>
+                <td>speak loudly / everyone can hear</td>
+                <td><mark class="cyan">He __________ loudly</mark> <mark class="red">so that</mark> <mark class="yellow">everyone __________ hear</mark>.</td>
+            </tr>
+            <tr>
+                <td>exercise regularly / will be healthy</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>wrote it down / wouldn't forget</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Using "SO AS TO" (formal purpose) - Example</strong></td>
+            </tr>
+            <tr>
+                <td>left early / avoid traffic</td>
+                <td><mark class="cyan">She <mark class="green">left</mark> early</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">avoid</mark> traffic</mark>.</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Your Turn - Fill in the Blanks (SO AS TO)</strong></td>
+            </tr>
+            <tr>
+                <td>arrived early / get a good seat</td>
+                <td><mark class="cyan">They __________ early</mark> <mark class="red">so as to</mark> <mark class="yellow">__________ a good seat</mark>.</td>
+            </tr>
+            <tr>
+                <td>took notes / remember everything</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>practiced daily / improve skills</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><strong>Mixed Practice - Choose the Correct Form</strong></td>
+            </tr>
+            <tr>
+                <td>It was raining (result)</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>I set an alarm (purpose - can wake up)</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+            <tr>
+                <td>She studies hard (purpose - formal)</td>
+                <td>___________________________________________________________________________</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>⚠️ Common Mistakes</h3>
+        <table>
+            <tr>
+                <th>❌ Incorrect</th>
+                <th>✅ Correct</th>
+            </tr>
+            <tr>
+                <td>I study hard so that pass the exam. (missing subject)</td>
+                <td><mark class="cyan">I <mark class="green">study</mark> hard</mark> <mark class="red">so that</mark> <mark class="yellow">I can <mark class="green">pass</mark> the exam</mark>.</td>
+            </tr>
+            <tr>
+                <td>She left early so as to she could avoid traffic. (wrong structure)</td>
+                <td><mark class="cyan">She <mark class="green">left</mark> early</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">avoid</mark> traffic</mark>.</td>
+            </tr>
+            <tr>
+                <td>I was tired so that I went to bed. (wrong connector)</td>
+                <td><mark class="cyan">I was <mark class="green">tired</mark></mark>, <mark class="red">so</mark> <mark class="yellow">I <mark class="green">went</mark> to bed</mark>.</td>
+            </tr>
+            <tr>
+                <td>He whispered so as to nobody would hear. (wrong verb form)</td>
+                <td><mark class="cyan">He <mark class="green">whispered</mark></mark> <mark class="red">so that</mark> <mark class="yellow">nobody would <mark class="green">hear</mark></mark>.</td>
+            </tr>
+            <tr>
+                <td>I study English so that to travel abroad. (mixed structure)</td>
+                <td><mark class="cyan">I <mark class="green">study</mark> English</mark> <mark class="red">so as to</mark> <mark class="yellow"><mark class="green">travel</mark> abroad</mark>.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>💡 Quick Reference Guide</h3>
+        <table>
+            <tr>
+                <th>Use This</th>
+                <th>When You Want To</th>
+                <th>Pattern</th>
+            </tr>
+            <tr>
+                <td><strong>SO</strong></td>
+                <td>Show a result or consequence</td>
+                <td>Reason, <mark class="red">so</mark> result</td>
+            </tr>
+            <tr>
+                <td><strong>SO THAT</strong></td>
+                <td>Show purpose with a subject and verb</td>
+                <td>Action <mark class="red">so that</mark> subject + modal + verb</td>
+            </tr>
+            <tr>
+                <td><strong>SO AS TO</strong></td>
+                <td>Show purpose formally (no subject needed)</td>
+                <td>Action <mark class="red">so as to</mark> + infinitive</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
