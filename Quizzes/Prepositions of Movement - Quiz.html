@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Prepositions of Movement</title>
+    <style>
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); --success: #10b981; --error: #ef4444; }
+        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; text-decoration: none; }
+        .back-btn:hover { text-decoration: underline; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+
+        .quiz-container { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+
+        .question { margin-bottom: 30px; padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary); }
+        .question-text { font-weight: 600; margin-bottom: 15px; font-size: 1.1rem; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option { padding: 12px 16px; background: white; border: 2px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .option:hover { border-color: var(--primary); background: #eff6ff; }
+        .option input[type="radio"] { margin-right: 10px; cursor: pointer; }
+        
+        .feedback { margin-top: 10px; padding: 12px; border-radius: 6px; font-weight: 500; display: none; }
+        .feedback.correct { background: #d1fae5; color: #065f46; border: 1px solid #10b981; display: block; }
+        .feedback.incorrect { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; display: block; }
+
+        .check-btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 8px 20px; border-radius: 8px; border: none; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 12px rgba(2,30,80,0.06); margin-top: 12px; }
+        .check-btn:hover { opacity: 0.9; }
+        .check-btn:disabled { opacity: 0.5; cursor: not-allowed; background: #9ca3af; }
+
+        .progress-container { text-align: center; padding: 15px; background: #eff6ff; border-radius: 8px; margin-bottom: 20px; position: sticky; top: 20px; z-index: 10; }
+        .progress-text { font-size: 1.1rem; font-weight: 600; color: var(--primary); }
+
+        .reset-btn { background: #6b7280; color: white; padding: 8px 16px; border-radius: 6px; border: none; font-size: 0.85rem; cursor: pointer; margin-left: 10px; }
+        .reset-btn:hover { background: #4b5563; }
+
+        .explanation { margin-top: 8px; padding: 10px; background: #fef3c7; border-left: 3px solid #f59e0b; border-radius: 4px; font-size: 0.95rem; display: none; }
+        .explanation.show { display: block; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../Grammar/Prepositions of Movement.html" class="back-btn">← Back to Lesson</a>
+    </div>
+
+    <header>
+        <h1>📝 Quiz: Prepositions of Movement</h1>
+    </header>
+
+    <div class="quiz-container">
+        <div class="progress-container" id="progressContainer">
+            <span class="progress-text" id="progressText">Answer the questions below</span>
+            <button class="reset-btn" onclick="resetQuiz()">Reset All</button>
+        </div>
+
+        <form id="quizForm">
+            <!-- Questions will be dynamically generated here -->
+        </form>
+    </div>
+</div>
+
+<script>
+    let checkedQuestions = new Set();
+    let currentQuestions = [];
+    let answers = {};
+    
+    // Question bank with all possible questions
+    const questionBank = [
+        {
+            question: "She walked _____ the street to the other side.",
+            options: ["across", "through", "into"],
+            correct: 0,
+            explanation: "Use 'across' for movement from one side to the other of a surface."
+        },
+        {
+            question: "The train went _____ the tunnel.",
+            options: ["through", "across", "over"],
+            correct: 0,
+            explanation: "Use 'through' for movement from one end to the other inside something."
+        },
+        {
+            question: "He jumped _____ the fence.",
+            options: ["over", "across", "through"],
+            correct: 0,
+            explanation: "Use 'over' for movement above and across something."
+        },
+        {
+            question: "We drove _____ the bridge.",
+            options: ["over", "through", "into"],
+            correct: 0,
+            explanation: "Use 'over' when crossing on top of something like a bridge."
+        },
+        {
+            question: "The cat climbed _____ the tree.",
+            options: ["up", "down", "across"],
+            correct: 0,
+            explanation: "Use 'up' for upward movement."
+        },
+        {
+            question: "She walked _____ the stairs carefully.",
+            options: ["down", "up", "into"],
+            correct: 0,
+            explanation: "Use 'down' for downward movement."
+        },
+        {
+            question: "They ran _____ the room when the bell rang.",
+            options: ["out of", "into", "along"],
+            correct: 0,
+            explanation: "Use 'out of' for movement from inside to outside."
+        },
+        {
+            question: "He walked _____ the shop to buy milk.",
+            options: ["into", "out of", "along"],
+            correct: 0,
+            explanation: "Use 'into' for movement from outside to inside."
+        },
+        {
+            question: "Which is CORRECT?",
+            options: ["Walk through the bridge.", "Walk over the bridge.", "Walk into the bridge."],
+            correct: 1,
+            explanation: "Use 'over' when crossing on top of a bridge."
+        },
+        {
+            question: "The children ran _____ the park.",
+            options: ["around", "into", "up"],
+            correct: 0,
+            explanation: "Use 'around' for circular movement or moving in the area."
+        },
+        {
+            question: "She swam _____ the river.",
+            options: ["across", "through", "over"],
+            correct: 0,
+            explanation: "Use 'across' when moving from one side to the other of a surface (water)."
+        },
+        {
+            question: "We walked _____ the beach.",
+            options: ["along", "through", "into"],
+            correct: 0,
+            explanation: "Use 'along' for movement in a line beside or following something."
+        },
+        {
+            question: "The ball rolled _____ the hill.",
+            options: ["down", "up", "across"],
+            correct: 0,
+            explanation: "Use 'down' for downward movement from high to low."
+        },
+        {
+            question: "Which is INCORRECT?",
+            options: ["Go up the mountain.", "Go through the door.", "Go across the tunnel."],
+            correct: 2,
+            explanation: "Use 'through' (not 'across') for movement inside a tunnel."
+        },
+        {
+            question: "The plane flew _____ the clouds.",
+            options: ["through", "across", "into"],
+            correct: 0,
+            explanation: "Use 'through' for movement inside or among something (like clouds)."
+        },
+        {
+            question: "He drove _____ the city center.",
+            options: ["through", "over", "across"],
+            correct: 0,
+            explanation: "Use 'through' for movement within an area from one end to another."
+        },
+        {
+            question: "The snake slithered _____ the grass.",
+            options: ["through", "over", "into"],
+            correct: 0,
+            explanation: "Use 'through' for movement among/within things like grass."
+        },
+        {
+            question: "She climbed _____ the ladder.",
+            options: ["up", "down", "across"],
+            correct: 0,
+            explanation: "Use 'up' for upward climbing movement."
+        },
+        {
+            question: "They walked _____ the river bank.",
+            options: ["along", "through", "into"],
+            correct: 0,
+            explanation: "Use 'along' when following a path beside something."
+        },
+        {
+            question: "The bird flew _____ the window _____ the room.",
+            options: ["through, into", "into, through", "across, into"],
+            correct: 0,
+            explanation: "Use 'through' for the window opening, then 'into' for entering the room."
+        }
+    ];
+
+    // Shuffle array function
+    function shuffle(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
+    // Generate quiz on page load
+    function generateQuiz() {
+        // Shuffle and select 12 random questions
+        const shuffled = shuffle(questionBank);
+        currentQuestions = shuffled.slice(0, 12);
+        
+        // Generate HTML for questions
+        const quizForm = document.getElementById('quizForm');
+        quizForm.innerHTML = '';
+        
+        currentQuestions.forEach((q, index) => {
+            const questionNum = index + 1;
+            const questionId = `q${questionNum}`;
+            
+            // Shuffle options
+            const shuffledOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
+            const shuffledOptionsArray = shuffle(shuffledOptions);
+            
+            // Find correct answer index after shuffle
+            const correctIndex = shuffledOptionsArray.findIndex(opt => opt.isCorrect);
+            answers[questionId] = String.fromCharCode(97 + correctIndex); // 'a', 'b', 'c', etc.
+            
+            // Build question HTML
+            const questionHTML = `
+            <div class="question">
+                <div class="question-text">${questionNum}. ${q.question}</div>
+                <div class="options">
+                    ${shuffledOptionsArray.map((opt, idx) => `
+                    <label class="option">
+                        <input type="radio" name="${questionId}" value="${String.fromCharCode(97 + idx)}">
+                        ${opt.text}
+                    </label>`).join('')}
+                </div>
+                <div class="feedback" id="feedback${questionNum}"></div>
+                <div class="explanation" id="explanation${questionNum}">
+                    ${q.explanation}
+                </div>
+                <button type="button" class="check-btn" onclick="checkQuestion(${questionNum})">Check Answer</button>
+            </div>`;
+            
+            quizForm.innerHTML += questionHTML;
+        });
+    }
+
+    // Initialize quiz on page load
+    window.addEventListener('DOMContentLoaded', generateQuiz);
+
+    function checkQuestion(questionNum) {
+        const question = `q${questionNum}`;
+        const selected = document.querySelector(`input[name="${question}"]:checked`);
+        
+        if (!selected) {
+            alert('Please select an answer first.');
+            return;
+        }
+
+        const feedbackEl = document.getElementById(`feedback${questionNum}`);
+        const explanationEl = document.getElementById(`explanation${questionNum}`);
+        const button = event.target;
+        
+        if (selected.value === answers[question]) {
+            feedbackEl.className = 'feedback correct';
+            feedbackEl.textContent = '✓ Correct!';
+        } else {
+            feedbackEl.className = 'feedback incorrect';
+            feedbackEl.textContent = '✗ Incorrect. Check the explanation below.';
+        }
+        
+        explanationEl.classList.add('show');
+        button.disabled = true;
+        button.textContent = 'Checked ✓';
+        
+        // Mark as checked
+        checkedQuestions.add(questionNum);
+        updateProgress();
+    }
+    
+    function updateProgress() {
+        const totalQuestions = Object.keys(answers).length;
+        const checked = checkedQuestions.size;
+        const progressText = document.getElementById('progressText');
+        
+        if (checked === 0) {
+            progressText.textContent = 'Answer the questions below';
+        } else if (checked === totalQuestions) {
+            const correctCount = Array.from(checkedQuestions).filter(num => {
+                const question = `q${num}`;
+                const selected = document.querySelector(`input[name="${question}"]:checked`);
+                return selected && selected.value === answers[question];
+            }).length;
+            
+            progressText.textContent = `Quiz Complete! Score: ${correctCount}/${totalQuestions}`;
+        } else {
+            progressText.textContent = `Progress: ${checked}/${totalQuestions} questions checked`;
+        }
+    }
+
+    function resetQuiz() {
+        // Regenerate the quiz with new random questions
+        generateQuiz();
+        
+        // Reset progress
+        checkedQuestions.clear();
+        updateProgress();
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

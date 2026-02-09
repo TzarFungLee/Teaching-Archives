@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Tenses</title>
+    <style>
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); --success: #10b981; --error: #ef4444; }
+        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; text-decoration: none; }
+        .back-btn:hover { text-decoration: underline; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+
+        .quiz-container { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+
+        .question { margin-bottom: 30px; padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary); }
+        .question-text { font-weight: 600; margin-bottom: 15px; font-size: 1.1rem; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option { padding: 12px 16px; background: white; border: 2px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .option:hover { border-color: var(--primary); background: #eff6ff; }
+        .option input[type="radio"] { margin-right: 10px; cursor: pointer; }
+        
+        .feedback { margin-top: 10px; padding: 12px; border-radius: 6px; font-weight: 500; display: none; }
+        .feedback.correct { background: #d1fae5; color: #065f46; border: 1px solid #10b981; display: block; }
+        .feedback.incorrect { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; display: block; }
+
+        .check-btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 8px 20px; border-radius: 8px; border: none; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 12px rgba(2,30,80,0.06); margin-top: 12px; }
+        .check-btn:hover { opacity: 0.9; }
+        .check-btn:disabled { opacity: 0.5; cursor: not-allowed; background: #9ca3af; }
+
+        .progress-container { text-align: center; padding: 15px; background: #eff6ff; border-radius: 8px; margin-bottom: 20px; position: sticky; top: 20px; z-index: 10; }
+        .progress-text { font-size: 1.1rem; font-weight: 600; color: var(--primary); }
+
+        .reset-btn { background: #6b7280; color: white; padding: 8px 16px; border-radius: 6px; border: none; font-size: 0.85rem; cursor: pointer; margin-left: 10px; }
+        .reset-btn:hover { background: #4b5563; }
+
+        .explanation { margin-top: 8px; padding: 10px; background: #fef3c7; border-left: 3px solid #f59e0b; border-radius: 4px; font-size: 0.95rem; display: none; }
+        .explanation.show { display: block; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../Grammar/Tenses.html" class="back-btn">← Back to Lesson</a>
+    </div>
+
+    <header>
+        <h1>📝 Quiz: Tenses</h1>
+    </header>
+
+    <div class="quiz-container">
+        <div class="progress-container" id="progressContainer">
+            <span class="progress-text" id="progressText">Answer the questions below</span>
+            <button class="reset-btn" onclick="resetQuiz()">Reset All</button>
+        </div>
+
+        <form id="quizForm">
+            <!-- Questions will be dynamically generated here -->
+        </form>
+    </div>
+</div>
+
+<script>
+    let checkedQuestions = new Set();
+    let currentQuestions = [];
+    let answers = {};
+    
+    // Question bank with all possible questions
+    const questionBank = [
+        {
+            question: "I _____ to school every day.",
+            options: ["go", "went", "will go"],
+            correct: 0,
+            explanation: "Use simple present for habitual actions. 'Every day' indicates a routine."
+        },
+        {
+            question: "She _____ a book right now.",
+            options: ["is reading", "reads", "read"],
+            correct: 0,
+            explanation: "Use present continuous for actions happening now. 'Right now' is the key word."
+        },
+        {
+            question: "They _____ to Paris last year.",
+            options: ["went", "go", "have gone"],
+            correct: 0,
+            explanation: "Use simple past for completed actions. 'Last year' indicates past time."
+        },
+        {
+            question: "I _____ my homework tomorrow.",
+            options: ["will do", "do", "did"],
+            correct: 0,
+            explanation: "Use simple future for actions in the future. 'Tomorrow' indicates future time."
+        },
+        {
+            question: "He _____ for two hours when I arrived.",
+            options: ["had been waiting", "waits", "is waiting"],
+            correct: 0,
+            explanation: "Use past perfect continuous for an action that was ongoing before another past action."
+        },
+        {
+            question: "Which tense: 'She has lived here since 2010'?",
+            options: ["Present Perfect", "Past Simple", "Present Continuous"],
+            correct: 0,
+            explanation: "Present perfect with 'since' shows an action that started in the past and continues now."
+        },
+        {
+            question: "We _____ watching TV when the phone rang.",
+            options: ["were", "are", "have been"],
+            correct: 0,
+            explanation: "Use past continuous for an ongoing action interrupted by another past action."
+        },
+        {
+            question: "By next week, I _____ finished my project.",
+            options: ["will have", "have", "had"],
+            correct: 0,
+            explanation: "Use future perfect for actions that will be completed before a future time."
+        },
+        {
+            question: "She always _____ coffee in the morning.",
+            options: ["drinks", "is drinking", "drank"],
+            correct: 0,
+            explanation: "Use simple present for habits and routines. 'Always' indicates a habit."
+        },
+        {
+            question: "Which sentence uses PAST CONTINUOUS?",
+            options: ["I was sleeping when you called.", "I slept well last night.", "I sleep 8 hours daily."],
+            correct: 0,
+            explanation: "Past continuous: was/were + verb-ing for ongoing past actions."
+        },
+        {
+            question: "They _____ here for five years.",
+            options: ["have lived", "live", "lived"],
+            correct: 0,
+            explanation: "Use present perfect for actions that started in the past and continue to now."
+        },
+        {
+            question: "I _____ my keys. Can you help me find them?",
+            options: ["have lost", "lost", "lose"],
+            correct: 0,
+            explanation: "Use present perfect when the past action has a present result."
+        },
+        {
+            question: "The sun _____ in the east.",
+            options: ["rises", "is rising", "rose"],
+            correct: 0,
+            explanation: "Use simple present for universal truths and facts."
+        },
+        {
+            question: "Which is FUTURE CONTINUOUS?",
+            options: ["I will be working at 3 PM.", "I will work tomorrow.", "I am working now."],
+            correct: 0,
+            explanation: "Future continuous: will be + verb-ing for ongoing future actions."
+        },
+        {
+            question: "He _____ already eaten when I arrived.",
+            options: ["had", "has", "have"],
+            correct: 0,
+            explanation: "Use past perfect for an action completed before another past action."
+        },
+        {
+            question: "Look! It _____.",
+            options: ["is snowing", "snows", "snowed"],
+            correct: 0,
+            explanation: "Use present continuous for actions happening now. 'Look!' indicates now."
+        },
+        {
+            question: "By 2030, they _____ married for 20 years.",
+            options: ["will have been", "have been", "are"],
+            correct: 0,
+            explanation: "Use future perfect continuous for duration up to a future point."
+        },
+        {
+            question: "She _____ her homework before dinner yesterday.",
+            options: ["had finished", "has finished", "finished"],
+            correct: 0,
+            explanation: "Use past perfect when one past action happened before another."
+        },
+        {
+            question: "Which uses PRESENT PERFECT?",
+            options: ["I have seen that movie.", "I saw that movie yesterday.", "I see movies often."],
+            correct: 0,
+            explanation: "Present perfect: have/has + past participle for past actions with present relevance."
+        },
+        {
+            question: "Water _____ at 100 degrees Celsius.",
+            options: ["boils", "is boiling", "boiled"],
+            correct: 0,
+            explanation: "Use simple present for scientific facts and general truths."
+        }
+    ];
+
+    // Shuffle array function
+    function shuffle(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
+    // Generate quiz on page load
+    function generateQuiz() {
+        // Shuffle and select 12 random questions
+        const shuffled = shuffle(questionBank);
+        currentQuestions = shuffled.slice(0, 12);
+        
+        // Generate HTML for questions
+        const quizForm = document.getElementById('quizForm');
+        quizForm.innerHTML = '';
+        
+        currentQuestions.forEach((q, index) => {
+            const questionNum = index + 1;
+            const questionId = `q${questionNum}`;
+            
+            // Shuffle options
+            const shuffledOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
+            const shuffledOptionsArray = shuffle(shuffledOptions);
+            
+            // Find correct answer index after shuffle
+            const correctIndex = shuffledOptionsArray.findIndex(opt => opt.isCorrect);
+            answers[questionId] = String.fromCharCode(97 + correctIndex); // 'a', 'b', 'c', etc.
+            
+            // Build question HTML
+            const questionHTML = `
+            <div class="question">
+                <div class="question-text">${questionNum}. ${q.question}</div>
+                <div class="options">
+                    ${shuffledOptionsArray.map((opt, idx) => `
+                    <label class="option">
+                        <input type="radio" name="${questionId}" value="${String.fromCharCode(97 + idx)}">
+                        ${opt.text}
+                    </label>`).join('')}
+                </div>
+                <div class="feedback" id="feedback${questionNum}"></div>
+                <div class="explanation" id="explanation${questionNum}">
+                    ${q.explanation}
+                </div>
+                <button type="button" class="check-btn" onclick="checkQuestion(${questionNum})">Check Answer</button>
+            </div>`;
+            
+            quizForm.innerHTML += questionHTML;
+        });
+    }
+
+    // Initialize quiz on page load
+    window.addEventListener('DOMContentLoaded', generateQuiz);
+
+    function checkQuestion(questionNum) {
+        const question = `q${questionNum}`;
+        const selected = document.querySelector(`input[name="${question}"]:checked`);
+        
+        if (!selected) {
+            alert('Please select an answer first.');
+            return;
+        }
+
+        const feedbackEl = document.getElementById(`feedback${questionNum}`);
+        const explanationEl = document.getElementById(`explanation${questionNum}`);
+        const button = event.target;
+        
+        if (selected.value === answers[question]) {
+            feedbackEl.className = 'feedback correct';
+            feedbackEl.textContent = '✓ Correct!';
+        } else {
+            feedbackEl.className = 'feedback incorrect';
+            feedbackEl.textContent = '✗ Incorrect. Check the explanation below.';
+        }
+        
+        explanationEl.classList.add('show');
+        button.disabled = true;
+        button.textContent = 'Checked ✓';
+        
+        // Mark as checked
+        checkedQuestions.add(questionNum);
+        updateProgress();
+    }
+    
+    function updateProgress() {
+        const totalQuestions = Object.keys(answers).length;
+        const checked = checkedQuestions.size;
+        const progressText = document.getElementById('progressText');
+        
+        if (checked === 0) {
+            progressText.textContent = 'Answer the questions below';
+        } else if (checked === totalQuestions) {
+            const correctCount = Array.from(checkedQuestions).filter(num => {
+                const question = `q${num}`;
+                const selected = document.querySelector(`input[name="${question}"]:checked`);
+                return selected && selected.value === answers[question];
+            }).length;
+            
+            progressText.textContent = `Quiz Complete! Score: ${correctCount}/${totalQuestions}`;
+        } else {
+            progressText.textContent = `Progress: ${checked}/${totalQuestions} questions checked`;
+        }
+    }
+
+    function resetQuiz() {
+        // Regenerate the quiz with new random questions
+        generateQuiz();
+        
+        // Reset progress
+        checkedQuestions.clear();
+        updateProgress();
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

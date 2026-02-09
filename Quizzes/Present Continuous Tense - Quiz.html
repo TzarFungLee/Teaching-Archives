@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Present Continuous Tense</title>
+    <style>
+        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.08); --success: #10b981; --error: #ef4444; }
+        body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.65; }
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .nav-bar { margin-bottom: 20px; }
+        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; text-decoration: none; }
+        .back-btn:hover { text-decoration: underline; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+
+        .quiz-container { background: var(--surface); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
+
+        .question { margin-bottom: 30px; padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary); }
+        .question-text { font-weight: 600; margin-bottom: 15px; font-size: 1.1rem; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option { padding: 12px 16px; background: white; border: 2px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .option:hover { border-color: var(--primary); background: #eff6ff; }
+        .option input[type="radio"] { margin-right: 10px; cursor: pointer; }
+        
+        .feedback { margin-top: 10px; padding: 12px; border-radius: 6px; font-weight: 500; display: none; }
+        .feedback.correct { background: #d1fae5; color: #065f46; border: 1px solid #10b981; display: block; }
+        .feedback.incorrect { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; display: block; }
+
+        .check-btn { background: linear-gradient(90deg,var(--primary),var(--primary-2)); color: white; padding: 8px 20px; border-radius: 8px; border: none; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 12px rgba(2,30,80,0.06); margin-top: 12px; }
+        .check-btn:hover { opacity: 0.9; }
+        .check-btn:disabled { opacity: 0.5; cursor: not-allowed; background: #9ca3af; }
+
+        .progress-container { text-align: center; padding: 15px; background: #eff6ff; border-radius: 8px; margin-bottom: 20px; position: sticky; top: 20px; z-index: 10; }
+        .progress-text { font-size: 1.1rem; font-weight: 600; color: var(--primary); }
+
+        .reset-btn { background: #6b7280; color: white; padding: 8px 16px; border-radius: 6px; border: none; font-size: 0.85rem; cursor: pointer; margin-left: 10px; }
+        .reset-btn:hover { background: #4b5563; }
+
+        .explanation { margin-top: 8px; padding: 10px; background: #fef3c7; border-left: 3px solid #f59e0b; border-radius: 4px; font-size: 0.95rem; display: none; }
+        .explanation.show { display: block; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../Grammar/Present Continuous Tense.html" class="back-btn">← Back to Lesson</a>
+    </div>
+
+    <header>
+        <h1>📝 Quiz: Present Continuous Tense</h1>
+    </header>
+
+    <div class="quiz-container">
+        <div class="progress-container" id="progressContainer">
+            <span class="progress-text" id="progressText">Answer the questions below</span>
+            <button class="reset-btn" onclick="resetQuiz()">Reset All</button>
+        </div>
+
+        <form id="quizForm">
+            <!-- Questions will be dynamically generated here -->
+        </form>
+    </div>
+</div>
+
+<script>
+    let checkedQuestions = new Set();
+    let currentQuestions = [];
+    let answers = {};
+    
+    // Question bank with all possible questions
+    const questionBank = [
+        {
+            question: "She _____ reading a book right now.",
+            options: ["is", "are", "am"],
+            correct: 0,
+            explanation: "Use 'is' with third person singular subjects (he/she/it) in present continuous."
+        },
+        {
+            question: "They _____ playing football at the moment.",
+            options: ["is", "are", "am"],
+            correct: 1,
+            explanation: "Use 'are' with plural subjects (they/we/you) in present continuous."
+        },
+        {
+            question: "I _____ studying for my exam now.",
+            options: ["am", "is", "are"],
+            correct: 0,
+            explanation: "Use 'am' with 'I' in present continuous tense."
+        },
+        {
+            question: "He _____ not listening to music.",
+            options: ["is", "are", "am"],
+            correct: 0,
+            explanation: "Use 'is not' (isn't) with third person singular in negative present continuous."
+        },
+        {
+            question: "_____ you working on your project?",
+            options: ["Is", "Are", "Am"],
+            correct: 1,
+            explanation: "Use 'Are' with 'you' in present continuous questions."
+        },
+        {
+            question: "The children _____ sleeping upstairs.",
+            options: ["is", "are", "am"],
+            correct: 1,
+            explanation: "Use 'are' with plural subjects like 'children' in present continuous."
+        },
+        {
+            question: "My mother _____ cooking dinner now.",
+            options: ["is", "are", "am"],
+            correct: 0,
+            explanation: "Use 'is' with third person singular subjects in present continuous."
+        },
+        {
+            question: "We _____ watching a movie currently.",
+            options: ["is", "are", "am"],
+            correct: 1,
+            explanation: "Use 'are' with 'we' in present continuous tense."
+        },
+        {
+            question: "_____ she coming to the party?",
+            options: ["Is", "Are", "Am"],
+            correct: 0,
+            explanation: "Use 'Is' with third person singular in present continuous questions."
+        },
+        {
+            question: "Which sentence is CORRECT?",
+            options: ["He is run in the park.", "He is running in the park.", "He are running in the park."],
+            correct: 1,
+            explanation: "Present continuous uses 'is/am/are + verb-ing'. 'He is running' is correct."
+        },
+        {
+            question: "The dog _____ barking loudly.",
+            options: ["is", "are", "am"],
+            correct: 0,
+            explanation: "Use 'is' with singular subjects like 'dog' in present continuous."
+        },
+        {
+            question: "You _____ making too much noise!",
+            options: ["is", "are", "am"],
+            correct: 1,
+            explanation: "Use 'are' with 'you' in present continuous tense."
+        },
+        {
+            question: "I _____ not feeling well today.",
+            options: ["am", "is", "are"],
+            correct: 0,
+            explanation: "Use 'am not' with 'I' in negative present continuous sentences."
+        },
+        {
+            question: "What _____ you doing right now?",
+            options: ["is", "are", "am"],
+            correct: 1,
+            explanation: "Use 'are' with 'you' in wh-questions in present continuous."
+        },
+        {
+            question: "The students _____ taking a test.",
+            options: ["is", "are", "am"],
+            correct: 1,
+            explanation: "Use 'are' with plural subjects like 'students' in present continuous."
+        },
+        {
+            question: "Which is INCORRECT?",
+            options: ["They is playing.", "They are playing.", "We are playing."],
+            correct: 0,
+            explanation: "'They' is plural, so use 'are', not 'is'."
+        },
+        {
+            question: "It _____ raining outside.",
+            options: ["is", "are", "am"],
+            correct: 0,
+            explanation: "Use 'is' with 'it' in present continuous tense."
+        },
+        {
+            question: "Where _____ he going?",
+            options: ["is", "are", "am"],
+            correct: 0,
+            explanation: "Use 'is' with third person singular in wh-questions in present continuous."
+        },
+        {
+            question: "My friends _____ arriving soon.",
+            options: ["is", "are", "am"],
+            correct: 1,
+            explanation: "Use 'are' with plural subjects like 'friends' in present continuous."
+        },
+        {
+            question: "She _____ wearing a beautiful dress today.",
+            options: ["is", "are", "am"],
+            correct: 0,
+            explanation: "Use 'is' with third person singular subjects in present continuous."
+        }
+    ];
+
+    // Shuffle array function
+    function shuffle(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
+    // Generate quiz on page load
+    function generateQuiz() {
+        // Shuffle and select 12 random questions
+        const shuffled = shuffle(questionBank);
+        currentQuestions = shuffled.slice(0, 12);
+        
+        // Generate HTML for questions
+        const quizForm = document.getElementById('quizForm');
+        quizForm.innerHTML = '';
+        
+        currentQuestions.forEach((q, index) => {
+            const questionNum = index + 1;
+            const questionId = `q${questionNum}`;
+            
+            // Shuffle options
+            const shuffledOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
+            const shuffledOptionsArray = shuffle(shuffledOptions);
+            
+            // Find correct answer index after shuffle
+            const correctIndex = shuffledOptionsArray.findIndex(opt => opt.isCorrect);
+            answers[questionId] = String.fromCharCode(97 + correctIndex); // 'a', 'b', 'c', etc.
+            
+            // Build question HTML
+            const questionHTML = `
+            <div class="question">
+                <div class="question-text">${questionNum}. ${q.question}</div>
+                <div class="options">
+                    ${shuffledOptionsArray.map((opt, idx) => `
+                    <label class="option">
+                        <input type="radio" name="${questionId}" value="${String.fromCharCode(97 + idx)}">
+                        ${opt.text}
+                    </label>`).join('')}
+                </div>
+                <div class="feedback" id="feedback${questionNum}"></div>
+                <div class="explanation" id="explanation${questionNum}">
+                    ${q.explanation}
+                </div>
+                <button type="button" class="check-btn" onclick="checkQuestion(${questionNum})">Check Answer</button>
+            </div>`;
+            
+            quizForm.innerHTML += questionHTML;
+        });
+    }
+
+    // Initialize quiz on page load
+    window.addEventListener('DOMContentLoaded', generateQuiz);
+
+    function checkQuestion(questionNum) {
+        const question = `q${questionNum}`;
+        const selected = document.querySelector(`input[name="${question}"]:checked`);
+        
+        if (!selected) {
+            alert('Please select an answer first.');
+            return;
+        }
+
+        const feedbackEl = document.getElementById(`feedback${questionNum}`);
+        const explanationEl = document.getElementById(`explanation${questionNum}`);
+        const button = event.target;
+        
+        if (selected.value === answers[question]) {
+            feedbackEl.className = 'feedback correct';
+            feedbackEl.textContent = '✓ Correct!';
+        } else {
+            feedbackEl.className = 'feedback incorrect';
+            feedbackEl.textContent = '✗ Incorrect. Check the explanation below.';
+        }
+        
+        explanationEl.classList.add('show');
+        button.disabled = true;
+        button.textContent = 'Checked ✓';
+        
+        // Mark as checked
+        checkedQuestions.add(questionNum);
+        updateProgress();
+    }
+    
+    function updateProgress() {
+        const totalQuestions = Object.keys(answers).length;
+        const checked = checkedQuestions.size;
+        const progressText = document.getElementById('progressText');
+        
+        if (checked === 0) {
+            progressText.textContent = 'Answer the questions below';
+        } else if (checked === totalQuestions) {
+            const correctCount = Array.from(checkedQuestions).filter(num => {
+                const question = `q${num}`;
+                const selected = document.querySelector(`input[name="${question}"]:checked`);
+                return selected && selected.value === answers[question];
+            }).length;
+            
+            progressText.textContent = `Quiz Complete! Score: ${correctCount}/${totalQuestions}`;
+        } else {
+            progressText.textContent = `Progress: ${checked}/${totalQuestions} questions checked`;
+        }
+    }
+
+    function resetQuiz() {
+        // Regenerate the quiz with new random questions
+        generateQuiz();
+        
+        // Reset progress
+        checkedQuestions.clear();
+        updateProgress();
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
