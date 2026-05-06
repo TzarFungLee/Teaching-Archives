@@ -180,14 +180,6 @@
 <body>
 
 <div class="container">
-    {% if page.url != '/' and page.url != '/index.html' %}
-        <div class="nav-bar">
-            <a href="../index.html" class="back-btn">
-                <span>←</span> Back to Topics
-            </a>
-        </div>
-    {% endif %}
-
     <header>
         <h1>{% if page.icon %}{{ page.icon }} {% endif %}{{ page.title }}</h1>
         {% if page.subtitle %}
@@ -196,6 +188,11 @@
     </header>
 
     <div class="content">
+        {% if page.url != '/' and page.url != '/index.html' %}
+            <div class="nav-bar">
+                <a href="/" class="back-btn">← Back to Home</a>
+            </div>
+        {% endif %}
         {{ content }}
     </div>
 </div>
