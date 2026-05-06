@@ -1,246 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Types</title>
-    <style>
-        /* COLOR MEANINGS FOR ESL LEARNERS
-           Cyan (#a5f3fc): Name of the format / Type of writing
-           Green (#bbf7d0): Important features / How to use it
-           Yellow (#fef3c7): Examples / What to include
-           Red (#fecaca): Rules to follow / Do not do this
-        */
-        :root { --primary: #0b3d91; --primary-2: #062b6e; --bg: linear-gradient(180deg,#f0fbfb 0%,#f7fff9 100%); --surface: #ffffff; --text: #083344; --muted: #5b6b70; --border: rgba(8,51,68,0.1); }
-        body { font-family: 'Segoe UI', Roboto, "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--text); padding: 28px; line-height: 1.8; font-size: 18px; }
-        .container { max-width: 1000px; margin: 0 auto; }
+---
+layout: default
+title: "English Writing - Text Types"
+category: "Writing"
+icon: "✍️"
+---
 
-        .nav-bar { margin-bottom: 30px; }
-        .back-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1rem; display: flex; align-items: center; padding: 0; }
-        .back-btn:hover { text-decoration: underline; }
-
-        header { text-align: center; margin-bottom: 40px; padding: 30px 20px; }
-        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.5em; font-weight: 700; }
-        h2 { color: var(--primary); margin-top: 0; margin-bottom: 20px; font-size: 1.8em; }
-        h3 { color: var(--primary); font-size: 1.4em; margin-top: 30px; margin-bottom: 15px; }
-        h4 { color: var(--primary); font-size: 1.2em; margin: 15px 0 10px 0; }
-
-        .content { background: var(--surface); padding: 40px; border-radius: 12px; border: 2px solid var(--border); }
-
-        .text-type-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-            gap: 15px; 
-            margin-bottom: 40px; 
-        }
-        
-        .text-type-card { 
-            background: white; 
-            border: 3px solid var(--border); 
-            border-radius: 10px; 
-            padding: 18px 12px; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-            font-weight: 600; 
-            font-size: 1rem; 
-            line-height: 1.4; 
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .text-type-card:hover { 
-            border-color: var(--primary); 
-            background: #eff6ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(11, 61, 145, 0.1);
-        }
-        
-        .text-type-card.active { 
-            background: var(--primary); 
-            color: white; 
-            border-color: var(--primary);
-            box-shadow: 0 6px 12px rgba(11, 61, 145, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .text-type-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 12px;
-            }
-            .text-type-card {
-                padding: 14px 10px;
-                font-size: 0.95rem;
-                min-height: 70px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .text-type-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            .text-type-card {
-                padding: 12px 8px;
-                font-size: 0.9rem;
-                min-height: 65px;
-            }
-            body { font-size: 16px; }
-            h1 { font-size: 2em; }
-            h2 { font-size: 1.5em; }
-            h3 { font-size: 1.2em; }
-        }
-
-        .content-section { display: none; animation: fadeIn 0.3s; }
-        .content-section.show { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 1rem; }
-        th, td { padding: 15px; border: 2px solid #e2e8f0; text-align: left; }
-        th { background: #eff6ff; font-weight: 700; color: var(--primary); }
-        tr:nth-child(even) { background: #f8fafc; }
-        tr:hover { background: #f0f9ff; }
-
-        ul { line-height: 2; margin: 15px 0; }
-        li { margin-bottom: 15px; font-size: 1.05rem; }
-        p { margin: 15px 0; font-size: 1.05rem; line-height: 1.8; }
-
-        hr { margin: 40px 0; border: none; border-top: 2px solid #e2e8f0; }
-
-        mark { background-color: #fef3c7; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
-        mark.cyan { background-color: #a5f3fc; color: #0369a1; }
-        mark.green { background-color: #bbf7d0; color: #166534; }
-        mark.yellow { background-color: #fef3c7; color: #854d0e; }
-        mark.red { background-color: #fecaca; color: #991b1b; }
-
-        .structure-box { background: #f0f9ff; border-left: 6px solid #0b3d91; padding: 20px; margin: 25px 0; border-radius: 8px; }
-        .example-box { background: #edf2f7; border-left: 6px solid #48bb78; padding: 20px; margin: 25px 0; border-radius: 8px; }
-        .tips-box { background: #fff5f5; border-left: 6px solid #f56565; padding: 20px; margin: 25px 0; border-radius: 8px; }
-        .features-box { background: #ecfdf5; border-left: 6px solid #10b981; padding: 20px; margin: 25px 0; border-radius: 8px; }
-        .sample-box { background: #fefce8; border-left: 6px solid #eab308; padding: 20px; margin: 25px 0; border-radius: 8px; }
-        .pdf-embed { width: 100%; height: 600px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-
-        .format-item { margin: 20px 0; padding: 16px; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--primary); }
-
-        /* Table of Contents */
-        #toc {
-            position: fixed;
-            left: calc(50% + 560px);
-            top: 245px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px 16px;
-            box-shadow: 0 4px 12px rgba(11, 61, 145, 0.15);
-            width: 140px;
-            max-height: 500px;
-            overflow-y: auto;
-            z-index: 1000;
-            border: 2px solid var(--primary);
-        }
-
-        #toc h3 {
-            margin: 0 0 14px 0;
-            font-size: 0.8rem;
-            color: var(--primary);
-            text-align: center;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 10px;
-        }
-
-        #toc ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            line-height: 1.4;
-        }
-
-        #toc li {
-            margin-bottom: 8px;
-        }
-
-        #toc a {
-            text-decoration: none;
-            color: var(--text);
-            font-size: 0.72rem;
-            display: block;
-            padding: 8px 10px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            border-left: 3px solid transparent;
-            line-height: 1.3;
-        }
-
-        #toc a:hover {
-            background: #eff6ff;
-            border-left-color: var(--primary);
-        }
-
-        #toc a.active {
-            background: var(--primary);
-            color: white;
-            font-weight: 600;
-            border-left-color: #fdb913;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 1400px) {
-            #toc {
-                left: auto;
-                right: 3px;
-                width: 120px;
-                padding: 16px 12px;
-                max-height: 400px;
-            }
-            #toc h3 {
-                font-size: 0.75rem;
-            }
-            #toc a {
-                font-size: 0.68rem;
-                padding: 6px 8px;
-            }
-            #toc li {
-                margin-bottom: 7px;
-            }
-        }
-
-        @media (max-width: 1200px) {
-            #toc {
-                display: none;
-            }
-        }
-    </style>
-</head>
-
-<style>
-  body { user-select: none; }
-</style>
-
-<body>
-
-<div class="container">
-    <div class="nav-bar">
-        <a href="../index.html" class="back-btn">← Back to the Archives</a>
-    </div>
-
-    <header>
-        <h1>📝 English Writing - Text Types</h1>
-    </header>
-
-    <div class="content">
-        <h2>Text Types and Formats</h2>
-        <div class="text-type-grid">
-            <div class="text-type-card active" onclick="switchTextType('arg', this)">⚖️ Argumentative<br>(Persuasive)</div>
-            <div class="text-type-card" onclick="switchTextType('letter', this)">✉️ Letter<br>to Editor</div>
-            <div class="text-type-card" onclick="switchTextType('proposal', this)">📋 Proposal<br>(Request)</div>
-            <div class="text-type-card" onclick="switchTextType('report', this)">📊 Report<br>(Facts)</div>
-            <div class="text-type-card" onclick="switchTextType('article', this)">📰 Article<br>(News)</div>
-            <div class="text-type-card" onclick="switchTextType('speech', this)">🎤 Speech<br>(Talk)</div>
-            <div class="text-type-card" onclick="switchTextType('story', this)">📖 Story<br>(Fiction)</div>
-            <div class="text-type-card" onclick="switchTextType('blog', this)">💻 Blog<br>(Opinion)</div>
+<h2>Text Types and Formats</h2>
+        <div class="tense-grid">
+            <div class="tense-card active" onclick="switchTextType('arg', this)">⚖️ Argumentative<br>(Persuasive)</div>
+            <div class="tense-card" onclick="switchTextType('letter', this)">✉️ Letter<br>to Editor</div>
+            <div class="tense-card" onclick="switchTextType('proposal', this)">📋 Proposal<br>(Request)</div>
+            <div class="tense-card" onclick="switchTextType('report', this)">📊 Report<br>(Facts)</div>
+            <div class="tense-card" onclick="switchTextType('article', this)">📰 Article<br>(News)</div>
+            <div class="tense-card" onclick="switchTextType('speech', this)">🎤 Speech<br>(Talk)</div>
+            <div class="tense-card" onclick="switchTextType('story', this)">📖 Story<br>(Fiction)</div>
+            <div class="tense-card" onclick="switchTextType('blog', this)">💻 Blog<br>(Opinion)</div>
         </div>
 
         <!-- ARGUMENTATIVE ESSAY -->
@@ -403,11 +177,11 @@
             <!-- SAMPLE WRITING SECTION -->
             <div class="sample-box">
                 <h4>📄 Sample Writing</h4>
-                <ul>
-                    <li><a href="../pdf/letter_formal_mental health problems.pdf" target="_blank" style="color: #0b3d91; text-decoration: none; font-weight: 500;">Formal: Reasons and Solutions for Mental Health Issues</a></li>
-                    <li><a href="https://drive.google.com/file/d/YOUR_LETTER_FILE_ID_2/preview" target="_blank" style="color: #0b3d91; text-decoration: none; font-weight: 500;">Example 2: School Policy Response</a></li>
-                    <li><a href="https://drive.google.com/file/d/YOUR_LETTER_FILE_ID_3/preview" target="_blank" style="color: #0b3d91; text-decoration: none; font-weight: 500;">Example 3: Public Health Issue</a></li>
-                </ul>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button class="btn" style="opacity: 0.6; cursor: not-allowed; text-align: left;" disabled>📄 Formal: Mental Health Issues (PDF Missing)</button>
+                    <button class="btn" style="opacity: 0.6; cursor: not-allowed; text-align: left;" disabled>📄 Example 2: School Policy Response (Link Missing)</button>
+                    <button class="btn" style="opacity: 0.6; cursor: not-allowed; text-align: left;" disabled>📄 Example 3: Public Health Issue (Link Missing)</button>
+                </div>
             </div>
         </div>
 
@@ -595,9 +369,9 @@
 
             <div class="sample-box">
                 <h4>📄 Sample Writing</h4>
-                <ul>
-                    <li><a href="../pdf/report_neets.pdf" target="_blank" style="color: #0b3d91; text-decoration: none; font-weight: 500;">Report on NEETs</a></li>
-                </ul>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button class="btn" style="opacity: 0.6; cursor: not-allowed; text-align: left;" disabled>📄 Report on NEETs (PDF Missing)</button>
+                </div>
             </div>
         </div>
 
@@ -1022,129 +796,26 @@
         </div>
 
     </div>
-</div>
 
-<!-- Table of Contents -->
-<div id="toc">
-    <h3>📑 TOC</h3>
-    <ul id="toc-list"></ul>
-</div>
-
-<script>
-    function switchTextType(typeId, btn) {
-        document.querySelectorAll('.text-type-card').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('show'));
-        const target = document.getElementById(typeId);
-        if (target) target.classList.add('show');
-    }
-
-    // Generate Table of Contents
-    const textTypes = [
-        { id: 'arg', name: 'Argumentative' },
-        { id: 'letter', name: 'Letter to Editor' },
-        { id: 'proposal', name: 'Proposal' },
-        { id: 'report', name: 'Report' },
-        { id: 'article', name: 'Article' },
-        { id: 'speech', name: 'Speech' },
-        { id: 'story', name: 'Story' },
-        { id: 'blog', name: 'Blog' }
-    ];
-
-    const tocList = document.getElementById('toc-list');
-    textTypes.forEach((type, index) => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = `#${type.id}`;
-        a.textContent = `${index + 1}. ${type.name}`;
-        a.dataset.typeId = type.id;
-        a.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetElement = document.getElementById(type.id);
-            if (targetElement) {
-                // Use the existing switchTextType function
-                const btn = document.querySelector(`.text-type-card[onclick*="'${type.id}'"]`);
-                if (btn) {
-                    switchTextType(type.id, btn);
-                }
-                // Scroll to top of content
-                const yOffset = -100;
-                const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({ top: y, behavior: 'smooth' });
-                
-                // Update URL hash
-                history.pushState(null, null, `#${type.id}`);
-            }
-        });
-        li.appendChild(a);
-        tocList.appendChild(li);
-    });
-
-    // Scroll spy - highlight active section in TOC
-    function updateActiveLink() {
-        // Find which section is currently visible
-        let currentType = null;
-        
-        // Check which content section is currently showing
-        const visibleSection = document.querySelector('.content-section.show');
-        if (visibleSection) {
-            currentType = visibleSection.id;
-        }
-        
-        // Remove active class from all links
-        document.querySelectorAll('#toc a').forEach(link => {
-            link.classList.remove('active');
-        });
-        
-        // Add active class to current link
-        if (currentType) {
-            const activeLink = document.querySelector(`#toc a[data-type-id="${currentType}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
+    <script>
+        function switchTextType(typeId, element) {
+            // Remove active class from all cards
+            document.querySelectorAll('.tense-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to clicked card
+            element.classList.add('active');
+            
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('show');
+            });
+            
+            // Show the selected section
+            const targetSection = document.getElementById(typeId);
+            if (targetSection) {
+                targetSection.classList.add('show');
             }
         }
-    }
-
-    // Run on load and whenever sections are switched
-    updateActiveLink();
-    
-    // Observe changes to content sections
-    const observer = new MutationObserver(updateActiveLink);
-    document.querySelectorAll('.content-section').forEach(section => {
-        observer.observe(section, { attributes: true, attributeFilter: ['class'] });
-    });
-
-    // Disable right-click
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    
-    // Disable text selection
-    document.addEventListener('selectstart', event => event.preventDefault());
-    
-    // Disable copy
-    document.addEventListener('copy', event => event.preventDefault());
-    
-    // Disable cut
-    document.addEventListener('cut', event => event.preventDefault());
-    
-    // Disable drag
-    document.addEventListener('dragstart', event => event.preventDefault());
-    
-    // Disable keyboard shortcuts for copying and viewing source
-    document.addEventListener('keydown', event => {
-        // Prevent Ctrl+C, Ctrl+U, F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-        if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'C' || 
-            event.key === 'u' || event.key === 'U')) {
-            event.preventDefault();
-        }
-        if (event.key === 'F12' || 
-            ((event.ctrlKey || event.metaKey) && event.shiftKey && 
-             (event.key === 'I' || event.key === 'i' || 
-              event.key === 'J' || event.key === 'j' || 
-              event.key === 'C' || event.key === 'c'))) {
-            event.preventDefault();
-        }
-    });
-</script>
-
-</body>
-</html>
+    </script>

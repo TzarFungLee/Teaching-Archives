@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | LTF Teaching Archives</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #07131f;
+            --bg-alt: #0f1d31;
+            --surface: rgba(10, 20, 37, 0.94);
+            --surface-soft: rgba(14, 26, 46, 0.96);
+            --surface-hover: rgba(23, 40, 72, 0.95);
+            --text: #e7eef7;
+            --muted: #9ab5d1;
+            --border: rgba(255, 255, 255, 0.1);
+            --primary: #6ec1e4;
+            --primary-2: #3f8dbc;
+            --accent: #88d6ff;
+            --shadow: 0 30px 70px rgba(0, 0, 0, 0.24);
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: radial-gradient(circle at top left, rgba(110, 193, 228, 0.18), transparent 20%),
+                        radial-gradient(circle at 80% 10%, rgba(138, 196, 255, 0.12), transparent 18%),
+                        linear-gradient(180deg, #07131f 0%, #06111f 42%, #091a2f 100%);
+            color: var(--text);
+            padding: 32px;
+            line-height: 1.8;
+            font-size: 18px;
+            min-height: 100vh;
+        }
+        .container { max-width: 1080px; margin: 0 auto; }
+
+        .nav-bar { margin-bottom: 40px; display: flex; align-items: center; }
+        .back-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+            transition: all 0.25s ease;
+        }
+        .back-btn:hover {
+            color: var(--accent);
+            border-color: rgba(110, 193, 228, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.26);
+        }
+
+        header { text-align: center; margin-bottom: 40px; padding: 16px 0; }
+        h1 {
+            color: #f5fbff;
+            margin-bottom: 12px;
+            font-size: 3.4em;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+        }
+        h2 { color: #9eb8d8; margin-top: 0; margin-bottom: 24px; font-size: 1.6em; font-weight: 500; }
+        h3 { color: var(--accent); font-size: 1.95em; margin-top: 40px; margin-bottom: 20px; font-weight: 700; letter-spacing: -0.02em; }
+        h4 { color: #d7e4f3; font-size: 1.45em; margin: 20px 0 10px 0; font-weight: 700; }
+
+        .content {
+            background: rgba(10, 20, 37, 0.96);
+            padding: 48px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow);
+            position: relative;
+            backdrop-filter: blur(14px);
+        }
+
+        ul { line-height: 1.95; margin: 20px 0; padding-left: 32px; }
+        li { margin-bottom: 16px; font-size: 1.12rem; color: #c7d5ed; }
+        p { margin: 18px 0; font-size: 1.12rem; line-height: 1.85; color: #c7d5ed; }
+
+        mark {
+            padding: 5px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            display: inline-block;
+            margin: 3px 2px;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        }
+        mark:hover { transform: translateY(-2px); filter: brightness(1.05); }
+        mark.cyan { background-color: rgba(110, 193, 228, 0.14); color: #b9efff; border: 1px solid rgba(110, 193, 228, 0.28); }
+        mark.green { background-color: rgba(138, 227, 193, 0.15); color: #c2f2de; border: 1px solid rgba(138, 227, 193, 0.25); }
+        mark.red { background-color: rgba(255, 156, 190, 0.16); color: #ffd3eb; border: 1px solid rgba(255, 156, 190, 0.2); }
+        mark.yellow { background-color: rgba(248, 211, 107, 0.17); color: #ffefb1; border: 1px solid rgba(248, 211, 107, 0.22); }
+        mark:not([class]) { background-color: rgba(255, 255, 255, 0.05); color: #d7e4f4; border: 1px solid rgba(255, 255, 255, 0.08); }
+
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 28px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.04); box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.04); }
+        th, td { padding: 18px 22px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); text-align: left; font-size: 1.1rem; line-height: 1.6; color: #d7e4f4; }
+        th { background: rgba(255, 255, 255, 0.05); font-weight: 700; color: #f0f7ff; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
+        td[colspan="2"] { background: rgba(110, 193, 228, 0.12); color: #e4fbff; font-size: 1.18rem; font-weight: 700; text-align: center; }
+
+        .btn {
+            background: linear-gradient(135deg, #6ec1e4, #3f8dbc);
+            color: white;
+            padding: 16px 34px;
+            border-radius: 16px;
+            text-decoration: none;
+            border: none;
+            font-size: 1.18rem;
+            font-weight: 700;
+            box-shadow: 0 18px 40px rgba(26, 58, 92, 0.32);
+            display: inline-block;
+            margin: 18px 0;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 24px 50px rgba(26, 58, 92, 0.38); }
+
+        .tips-box, .example-box, .warning-box {
+            padding: 26px;
+            margin: 32px 0;
+            border-radius: 22px;
+            border-left: 4px solid;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04);
+        }
+        .tips-box { background: rgba(26, 54, 91, 0.7); border-color: #4c7fa0; }
+        .example-box { background: rgba(19, 35, 57, 0.72); border-color: #6eb6f2; }
+        .warning-box { background: rgba(55, 26, 48, 0.72); border-color: #f093c6; }
+
+        body { user-select: none; }
+        
+        .tense-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 30px; }
+        .tense-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 22px 18px; text-align: center; cursor: pointer; transition: all 0.25s ease; font-weight: 700; font-size: 1.1rem; color: var(--muted); }
+        .tense-card:hover { border-color: rgba(110, 193, 228, 0.45); background: rgba(255, 255, 255, 0.08); color: var(--accent); transform: translateY(-3px); }
+        .tense-card.active { background: linear-gradient(135deg, rgba(110, 193, 228, 0.3), rgba(63, 141, 188, 0.25)); color: white; border-color: transparent; box-shadow: 0 16px 35px rgba(25, 55, 88, 0.25); }
+        .content-section { display: none; animation: fadeIn 0.3s; }
+        .content-section.show { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .quiz-container { background: rgba(255, 255, 255, 0.04); padding: 40px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.04); }
+        .question { margin-bottom: 32px; padding: 30px; background: rgba(255, 255, 255, 0.05); border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.08); border-left: 4px solid var(--primary); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); }
+        .question-text { font-weight: 700; margin-bottom: 24px; font-size: 1.25rem; color: #eef6ff; }
+        .options { display: flex; flex-direction: column; gap: 15px; }
+        .option { padding: 18px 25px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; cursor: pointer; transition: all 0.2s ease; font-size: 1.15rem; color: #d3e1f3; }
+        .option:hover { border-color: rgba(110, 193, 228, 0.45); background: rgba(255, 255, 255, 0.08); color: #f2fbff; transform: translateX(4px); box-shadow: 0 8px 18px rgba(6, 15, 32, 0.18); }
+        .option input[type="radio"] { margin-right: 15px; cursor: pointer; transform: scale(1.25); accent-color: var(--primary); }
+        
+        .feedback { margin-top: 20px; padding: 20px; border-radius: 14px; font-weight: 600; display: none; font-size: 1.1rem; }
+        .feedback.correct { background: rgba(21, 76, 51, 0.22); color: #b8f2d5; border: 1px solid rgba(138, 227, 193, 0.25); display: block; }
+        .feedback.incorrect { background: rgba(152, 45, 53, 0.22); color: #ffd9de; border: 1px solid rgba(255, 155, 190, 0.25); display: block; }
+
+        .check-btn { background: rgba(255, 255, 255, 0.08); color: #eef6ff; padding: 15px 30px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.12); font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 20px; transition: all 0.25s ease; }
+        .check-btn:hover { background: linear-gradient(135deg, rgba(110, 193, 228, 0.22), rgba(63, 141, 188, 0.22)); border-color: rgba(110, 193, 228, 0.4); color: white; box-shadow: 0 12px 28px rgba(16, 38, 62, 0.25); transform: translateY(-2px); }
+        .check-btn:disabled { opacity: 0.55; cursor: not-allowed; background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.08); color: var(--muted); box-shadow: none; transform: none; }
+
+        .progress-container { text-align: center; padding: 26px; background: rgba(255, 255, 255, 0.04); border-radius: 18px; margin-bottom: 40px; position: sticky; top: 20px; z-index: 10; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18); }
+        .progress-text { font-size: 1.25rem; font-weight: 800; color: #eef6ff; }
+
+        .reset-btn { background: rgba(255, 255, 255, 0.05); color: #d7e4f4; padding: 12px 24px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 20px; transition: all 0.2s ease; }
+        .reset-btn:hover { background: rgba(110, 193, 228, 0.16); border-color: rgba(110, 193, 228, 0.35); color: #f4fdff; }
+
+        .explanation { margin-top: 15px; padding: 20px; background: rgba(255, 255, 255, 0.06); border-left: 4px solid rgba(110, 193, 228, 0.7); border-radius: 0 14px 14px 0; font-size: 1.1rem; color: #d7e4f4; display: none; }
+        .explanation.show { display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    {% if page.url != '/' and page.url != '/index.html' %}
+        <div class="nav-bar">
+            <a href="../index.html" class="back-btn">
+                <span>←</span> Back to Topics
+            </a>
+        </div>
+    {% endif %}
+
+    <header>
+        <h1>{% if page.icon %}{{ page.icon }} {% endif %}{{ page.title }}</h1>
+        {% if page.subtitle %}
+        <h2 style="color: #64748b; font-size: 1.8em; font-weight: 500;">{{ page.subtitle }}</h2>
+        {% endif %}
+    </header>
+
+    <div class="content">
+        {{ content }}
+    </div>
+</div>
+
+<script>
+  // Disable right-click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Disable common copy shortcuts
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+      e.preventDefault();
+      alert('Copying is disabled on this page.');
+    }
+  });
+
+  // Disable text drag
+  document.addEventListener('dragstart', event => event.preventDefault());
+</script>
+
+</body>
+</html>
