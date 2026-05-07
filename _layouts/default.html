@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | LTF Teaching Archives</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg: #07131f;
@@ -22,22 +24,38 @@
             --accent: #88d6ff;
             --shadow: 0 30px 70px rgba(0, 0, 0, 0.24);
         }
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background: radial-gradient(circle at top left, rgba(110, 193, 228, 0.18), transparent 20%),
-                        radial-gradient(circle at 80% 10%, rgba(138, 196, 255, 0.12), transparent 18%),
-                        linear-gradient(180deg, #07131f 0%, #06111f 42%, #091a2f 100%);
+                radial-gradient(circle at 80% 10%, rgba(138, 196, 255, 0.12), transparent 18%),
+                linear-gradient(180deg, #07131f 0%, #06111f 42%, #091a2f 100%);
             color: var(--text);
             padding: 32px;
             line-height: 1.8;
             font-size: 18px;
             min-height: 100vh;
         }
-        .container { max-width: 1080px; margin: 0 auto; }
 
-        .nav-bar { margin-bottom: 40px; display: flex; align-items: center; }
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .nav-bar {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
         .back-btn {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -54,6 +72,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
             transition: all 0.25s ease;
         }
+
         .back-btn:hover {
             color: var(--accent);
             border-color: rgba(110, 193, 228, 0.4);
@@ -62,7 +81,12 @@
             box-shadow: 0 24px 50px rgba(0, 0, 0, 0.26);
         }
 
-        header { text-align: center; margin-bottom: 40px; padding: 16px 0; }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 16px 0;
+        }
+
         h1 {
             color: #f5fbff;
             margin-bottom: 12px;
@@ -71,9 +95,30 @@
             letter-spacing: -0.04em;
             line-height: 1.05;
         }
-        h2 { color: #9eb8d8; margin-top: 0; margin-bottom: 24px; font-size: 1.6em; font-weight: 500; }
-        h3 { color: var(--accent); font-size: 1.95em; margin-top: 40px; margin-bottom: 20px; font-weight: 700; letter-spacing: -0.02em; }
-        h4 { color: #d7e4f3; font-size: 1.45em; margin: 20px 0 10px 0; font-weight: 700; }
+
+        h2 {
+            color: #9eb8d8;
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-size: 1.6em;
+            font-weight: 500;
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.95em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h4 {
+            color: #d7e4f3;
+            font-size: 1.45em;
+            margin: 20px 0 10px 0;
+            font-weight: 700;
+        }
 
         .content {
             background: rgba(10, 20, 37, 0.96);
@@ -85,34 +130,131 @@
             backdrop-filter: blur(14px);
         }
 
-        ul { line-height: 1.95; margin: 20px 0; padding-left: 32px; }
-        li { margin-bottom: 16px; font-size: 1.12rem; color: #c7d5ed; }
-        p { margin: 18px 0; font-size: 1.12rem; line-height: 1.85; color: #c7d5ed; }
+        ul {
+            line-height: 1.95;
+            margin: 20px 0;
+            padding-left: 32px;
+        }
+
+        li {
+            margin-bottom: 16px;
+            font-size: 1.12rem;
+            color: #c7d5ed;
+        }
+
+        p {
+            margin: 18px 0;
+            font-size: 1.12rem;
+            line-height: 1.85;
+            color: #c7d5ed;
+        }
 
         mark {
-            padding: 5px 14px;
+            padding: 4px 12px;
             border-radius: 999px;
             font-weight: 700;
-            display: inline-block;
-            margin: 3px 2px;
+            display: inline;
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            margin: 0 2px;
             font-size: 0.95rem;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.01em;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        mark:hover { transform: translateY(-2px); filter: brightness(1.05); }
-        mark.cyan { background-color: rgba(110, 193, 228, 0.14); color: #b9efff; border: 1px solid rgba(110, 193, 228, 0.28); }
-        mark.green { background-color: rgba(138, 227, 193, 0.15); color: #c2f2de; border: 1px solid rgba(138, 227, 193, 0.25); }
-        mark.red { background-color: rgba(255, 156, 190, 0.16); color: #ffd3eb; border: 1px solid rgba(255, 156, 190, 0.2); }
-        mark.yellow { background-color: rgba(248, 211, 107, 0.17); color: #ffefb1; border: 1px solid rgba(248, 211, 107, 0.22); }
-        mark:not([class]) { background-color: rgba(255, 255, 255, 0.05); color: #d7e4f4; border: 1px solid rgba(255, 255, 255, 0.08); }
 
-        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 28px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.04); box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.04); }
-        th, td { padding: 18px 22px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); text-align: left; font-size: 1.1rem; line-height: 1.6; color: #d7e4f4; }
-        th { background: rgba(255, 255, 255, 0.05); font-weight: 700; color: #f0f7ff; }
-        tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
-        td[colspan="2"] { background: rgba(110, 193, 228, 0.12); color: #e4fbff; font-size: 1.18rem; font-weight: 700; text-align: center; }
+        mark:hover {
+            filter: brightness(1.15);
+        }
+
+        mark.cyan {
+            background-color: rgba(110, 193, 228, 0.28);
+            color: #fff;
+            border: 1px solid rgba(110, 193, 228, 0.45);
+        }
+
+        mark.green {
+            background-color: rgba(34, 197, 129, 0.28);
+            color: #fff;
+            border: 1px solid rgba(34, 197, 129, 0.45);
+        }
+
+        mark.red {
+            background-color: rgba(244, 63, 94, 0.28);
+            color: #fff;
+            border: 1px solid rgba(244, 63, 94, 0.45);
+        }
+
+        mark.yellow {
+            background-color: rgba(234, 179, 8, 0.28);
+            color: #fff;
+            border: 1px solid rgba(234, 179, 8, 0.45);
+        }
+
+        mark:not([class]) {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .content a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: rgba(136, 214, 255, 0.3);
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .content a:hover {
+            color: #fff;
+            text-decoration-color: var(--accent);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 28px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.04);
+        }
+
+        th,
+        td {
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: left;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #d7e4f4;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 700;
+            color: #f0f7ff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        td[colspan="2"] {
+            background: rgba(110, 193, 228, 0.15);
+            color: #e4fbff;
+            font-size: 1.18rem;
+            font-weight: 700;
+            text-align: center;
+            border-top: 1px solid rgba(110, 193, 228, 0.2);
+        }
 
         .btn {
             background: linear-gradient(135deg, #6ec1e4, #3f8dbc);
@@ -128,90 +270,630 @@
             margin: 18px 0;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 24px 50px rgba(26, 58, 92, 0.38); }
 
-        .tips-box, .example-box, .warning-box {
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 24px 50px rgba(26, 58, 92, 0.38);
+        }
+
+        .tips-box,
+        .example-box,
+        .warning-box,
+        .rules-box {
             padding: 26px;
             margin: 32px 0;
             border-radius: 22px;
             border-left: 4px solid;
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04);
         }
-        .tips-box { background: rgba(26, 54, 91, 0.7); border-color: #4c7fa0; }
-        .example-box { background: rgba(19, 35, 57, 0.72); border-color: #6eb6f2; }
-        .warning-box { background: rgba(55, 26, 48, 0.72); border-color: #f093c6; }
 
-        body { user-select: none; }
-        
-        .tense-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 30px; }
-        .tense-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 22px 18px; text-align: center; cursor: pointer; transition: all 0.25s ease; font-weight: 700; font-size: 1.1rem; color: var(--muted); }
-        .tense-card:hover { border-color: rgba(110, 193, 228, 0.45); background: rgba(255, 255, 255, 0.08); color: var(--accent); transform: translateY(-3px); }
-        .tense-card.active { background: linear-gradient(135deg, rgba(110, 193, 228, 0.3), rgba(63, 141, 188, 0.25)); color: white; border-color: transparent; box-shadow: 0 16px 35px rgba(25, 55, 88, 0.25); }
-        .content-section { display: none; animation: fadeIn 0.3s; }
-        .content-section.show { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .tips-box {
+            background: rgba(26, 54, 91, 0.7);
+            border-color: #4c7fa0;
+        }
 
-        .quiz-container { background: rgba(255, 255, 255, 0.04); padding: 40px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.04); }
-        .question { margin-bottom: 32px; padding: 30px; background: rgba(255, 255, 255, 0.05); border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.08); border-left: 4px solid var(--primary); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); }
-        .question-text { font-weight: 700; margin-bottom: 24px; font-size: 1.25rem; color: #eef6ff; }
-        .options { display: flex; flex-direction: column; gap: 15px; }
-        .option { padding: 18px 25px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; cursor: pointer; transition: all 0.2s ease; font-size: 1.15rem; color: #d3e1f3; }
-        .option:hover { border-color: rgba(110, 193, 228, 0.45); background: rgba(255, 255, 255, 0.08); color: #f2fbff; transform: translateX(4px); box-shadow: 0 8px 18px rgba(6, 15, 32, 0.18); }
-        .option input[type="radio"] { margin-right: 15px; cursor: pointer; transform: scale(1.25); accent-color: var(--primary); }
-        
-        .feedback { margin-top: 20px; padding: 20px; border-radius: 14px; font-weight: 600; display: none; font-size: 1.1rem; }
-        .feedback.correct { background: rgba(21, 76, 51, 0.22); color: #b8f2d5; border: 1px solid rgba(138, 227, 193, 0.25); display: block; }
-        .feedback.incorrect { background: rgba(152, 45, 53, 0.22); color: #ffd9de; border: 1px solid rgba(255, 155, 190, 0.25); display: block; }
+        .example-box {
+            background: rgba(19, 35, 57, 0.72);
+            border-color: #6eb6f2;
+        }
 
-        .check-btn { background: rgba(255, 255, 255, 0.08); color: #eef6ff; padding: 15px 30px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.12); font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 20px; transition: all 0.25s ease; }
-        .check-btn:hover { background: linear-gradient(135deg, rgba(110, 193, 228, 0.22), rgba(63, 141, 188, 0.22)); border-color: rgba(110, 193, 228, 0.4); color: white; box-shadow: 0 12px 28px rgba(16, 38, 62, 0.25); transform: translateY(-2px); }
-        .check-btn:disabled { opacity: 0.55; cursor: not-allowed; background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.08); color: var(--muted); box-shadow: none; transform: none; }
+        .warning-box {
+            background: rgba(55, 26, 48, 0.72);
+            border-color: #f093c6;
+        }
 
-        .progress-container { text-align: center; padding: 26px; background: rgba(255, 255, 255, 0.04); border-radius: 18px; margin-bottom: 40px; position: sticky; top: 20px; z-index: 10; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18); }
-        .progress-text { font-size: 1.25rem; font-weight: 800; color: #eef6ff; }
+        .rules-box {
+            background: rgba(10, 20, 37, 0.8);
+            border-color: var(--accent);
+        }
 
-        .reset-btn { background: rgba(255, 255, 255, 0.05); color: #d7e4f4; padding: 12px 24px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 20px; transition: all 0.2s ease; }
-        .reset-btn:hover { background: rgba(110, 193, 228, 0.16); border-color: rgba(110, 193, 228, 0.35); color: #f4fdff; }
+        body {
+            user-select: none;
+        }
 
-        .explanation { margin-top: 15px; padding: 20px; background: rgba(255, 255, 255, 0.06); border-left: 4px solid rgba(110, 193, 228, 0.7); border-radius: 0 14px 14px 0; font-size: 1.1rem; color: #d7e4f4; display: none; }
-        .explanation.show { display: block; }
+        .tense-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .tense-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 22px 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--muted);
+        }
+
+        .tense-card:hover {
+            border-color: rgba(110, 193, 228, 0.45);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .tense-card.active {
+            background: linear-gradient(135deg, rgba(110, 193, 228, 0.3), rgba(63, 141, 188, 0.25));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 16px 35px rgba(25, 55, 88, 0.25);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .content-section.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.04);
+        }
+
+        .question {
+            margin-bottom: 32px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .question-text {
+            font-weight: 700;
+            margin-bottom: 24px;
+            font-size: 1.25rem;
+            color: #eef6ff;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            padding: 18px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.15rem;
+            color: #d3e1f3;
+        }
+
+        .option:hover {
+            border-color: rgba(110, 193, 228, 0.45);
+            background: rgba(255, 255, 255, 0.08);
+            color: #f2fbff;
+            transform: translateX(4px);
+            box-shadow: 0 8px 18px rgba(6, 15, 32, 0.18);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 15px;
+            cursor: pointer;
+            transform: scale(1.25);
+            accent-color: var(--primary);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 14px;
+            font-weight: 600;
+            display: none;
+            font-size: 1.1rem;
+        }
+
+        .feedback.correct {
+            background: rgba(21, 76, 51, 0.22);
+            color: #b8f2d5;
+            border: 1px solid rgba(138, 227, 193, 0.25);
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: rgba(152, 45, 53, 0.22);
+            color: #ffd9de;
+            border: 1px solid rgba(255, 155, 190, 0.25);
+            display: block;
+        }
+
+        .check-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #eef6ff;
+            padding: 15px 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.25s ease;
+        }
+
+        .check-btn:hover {
+            background: linear-gradient(135deg, rgba(110, 193, 228, 0.22), rgba(63, 141, 188, 0.22));
+            border-color: rgba(110, 193, 228, 0.4);
+            color: white;
+            box-shadow: 0 12px 28px rgba(16, 38, 62, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .check-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: var(--muted);
+            box-shadow: none;
+            transform: none;
+        }
+
+        .progress-container {
+            text-align: center;
+            padding: 26px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 18px;
+            margin-bottom: 40px;
+            position: sticky;
+            top: 20px;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+        }
+
+        .progress-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #eef6ff;
+        }
+
+        .reset-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #d7e4f4;
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .reset-btn:hover {
+            background: rgba(110, 193, 228, 0.16);
+            border-color: rgba(110, 193, 228, 0.35);
+            color: #f4fdff;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border-left: 4px solid rgba(110, 193, 228, 0.7);
+            border-radius: 0 14px 14px 0;
+            font-size: 1.1rem;
+            color: #d7e4f4;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        /* Grammar Bubble Styling */
+        .grammar-bubble {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 4px 14px;
+            margin: 4px 2px;
+            border: 1.5px solid transparent;
+            font-weight: 500;
+            color: #eef6ff;
+            vertical-align: middle;
+            line-height: 1.2;
+        }
+
+        .bubble-cyan {
+            border-color: #00acc1;
+            background: rgba(0, 172, 193, 0.15);
+        }
+
+        .bubble-yellow {
+            border-color: #fbc02d;
+            background: rgba(251, 192, 45, 0.15);
+        }
+
+        .v-bubble {
+            display: inline-block;
+            border-radius: 999px;
+            padding: 2px 12px;
+            margin: 0 4px;
+            font-weight: 700;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .v-green {
+            background: #26a69a;
+            color: #fff;
+        }
+
+        .v-red {
+            background: #ef5350;
+            color: #fff;
+        }
+
+        .v-orange {
+            background: #ff7043;
+            color: #fff;
+        }
+
+        /* Legacy mark compatibility override */
+        mark {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Interactive Practice Table Styles */
+        .answer {
+            display: none;
+        }
+
+        .answer.show {
+            display: inline;
+        }
+
+        .placeholder.hide {
+            display: none;
+        }
+
+        .clickable-situation {
+            padding: 0;
+        }
+
+        .clickable-situation span {
+            display: inline-block;
+            padding: 8px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .clickable-situation span:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .clickable-sentence {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .clickable-sentence:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .part-1,
+        .part-2 {
+            display: inline;
+        }
+
+        .audio-icon {
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 10px;
+            opacity: 0.6;
+            transition: opacity 0.2s, transform 0.1s;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .audio-icon:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .audio-icon:active {
+            transform: scale(0.9);
+        }
+
+        .verb-lab-input {
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #444;
+            background: #1a1a1a;
+            color: white;
+            width: 100%;
+            max-width: 250px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .verb-lab-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <header>
-        <h1>{% if page.icon %}{{ page.icon }} {% endif %}{{ page.title }}</h1>
-        {% if page.subtitle %}
-        <h2 style="color: #64748b; font-size: 1.8em; font-weight: 500;">{{ page.subtitle }}</h2>
-        {% endif %}
-    </header>
+    <div class="container">
+        <header>
+            {% if page.url != '/' and page.url != '/index.html' %}
+            <h1>{% if page.icon %}{{ page.icon }} {% endif %}{{ page.title }}</h1>
+            {% if page.subtitle %}
+            <h2 style="color: #64748b; font-size: 1.8em; font-weight: 500;">{{ page.subtitle }}</h2>
+            {% endif %}
+            {% endif %}
+        </header>
 
-    <div class="content">
-        {% if page.url != '/' and page.url != '/index.html' %}
+        <div class="content">
+            {% if page.url != '/' and page.url != '/index.html' %}
             <div class="nav-bar">
                 <a href="/" class="back-btn">← Back to Home</a>
             </div>
-        {% endif %}
-        {{ content }}
+            {% endif %}
+            {{ content }}
+        </div>
     </div>
-</div>
 
-<script>
-  // Disable right-click
-  document.addEventListener('contextmenu', event => event.preventDefault());
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', event => event.preventDefault());
 
-  // Disable common copy shortcuts
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
-      e.preventDefault();
-      alert('Copying is disabled on this page.');
-    }
-  });
+        // Disable common copy shortcuts
+        document.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
+                e.preventDefault();
+                alert('Copying is disabled on this page.');
+            }
+        });
 
-  // Disable text drag
-  document.addEventListener('dragstart', event => event.preventDefault());
-</script>
+        // Disable text drag
+        document.addEventListener('dragstart', event => event.preventDefault());
+
+        // --- GLOBAL INTERACTIVE LOGIC --- //
+
+        // Table Interaction
+        function togglePart(element, partNum) {
+            event.stopPropagation();
+            const row = element.closest('tr');
+            const targetPart = row.querySelector('.part-' + partNum);
+            if (!targetPart) return;
+            const answer = targetPart.querySelector('.answer');
+            const placeholder = targetPart.querySelector('.placeholder');
+            const isShowing = answer.classList.contains('show');
+            if (isShowing) {
+                answer.classList.remove('show');
+                placeholder.classList.remove('hide');
+            } else {
+                answer.classList.add('show');
+                placeholder.classList.add('hide');
+            }
+        }
+
+        // Speak individual bubbles
+        function speakBubble(bubble) {
+            if (!cachedBestVoice && window.speechSynthesis.getVoices().length === 0) {
+                window.speechSynthesis.onvoiceschanged = () => { loadBestVoice(); speakBubble(bubble); };
+                return;
+            } else if (!cachedBestVoice) {
+                loadBestVoice();
+            }
+
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(bubble.textContent.trim());
+            if (cachedBestVoice) {
+                utterance.voice = cachedBestVoice;
+                utterance.lang = cachedBestVoice.lang;
+            } else {
+                utterance.lang = 'en-GB';
+            }
+            utterance.rate = 0.7; 
+            utterance.pitch = 1.1;
+            
+            const originalTransform = bubble.style.transform || 'none';
+            bubble.style.transform = "scale(1.15)";
+            setTimeout(() => bubble.style.transform = originalTransform, 150);
+            
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Global click listener for bubbles
+        document.addEventListener('click', function(event) {
+            const bubble = event.target.closest('.grammar-bubble, .v-bubble');
+            if (bubble) {
+                event.stopPropagation(); // Prevents the row toggle from firing!
+                speakBubble(bubble);
+            }
+        }, true); // useCapture = true ensures this fires BEFORE the td onclick
+
+        function toggleFullRow(td) {
+            const row = td.closest('tr');
+            const parts = row.querySelectorAll('.part');
+            const firstAnswer = row.querySelector('.part-1 .answer');
+            if (!firstAnswer) return;
+            const shouldShow = !firstAnswer.classList.contains('show');
+            parts.forEach(part => {
+                const answer = part.querySelector('.answer');
+                const placeholder = part.querySelector('.placeholder');
+                if (shouldShow) {
+                    answer.classList.add('show');
+                    placeholder.classList.add('hide');
+                } else {
+                    answer.classList.remove('show');
+                    placeholder.classList.remove('hide');
+                }
+            });
+        }
+
+        // Initialize dynamic click handlers to safely override inline onclicks
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.clickable-sentence').forEach(td => {
+                td.onclick = function(event) {
+                    // If they clicked a bubble, DO NOT toggle the row.
+                    if (event.target.closest('.grammar-bubble, .v-bubble')) {
+                        return;
+                    }
+                    toggleFullRow(this);
+                };
+            });
+        });
+
+        // Audio Engine
+        let cachedBestVoice = null;
+        function loadBestVoice() {
+            if (cachedBestVoice) return;
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length === 0) return;
+            const targets = ["Serena", "Google UK English Female", "Martha", "Google UK English Male", "Daniel", "Samantha"];
+            for (let name of targets) {
+                cachedBestVoice = voices.find(v => v.name.includes(name));
+                if (cachedBestVoice) break;
+            }
+            if (!cachedBestVoice) cachedBestVoice = voices.find(v => v.lang.includes("en-GB"));
+        }
+
+        if (window.speechSynthesis) {
+            window.speechSynthesis.onvoiceschanged = loadBestVoice;
+            loadBestVoice();
+        }
+
+        function speakSentence(icon) {
+            event.stopPropagation();
+            const container = icon.parentElement;
+            if (!cachedBestVoice && window.speechSynthesis.getVoices().length === 0) {
+                window.speechSynthesis.onvoiceschanged = () => { loadBestVoice(); speakSentence(icon); };
+                return;
+            } else if (!cachedBestVoice) {
+                loadBestVoice();
+            }
+
+            let visibleTextParts = [];
+            function extractVisibleText(node) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    visibleTextParts.push(node.textContent);
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    if (node === icon || window.getComputedStyle(node).display === 'none') return;
+                    if (node.classList.contains('placeholder')) {
+                        visibleTextParts.push(node.textContent.replace(/_{2,}/g, '|PAUSE|'));
+                        return;
+                    }
+                    for (let child of node.childNodes) extractVisibleText(child);
+                }
+            }
+            extractVisibleText(container);
+
+            let textToSpeak = visibleTextParts.join(' ').replace(/\s+/g, ' ').trim();
+            window.speechSynthesis.cancel();
+
+            const chunks = textToSpeak.split('|PAUSE|');
+
+            function speakChunks(chunksToSpeak) {
+                if (chunksToSpeak.length === 0) return;
+                const chunk = chunksToSpeak.shift().trim();
+
+                if (chunk) {
+                    const utterance = new SpeechSynthesisUtterance(chunk);
+                    if (cachedBestVoice) {
+                        utterance.voice = cachedBestVoice;
+                        utterance.lang = cachedBestVoice.lang;
+                    } else {
+                        utterance.lang = 'en-GB';
+                    }
+                    utterance.rate = 0.7;
+                    utterance.pitch = 1.1;
+
+                    utterance.onend = () => {
+                        if (chunksToSpeak.length > 0) {
+                            setTimeout(() => speakChunks(chunksToSpeak), 500);
+                        }
+                    };
+
+                    window.speechSynthesis.speak(utterance);
+                } else if (chunksToSpeak.length > 0) {
+                    // If the chunk is empty (e.g. back-to-back blanks), just pause and continue
+                    setTimeout(() => speakChunks(chunksToSpeak), 500);
+                }
+            }
+
+            speakChunks(chunks);
+
+            icon.style.transform = "scale(1.3)";
+            setTimeout(() => icon.style.transform = "scale(1.1)", 200);
+        }
+
+        function renderSemanticFeedback(questionNum, isCorrect, explanation) {
+            const feedbackEl = document.getElementById(`feedback${questionNum}`);
+            const explanationEl = document.getElementById(`explanation${questionNum}`);
+            
+            if (isCorrect) {
+                feedbackEl.className = 'feedback correct';
+                feedbackEl.innerHTML = `<span>✓ Correct!</span>`;
+            } else {
+                feedbackEl.className = 'feedback incorrect';
+                feedbackEl.innerHTML = `<span>✗ Incorrect. Check the explanation.</span>`;
+            }
+            
+            explanationEl.classList.add('show');
+            explanationEl.style.marginTop = "10px";
+            explanationEl.style.padding = "20px";
+            explanationEl.style.background = "rgba(255,255,255,0.03)";
+            explanationEl.style.borderLeft = "4px solid " + (isCorrect ? "#4ade80" : "#f87171");
+        }
+    </script>
 
 </body>
+
 </html>

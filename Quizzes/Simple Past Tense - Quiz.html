@@ -173,7 +173,7 @@ icon: "📝"
             
             const questionHTML = `
             <div class="question">
-                <div class="question-text">${questionNum}. ${q.question}</div>
+                <div class="question-text">${questionNum}. ${q.question} <span class="audio-icon" onclick="speakSentence(this)">🔊</span></div>
                 <div class="options">
                     ${shuffledOptionsArray.map((opt, idx) => `
                     <label class="option">
@@ -203,19 +203,10 @@ icon: "📝"
             return;
         }
 
-        const feedbackEl = document.getElementById(`feedback${questionNum}`);
-        const explanationEl = document.getElementById(`explanation${questionNum}`);
+        const isCorrect = (selected.value === answers[question]);
+        renderSemanticFeedback(questionNum, isCorrect);
+        
         const button = event.target;
-        
-        if (selected.value === answers[question]) {
-            feedbackEl.className = 'feedback correct';
-            feedbackEl.textContent = '✓ Correct!';
-        } else {
-            feedbackEl.className = 'feedback incorrect';
-            feedbackEl.textContent = '✗ Incorrect. Check the explanation below.';
-        }
-        
-        explanationEl.classList.add('show');
         button.disabled = true;
         button.textContent = 'Checked ✓';
         

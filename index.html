@@ -3,103 +3,111 @@ layout: default
 title: "Home"
 icon: "🏠"
 ---
-
 <style>
-    .subtitle {
-        color: var(--accent);
-        font-size: 1.35rem;
-        margin: 16px 0;
+    .hero-section {
+        padding: 60px 20px;
         text-align: center;
-        font-weight: 500;
-        letter-spacing: 0.02em;
     }
 
-    .instructions {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(110, 193, 228, 0.22);
-        padding: 30px 28px;
-        margin: 30px auto 40px auto;
-        border-radius: 28px;
-        font-size: 1.15rem;
-        text-align: center;
-        max-width: 720px;
-        color: #d9e9ff;
-        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(14px);
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 40px;
+        background: linear-gradient(135deg, #fff, #b7e6ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.04em;
     }
 
-    .tabs {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-bottom: 36px;
-        flex-wrap: wrap;
-    }
-
-    .tab-btn {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 14px 24px;
-        border-radius: 999px;
-        cursor: pointer;
-        font-weight: 700;
-        color: #c7d7ec;
-        transition: all 0.25s ease;
-        font-size: 1.05rem;
-        min-width: 130px;
-        letter-spacing: 0.01em;
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
-    }
-
-    .tab-btn:hover {
-        background: rgba(110, 193, 228, 0.18);
-        color: #f5fcff;
-        transform: translateY(-1px);
-    }
-
-    .tab-btn.active {
-        background: linear-gradient(135deg, rgba(110, 193, 228, 0.35), rgba(63, 141, 188, 0.28));
-        color: #effcff;
-        border-color: rgba(110, 193, 228, 0.35);
-        box-shadow: 0 20px 48px rgba(16, 38, 62, 0.28);
+    .hero-subtitle {
+        color: rgba(231, 238, 247, 0.7);
+        font-size: 1.25rem;
+        margin-bottom: 40px;
     }
 
     .search-wrapper {
-        margin-bottom: 42px;
+        max-width: 800px;
+        margin: 0 auto 60px auto;
         position: relative;
     }
 
     input {
         width: 100%;
-        padding: 20px 24px 20px 56px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 22px;
-        font-size: 1.1rem;
-        box-sizing: border-box;
-        transition: border-color 0.25s ease, background 0.25s ease;
-        box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.25);
+        padding: 24px 30px 24px 70px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 30px;
+        font-size: 1.25rem;
         background: rgba(255, 255, 255, 0.05);
-        color: #edf7ff;
-        font-family: inherit;
-    }
-
-    input::placeholder {
-        color: rgba(231, 238, 247, 0.62);
+        color: #fff;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
     }
 
     input:focus {
-        border-color: rgba(110, 193, 228, 0.5);
-        outline: none;
+        border-color: var(--primary);
         background: rgba(255, 255, 255, 0.08);
+        outline: none;
+        box-shadow: 0 15px 50px rgba(110, 193, 228, 0.2);
     }
 
     .search-icon {
         position: absolute;
-        left: 20px;
+        left: 25px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 1.4rem;
-        color: rgba(255, 255, 255, 0.75);
+        font-size: 1.8rem;
+        opacity: 0.6;
+    }
+
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .category-box {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 40px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .category-box:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--primary);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .category-box i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .category-box span {
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Results section - hidden by default */
+    .results-container {
+        margin-top: 60px;
+        display: none;
+    }
+
+    .results-container.active {
+        display: block;
     }
 
     .resource-list {
@@ -109,206 +117,231 @@ icon: "🏠"
     }
 
     .resource-card {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 32px;
-        border-radius: 28px;
-        border: 1px solid rgba(110, 193, 228, 0.15);
-        display: block;
-        cursor: pointer;
-        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 24px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         text-decoration: none;
-        color: inherit;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
-        min-height: 170px;
-    }
-
-    .resource-card::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(110, 193, 228, 0.08), transparent 40%);
-        pointer-events: none;
+        color: #fff;
+        transition: all 0.2s ease;
     }
 
     .resource-card:hover {
-        transform: translateY(-5px);
-        border-color: rgba(110, 193, 228, 0.42);
-        box-shadow: 0 26px 70px rgba(0, 0, 0, 0.26);
-        background: rgba(255, 255, 255, 0.08);
-    }
-
-    .tags-row {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 18px;
-        align-items: center;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-    }
-
-    .tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        border-radius: 999px;
-        font-size: 0.92rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-    }
-
-    .tag-grammar {
-        background: rgba(110, 193, 228, 0.12);
-        color: #b7e6ff;
-        border: 1px solid rgba(110, 193, 228, 0.22);
-    }
-
-    .tag-writing {
-        background: rgba(143, 160, 255, 0.12);
-        color: #d5d8ff;
-        border: 1px solid rgba(143, 160, 255, 0.22);
-    }
-
-    .tag-reading {
-        background: rgba(97, 205, 200, 0.12);
-        color: #bdf4f0;
-        border: 1px solid rgba(97, 205, 200, 0.22);
-    }
-
-    .tag-listening {
-        background: rgba(115, 157, 255, 0.12);
-        color: #d5e5ff;
-        border: 1px solid rgba(115, 157, 255, 0.22);
-    }
-
-    .tag-quizzes {
-        background: rgba(119, 225, 191, 0.12);
-        color: #d7fff2;
-        border: 1px solid rgba(119, 225, 191, 0.22);
-    }
-
-    .tag-secondary {
-        background: rgba(255, 255, 255, 0.06);
-        color: #d8e4f5;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--primary);
+        transform: scale(1.02);
     }
 
     .resource-card h3 {
-        margin: 0 0 12px 0;
-        font-size: 1.85rem;
-        color: #f7fbff;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        position: relative;
-        z-index: 1;
+        margin: 0;
+        font-size: 1.25rem;
     }
 
-    .resource-card:hover h3 {
-        color: #d1f4ff;
+    .resource-card .cat-tag {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        opacity: 0.6;
+        margin-bottom: 8px;
+        display: block;
     }
 
     .no-results {
         text-align: center;
-        padding: 60px 20px;
-        color: #a3bbd9;
-        font-size: 1.35rem;
-        font-weight: 600;
+        padding: 40px;
+        opacity: 0.6;
     }
 </style>
 
-<div class="instructions">
-    👋 <strong>Welcome!</strong> Choose a topic below or type in the search box to find a lesson.
-</div>
+<div class="hero-section">
+    <h1 class="hero-title">LTF Archives</h1>
 
-<div class="tabs">
-    <button class="tab-btn active" onclick="filterTab('All', this)">🌟 All Topics</button>
-    <button class="tab-btn" onclick="filterTab('Reading', this)">📖 Reading</button>
-    <button class="tab-btn" onclick="filterTab('Grammar', this)">🧩 Grammar</button>
-    <button class="tab-btn" onclick="filterTab('Writing', this)">✍️ Writing</button>
-    <button class="tab-btn" onclick="filterTab('Listening', this)">🎧 Listening</button>
-    <button class="tab-btn" onclick="filterTab('Quizzes', this)">📝 Quizzes</button>
-</div>
+    <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search" placeholder="Type to search lessons, grammar, text types..."
+            onkeyup="handleSearch()">
+    </div>
 
-<div class="search-wrapper">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search" placeholder="Search for a lesson (e.g. 'Tenses' or 'Writing')..." onkeyup="renderList()">
-</div>
+    <div class="category-grid" id="categoryGrid">
+        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Reading')">
+            <i>📖</i>
+            <span>Reading</span>
+        </a>
+        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Grammar')">
+            <i>🧩</i>
+            <span>Grammar</span>
+        </a>
+        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Writing')">
+            <i>✍️</i>
+            <span>Writing</span>
+        </a>
+        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Listening')">
+            <i>🎧</i>
+            <span>Listening</span>
+        </a>
+        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Quizzes')">
+            <i>📝</i>
+            <span>Quizzes</span>
+        </a>
+    </div>
 
-<div id="list" class="resource-list"></div>
+    <div id="resultsWrapper" class="results-container">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+            <h2 id="resultsTitle" style="margin: 0; font-size: 1.5rem; color: var(--primary);">Search Results</h2>
+            <button onclick="clearSearch()"
+                style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-weight: bold;">✕
+                Close</button>
+        </div>
+        <div id="list" class="resource-list"></div>
+    </div>
+</div>
 
 <script>
     const resources = [
-{% assign sorted_pages = site.pages | sort: "title" %}
-{% assign first = true %}
-{% for p in sorted_pages %}
+        {% assign sorted_pages = site.pages | sort: "title" %}
+    {% assign first = true %}
+    {% for p in sorted_pages %}
     {% if p.title and p.category and p.url != '/' %}
-        {% unless first %},{% endunless %}
-        {
-            title: {{ p.title | jsonify }},
-            category: {{ p.category | jsonify }},
-            icon: {{ p.icon | jsonify }},
-            file: "{{ p.url | relative_url | replace: ' ', '%20' }}"
-        }{% assign first = false %}
+    {% unless first %}, {% endunless %}
+    {
+        title: { { p.title | jsonify } },
+        category: { { p.category | jsonify } },
+        icon: { { p.icon | jsonify } },
+        file: "{{ p.url | relative_url | replace: ' ', '%20' }}"
+    } {% assign first = false %}
     {% endif %}
-{% endfor %}
-    ];
+    {% endfor %}
+        ];
 
-    let currentTab = 'All';
-
-    function filterTab(tabName, btnElement) {
-        currentTab = tabName;
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btnElement.classList.add('active');
-        renderList();
+    function handleSearch() {
+        const query = document.getElementById('search').value.toLowerCase();
+        if (query.length > 0) {
+            renderList(query, 'Search Results');
+        } else {
+            closeResults();
+        }
     }
 
-    function renderList() {
-        const query = document.getElementById('search').value.toLowerCase();
+    function filterCategory(cat) {
+        document.getElementById('search').value = '';
+        renderList('', cat, cat);
+    }
+
+    function clearSearch() {
+        document.getElementById('search').value = '';
+        closeResults();
+    }
+
+    function closeResults() {
+        document.getElementById('resultsWrapper').classList.remove('active');
+        document.getElementById('categoryGrid').style.opacity = '1';
+    }
+
+    function renderList(query, title, categoryFilter = null) {
         const container = document.getElementById('list');
+        const wrapper = document.getElementById('resultsWrapper');
+        const grid = document.getElementById('categoryGrid');
+        const titleEl = document.getElementById('resultsTitle');
+
         container.innerHTML = '';
+        titleEl.innerText = title;
+        wrapper.classList.add('active');
+        grid.style.opacity = '0.3';
 
         const filtered = resources.filter(item => {
-            const matchSearch = item.title.toLowerCase().includes(query) || 
-                              item.category.toLowerCase().includes(query);
-            
-            const matchTab = currentTab === 'All' || item.category === currentTab;
-            return matchSearch && matchTab;
+            const matchSearch = query ? (item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)) : true;
+            const matchCat = categoryFilter ? (item.category === categoryFilter) : true;
+            return matchSearch && matchCat;
         });
 
         if (!filtered.length) {
-            container.innerHTML = `<div class="no-results">No lessons found. Try a different search!</div>`;
+            container.innerHTML = `<div class="no-results">No lessons found matching "${query || categoryFilter}".</div>`;
             return;
         }
 
-        filtered.forEach(item => {
+        const getBaseTitle = (t) => t.replace(/^Quiz[:\s-]+/i, '').replace(/[:\-\s]+Quiz$/i, '').trim();
+
+        // Only pair Grammar/Quizzes if searching everything
+        if (!categoryFilter) {
+            container.style.display = 'block'; // Reset to block for paired rows
+            const groups = new Map();
+            filtered.forEach(item => {
+                const base = getBaseTitle(item.title);
+                if (!groups.has(base)) groups.set(base, { grammar: null, quiz: null, others: [] });
+                
+                const group = groups.get(base);
+                if (item.category === 'Grammar') group.grammar = item;
+                else if (item.category === 'Quizzes') group.quiz = item;
+                else group.others.push(item);
+            });
+
+            groups.forEach((group, baseTitle) => {
+                if (group.grammar || group.quiz) {
+                    const row = document.createElement('div');
+                    row.style.display = 'grid';
+                    row.style.gridTemplateColumns = '1fr 1fr';
+                    row.style.gap = '20px';
+                    row.style.marginBottom = '20px';
+                    row.style.width = '100%';
+
+                    if (group.grammar) {
+                        row.appendChild(createCard(group.grammar, baseTitle));
+                    } else {
+                        row.appendChild(document.createElement('div'));
+                    }
+
+                    if (group.quiz) {
+                        row.appendChild(createCard(group.quiz, baseTitle));
+                    } else {
+                        row.appendChild(document.createElement('div'));
+                    }
+                    container.appendChild(row);
+                }
+
+                group.others.forEach(item => {
+                    container.appendChild(createCard(item));
+                });
+            });
+        } else {
+            // Standard Grid for single categories
+            container.style.display = 'grid';
+            container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
+            container.style.gap = '24px';
+            
+            filtered.forEach(item => {
+                container.appendChild(createCard(item));
+            });
+        }
+
+        wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+        function createCard(item, overrideTitle = null) {
             const link = document.createElement('a');
             link.className = 'resource-card';
             link.href = item.file;
+            link.style.height = '100%';
             
-            let tagClass = 'tag-secondary';
-            if(item.category === 'Grammar') tagClass = 'tag-grammar';
-            else if(item.category === 'Writing') tagClass = 'tag-writing';
-            else if(item.category === 'Reading') tagClass = 'tag-reading';
-            else if(item.category === 'Listening') tagClass = 'tag-listening';
-            else if(item.category === 'Quizzes') tagClass = 'tag-quizzes';
+            const displayTitle = overrideTitle || item.title.replace(/^Quiz[:\s-]+/i, '').trim();
+
+            let tagColor = 'rgba(255,255,255,0.2)';
+            if (item.category === 'Grammar') tagColor = 'rgba(110, 193, 228, 0.3)';
+            else if (item.category === 'Quizzes') tagColor = 'rgba(255, 107, 107, 0.3)';
+            else if (item.category === 'Reading') tagColor = 'rgba(74, 222, 128, 0.3)';
+            else if (item.category === 'Listening') tagColor = 'rgba(167, 139, 250, 0.3)';
+            else if (item.category === 'Writing') tagColor = 'rgba(251, 159, 67, 0.3)';
 
             link.innerHTML = `
-                <div>
-                    <div class="tags-row">
-                        <span class="tag ${tagClass}">${item.icon} ${item.category}</span>
-                    </div>
-                    <h3>${item.title}</h3>
-                </div>
+                <span class="cat-tag" style="background: ${tagColor}; padding: 4px 10px; border-radius: 6px; color: #fff;">${item.icon} ${item.category}</span>
+                <h3 style="text-align: center; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 2px; margin: 15px auto 0 auto; width: fit-content;">${displayTitle}</h3>
             `;
-            container.appendChild(link);
-        });
-    }
+            link.style.display = 'flex';
+            link.style.flexDirection = 'column';
+            link.style.alignItems = 'center';
+            link.style.justifyContent = 'center';
+            return link;
+        }
 
     // Sort alphabetically by title initially
     resources.sort((a, b) => a.title.localeCompare(b.title));
-    renderList();
 </script>

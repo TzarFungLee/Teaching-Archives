@@ -2,130 +2,125 @@
 layout: default
 title: "Present Continuous Tense"
 category: "Grammar"
-icon: "🧩"
+icon: "🕒"
 ---
 
-<h3>💡 Key Concepts</h3>
-<ul>
-    <li><strong>When to use:</strong> Actions happening now, temporary situations, future arrangements</li>
-    <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">am/is/are + verb-ing</mark> + <mark class="yellow">(object/complement)</mark></li>
-    <li><strong>Examples:</strong>
-        <ul>
-            <li><mark class="cyan">I</mark> <mark class="red">am studying</mark> <mark class="yellow">English</mark> <mark class="green">right now</mark>.</li>
-            <li><mark class="cyan">She</mark> <mark class="red">is working</mark> <mark class="yellow">on a project</mark>.</li>
-            <li><mark class="cyan">They</mark> <mark class="red">are playing</mark> <mark class="yellow">soccer</mark> <mark class="green">at the moment</mark>.</li>
-        </ul>
-    </li>
-    <li><strong>Spelling rules:</strong> drop final 'e' (make→making), double consonant (run→running), change 'ie' to 'y' (lie→lying)</li>
-    <li><strong>Time markers:</strong> <mark class="green">now, right now, at the moment, currently, today, this week</mark></li>
-</ul>
-
-        <hr>
 <h3>📊 Teaching Slides</h3>
-
-<!-- Add your Google Slides embed code here -->
-<div style="position:relative; width:100%; padding-bottom:56.25%; height:0; overflow:hidden; background:#f1f5f9; display:flex; align-items:center; justify-content:center; min-height:400px;">
-  <p style="color:#64748b;">Teaching slides will be embedded here</p>
+<div style="text-align: center; margin: 30px 0;">
+    <a href="https://docs.google.com/presentation/d/e/2PACX-1vQCgsVFa96ZelhZbopaI4M3-4eQhPx7fIh1lfCegBF6o2Ew3GrJkcAPZRUupc60eg/pub" target="_blank" class="btn" style="padding: 12px 24px; font-size: 1.1rem;">📖 Open Teaching Slides</a>
 </div>
 
-        <hr>
-        <h3>📖 Practice</h3>
-        <table>
-            <tr>
-                <th>Exercise Type</th>
-                <th>Practice Sentence</th>
-            </tr>
+<hr>
 
-            <tr>
-                <td colspan="2"><strong>Affirmative Sentences</strong></td>
-            </tr>
-            <tr>
-                <td>Example</td>
-                <td><mark class="cyan">I</mark> <mark class="red">am reading</mark> <mark class="yellow">a book</mark> <mark class="green">right now</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">She</mark> <mark class="red">__________ (cook)</mark> <mark class="yellow">dinner</mark> <mark class="green">at the moment</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">They</mark> <mark class="red">__________ (watch)</mark> <mark class="yellow">a movie</mark> <mark class="green">now</mark>.</td>
-            </tr>
-            <tr>
-                <td>Complete sentence</td>
-                <td><mark class="cyan">My brother</mark> __________________________________________ <mark class="green">currently</mark>.</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
+<h3>📖 Practice</h3>
 
-            <tr>
-                <td colspan="2"><strong>Spelling Changes</strong></td>
-            </tr>
-            <tr>
-                <td>Drop 'e'</td>
-                <td><mark class="cyan">He</mark> <mark class="red">is making</mark> <mark class="yellow">breakfast</mark>. (make → making)</td>
-            </tr>
-            <tr>
-                <td>Double consonant</td>
-                <td><mark class="cyan">She</mark> <mark class="red">is running</mark> <mark class="yellow">in the park</mark>. (run → running)</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">I</mark> <mark class="red">__________ (sit)</mark> <mark class="yellow">on the sofa</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">They</mark> <mark class="red">__________ (swim)</mark> <mark class="yellow">in the pool</mark>.</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
+<!-- ING Transformer Lab -->
+<div class="interactive-lab card" style="margin-bottom: 30px; padding: 25px; border-left: 5px solid var(--primary); background: rgba(255,255,255,0.02); border-radius: 12px;">
+    <h4 style="margin-top: 0;">🧪 ING Transformer Lab</h4>
+    <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">Type a base verb (e.g., 'work', 'make', 'run') to see its -ing form!</p>
+    
+    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="verbInputING" class="verb-lab-input" placeholder="Enter base verb..." onkeyup="if(event.key === 'Enter') transformVerbING()">
+        <button onclick="transformVerbING()" class="btn" style="padding: 12px 24px; border-radius: 8px;">Transform ✨</button>
+    </div>
 
-            <tr>
-                <td colspan="2"><strong>Negative & Questions</strong></td>
-            </tr>
-            <tr>
-                <td>Negative</td>
-                <td><mark class="cyan">I</mark> <mark class="red">am not (I'm not) listening</mark> <mark class="yellow">to music</mark>.</td>
-            </tr>
-            <tr>
-                <td>Question</td>
-                <td><mark class="red">Are</mark> <mark class="cyan">you</mark> <mark class="red">studying</mark> <mark class="green">now</mark>?</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">He</mark> <mark class="red">__________ (not/work)</mark> <mark class="green">today</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="red">__________</mark> <mark class="cyan">they</mark> <mark class="red">playing</mark> <mark class="yellow">video games</mark>?</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
+    <div id="transformResultING" style="margin-top: 25px; display: none; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 10px; animation: fadeIn 0.3s ease;">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div>
+                <span style="font-size: 0.85rem; display: block; margin-bottom: 8px; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">-ING Form:</span>
+                <span class="grammar-bubble bubble-cyan" style="font-size: 1.1rem;">She <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red" id="ingVerbResult" style="font-weight: bold;">---</span> ...</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <tr>
-                <td colspan="2"><strong>Future Arrangements</strong></td>
-            </tr>
-            <tr>
-                <td>Example</td>
-                <td><mark class="cyan">I</mark> <mark class="red">am meeting</mark> <mark class="yellow">my friend</mark> <mark class="green">tomorrow</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">She</mark> <mark class="red">__________ (fly)</mark> <mark class="yellow">to London</mark> <mark class="green">next week</mark>.</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
-        </table>
+<table>
+    <tr>
+        <th>Exercise Type</th>
+        <th>Practice Sentence</th>
+    </tr>
 
-        <hr>
+    <tr>
+        <td colspan="2"><strong>Affirmative Sentences</strong></td>
+    </tr>
+    <tr>
+        <td>Example</td>
+        <td>
+            <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">am</span> <span class="v-bubble v-red">reading</span> <span class="grammar-bubble bubble-yellow">a book</span> <span class="grammar-bubble bubble-green">right now</span>.
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Fill in the blank</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">She __________ (is/cook) dinner at the moment.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">cooking</span> <span class="grammar-bubble bubble-yellow">dinner</span> <span class="grammar-bubble bubble-green">at the moment</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Spelling Changes</strong></td>
+    </tr>
+    <tr>
+        <td>Drop 'e'</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">He __________ (is/make) breakfast. (make → making)</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">making</span> <span class="grammar-bubble bubble-yellow">breakfast</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Double consonant</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">She __________ (is/run) in the park. (run → running)</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">running</span> <span class="grammar-bubble bubble-yellow">in the park</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Negative & Questions</strong></td>
+    </tr>
+    <tr>
+        <td>Negative</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">I __________ (am not/listen) to music.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">am not</span> <span class="v-bubble v-red">listening</span> <span class="grammar-bubble bubble-yellow">to music</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Question</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ you (study) now?</span>
+                <span class="answer">
+                    <span class="v-bubble v-orange">Are</span> <span class="grammar-bubble bubble-cyan">you</span> <span class="v-bubble v-red">studying</span> <span class="grammar-bubble bubble-green">now</span>?
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+</table>
+
+<hr>
 
 <div style="text-align: center; margin: 30px 0;">
     <a href="../Quizzes/Present Continuous Tense - Quiz.html" class="btn">📝 Take the Quiz</a>
@@ -133,59 +128,45 @@ icon: "🧩"
 
 <hr>
 
-        <h3>📦 Concept Compressed</h3>
-        <p>The Present Continuous (also called Present Progressive) describes actions happening at the moment of speaking or ongoing temporary situations. It uses <em>am/is/are</em> + verb-<em>ing</em>.</p>
+<h3>📦 Concept Compressed</h3>
+<p>The Present Continuous (also called Present Progressive) describes actions happening at the moment of speaking or ongoing temporary situations. It uses <em>am/is/are</em> + verb-<em>ing</em>.</p>
 
-        <h4>When to Use</h4>
-        <ul>
-            <li><strong>Actions happening now:</strong> She is reading a book right now.</li>
-            <li><strong>Temporary situations:</strong> I'm living with my parents this month.</li>
-            <li><strong>Future arrangements:</strong> We're meeting at 7 PM tomorrow.</li>
-            <li><strong>Changing situations:</strong> The weather is getting colder.</li>
-        </ul>
+<h4>Formation</h4>
+<ul>
+    <li><strong>Structure (Affirmative):</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-orange">am/is/are</span> + <span class="v-bubble v-red">Verb-ing</span> + <span class="grammar-bubble bubble-yellow">Object</span></li>
+    <li><strong>Structure (Negative):</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-orange">am/is/are not</span> + <span class="v-bubble v-red">Verb-ing</span> + <span class="grammar-bubble bubble-yellow">Object</span></li>
+    <li><strong>Structure (Question):</strong> <span class="v-bubble v-orange">Am/Is/Are</span> + <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-red">Verb-ing</span> + <span class="grammar-bubble bubble-yellow">Object</span>?</li>
+</ul>
 
-        <h4>Formation</h4>
-        <table>
-            <tr>
-                <th>Subject</th>
-                <th>Be Form</th>
-                <th>Verb + ing</th>
-                <th>Example</th>
-            </tr>
-            <tr>
-                <td>I</td>
-                <td>am</td>
-                <td>working</td>
-                <td>I am working.</td>
-            </tr>
-            <tr>
-                <td>He/She/It</td>
-                <td>is</td>
-                <td>working</td>
-                <td>She is working.</td>
-            </tr>
-            <tr>
-                <td>You/We/They</td>
-                <td>are</td>
-                <td>working</td>
-                <td>They are working.</td>
-            </tr>
-        </table>
+<h4>Spelling Rules for -ing</h4>
+<ul>
+    <li><strong>Most verbs:</strong> Add <em>-ing</em> (play → playing)</li>
+    <li><strong>Verbs ending in -e:</strong> Drop <em>-e</em>, add <em>-ing</em> (make → making)</li>
+    <li><strong>Short verbs (CVC pattern):</strong> Double final consonant (run → running, sit → sitting)</li>
+    <li><strong>Verbs ending in -ie:</strong> Change to <em>-y</em> (lie → lying, die → dying)</li>
+</ul>
 
-        <h4>Spelling Rules for -ing</h4>
-        <ul>
-            <li><strong>Most verbs:</strong> Add <em>-ing</em> (play → playing)</li>
-            <li><strong>Verbs ending in -e:</strong> Drop <em>-e</em>, add <em>-ing</em> (make → making)</li>
-            <li><strong>Short verbs (CVC pattern):</strong> Double final consonant (run → running, sit → sitting)</li>
-            <li><strong>Verbs ending in -ie:</strong> Change to <em>-y</em> (lie → lying, die → dying)</li>
-        </ul>
+<h4>Common Time Markers</h4>
+<p><em>Now, right now, at the moment, currently, today, this week, these days</em></p>
 
-        <h4>Common Time Markers</h4>
-        <p><em>Now, right now, at the moment, currently, today, this week, these days</em></p>
+<script>
+    function transformVerbING() {
+        const input = document.getElementById('verbInputING');
+        const verb = input.value.trim().toLowerCase();
+        if (!verb) return;
 
-        <h4>Key Rules</h4>
-        <ul>
-            <li><strong>Stative verbs:</strong> Don't use continuous form with verbs of state (know, believe, love, want, need)</li>
-            <li><strong>Negatives:</strong> am/is/are + not + verb-ing</li>
-            <li><strong>Questions:</strong> Am/Is/Are + subject + verb-ing?</li>
-        </ul>
+        let result;
+        if (verb.endsWith('ie')) {
+            result = verb.slice(0, -2) + 'ying';
+        } else if (verb.endsWith('e') && verb !== 'be') {
+            result = verb.slice(0, -1) + 'ing';
+        } else if (/[bcdfghjklmnpqrstvwxz][aeiou][bcdfghjklmnpqrstvwxz]$/.test(verb) && !/[xyw]$/.test(verb)) {
+            result = verb + verb.slice(-1) + 'ing';
+        } else {
+            result = verb + 'ing';
+        }
+
+        document.getElementById('ingVerbResult').textContent = result;
+        document.getElementById('transformResultING').style.display = 'block';
+    }
+</script>

@@ -5,7 +5,155 @@ category: "Listening"
 icon: "🎧"
 ---
 
-<table>
+    <style>
+        .word, .forms {
+            position: relative;
+        }
+        .speak-item {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 0 2px;
+            border-radius: 3px;
+            display: inline; 
+            text-decoration: none;
+        }
+        .speak-item:hover {
+            color: var(--primary);
+            background: rgba(110, 193, 228, 0.15);
+        }
+        /* Speaker icon ONLY for the Word/Phrase column items */
+        .word .speak-item::after {
+            content: ' 🔊';
+            font-size: 0.75em;
+            opacity: 0;
+            margin-left: 1px;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+        .word .speak-item:hover::after {
+            opacity: 0.6;
+        }
+        .category-row {
+            background: rgba(11, 61, 145, 0.1) !important;
+        }
+        .category-row td {
+            text-align: center;
+            font-weight: bold;
+            color: var(--accent);
+            padding: 20px !important;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+        }
+    </style>
+
+    <script>
+        const SpeechManager = {
+            voice: null,
+            init() {
+                const setVoice = () => {
+                    const voices = window.speechSynthesis.getVoices();
+                    
+                    // Priority List for Natural British Voices (Prioritizing Female)
+                    const priorityNames = [
+                        'Serena',           // Premium Female macOS
+                        'Martha',           // Premium Female macOS
+                        'Google UK English Female', 
+                        'Stephanie',        // Female macOS
+                        'Daniel (Premium)', // High-quality Male macOS (backup)
+                        'Arthur', 
+                        'Daniel',
+                        'Microsoft Hazel',
+                        'English (United Kingdom)'
+                    ];
+
+                    for (const name of priorityNames) {
+                        const v = voices.find(v => v.name.includes(name) && v.lang.startsWith('en-G'));
+                        if (v) {
+                            this.voice = v;
+                            console.log('%c Pronunciation Voice Selected: ' + v.name, 'color: #007bff; font-weight: bold;');
+                            break;
+                        }
+                    }
+
+                    if (!this.voice) {
+                        this.voice = voices.find(v => v.lang.startsWith('en-G')) || 
+                                     voices.find(v => v.lang.startsWith('en')) || 
+                                     voices[0];
+                    }
+                };
+
+                if (speechSynthesis.onvoiceschanged !== undefined) {
+                    speechSynthesis.onvoiceschanged = setVoice;
+                }
+                setVoice();
+            },
+            speak(text) {
+                if (!text || !window.speechSynthesis) return;
+                
+                const cleanText = text.replace(/\(.*?\)/g, '').trim();
+                window.speechSynthesis.cancel(); 
+                
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.voice = this.voice;
+                
+                // Fine-tuning for "Natural" feel
+                utterance.rate = 0.9;   // Clear but natural
+                utterance.pitch = 1.0;  // Neutral pitch
+                utterance.volume = 1.0;
+
+                window.speechSynthesis.speak(utterance);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            SpeechManager.init();
+
+            // Handle the Word/Phrase column (split by slashes)
+            document.querySelectorAll('.word').forEach(cell => {
+                const text = cell.innerText;
+                if (text.includes('/')) {
+                    const parts = text.split('/');
+                    cell.innerHTML = parts.map(p => `<span class="speak-item">${p.trim()}</span>`).join(' <span style="opacity: 0.2; cursor: default;">/</span> ');
+                } else {
+                    cell.innerHTML = `<span class="speak-item">${text.trim()}</span>`;
+                }
+            });
+
+            // Handle the Common Usage column (make full sentences clickable)
+            document.querySelectorAll('.forms').forEach(cell => {
+                const lines = cell.innerHTML.split(/<br\s*\/?>/i);
+                cell.innerHTML = lines.map(line => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return '';
+                    // Wrap the line in a speak-item span and collapse spaces to fix 'weird spacing'
+                    // This ensures "retire   next" becomes "retire next"
+                    const cleaned = trimmed.replace(/\s+/g, ' ');
+                    return `<span class="speak-item">${cleaned}</span>`;
+                }).join('<br>');
+            });
+
+            const table = document.querySelector('table');
+            if (table) {
+                table.addEventListener('click', (e) => {
+                    const target = e.target.closest('.speak-item');
+                    if (target) {
+                        // Use textContent to get the clean text without HTML tags for speech
+                        SpeechManager.speak(target.textContent);
+                    }
+                });
+            }
+        });
+    </script>
+
+    <div class="content">
+        <hr>
+        <h3>📊 Teaching Slides</h3>
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="https://docs.google.com/presentation/d/e/2PACX-1vQ...placeholder.../pub" target="_blank" class="btn" style="padding: 12px 24px; font-size: 1.1rem;">📖 Open Reading Material</a>
+        </div>
+        <hr>
+
+        <table>
             <thead>
                 <tr>
                     <th style="width: 25%;">Word/Phrase</th>

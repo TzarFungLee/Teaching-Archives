@@ -22,127 +22,492 @@ icon: "📝"
     let currentQuestions = [];
     let answers = {};
     
-    // Question bank with all possible questions
-    const questionBank = [
+    // Scenario bank for dynamic question generation
+    const scenarioBank = [
+        // --- CATEGORY: School & Student Life ---
         {
-            question: "If I _____ a millionaire, I would travel the world.",
-            options: ["were", "was", "am"],
-            correct: 0,
-            explanation: "In second conditional, use past simple in the if-clause. With 'I/he/she/it', use 'were'."
+            ifSubj: "the honor student",
+            ifVerbCorrect: "studied",
+            ifVerbWrong1: "studies",
+            ifVerbWrong2: "would study",
+            ifPred: "the advanced physics syllabus",
+            mainSubj: "the university",
+            mainVerbCorrect: "would offer",
+            mainVerbWrong1: "will offer",
+            mainVerbWrong2: "offered",
+            mainPred: "a full scholarship"
         },
         {
-            question: "She _____ buy a new car if she had enough money.",
-            options: ["would", "will", "can"],
-            correct: 0,
-            explanation: "Use 'would' + base verb in the main clause of second conditional sentences."
+            ifSubj: "the discipline committee",
+            ifVerbCorrect: "caught",
+            ifVerbWrong1: "catches",
+            ifVerbWrong2: "would catch",
+            ifPred: "them skipping class",
+            mainSubj: "the principal",
+            mainVerbCorrect: "would suspend",
+            mainVerbWrong1: "will suspend",
+            mainVerbWrong2: "suspended",
+            mainPred: "them immediately"
         },
         {
-            question: "If you _____ harder, you would pass the exam.",
-            options: ["studied", "study", "will study"],
-            correct: 0,
-            explanation: "Use past simple in the if-clause of second conditional."
+            ifSubj: "the classmates",
+            ifVerbCorrect: "did not gossip",
+            ifVerbWrong1: "do not gossip",
+            ifVerbWrong2: "would not gossip",
+            ifPred: "so much during breaks",
+            mainSubj: "the classroom atmosphere",
+            mainVerbCorrect: "would be",
+            mainVerbWrong1: "will be",
+            mainVerbWrong2: "was",
+            mainPred: "much less tense"
         },
         {
-            question: "They would come to the party if they _____ invited.",
-            options: ["were", "are", "will be"],
-            correct: 0,
-            explanation: "Use past simple (were) in the if-clause of second conditional."
+            ifSubj: "the teacher",
+            ifVerbCorrect: "assigned",
+            ifVerbWrong1: "assigns",
+            ifVerbWrong2: "would assign",
+            ifPred: "less homework",
+            mainSubj: "the students",
+            mainVerbCorrect: "could focus",
+            mainVerbWrong1: "can focus",
+            mainVerbWrong2: "focused",
+            mainPred: "on their extracurricular projects"
         },
         {
-            question: "If he _____ me, I would help him.",
-            options: ["asked", "asks", "will ask"],
-            correct: 0,
-            explanation: "Use past simple in the if-clause of second conditional."
+            ifSubj: "the student council",
+            ifVerbCorrect: "organized",
+            ifVerbWrong1: "organizes",
+            ifVerbWrong2: "would organize",
+            ifPred: "a better festival",
+            mainSubj: "attendance",
+            mainVerbCorrect: "might double",
+            mainVerbWrong1: "will double",
+            mainVerbWrong2: "doubled",
+            mainPred: "this year"
+        },
+        // --- CATEGORY: Finance, Markets & Trading ---
+        {
+            ifSubj: "the hedge fund manager",
+            ifVerbCorrect: "shorted",
+            ifVerbWrong1: "shorts",
+            ifVerbWrong2: "would short",
+            ifPred: "the housing market",
+            mainSubj: "the portfolio",
+            mainVerbCorrect: "would yield",
+            mainVerbWrong1: "will yield",
+            mainVerbWrong2: "yielded",
+            mainPred: "massive returns"
         },
         {
-            question: "We _____ go to the beach if the weather were nice.",
-            options: ["would", "will", "can"],
-            correct: 0,
-            explanation: "Use 'would' in the main clause for imaginary or unlikely situations."
+            ifSubj: "the central bank",
+            ifVerbCorrect: "cut",
+            ifVerbWrong1: "cuts",
+            ifVerbWrong2: "would cut",
+            ifPred: "interest rates unexpectedly",
+            mainSubj: "the tech stocks",
+            mainVerbCorrect: "might rally",
+            mainVerbWrong1: "will rally",
+            mainVerbWrong2: "rallied",
+            mainPred: "before Friday's close"
         },
         {
-            question: "If I _____ you, I would apologize.",
-            options: ["were", "was", "am"],
-            correct: 0,
-            explanation: "Use 'were' (not 'was') with all subjects in second conditional for formal English."
+            ifSubj: "the prominent investor",
+            ifVerbCorrect: "posted",
+            ifVerbWrong1: "posts",
+            ifVerbWrong2: "would post",
+            ifPred: "a negative review of the company",
+            mainSubj: "the share price",
+            mainVerbCorrect: "would plummet",
+            mainVerbWrong1: "will plummet",
+            mainVerbWrong2: "plummeted",
+            mainPred: "within minutes"
         },
         {
-            question: "Which sentence is CORRECT?",
-            options: ["If she would come, I would be happy.", "If she came, I would be happy.", "If she comes, I would be happy."],
-            correct: 1,
-            explanation: "Second conditional: If + past simple, would + verb. 'If she came' is correct."
+            ifSubj: "the algorithms",
+            ifVerbCorrect: "detected",
+            ifVerbWrong1: "detect",
+            ifVerbWrong2: "would detect",
+            ifPred: "the event-driven market shift",
+            mainSubj: "the trading desk",
+            mainVerbCorrect: "could execute",
+            mainVerbWrong1: "can execute",
+            mainVerbWrong2: "executed",
+            mainPred: "the block trade instantly"
         },
         {
-            question: "You would feel better if you _____ more exercise.",
-            options: ["did", "do", "will do"],
-            correct: 0,
-            explanation: "Use past simple in the if-clause of second conditional."
+            ifSubj: "the economic data",
+            ifVerbCorrect: "were not",
+            ifVerbWrong1: "is not",
+            ifVerbWrong2: "would not be",
+            ifPred: "so volatile",
+            mainSubj: "the analysts",
+            mainVerbCorrect: "would predict",
+            mainVerbWrong1: "will predict",
+            mainVerbWrong2: "predicted",
+            mainPred: "the next quarter's earnings easily"
+        },
+        // --- CATEGORY: Tech, IT & Privacy ---
+        {
+            ifSubj: "the network admin",
+            ifVerbCorrect: "blocked",
+            ifVerbWrong1: "blocks",
+            ifVerbWrong2: "would block",
+            ifPred: "background AI model downloads",
+            mainSubj: "the office Wi-Fi",
+            mainVerbCorrect: "would run",
+            mainVerbWrong1: "will run",
+            mainVerbWrong2: "ran",
+            mainPred: "much faster"
         },
         {
-            question: "If I _____ a bird, I would fly around the world.",
-            options: ["were", "was", "am"],
-            correct: 0,
-            explanation: "Use 'were' for impossible or imaginary situations in second conditional."
+            ifSubj: "the VPN connection",
+            ifVerbCorrect: "dropped",
+            ifVerbWrong1: "drops",
+            ifVerbWrong2: "would drop",
+            ifPred: "during the confidential meeting",
+            mainSubj: "the firewall",
+            mainVerbCorrect: "would disconnect",
+            mainVerbWrong1: "will disconnect",
+            mainVerbWrong2: "disconnected",
+            mainPred: "the local server immediately"
         },
         {
-            question: "She _____ be happier if she lived in the countryside.",
-            options: ["would", "will", "can"],
-            correct: 0,
-            explanation: "Use 'would' in the main clause for hypothetical results."
+            ifSubj: "the employer",
+            ifVerbCorrect: "did not monitor",
+            ifVerbWrong1: "does not monitor",
+            ifVerbWrong2: "would not monitor",
+            ifPred: "the terminal logs",
+            mainSubj: "the developers",
+            mainVerbCorrect: "might test",
+            mainVerbWrong1: "will test",
+            mainVerbWrong2: "tested",
+            mainPred: "unauthorized software"
         },
         {
-            question: "If they _____ the lottery, they would buy a mansion.",
-            options: ["won", "win", "will win"],
-            correct: 0,
-            explanation: "Use past simple in the if-clause of second conditional."
+            ifSubj: "the macOS update",
+            ifVerbCorrect: "caused",
+            ifVerbWrong1: "causes",
+            ifVerbWrong2: "would cause",
+            ifPred: "a system panic",
+            mainSubj: "the IT department",
+            mainVerbCorrect: "would have to roll back",
+            mainVerbWrong1: "will have to roll back",
+            mainVerbWrong2: "had to roll back",
+            mainPred: "everyone's laptops"
         },
         {
-            question: "I would travel more if I _____ more time.",
-            options: ["had", "have", "will have"],
-            correct: 0,
-            explanation: "Use past simple in the if-clause for hypothetical situations."
+            ifSubj: "the website domain",
+            ifVerbCorrect: "expired",
+            ifVerbWrong1: "expires",
+            ifVerbWrong2: "would expire",
+            ifPred: "without warning",
+            mainSubj: "the teaching archives",
+            mainVerbCorrect: "would go",
+            mainVerbWrong1: "will go",
+            mainVerbWrong2: "went",
+            mainPred: "offline entirely"
+        },
+        // --- CATEGORY: City Context (Hong Kong) ---
+        {
+            ifSubj: "the typhoon signal",
+            ifVerbCorrect: "reached",
+            ifVerbWrong1: "reaches",
+            ifVerbWrong2: "would reach",
+            ifPred: "level eight",
+            mainSubj: "the authorities",
+            mainVerbCorrect: "would cancel",
+            mainVerbWrong1: "will cancel",
+            mainVerbWrong2: "canceled",
+            mainPred: "all afternoon classes"
         },
         {
-            question: "Which is INCORRECT?",
-            options: ["If you will study, you would pass.", "If you studied, you would pass.", "You would pass if you studied."],
-            correct: 0,
-            explanation: "Don't use 'will' in the if-clause of second conditional. Use past simple."
+            ifSubj: "the MTR",
+            ifVerbCorrect: "broke down",
+            ifVerbWrong1: "breaks down",
+            ifVerbWrong2: "would break down",
+            ifPred: "during rush hour",
+            mainSubj: "half the city",
+            mainVerbCorrect: "would be",
+            mainVerbWrong1: "will be",
+            mainVerbWrong2: "was",
+            mainPred: "late for work"
         },
         {
-            question: "If she _____ the truth, she would tell you.",
-            options: ["knew", "knows", "will know"],
-            correct: 0,
-            explanation: "Use past simple in the if-clause of second conditional."
+            ifSubj: "the rent in Central",
+            ifVerbCorrect: "were not",
+            ifVerbWrong1: "is not",
+            ifVerbWrong2: "will not be",
+            ifPred: "so astronomical",
+            mainSubj: "more independent cafes",
+            mainVerbCorrect: "could open",
+            mainVerbWrong1: "can open",
+            mainVerbWrong2: "opened",
+            mainPred: "in the district"
         },
         {
-            question: "They _____ move to a bigger house if they could afford it.",
-            options: ["would", "will", "can"],
-            correct: 0,
-            explanation: "Use 'would' in the main clause for hypothetical situations."
+            ifSubj: "the humidity",
+            ifVerbCorrect: "dropped",
+            ifVerbWrong1: "drops",
+            ifVerbWrong2: "would drop",
+            ifPred: "below eighty percent",
+            mainSubj: "the hiking trails",
+            mainVerbCorrect: "would be",
+            mainVerbWrong1: "will be",
+            mainVerbWrong2: "were",
+            mainPred: "much more crowded"
         },
         {
-            question: "If I _____ more money, I would save some.",
-            options: ["earned", "earn", "will earn"],
-            correct: 0,
-            explanation: "Use past simple in the if-clause of second conditional."
+            ifSubj: "the ferry to Kowloon",
+            ifVerbCorrect: "stopped",
+            ifVerbWrong1: "stops",
+            ifVerbWrong2: "would stop",
+            ifPred: "running early",
+            mainSubj: "the tourists",
+            mainVerbCorrect: "would take",
+            mainVerbWrong1: "will take",
+            mainVerbWrong2: "took",
+            mainPred: "the tunnel buses instead"
+        },
+        // --- CATEGORY: General / Corporate / Daily Life ---
+        {
+            ifSubj: "the marketing team",
+            ifVerbCorrect: "had",
+            ifVerbWrong1: "has",
+            ifVerbWrong2: "would have",
+            ifPred: "a larger budget",
+            mainSubj: "the company",
+            mainVerbCorrect: "would launch",
+            mainVerbWrong1: "will launch",
+            mainVerbWrong2: "launched",
+            mainPred: "a global campaign"
         },
         {
-            question: "He would be healthier if he _____ smoking.",
-            options: ["stopped", "stops", "will stop"],
-            correct: 0,
-            explanation: "Use past simple in the if-clause of second conditional."
+            ifSubj: "the client",
+            ifVerbCorrect: "agreed",
+            ifVerbWrong1: "agrees",
+            ifVerbWrong2: "would agree",
+            ifPred: "to the revised terms",
+            mainSubj: "the legal department",
+            mainVerbCorrect: "would draft",
+            mainVerbWrong1: "will draft",
+            mainVerbWrong2: "drafted",
+            mainPred: "the contract today"
         },
         {
-            question: "If it _____ so expensive, I would buy it.",
-            options: ["weren't", "isn't", "won't be"],
-            correct: 0,
-            explanation: "Use past simple negative (weren't) in the if-clause of second conditional."
+            ifSubj: "the pet snake",
+            ifVerbCorrect: "got stuck",
+            ifVerbWrong1: "gets stuck",
+            ifVerbWrong2: "would get stuck",
+            ifPred: "in the ergonomic chair mechanism",
+            mainSubj: "the owner",
+            mainVerbCorrect: "would have to disassemble",
+            mainVerbWrong1: "will have to disassemble",
+            mainVerbWrong2: "had to disassemble",
+            mainPred: "the entire backrest"
         },
         {
-            question: "We _____ be late if we took a taxi.",
-            options: ["wouldn't", "won't", "don't"],
-            correct: 0,
-            explanation: "Use 'wouldn't' (would not) in the main clause for negative hypothetical results."
+            ifSubj: "the software",
+            ifVerbCorrect: "supported",
+            ifVerbWrong1: "supports",
+            ifVerbWrong2: "would support",
+            ifPred: "multiple languages",
+            mainSubj: "our sales",
+            mainVerbCorrect: "could double",
+            mainVerbWrong1: "can double",
+            mainVerbWrong2: "doubled",
+            mainPred: "in the overseas market"
+        },
+        {
+            ifSubj: "the management",
+            ifVerbCorrect: "offered",
+            ifVerbWrong1: "offers",
+            ifVerbWrong2: "would offer",
+            ifPred: "remote work options",
+            mainSubj: "employee retention",
+            mainVerbCorrect: "might improve",
+            mainVerbWrong1: "improves",
+            mainVerbWrong2: "will improve",
+            mainPred: "drastically"
+        },
+        {
+            ifSubj: "the delivery driver",
+            ifVerbCorrect: "could not find",
+            ifVerbWrong1: "cannot find",
+            ifVerbWrong2: "would not find",
+            ifPred: "the residential address",
+            mainSubj: "the package",
+            mainVerbCorrect: "would return",
+            mainVerbWrong1: "will return",
+            mainVerbWrong2: "returned",
+            mainPred: "to the warehouse"
+        },
+        {
+            ifSubj: "the restaurant",
+            ifVerbCorrect: "did not require",
+            ifVerbWrong1: "does not require",
+            ifVerbWrong2: "would not require",
+            ifPred: "a reservation",
+            mainSubj: "we",
+            mainVerbCorrect: "could eat",
+            mainVerbWrong1: "can eat",
+            mainVerbWrong2: "ate",
+            mainPred: "there tonight"
+        },
+        {
+            ifSubj: "the architect",
+            ifVerbCorrect: "redesigned",
+            ifVerbWrong1: "redesigns",
+            ifVerbWrong2: "would redesign",
+            ifPred: "the floor plan",
+            mainSubj: "the building",
+            mainVerbCorrect: "would pass",
+            mainVerbWrong1: "will pass",
+            mainVerbWrong2: "passed",
+            mainPred: "the safety inspection"
+        },
+        {
+            ifSubj: "the publisher",
+            ifVerbCorrect: "rejected",
+            ifVerbWrong1: "rejects",
+            ifVerbWrong2: "would reject",
+            ifPred: "the final manuscript",
+            mainSubj: "the author",
+            mainVerbCorrect: "would self-publish",
+            mainVerbWrong1: "will self-publish",
+            mainVerbWrong2: "self-published",
+            mainPred: "it online"
+        },
+        {
+            ifSubj: "the airline",
+            ifVerbCorrect: "canceled",
+            ifVerbWrong1: "cancels",
+            ifVerbWrong2: "would cancel",
+            ifPred: "the outbound flight",
+            mainSubj: "the passengers",
+            mainVerbCorrect: "would demand",
+            mainVerbWrong1: "will demand",
+            mainVerbWrong2: "demanded",
+            mainPred: "full compensation"
+        },
+        {
+            ifSubj: "the security cameras",
+            ifVerbCorrect: "were",
+            ifVerbWrong1: "are",
+            ifVerbWrong2: "would be",
+            ifPred: "functional",
+            mainSubj: "the detective",
+            mainVerbCorrect: "could identify",
+            mainVerbWrong1: "can identify",
+            mainVerbWrong2: "identified",
+            mainPred: "the suspect immediately"
+        },
+        {
+            ifSubj: "the board of directors",
+            ifVerbCorrect: "did not approve",
+            ifVerbWrong1: "do not approve",
+            ifVerbWrong2: "would not approve",
+            ifPred: "the merger",
+            mainSubj: "the CEO",
+            mainVerbCorrect: "might resign",
+            mainVerbWrong1: "will resign",
+            mainVerbWrong2: "resigned",
+            mainPred: "in protest"
+        },
+        {
+            ifSubj: "the coffee machine",
+            ifVerbCorrect: "broke",
+            ifVerbWrong1: "breaks",
+            ifVerbWrong2: "would break",
+            ifPred: "again",
+            mainSubj: "the staff",
+            mainVerbCorrect: "would complain",
+            mainVerbWrong1: "will complain",
+            mainVerbWrong2: "complained",
+            mainPred: "to human resources"
+        },
+        {
+            ifSubj: "the landlord",
+            ifVerbCorrect: "raised",
+            ifVerbWrong1: "raises",
+            ifVerbWrong2: "would raise",
+            ifPred: "the rent by twenty percent",
+            mainSubj: "the tenants",
+            mainVerbCorrect: "would look",
+            mainVerbWrong1: "will look",
+            mainVerbWrong2: "looked",
+            mainPred: "for alternative housing"
+        },
+        {
+            ifSubj: "the translation software",
+            ifVerbCorrect: "were",
+            ifVerbWrong1: "is",
+            ifVerbWrong2: "will be",
+            ifPred: "more accurate",
+            mainSubj: "the diplomats",
+            mainVerbCorrect: "would not need",
+            mainVerbWrong1: "will not need",
+            mainVerbWrong2: "did not need",
+            mainPred: "live interpreters"
+        },
+        {
+            ifSubj: "the venue",
+            ifVerbCorrect: "had",
+            ifVerbWrong1: "has",
+            ifVerbWrong2: "would have",
+            ifPred: "better acoustics",
+            mainSubj: "the orchestra",
+            mainVerbCorrect: "would sound",
+            mainVerbWrong1: "will sound",
+            mainVerbWrong2: "sounded",
+            mainPred: "flawless"
+        },
+        {
+            ifSubj: "the mechanic",
+            ifVerbCorrect: "found",
+            ifVerbWrong1: "finds",
+            ifVerbWrong2: "would find",
+            ifPred: "more engine damage",
+            mainSubj: "the repair bill",
+            mainVerbCorrect: "might exceed",
+            mainVerbWrong1: "will exceed",
+            mainVerbWrong2: "exceeded",
+            mainPred: "our budget"
+        },
+        {
+            ifSubj: "the researchers",
+            ifVerbCorrect: "falsified",
+            ifVerbWrong1: "falsify",
+            ifVerbWrong2: "would falsify",
+            ifPred: "the trial data",
+            mainSubj: "the medical journal",
+            mainVerbCorrect: "would retract",
+            mainVerbWrong1: "will retract",
+            mainVerbWrong2: "retracted",
+            mainPred: "the publication entirely"
+        },
+        {
+            ifSubj: "the prototype",
+            ifVerbCorrect: "failed",
+            ifVerbWrong1: "fails",
+            ifVerbWrong2: "would fail",
+            ifPred: "the stress test",
+            mainSubj: "the engineers",
+            mainVerbCorrect: "would have to redesign",
+            mainVerbWrong1: "will have to redesign",
+            mainVerbWrong2: "had to redesign",
+            mainPred: "the outer casing"
+        },
+        {
+            ifSubj: "the factory",
+            ifVerbCorrect: "shut down",
+            ifVerbWrong1: "shuts down",
+            ifVerbWrong2: "would shut down",
+            ifPred: "due to supply shortages",
+            mainSubj: "the global market",
+            mainVerbCorrect: "would experience",
+            mainVerbWrong1: "will experience",
+            mainVerbWrong2: "experienced",
+            mainPred: "severe delays"
         }
     ];
 
@@ -158,9 +523,74 @@ icon: "📝"
 
     // Generate quiz on page load
     function generateQuiz() {
-        // Shuffle and select 12 random questions
-        const shuffled = shuffle(questionBank);
-        currentQuestions = shuffled.slice(0, 12);
+        const shuffledScenarios = shuffle(scenarioBank).slice(0, 12);
+        
+        // Define the 4 logic combinations (3 times each for 12 questions total)
+        const logicBank = [];
+        for (let i = 0; i < 3; i++) {
+            logicBank.push({ testIfClause: true,  isIfFirst: true  });
+            logicBank.push({ testIfClause: false, isIfFirst: true  });
+            logicBank.push({ testIfClause: true,  isIfFirst: false });
+            logicBank.push({ testIfClause: false, isIfFirst: false });
+        }
+        const shuffledLogic = shuffle(logicBank);
+
+        // Generate questions applying the balanced logic
+        currentQuestions = shuffledScenarios.map((scenario, index) => {
+            const logic = shuffledLogic[index];
+            const testIfClause = logic.testIfClause;
+            const isIfFirst = logic.isIfFirst;
+            
+            let questionText, options, explanation;
+            
+            // Define the components
+            const ifPartFull = `${scenario.ifSubj} ${scenario.ifVerbCorrect} ${scenario.ifPred}`;
+            const ifPartBlank = `${scenario.ifSubj} __________ ${scenario.ifPred}`;
+            
+            const mainPartFull = `${scenario.mainSubj} ${scenario.mainVerbCorrect} ${scenario.mainPred}`;
+            const mainPartBlank = `${scenario.mainSubj} __________ ${scenario.mainPred}`;
+
+            // Construct the question text based on order and blank location
+            if (isIfFirst) {
+                // Order: If [clause], [main]
+                if (testIfClause) {
+                    questionText = `If ${ifPartBlank}, ${mainPartFull}.`;
+                    options = [scenario.ifVerbCorrect, scenario.ifVerbWrong1, scenario.ifVerbWrong2];
+                    explanation = "In the 'if' clause of the second conditional, use the Past Simple tense.";
+                } else {
+                    questionText = `If ${ifPartFull}, ${mainPartBlank}.`;
+                    options = [scenario.mainVerbCorrect, scenario.mainVerbWrong1, scenario.mainVerbWrong2];
+                    explanation = "In the result clause of the second conditional, use 'would' (or other modals like 'could'/'might') + base verb.";
+                }
+            } else {
+                // Order: [main] if [clause] (No comma)
+                if (testIfClause) {
+                    questionText = `${mainPartFull} if ${ifPartBlank}.`;
+                    options = [scenario.ifVerbCorrect, scenario.ifVerbWrong1, scenario.ifVerbWrong2];
+                    explanation = "In the 'if' clause of the second conditional, use the Past Simple tense.";
+                } else {
+                    questionText = `${mainPartBlank} if ${ifPartFull}.`;
+                    options = [scenario.mainVerbCorrect, scenario.mainVerbWrong1, scenario.mainVerbWrong2];
+                    explanation = "In the result clause of the second conditional, use 'would' (or other modals like 'could'/'might') + base verb.";
+                }
+            }
+
+            // Capitalize the first letter of the question
+            questionText = questionText.charAt(0).toUpperCase() + questionText.slice(1);
+
+            // Shuffle options for this question
+            const rawOptions = options.map((opt, idx) => ({ text: opt, isCorrect: idx === 0 }));
+            const shuffledOpts = shuffle(rawOptions);
+            const finalOptions = shuffledOpts.map(o => o.text);
+            const correctIndex = shuffledOpts.findIndex(o => o.isCorrect);
+
+            return {
+                question: questionText,
+                options: finalOptions,
+                correct: correctIndex,
+                explanation: explanation
+            };
+        });
         
         // Generate HTML for questions
         const quizForm = document.getElementById('quizForm');
@@ -170,23 +600,18 @@ icon: "📝"
             const questionNum = index + 1;
             const questionId = `q${questionNum}`;
             
-            // Shuffle options
-            const shuffledOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
-            const shuffledOptionsArray = shuffle(shuffledOptions);
-            
-            // Find correct answer index after shuffle
-            const correctIndex = shuffledOptionsArray.findIndex(opt => opt.isCorrect);
-            answers[questionId] = String.fromCharCode(97 + correctIndex); // 'a', 'b', 'c', etc.
+            // Note: Options are already shuffled in the map function above
+            answers[questionId] = String.fromCharCode(97 + q.correct); // 'a', 'b', 'c', etc.
             
             // Build question HTML
             const questionHTML = `
             <div class="question">
-                <div class="question-text">${questionNum}. ${q.question}</div>
+                <div class="question-text">${questionNum}. ${q.question} <span class="audio-icon" onclick="speakSentence(this)">🔊</span></div>
                 <div class="options">
-                    ${shuffledOptionsArray.map((opt, idx) => `
+                    ${q.options.map((opt, idx) => `
                     <label class="option">
                         <input type="radio" name="${questionId}" value="${String.fromCharCode(97 + idx)}">
-                        ${opt.text}
+                        ${opt}
                     </label>`).join('')}
                 </div>
                 <div class="feedback" id="feedback${questionNum}"></div>
@@ -212,23 +637,13 @@ icon: "📝"
             return;
         }
 
-        const feedbackEl = document.getElementById(`feedback${questionNum}`);
-        const explanationEl = document.getElementById(`explanation${questionNum}`);
+        const isCorrect = (selected.value === answers[question]);
+        renderSemanticFeedback(questionNum, isCorrect);
+        
         const button = event.target;
-        
-        if (selected.value === answers[question]) {
-            feedbackEl.className = 'feedback correct';
-            feedbackEl.textContent = '✓ Correct!';
-        } else {
-            feedbackEl.className = 'feedback incorrect';
-            feedbackEl.textContent = '✗ Incorrect. Check the explanation below.';
-        }
-        
-        explanationEl.classList.add('show');
         button.disabled = true;
         button.textContent = 'Checked ✓';
         
-        // Mark as checked
         checkedQuestions.add(questionNum);
         updateProgress();
     }

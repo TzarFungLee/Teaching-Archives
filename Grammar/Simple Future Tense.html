@@ -2,114 +2,136 @@
 layout: default
 title: "Simple Future Tense"
 category: "Grammar"
-icon: "🧩"
+icon: "🕒"
 ---
 
-<h3>💡 Key Concepts</h3>
-<ul>
-    <li><strong>When to use:</strong> Future plans, predictions, promises, spontaneous decisions</li>
-    <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">will + base verb</mark> + <mark class="yellow">(object/complement)</mark></li>
-    <li><strong>Alternative:</strong> <mark class="cyan">Subject</mark> + <mark class="red">be going to + base verb</mark> (for planned actions)</li>
-    <li><strong>Examples:</strong>
-        <ul>
-            <li><mark class="cyan">I</mark> <mark class="red">will travel</mark> <mark class="yellow">to Japan</mark> <mark class="green">next year</mark>.</li>
-            <li><mark class="cyan">She</mark> <mark class="red">is going to study</mark> <mark class="yellow">medicine</mark>.</li>
-            <li><mark class="cyan">They</mark> <mark class="red">will arrive</mark> <mark class="green">tomorrow</mark>.</li>
-        </ul>
-    </li>
-    <li><strong>Time markers:</strong> <mark class="green">tomorrow, next (week/month/year), soon, in the future, later</mark></li>
-</ul>
-
-        <hr>
 <h3>📊 Teaching Slides</h3>
-
-<!-- Add your Google Slides embed code here -->
-<div style="position:relative; width:100%; padding-bottom:56.25%; height:0; overflow:hidden; background:#f1f5f9; display:flex; align-items:center; justify-content:center; min-height:400px;">
-  <p style="color:#64748b;">Teaching slides will be embedded here</p>
+<div style="text-align: center; margin: 30px 0;">
+    <a href="https://docs.google.com/presentation/d/e/2PACX-1vQCgsVFa96ZelhZbopaI4M3-4eQhPx7fIh1lfCegBF6o2Ew3GrJkcAPZRUupc60eg/pub" target="_blank" class="btn" style="padding: 12px 24px; font-size: 1.1rem;">📖 Open Teaching Slides</a>
 </div>
 
-        <hr>
-        <h3>📖 Practice</h3>
-        <table>
-            <tr>
-                <th>Exercise Type</th>
-                <th>Practice Sentence</th>
-            </tr>
+<hr>
 
-            <tr>
-                <td colspan="2"><strong>Using 'will'</strong></td>
-            </tr>
-            <tr>
-                <td>Example</td>
-                <td><mark class="cyan">I</mark> <mark class="red">will call</mark> <mark class="yellow">you</mark> <mark class="green">later</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">She</mark> <mark class="red">__________ (help)</mark> <mark class="yellow">us</mark> <mark class="green">tomorrow</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">They</mark> <mark class="red">__________ (finish)</mark> <mark class="yellow">the project</mark> <mark class="green">next week</mark>.</td>
-            </tr>
-            <tr>
-                <td>Complete sentence</td>
-                <td><mark class="cyan">We</mark> __________________________________________ <mark class="green">in the future</mark>.</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
+<h3>📖 Practice</h3>
 
-            <tr>
-                <td colspan="2"><strong>Using 'be going to'</strong></td>
-            </tr>
-            <tr>
-                <td>Example</td>
-                <td><mark class="cyan">I</mark> <mark class="red">am going to visit</mark> <mark class="yellow">my grandparents</mark> <mark class="green">this weekend</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">He</mark> <mark class="red">__________ (buy)</mark> <mark class="yellow">a new car</mark> <mark class="green">next month</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">We</mark> <mark class="red">__________ (not/attend)</mark> <mark class="yellow">the meeting</mark>.</td>
-            </tr>
-            <tr>
-                <td>Complete sentence</td>
-                <td><mark class="cyan">My sister</mark> __________________________________________ <mark class="green">soon</mark>.</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
+<!-- Future Transformer Lab -->
+<div class="interactive-lab card" style="margin-bottom: 30px; padding: 25px; border-left: 5px solid var(--primary); background: rgba(255,255,255,0.02); border-radius: 12px;">
+    <h4 style="margin-top: 0;">🧪 Future Transformer Lab</h4>
+    <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">Type a base verb (e.g., 'help', 'travel', 'study') to see it in both Future forms!</p>
+    
+    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="verbInputFuture" class="verb-lab-input" placeholder="Enter base verb..." onkeyup="if(event.key === 'Enter') transformVerbFuture()">
+        <button onclick="transformVerbFuture()" class="btn" style="padding: 12px 24px; border-radius: 8px;">Transform ✨</button>
+    </div>
 
-            <tr>
-                <td colspan="2"><strong>Negative & Questions</strong></td>
-            </tr>
-            <tr>
-                <td>Negative</td>
-                <td><mark class="cyan">I</mark> <mark class="red">will not (won't) go</mark> <mark class="yellow">to the party</mark>.</td>
-            </tr>
-            <tr>
-                <td>Question</td>
-                <td><mark class="red">Will</mark> <mark class="cyan">you</mark> <mark class="red">join</mark> <mark class="yellow">us</mark> <mark class="green">tomorrow</mark>?</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">She</mark> <mark class="red">__________ (not/come)</mark> <mark class="green">today</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="red">__________</mark> <mark class="cyan">they</mark> <mark class="red">arrive</mark> <mark class="green">on time</mark>?</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
-        </table>
+    <div id="transformResultFuture" style="margin-top: 25px; display: none; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 10px; animation: fadeIn 0.3s ease;">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div>
+                <span style="font-size: 0.85rem; display: block; margin-bottom: 8px; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Will Form (Decision/Prediction):</span>
+                <span class="grammar-bubble bubble-cyan" style="font-size: 1.1rem;">I <span class="v-bubble v-orange">will</span> <span class="v-bubble v-red" id="futureWillVerb" style="font-weight: bold;">---</span> ...</span>
+            </div>
+            <div>
+                <span style="font-size: 0.85rem; display: block; margin-bottom: 8px; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Be Going To Form (Plan/Evidence):</span>
+                <span class="grammar-bubble bubble-cyan" style="font-size: 1.1rem;">I <span class="v-bubble v-orange">am going to</span> <span class="v-bubble v-red" id="futureGoingToVerb" style="font-weight: bold;">---</span> ...</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <hr>
+<table>
+    <tr>
+        <th>Exercise Type</th>
+        <th>Practice Sentence</th>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Using 'will'</strong></td>
+    </tr>
+    <tr>
+        <td>Example</td>
+        <td>
+            <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">will</span> <span class="v-bubble v-red">call</span> <span class="grammar-bubble bubble-yellow">you</span> <span class="grammar-bubble bubble-green">later</span>.
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Fill in the blank</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">She __________ (will/help) us tomorrow.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">will</span> <span class="v-bubble v-red">help</span> <span class="grammar-bubble bubble-yellow">us</span> <span class="grammar-bubble bubble-green">tomorrow</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Fill in the blank</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">They __________ (will/finish) the project next week.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-orange">will</span> <span class="v-bubble v-red">finish</span> <span class="grammar-bubble bubble-yellow">the project</span> <span class="grammar-bubble bubble-green">next week</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Using 'be going to'</strong></td>
+    </tr>
+    <tr>
+        <td>Example</td>
+        <td>
+            <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">am going to visit</span> <span class="grammar-bubble bubble-yellow">my grandparents</span> <span class="grammar-bubble bubble-green">this weekend</span>.
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Fill in the blank</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">He __________ (is going to buy) a new car next month.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">is going to buy</span> <span class="grammar-bubble bubble-yellow">a new car</span> <span class="grammar-bubble bubble-green">next month</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Negative & Questions</strong></td>
+    </tr>
+    <tr>
+        <td>Negative</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">I __________ (will not/go) to the party.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">won't</span> <span class="v-bubble v-red">go</span> <span class="grammar-bubble bubble-yellow">to the party</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Question</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ you (join) us tomorrow?</span>
+                <span class="answer">
+                    <span class="v-bubble v-orange">Will</span> <span class="grammar-bubble bubble-cyan">you</span> <span class="v-bubble v-red">join</span> <span class="grammar-bubble bubble-yellow">us</span> <span class="grammar-bubble bubble-green">tomorrow</span>?
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+</table>
+
+<hr>
 
 <div style="text-align: center; margin: 30px 0;">
     <a href="../Quizzes/Simple Future Tense - Quiz.html" class="btn">📝 Take the Quiz</a>
@@ -117,41 +139,45 @@ icon: "🧩"
 
 <hr>
 
-        <h3>📦 Concept Compressed</h3>
-        <p>The Simple Future Tense expresses actions or states that will happen in the future. English has two main forms: <em>will</em> and <em>be going to</em>, each with distinct uses.</p>
+<h3>📦 Concept Compressed</h3>
+<p>The Simple Future Tense expresses actions or states that will happen in the future. English has two main forms: <em>will</em> and <em>be going to</em>, each with distinct uses.</p>
 
-        <h4>When to Use</h4>
-        <table>
-            <tr>
-                <th>Form</th>
-                <th>Use</th>
-                <th>Example</th>
-            </tr>
-            <tr>
-                <td><strong>will</strong></td>
-                <td>Spontaneous decisions, promises, predictions</td>
-                <td>I'll help you. / It will rain tomorrow.</td>
-            </tr>
-            <tr>
-                <td><strong>be going to</strong></td>
-                <td>Planned actions, intentions, evidence-based predictions</td>
-                <td>I'm going to study tonight. / Look at those clouds—it's going to rain.</td>
-            </tr>
-        </table>
+<h4>Formation</h4>
+<ul>
+    <li><strong>Will:</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-orange">will</span> + <span class="v-bubble v-red">Verb (base)</span></li>
+    <li><strong>Be going to:</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-orange">am/is/are going to</span> + <span class="v-bubble v-red">Verb (base)</span></li>
+</ul>
 
-        <h4>Formation</h4>
-        <ul>
-            <li><strong>Will:</strong> Subject + will + base verb <em>(I will call you.)</em></li>
-            <li><strong>Be going to:</strong> Subject + am/is/are + going to + base verb <em>(She is going to travel.)</em></li>
-        </ul>
+<h4>When to Use</h4>
+<table>
+    <tr>
+        <th>Form</th>
+        <th>Use</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td><strong>will</strong></td>
+        <td>Spontaneous decisions, promises, predictions</td>
+        <td>I'll help you. / It will rain tomorrow.</td>
+    </tr>
+    <tr>
+        <td><strong>be going to</strong></td>
+        <td>Planned actions, intentions, evidence-based predictions</td>
+        <td>I'm going to study tonight. / Look at those clouds—it's going to rain.</td>
+    </tr>
+</table>
 
-        <h4>Common Time Markers</h4>
-        <p><em>Tomorrow, next week/month/year, soon, later, in the future, in [future time]</em></p>
+<h4>Common Time Markers</h4>
+<p><em>Tomorrow, next week/month/year, soon, later, in the future, in [future time]</em></p>
 
-        <h4>Key Rules</h4>
-        <ul>
-            <li><strong>Will:</strong> Same form for all subjects; contractions: I'll, you'll, he'll, etc.</li>
-            <li><strong>Be going to:</strong> Conjugate <em>be</em> according to subject (am/is/are)</li>
-            <li><strong>Negatives:</strong> will not (won't) / am/is/are not going to</li>
-            <li><strong>Questions:</strong> Will + subject + base verb? / Am/Is/Are + subject + going to + base verb?</li>
-        </ul>
+<script>
+    function transformVerbFuture() {
+        const input = document.getElementById('verbInputFuture');
+        const verb = input.value.trim().toLowerCase();
+        if (!verb) return;
+
+        document.getElementById('futureWillVerb').textContent = verb;
+        document.getElementById('futureGoingToVerb').textContent = verb;
+        document.getElementById('transformResultFuture').style.display = 'block';
+    }
+</script>

@@ -2,113 +2,144 @@
 layout: default
 title: "Simple Past Tense"
 category: "Grammar"
-icon: "🧩"
+icon: "🕒"
 ---
 
-<h3>💡 Key Concepts</h3>
-<ul>
-    <li><strong>When to use:</strong> Completed actions in the past, past habits, historical events</li>
-    <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">verb (past form / -ed or irregular)</mark> + <mark class="yellow">(object/complement)</mark></li>
-    <li><strong>Examples:</strong>
-        <ul>
-            <li><mark class="cyan">I</mark> <mark class="red">visited</mark> <mark class="yellow">London</mark> <mark class="green">last year</mark>.</li>
-            <li><mark class="cyan">She</mark> <mark class="red">wrote</mark> <mark class="yellow">a letter</mark> <mark class="green">yesterday</mark>.</li>
-            <li><mark class="cyan">They</mark> <mark class="red">lived</mark> <mark class="yellow">in Japan</mark> <mark class="green">in 2010</mark>.</li>
-        </ul>
-    </li>
-    <li><strong>Time markers:</strong> <mark class="green">yesterday, last (week/month/year), ago, in (year), when I was young</mark></li>
-</ul>
-
-        <hr>
 <h3>📊 Teaching Slides</h3>
-
-<!-- Add your Google Slides embed code here -->
-<div style="position:relative; width:100%; padding-bottom:56.25%; height:0; overflow:hidden; background:#f1f5f9; display:flex; align-items:center; justify-content:center; min-height:400px;">
-  <p style="color:#64748b;">Teaching slides will be embedded here</p>
+<div style="text-align: center; margin: 30px 0;">
+    <a href="https://docs.google.com/presentation/d/e/2PACX-1vQCgsVFa96ZelhZbopaI4M3-4eQhPx7fIh1lfCegBF6o2Ew3GrJkcAPZRUupc60eg/pub" target="_blank" class="btn" style="padding: 12px 24px; font-size: 1.1rem;">📖 Open Teaching Slides</a>
 </div>
 
-        <hr>
-        <h3>📖 Practice</h3>
-        <table>
-            <tr>
-                <th>Exercise Type</th>
-                <th>Practice Sentence</th>
-            </tr>
+<hr>
 
-            <tr>
-                <td colspan="2"><strong>Regular Verbs (+ ed)</strong></td>
-            </tr>
-            <tr>
-                <td>Example</td>
-                <td><mark class="cyan">I</mark> <mark class="red">watched</mark> <mark class="yellow">a movie</mark> <mark class="green">last night</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">She</mark> <mark class="red">__________ (cook)</mark> <mark class="yellow">dinner</mark> <mark class="green">two hours ago</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">They</mark> <mark class="red">__________ (play)</mark> <mark class="yellow">basketball</mark> <mark class="green">yesterday</mark>.</td>
-            </tr>
-            <tr>
-                <td>Complete sentence</td>
-                <td><mark class="cyan">We</mark> __________________________________________ <mark class="green">last weekend</mark>.</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
+<h3>📖 Practice</h3>
 
-            <tr>
-                <td colspan="2"><strong>Irregular Verbs</strong></td>
-            </tr>
-            <tr>
-                <td>Example</td>
-                <td><mark class="cyan">He</mark> <mark class="red">went</mark> <mark class="yellow">to Paris</mark> <mark class="green">in 2019</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">I</mark> <mark class="red">__________ (buy)</mark> <mark class="yellow">a new phone</mark> <mark class="green">yesterday</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">She</mark> <mark class="red">__________ (write)</mark> <mark class="yellow">three emails</mark> <mark class="green">this morning</mark>.</td>
-            </tr>
-            <tr>
-                <td>Complete sentence</td>
-                <td><mark class="cyan">My parents</mark> __________________________________________ <mark class="green">last month</mark>.</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
+<!-- Verb Transformer Lab -->
+<div class="interactive-lab card" style="margin-bottom: 30px; padding: 25px; border-left: 5px solid var(--primary); background: rgba(255,255,255,0.02); border-radius: 12px;">
+    <h4 style="margin-top: 0;">🧪 Past Simple Transformer Lab</h4>
+    <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">Type a base verb (e.g., 'walk', 'go', 'eat') to see its Past Simple form!</p>
+    
+    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="verbInputPast" class="verb-lab-input" placeholder="Enter base verb..." onkeyup="if(event.key === 'Enter') transformVerbPast()">
+        <button onclick="transformVerbPast()" class="btn" style="padding: 12px 24px; border-radius: 8px;">Transform ✨</button>
+    </div>
 
-            <tr>
-                <td colspan="2"><strong>Negative & Questions</strong></td>
-            </tr>
-            <tr>
-                <td>Negative</td>
-                <td><mark class="cyan">I</mark> <mark class="red">did not (didn't) see</mark> <mark class="yellow">him</mark> <mark class="green">yesterday</mark>.</td>
-            </tr>
-            <tr>
-                <td>Question</td>
-                <td><mark class="red">Did</mark> <mark class="cyan">you</mark> <mark class="red">finish</mark> <mark class="yellow">your homework</mark> <mark class="green">last night</mark>?</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="cyan">They</mark> <mark class="red">__________ (not/come)</mark> <mark class="yellow">to the party</mark>.</td>
-            </tr>
-            <tr>
-                <td>Fill in the blank</td>
-                <td><mark class="red">__________</mark> <mark class="cyan">she</mark> <mark class="red">__________ (call)</mark> <mark class="yellow">you</mark> <mark class="green">yesterday</mark>?</td>
-            </tr>
-            <tr>
-                <td>Write your own</td>
-                <td>___________________________________________________________________________</td>
-            </tr>
-        </table>
+    <div id="transformResultPast" style="margin-top: 25px; display: none; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 10px; animation: fadeIn 0.3s ease;">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div>
+                <span style="font-size: 0.85rem; display: block; margin-bottom: 8px; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Past Simple Form:</span>
+                <span class="grammar-bubble bubble-cyan" style="font-size: 1.1rem;">I <span class="v-bubble v-red" id="pastVerbResult" style="font-weight: bold;">---</span> ...</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <hr>
+<table>
+    <tr>
+        <th>Exercise Type</th>
+        <th>Practice Sentence</th>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Regular Verbs (+ ed)</strong></td>
+    </tr>
+    <tr>
+        <td>Example</td>
+        <td>
+            <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-red">watched</span> <span class="grammar-bubble bubble-yellow">a movie</span> <span class="grammar-bubble bubble-green">last night</span>.
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Fill in the blank</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">She __________ (cook) dinner two hours ago.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-red">cooked</span> <span class="grammar-bubble bubble-yellow">dinner</span> <span class="grammar-bubble bubble-green">two hours ago</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Fill in the blank</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">They __________ (play) basketball yesterday.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-red">played</span> <span class="grammar-bubble bubble-yellow">basketball</span> <span class="grammar-bubble bubble-green">yesterday</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Irregular Verbs</strong></td>
+    </tr>
+    <tr>
+        <td>Example</td>
+        <td>
+            <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-red">went</span> <span class="grammar-bubble bubble-yellow">to Paris</span> <span class="grammar-bubble bubble-green">in 2019</span>.
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Fill in the blank</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">I __________ (buy) a new phone yesterday.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-red">bought</span> <span class="grammar-bubble bubble-yellow">a new phone</span> <span class="grammar-bubble bubble-green">yesterday</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Fill in the blank</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">She __________ (write) three emails this morning.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-red">wrote</span> <span class="grammar-bubble bubble-yellow">three emails</span> <span class="grammar-bubble bubble-green">this morning</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Negative & Questions</strong></td>
+    </tr>
+    <tr>
+        <td>Negative</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">I __________ (not/see) him yesterday.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">didn't</span> <span class="v-bubble v-red">see</span> <span class="grammar-bubble bubble-yellow">him</span> <span class="grammar-bubble bubble-green">yesterday</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Question</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ you (finish) your homework last night?</span>
+                <span class="answer">
+                    <span class="v-bubble v-orange">Did</span> <span class="grammar-bubble bubble-cyan">you</span> <span class="v-bubble v-red">finish</span> <span class="grammar-bubble bubble-yellow">your homework</span> <span class="grammar-bubble bubble-green">last night</span>?
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+</table>
+
+<hr>
 
 <div style="text-align: center; margin: 30px 0;">
     <a href="../Quizzes/Simple Past Tense - Quiz.html" class="btn">📝 Take the Quiz</a>
@@ -116,43 +147,65 @@ icon: "🧩"
 
 <hr>
 
-        <h3>📦 Concept Compressed</h3>
-        <p>The Simple Past Tense describes completed actions or states in the past. It uses the past form of verbs—either regular (<em>-ed</em> endings) or irregular forms.</p>
+<h3>📦 Concept Compressed</h3>
+<p>The Simple Past Tense describes completed actions or states in the past. It uses the past form of verbs—either regular (<em>-ed</em> endings) or irregular forms.</p>
 
-        <h4>When to Use</h4>
-        <ul>
-            <li><strong>Completed actions:</strong> I visited Paris last summer.</li>
-            <li><strong>Past habits:</strong> She studied every night when she was in college.</li>
-            <li><strong>Historical events:</strong> World War II ended in 1945.</li>
-            <li><strong>Sequential past actions:</strong> He woke up, ate breakfast, and left.</li>
-        </ul>
+<h4>Formation</h4>
+<ul>
+    <li><strong>Structure (Regular):</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-red">Verb-ed</span> + <span class="grammar-bubble bubble-yellow">Object</span></li>
+    <li><strong>Structure (Negative):</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-orange">did not (didn't)</span> + <span class="v-bubble v-red">Verb (base)</span> + <span class="grammar-bubble bubble-yellow">Object</span></li>
+    <li><strong>Structure (Question):</strong> <span class="v-bubble v-orange">Did</span> + <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-red">Verb (base)</span> + <span class="grammar-bubble bubble-yellow">Object</span>?</li>
+</ul>
 
-        <h4>Formation</h4>
-        <table>
-            <tr>
-                <th>Verb Type</th>
-                <th>Formation</th>
-                <th>Example</th>
-            </tr>
-            <tr>
-                <td>Regular</td>
-                <td>Base + ed</td>
-                <td>walk → <strong>walked</strong></td>
-            </tr>
-            <tr>
-                <td>Irregular</td>
-                <td>Unique past form</td>
-                <td>go → <strong>went</strong>, see → <strong>saw</strong></td>
-            </tr>
-        </table>
+<h4>When to Use</h4>
+<ul>
+    <li><strong>Completed actions:</strong> I visited Paris last summer.</li>
+    <li><strong>Past habits:</strong> She studied every night when she was in college.</li>
+    <li><strong>Historical events:</strong> World War II ended in 1945.</li>
+    <li><strong>Sequential past actions:</strong> He woke up, ate breakfast, and left.</li>
+</ul>
 
-        <h4>Common Time Markers</h4>
-        <p><em>Yesterday, last night/week/month/year, ago, in [past year], when I was..., during...</em></p>
+<h4>Time Markers</h4>
+<p><em>Yesterday, last night/week/month/year, ago, in [past year], when I was..., during...</em></p>
 
-        <h4>Key Rules</h4>
-        <ul>
-            <li><strong>Regular verbs:</strong> Add <em>-ed</em> (jumped), <em>-d</em> (lived), double consonant + <em>-ed</em> (stopped), or <em>-ied</em> (studied)</li>
-            <li><strong>Irregular verbs:</strong> Memorize unique forms (buy→bought, think→thought)</li>
-            <li><strong>Negatives:</strong> Use <em>did not</em> (didn't) + base verb</li>
-            <li><strong>Questions:</strong> Did + subject + base verb?</li>
-        </ul>
+<script>
+    const pastIrregulars = {
+        "be": "was/were", "go": "went", "have": "had", "do": "did", "say": "said",
+        "get": "got", "make": "made", "know": "knew", "think": "thought",
+        "take": "took", "see": "saw", "come": "came", "find": "found",
+        "give": "gave", "tell": "told", "feel": "felt", "leave": "left",
+        "put": "put", "mean": "meant", "keep": "kept", "let": "let",
+        "begin": "began", "show": "showed", "hear": "heard", "run": "ran",
+        "bring": "brought", "write": "wrote", "sit": "sat", "stand": "stood",
+        "lose": "lost", "pay": "paid", "meet": "met", "set": "set",
+        "learn": "learned", "lead": "led", "understand": "understood",
+        "speak": "spoke", "read": "read", "spend": "spent", "grow": "grew",
+        "win": "won", "buy": "bought", "send": "sent", "fall": "fell",
+        "choose": "chose", "sleep": "slept", "drive": "drove", "eat": "ate",
+        "break": "broke", "catch": "caught", "draw": "drew", "fly": "flew",
+        "forget": "forgot", "steal": "stole", "throw": "threw", "wake": "woke",
+        "wear": "wore", "sell": "sold", "hit": "hit", "shut": "shut"
+    };
+
+    function transformVerbPast() {
+        const input = document.getElementById('verbInputPast');
+        const verb = input.value.trim().toLowerCase();
+        if (!verb) return;
+
+        let result;
+        if (pastIrregulars[verb]) {
+            result = pastIrregulars[verb];
+        } else if (verb.endsWith('e')) {
+            result = verb + 'd';
+        } else if (verb.endsWith('y') && !/[aeiou]y$/.test(verb)) {
+            result = verb.slice(0, -1) + 'ied';
+        } else if (/[bcdfghjklmnpqrstvwxz][aeiou][bcdfghjklmnpqrstvwxz]$/.test(verb) && !/[xyw]$/.test(verb)) {
+            result = verb + verb.slice(-1) + 'ed';
+        } else {
+            result = verb + 'ed';
+        }
+
+        document.getElementById('pastVerbResult').textContent = result;
+        document.getElementById('transformResultPast').style.display = 'block';
+    }
+</script>

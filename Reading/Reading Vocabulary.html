@@ -5,6 +5,57 @@ category: "Reading"
 icon: "📖"
 ---
 
+<style>
+    .word-search-container {
+        position: sticky;
+        top: 20px;
+        z-index: 100;
+        margin-bottom: 30px;
+        background: var(--bg-alt);
+        padding: 15px;
+        border-radius: 15px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+    }
+    
+    .word-search-input {
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(0,0,0,0.2);
+        color: white;
+        font-size: 1.1rem;
+    }
+
+    .word {
+        font-weight: 700;
+        color: var(--primary) !important;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .word:hover {
+        color: var(--accent) !important;
+        text-decoration: underline;
+    }
+
+    .word::after {
+        content: ' 🔊';
+        font-size: 0.8em;
+        opacity: 0.4;
+    }
+
+    .category-header {
+        background: rgba(110, 193, 228, 0.1) !important;
+    }
+</style>
+
+<div class="word-search-container">
+    <input type="text" id="vocabSearch" class="word-search-input" placeholder="🔍 Search for a word or meaning..." onkeyup="filterVocab()">
+</div>
+
+
 <table>
                 <thead>
                     <tr>
@@ -13,13 +64,13 @@ icon: "📖"
                         <th style="width: 40%;">Chinese Meaning</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="vocabTable">
                     <!-- GROUP 1: 重要的 (Important/Significant) -->
                     <tr style="background: #e3f2fd;">
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">重要的 | Important/Significant</td>
                     </tr>
                     <tr>
-                        <td class="word">crucial</td>
+                        <td class="word" onclick="speakBubble(this)">crucial</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> crucial<br>
                             <span class="form-type">adv.</span> crucially
@@ -27,7 +78,7 @@ icon: "📖"
                         <td class="chinese">關鍵的；極其重要的</td>
                     </tr>
                     <tr>
-                        <td class="word">essential</td>
+                        <td class="word" onclick="speakBubble(this)">essential</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> essential<br>
                             <span class="form-type">n.</span> essential, essentials<br>
@@ -36,7 +87,7 @@ icon: "📖"
                         <td class="chinese">必要的；本質的；要素</td>
                     </tr>
                     <tr>
-                        <td class="word">fundamental</td>
+                        <td class="word" onclick="speakBubble(this)">fundamental</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> fundamental<br>
                             <span class="form-type">n.</span> fundamental, fundamentals<br>
@@ -45,7 +96,7 @@ icon: "📖"
                         <td class="chinese">基本的；根本的；基礎</td>
                     </tr>
                     <tr>
-                        <td class="word">important</td>
+                        <td class="word" onclick="speakBubble(this)">important</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> important<br>
                             <span class="form-type">n.</span> importance<br>
@@ -54,7 +105,7 @@ icon: "📖"
                         <td class="chinese">重要的；重要性</td>
                     </tr>
                     <tr>
-                        <td class="word">necessary</td>
+                        <td class="word" onclick="speakBubble(this)">necessary</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> necessary, unnecessary<br>
                             <span class="form-type">n.</span> necessity<br>
@@ -63,7 +114,7 @@ icon: "📖"
                         <td class="chinese">必要的；必需品</td>
                     </tr>
                     <tr>
-                        <td class="word">primary</td>
+                        <td class="word" onclick="speakBubble(this)">primary</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> primary<br>
                             <span class="form-type">adv.</span> primarily
@@ -71,7 +122,7 @@ icon: "📖"
                         <td class="chinese">主要的；首要的</td>
                     </tr>
                     <tr>
-                        <td class="word">salient</td>
+                        <td class="word" onclick="speakBubble(this)">salient</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> salient<br>
                             <span class="form-type">n.</span> salience
@@ -79,7 +130,7 @@ icon: "📖"
                         <td class="chinese">顯著的；突出的</td>
                     </tr>
                     <tr>
-                        <td class="word">significant</td>
+                        <td class="word" onclick="speakBubble(this)">significant</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> significant<br>
                             <span class="form-type">n.</span> significance<br>
@@ -88,7 +139,7 @@ icon: "📖"
                         <td class="chinese">重要的；顯著的；意義</td>
                     </tr>
                     <tr>
-                        <td class="word">vital</td>
+                        <td class="word" onclick="speakBubble(this)">vital</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> vital<br>
                             <span class="form-type">adv.</span> vitally
@@ -101,7 +152,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">影響 | Influence/Impact/Effect</td>
                     </tr>
                     <tr>
-                        <td class="word">effect</td>
+                        <td class="word" onclick="speakBubble(this)">effect</td>
                         <td class="forms">
                             <span class="form-type">n.</span> effect<br>
                             <span class="form-type">v.</span> effect<br>
@@ -111,7 +162,7 @@ icon: "📖"
                         <td class="chinese">影響；效果；實現</td>
                     </tr>
                     <tr>
-                        <td class="word">impact</td>
+                        <td class="word" onclick="speakBubble(this)">impact</td>
                         <td class="forms">
                             <span class="form-type">n.</span> impact<br>
                             <span class="form-type">v.</span> impact<br>
@@ -120,7 +171,7 @@ icon: "📖"
                         <td class="chinese">影響；衝擊</td>
                     </tr>
                     <tr>
-                        <td class="word">influence</td>
+                        <td class="word" onclick="speakBubble(this)">influence</td>
                         <td class="forms">
                             <span class="form-type">n.</span> influence<br>
                             <span class="form-type">v.</span> influence<br>
@@ -134,7 +185,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">解決 | Solve/Resolve/Address</td>
                     </tr>
                     <tr>
-                        <td class="word">address</td>
+                        <td class="word" onclick="speakBubble(this)">address</td>
                         <td class="forms">
                             <span class="form-type">v.</span> address<br>
                             <span class="form-type">n.</span> address
@@ -142,7 +193,7 @@ icon: "📖"
                         <td class="chinese">處理；解決；地址</td>
                     </tr>
                     <tr>
-                        <td class="word">overcome</td>
+                        <td class="word" onclick="speakBubble(this)">overcome</td>
                         <td class="forms">
                             <span class="form-type">v.</span> overcome, overcame, overcome<br>
                             <span class="form-type">adj.</span> overcoming
@@ -150,7 +201,7 @@ icon: "📖"
                         <td class="chinese">克服；戰勝</td>
                     </tr>
                     <tr>
-                        <td class="word">resolve</td>
+                        <td class="word" onclick="speakBubble(this)">resolve</td>
                         <td class="forms">
                             <span class="form-type">v.</span> resolve<br>
                             <span class="form-type">n.</span> resolution, resolve<br>
@@ -159,7 +210,7 @@ icon: "📖"
                         <td class="chinese">解決；決心</td>
                     </tr>
                     <tr>
-                        <td class="word">solve</td>
+                        <td class="word" onclick="speakBubble(this)">solve</td>
                         <td class="forms">
                             <span class="form-type">v.</span> solve<br>
                             <span class="form-type">n.</span> solution
@@ -167,7 +218,7 @@ icon: "📖"
                         <td class="chinese">解決；答案</td>
                     </tr>
                     <tr>
-                        <td class="word">tackle</td>
+                        <td class="word" onclick="speakBubble(this)">tackle</td>
                         <td class="forms">
                             <span class="form-type">v.</span> tackle<br>
                             <span class="form-type">n.</span> tackle
@@ -180,7 +231,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">改善/提高/加強 | Improve/Enhance/Strengthen</td>
                     </tr>
                     <tr>
-                        <td class="word">enhance</td>
+                        <td class="word" onclick="speakBubble(this)">enhance</td>
                         <td class="forms">
                             <span class="form-type">v.</span> enhance<br>
                             <span class="form-type">n.</span> enhancement
@@ -188,7 +239,7 @@ icon: "📖"
                         <td class="chinese">提高；增強</td>
                     </tr>
                     <tr>
-                        <td class="word">improve</td>
+                        <td class="word" onclick="speakBubble(this)">improve</td>
                         <td class="forms">
                             <span class="form-type">v.</span> improve<br>
                             <span class="form-type">n.</span> improvement<br>
@@ -197,7 +248,7 @@ icon: "📖"
                         <td class="chinese">改善；提高</td>
                     </tr>
                     <tr>
-                        <td class="word">modify</td>
+                        <td class="word" onclick="speakBubble(this)">modify</td>
                         <td class="forms">
                             <span class="form-type">v.</span> modify<br>
                             <span class="form-type">n.</span> modification<br>
@@ -206,7 +257,7 @@ icon: "📖"
                         <td class="chinese">修改；調整</td>
                     </tr>
                     <tr>
-                        <td class="word">strengthen</td>
+                        <td class="word" onclick="speakBubble(this)">strengthen</td>
                         <td class="forms">
                             <span class="form-type">v.</span> strengthen<br>
                             <span class="form-type">n.</span> strength<br>
@@ -215,7 +266,7 @@ icon: "📖"
                         <td class="chinese">加強；力量</td>
                     </tr>
                     <tr>
-                        <td class="word">transform</td>
+                        <td class="word" onclick="speakBubble(this)">transform</td>
                         <td class="forms">
                             <span class="form-type">v.</span> transform<br>
                             <span class="form-type">n.</span> transformation<br>
@@ -229,7 +280,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">調查/研究/檢查 | Research/Investigate/Examine</td>
                     </tr>
                     <tr>
-                        <td class="word">examine</td>
+                        <td class="word" onclick="speakBubble(this)">examine</td>
                         <td class="forms">
                             <span class="form-type">v.</span> examine<br>
                             <span class="form-type">n.</span> examination, exam
@@ -237,7 +288,7 @@ icon: "📖"
                         <td class="chinese">檢查；調查；考試</td>
                     </tr>
                     <tr>
-                        <td class="word">investigate</td>
+                        <td class="word" onclick="speakBubble(this)">investigate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> investigate<br>
                             <span class="form-type">n.</span> investigation
@@ -245,7 +296,7 @@ icon: "📖"
                         <td class="chinese">調查；研究</td>
                     </tr>
                     <tr>
-                        <td class="word">research</td>
+                        <td class="word" onclick="speakBubble(this)">research</td>
                         <td class="forms">
                             <span class="form-type">n.</span> research<br>
                             <span class="form-type">v.</span> research<br>
@@ -254,7 +305,7 @@ icon: "📖"
                         <td class="chinese">研究；調查</td>
                     </tr>
                     <tr>
-                        <td class="word">scrutinize</td>
+                        <td class="word" onclick="speakBubble(this)">scrutinize</td>
                         <td class="forms">
                             <span class="form-type">v.</span> scrutinize<br>
                             <span class="form-type">n.</span> scrutiny
@@ -267,7 +318,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">解釋/說明 | Explain/Interpret/Clarify</td>
                     </tr>
                     <tr>
-                        <td class="word">clarify</td>
+                        <td class="word" onclick="speakBubble(this)">clarify</td>
                         <td class="forms">
                             <span class="form-type">v.</span> clarify<br>
                             <span class="form-type">n.</span> clarification
@@ -275,7 +326,7 @@ icon: "📖"
                         <td class="chinese">澄清；闡明</td>
                     </tr>
                     <tr>
-                        <td class="word">explain</td>
+                        <td class="word" onclick="speakBubble(this)">explain</td>
                         <td class="forms">
                             <span class="form-type">v.</span> explain<br>
                             <span class="form-type">n.</span> explanation<br>
@@ -284,7 +335,7 @@ icon: "📖"
                         <td class="chinese">解釋；說明</td>
                     </tr>
                     <tr>
-                        <td class="word">interpret</td>
+                        <td class="word" onclick="speakBubble(this)">interpret</td>
                         <td class="forms">
                             <span class="form-type">v.</span> interpret<br>
                             <span class="form-type">n.</span> interpretation, interpreter
@@ -297,7 +348,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">可行的/可能的 | Feasible/Viable/Possible</td>
                     </tr>
                     <tr>
-                        <td class="word">feasible</td>
+                        <td class="word" onclick="speakBubble(this)">feasible</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> feasible<br>
                             <span class="form-type">n.</span> feasibility
@@ -305,7 +356,7 @@ icon: "📖"
                         <td class="chinese">可行的；可能的</td>
                     </tr>
                     <tr>
-                        <td class="word">possible</td>
+                        <td class="word" onclick="speakBubble(this)">possible</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> possible, impossible<br>
                             <span class="form-type">n.</span> possibility<br>
@@ -314,7 +365,7 @@ icon: "📖"
                         <td class="chinese">可能的；可能性</td>
                     </tr>
                     <tr>
-                        <td class="word">viable</td>
+                        <td class="word" onclick="speakBubble(this)">viable</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> viable<br>
                             <span class="form-type">n.</span> viability
@@ -327,7 +378,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">有道理的/合理的 | Reasonable/Plausible</td>
                     </tr>
                     <tr>
-                        <td class="word">plausible</td>
+                        <td class="word" onclick="speakBubble(this)">plausible</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> plausible, implausible<br>
                             <span class="form-type">n.</span> plausibility<br>
@@ -336,7 +387,7 @@ icon: "📖"
                         <td class="chinese">似乎合理的；可信的</td>
                     </tr>
                     <tr>
-                        <td class="word">rational</td>
+                        <td class="word" onclick="speakBubble(this)">rational</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> rational, irrational<br>
                             <span class="form-type">adv.</span> rationally<br>
@@ -345,7 +396,7 @@ icon: "📖"
                         <td class="chinese">理性的；合理的</td>
                     </tr>
                     <tr>
-                        <td class="word">reasonable</td>
+                        <td class="word" onclick="speakBubble(this)">reasonable</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> reasonable, unreasonable<br>
                             <span class="form-type">adv.</span> reasonably
@@ -358,7 +409,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">促成/貢獻 | Contribute/Promote</td>
                     </tr>
                     <tr>
-                        <td class="word">contribute</td>
+                        <td class="word" onclick="speakBubble(this)">contribute</td>
                         <td class="forms">
                             <span class="form-type">v.</span> contribute<br>
                             <span class="form-type">n.</span> contribution, contributor<br>
@@ -367,7 +418,7 @@ icon: "📖"
                         <td class="chinese">貢獻；促成；捐助</td>
                     </tr>
                     <tr>
-                        <td class="word">promote</td>
+                        <td class="word" onclick="speakBubble(this)">promote</td>
                         <td class="forms">
                             <span class="form-type">v.</span> promote<br>
                             <span class="form-type">n.</span> promotion, promoter<br>
@@ -381,7 +432,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">描述/說明/表達 | Describe/Demonstrate/Express</td>
                     </tr>
                     <tr>
-                        <td class="word">communicate</td>
+                        <td class="word" onclick="speakBubble(this)">communicate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> communicate<br>
                             <span class="form-type">n.</span> communication, communicator<br>
@@ -391,7 +442,7 @@ icon: "📖"
                         <td class="chinese">溝通；交流；傳達</td>
                     </tr>
                     <tr>
-                        <td class="word">demonstrate</td>
+                        <td class="word" onclick="speakBubble(this)">demonstrate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> demonstrate<br>
                             <span class="form-type">n.</span> demonstration, demonstrator<br>
@@ -400,7 +451,7 @@ icon: "📖"
                         <td class="chinese">證明；示範；表明</td>
                     </tr>
                     <tr>
-                        <td class="word">describe</td>
+                        <td class="word" onclick="speakBubble(this)">describe</td>
                         <td class="forms">
                             <span class="form-type">v.</span> describe<br>
                             <span class="form-type">n.</span> description<br>
@@ -410,7 +461,7 @@ icon: "📖"
                         <td class="chinese">描述；形容；描寫性的</td>
                     </tr>
                     <tr>
-                        <td class="word">eloquent</td>
+                        <td class="word" onclick="speakBubble(this)">eloquent</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> eloquent<br>
                             <span class="form-type">n.</span> eloquence<br>
@@ -419,7 +470,7 @@ icon: "📖"
                         <td class="chinese">雄辯的；口才流利的</td>
                     </tr>
                     <tr>
-                        <td class="word">express</td>
+                        <td class="word" onclick="speakBubble(this)">express</td>
                         <td class="forms">
                             <span class="form-type">v.</span> express<br>
                             <span class="form-type">n.</span> expression<br>
@@ -429,7 +480,7 @@ icon: "📖"
                         <td class="chinese">表達；表現；表情</td>
                     </tr>
                     <tr>
-                        <td class="word">inform</td>
+                        <td class="word" onclick="speakBubble(this)">inform</td>
                         <td class="forms">
                             <span class="form-type">v.</span> inform<br>
                             <span class="form-type">n.</span> information<br>
@@ -444,7 +495,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">清晰/連貫/簡潔 | Clear/Coherent/Concise</td>
                     </tr>
                     <tr>
-                        <td class="word">coherent</td>
+                        <td class="word" onclick="speakBubble(this)">coherent</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> coherent, incoherent<br>
                             <span class="form-type">n.</span> coherence<br>
@@ -453,7 +504,7 @@ icon: "📖"
                         <td class="chinese">連貫的；一致的；連貫性</td>
                     </tr>
                     <tr>
-                        <td class="word">concise</td>
+                        <td class="word" onclick="speakBubble(this)">concise</td>
                         <td class="forms">
                             <span class="form-type">v.</span> concise<br>
                             <span class="form-type">n.</span> conciseness<br>
@@ -462,7 +513,7 @@ icon: "📖"
                         <td class="chinese">簡潔的；簡明的</td>
                     </tr>
                     <tr>
-                        <td class="word">lucid</td>
+                        <td class="word" onclick="speakBubble(this)">lucid</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> lucid<br>
                             <span class="form-type">n.</span> lucidity<br>
@@ -471,7 +522,7 @@ icon: "📖"
                         <td class="chinese">清晰的；明白易懂的</td>
                     </tr>
                     <tr>
-                        <td class="word">obvious</td>
+                        <td class="word" onclick="speakBubble(this)">obvious</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> obvious<br>
                             <span class="form-type">adv.</span> obviously
@@ -479,7 +530,7 @@ icon: "📖"
                         <td class="chinese">明顯的；顯然</td>
                     </tr>
                     <tr>
-                        <td class="word">subtle</td>
+                        <td class="word" onclick="speakBubble(this)">subtle</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> subtle<br>
                             <span class="form-type">n.</span> subtlety<br>
@@ -493,7 +544,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">全面/廣泛/多樣 | Comprehensive/Diverse/Ubiquitous</td>
                     </tr>
                     <tr>
-                        <td class="word">comprehensive</td>
+                        <td class="word" onclick="speakBubble(this)">comprehensive</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> comprehensive<br>
                             <span class="form-type">n.</span> comprehension<br>
@@ -502,7 +553,7 @@ icon: "📖"
                         <td class="chinese">全面的；綜合的；理解</td>
                     </tr>
                     <tr>
-                        <td class="word">diverse</td>
+                        <td class="word" onclick="speakBubble(this)">diverse</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> diverse<br>
                             <span class="form-type">n.</span> diversity<br>
@@ -512,7 +563,7 @@ icon: "📖"
                         <td class="chinese">多樣的；多元化；多樣性</td>
                     </tr>
                     <tr>
-                        <td class="word">global</td>
+                        <td class="word" onclick="speakBubble(this)">global</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> global<br>
                             <span class="form-type">n.</span> globalization<br>
@@ -522,7 +573,7 @@ icon: "📖"
                         <td class="chinese">全球的；全球化</td>
                     </tr>
                     <tr>
-                        <td class="word">ubiquitous</td>
+                        <td class="word" onclick="speakBubble(this)">ubiquitous</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> ubiquitous<br>
                             <span class="form-type">n.</span> ubiquity<br>
@@ -536,7 +587,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">發展/進化/變化 | Develop/Evolve/Transform</td>
                     </tr>
                     <tr>
-                        <td class="word">adapt</td>
+                        <td class="word" onclick="speakBubble(this)">adapt</td>
                         <td class="forms">
                             <span class="form-type">v.</span> adapt<br>
                             <span class="form-type">n.</span> adaptation, adaptability<br>
@@ -546,7 +597,7 @@ icon: "📖"
                         <td class="chinese">適應；改編；適應力</td>
                     </tr>
                     <tr>
-                        <td class="word">develop</td>
+                        <td class="word" onclick="speakBubble(this)">develop</td>
                         <td class="forms">
                             <span class="form-type">v.</span> develop<br>
                             <span class="form-type">n.</span> development, developer<br>
@@ -555,7 +606,7 @@ icon: "📖"
                         <td class="chinese">發展；開發；發展中的</td>
                     </tr>
                     <tr>
-                        <td class="word">evolve</td>
+                        <td class="word" onclick="speakBubble(this)">evolve</td>
                         <td class="forms">
                             <span class="form-type">v.</span> evolve<br>
                             <span class="form-type">n.</span> evolution<br>
@@ -564,7 +615,7 @@ icon: "📖"
                         <td class="chinese">演變；進化；演化的</td>
                     </tr>
                     <tr>
-                        <td class="word">gradual</td>
+                        <td class="word" onclick="speakBubble(this)">gradual</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> gradual<br>
                             <span class="form-type">adv.</span> gradually
@@ -572,7 +623,7 @@ icon: "📖"
                         <td class="chinese">逐漸的；逐步地</td>
                     </tr>
                     <tr>
-                        <td class="word">progress</td>
+                        <td class="word" onclick="speakBubble(this)">progress</td>
                         <td class="forms">
                             <span class="form-type">v.</span> progress<br>
                             <span class="form-type">n.</span> progress, progression<br>
@@ -587,7 +638,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">深刻/新穎/創新 | Profound/Novel/Innovative</td>
                     </tr>
                     <tr>
-                        <td class="word">creative</td>
+                        <td class="word" onclick="speakBubble(this)">creative</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> creative<br>
                             <span class="form-type">n.</span> creativity, creation, creator<br>
@@ -597,7 +648,7 @@ icon: "📖"
                         <td class="chinese">創造性的；創造力；創作</td>
                     </tr>
                     <tr>
-                        <td class="word">innovative</td>
+                        <td class="word" onclick="speakBubble(this)">innovative</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> innovative<br>
                             <span class="form-type">n.</span> innovation, innovator<br>
@@ -607,7 +658,7 @@ icon: "📖"
                         <td class="chinese">創新的；創新；革新者</td>
                     </tr>
                     <tr>
-                        <td class="word">novel</td>
+                        <td class="word" onclick="speakBubble(this)">novel</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> novel<br>
                             <span class="form-type">n.</span> novel, novelty<br>
@@ -616,7 +667,7 @@ icon: "📖"
                         <td class="chinese">新穎的；小說；新奇</td>
                     </tr>
                     <tr>
-                        <td class="word">profound</td>
+                        <td class="word" onclick="speakBubble(this)">profound</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> profound<br>
                             <span class="form-type">n.</span> profundity<br>
@@ -630,7 +681,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">分析/評估/比較 | Analyze/Evaluate/Compare</td>
                     </tr>
                     <tr>
-                        <td class="word">analyze</td>
+                        <td class="word" onclick="speakBubble(this)">analyze</td>
                         <td class="forms">
                             <span class="form-type">v.</span> analyze<br>
                             <span class="form-type">n.</span> analysis, analyst<br>
@@ -639,7 +690,7 @@ icon: "📖"
                         <td class="chinese">分析；分析師；分析的</td>
                     </tr>
                     <tr>
-                        <td class="word">compare</td>
+                        <td class="word" onclick="speakBubble(this)">compare</td>
                         <td class="forms">
                             <span class="form-type">v.</span> compare<br>
                             <span class="form-type">n.</span> comparison<br>
@@ -649,7 +700,7 @@ icon: "📖"
                         <td class="chinese">比較；可比的；相對地</td>
                     </tr>
                     <tr>
-                        <td class="word">contrast</td>
+                        <td class="word" onclick="speakBubble(this)">contrast</td>
                         <td class="forms">
                             <span class="form-type">v.</span> contrast<br>
                             <span class="form-type">n.</span> contrast<br>
@@ -658,7 +709,7 @@ icon: "📖"
                         <td class="chinese">對比；對照；對比的</td>
                     </tr>
                     <tr>
-                        <td class="word">distinguish</td>
+                        <td class="word" onclick="speakBubble(this)">distinguish</td>
                         <td class="forms">
                             <span class="form-type">v.</span> distinguish<br>
                             <span class="form-type">adj.</span> distinguished, distinguishable
@@ -666,7 +717,7 @@ icon: "📖"
                         <td class="chinese">區分；辨別；傑出的</td>
                     </tr>
                     <tr>
-                        <td class="word">evaluate</td>
+                        <td class="word" onclick="speakBubble(this)">evaluate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> evaluate<br>
                             <span class="form-type">n.</span> evaluation, evaluator<br>
@@ -680,7 +731,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">討論/爭論/說服 | Discuss/Argue/Persuade</td>
                     </tr>
                     <tr>
-                        <td class="word">argue</td>
+                        <td class="word" onclick="speakBubble(this)">argue</td>
                         <td class="forms">
                             <span class="form-type">v.</span> argue<br>
                             <span class="form-type">n.</span> argument<br>
@@ -690,7 +741,7 @@ icon: "📖"
                         <td class="chinese">爭論；主張；論點</td>
                     </tr>
                     <tr>
-                        <td class="word">discuss</td>
+                        <td class="word" onclick="speakBubble(this)">discuss</td>
                         <td class="forms">
                             <span class="form-type">v.</span> discuss<br>
                             <span class="form-type">n.</span> discussion
@@ -698,7 +749,7 @@ icon: "📖"
                         <td class="chinese">討論；商討</td>
                     </tr>
                     <tr>
-                        <td class="word">persuade</td>
+                        <td class="word" onclick="speakBubble(this)">persuade</td>
                         <td class="forms">
                             <span class="form-type">v.</span> persuade<br>
                             <span class="form-type">n.</span> persuasion<br>
@@ -713,7 +764,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">導致/引發/結果 | Cause/Trigger/Result</td>
                     </tr>
                     <tr>
-                        <td class="word">cause</td>
+                        <td class="word" onclick="speakBubble(this)">cause</td>
                         <td class="forms">
                             <span class="form-type">v.</span> cause<br>
                             <span class="form-type">n.</span> cause<br>
@@ -722,7 +773,7 @@ icon: "📖"
                         <td class="chinese">導致；原因；因果的</td>
                     </tr>
                     <tr>
-                        <td class="word">consequence</td>
+                        <td class="word" onclick="speakBubble(this)">consequence</td>
                         <td class="forms">
                             <span class="form-type">n.</span> consequence<br>
                             <span class="form-type">adj.</span> consequent, consequential<br>
@@ -731,7 +782,7 @@ icon: "📖"
                         <td class="chinese">結果；後果；因此</td>
                     </tr>
                     <tr>
-                        <td class="word">result</td>
+                        <td class="word" onclick="speakBubble(this)">result</td>
                         <td class="forms">
                             <span class="form-type">v.</span> result<br>
                             <span class="form-type">n.</span> result<br>
@@ -740,7 +791,7 @@ icon: "📖"
                         <td class="chinese">導致；結果；結果的</td>
                     </tr>
                     <tr>
-                        <td class="word">trigger</td>
+                        <td class="word" onclick="speakBubble(this)">trigger</td>
                         <td class="forms">
                             <span class="form-type">v.</span> trigger<br>
                             <span class="form-type">n.</span> trigger
@@ -753,7 +804,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">達成/實施/維持 | Achieve/Implement/Maintain</td>
                     </tr>
                     <tr>
-                        <td class="word">achieve</td>
+                        <td class="word" onclick="speakBubble(this)">achieve</td>
                         <td class="forms">
                             <span class="form-type">v.</span> achieve<br>
                             <span class="form-type">n.</span> achievement, achiever<br>
@@ -762,7 +813,7 @@ icon: "📖"
                         <td class="chinese">達成；成就；可達成的</td>
                     </tr>
                     <tr>
-                        <td class="word">conclude</td>
+                        <td class="word" onclick="speakBubble(this)">conclude</td>
                         <td class="forms">
                             <span class="form-type">v.</span> conclude<br>
                             <span class="form-type">n.</span> conclusion<br>
@@ -772,7 +823,7 @@ icon: "📖"
                         <td class="chinese">總結；得出結論；結論性的</td>
                     </tr>
                     <tr>
-                        <td class="word">implement</td>
+                        <td class="word" onclick="speakBubble(this)">implement</td>
                         <td class="forms">
                             <span class="form-type">v.</span> implement<br>
                             <span class="form-type">n.</span> implementation
@@ -780,7 +831,7 @@ icon: "📖"
                         <td class="chinese">實施；執行；實現</td>
                     </tr>
                     <tr>
-                        <td class="word">maintain</td>
+                        <td class="word" onclick="speakBubble(this)">maintain</td>
                         <td class="forms">
                             <span class="form-type">v.</span> maintain<br>
                             <span class="form-type">n.</span> maintenance
@@ -793,7 +844,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">合作/競爭/參與 | Cooperate/Compete/Participate</td>
                     </tr>
                     <tr>
-                        <td class="word">compete</td>
+                        <td class="word" onclick="speakBubble(this)">compete</td>
                         <td class="forms">
                             <span class="form-type">v.</span> compete<br>
                             <span class="form-type">n.</span> competition, competitor<br>
@@ -803,7 +854,7 @@ icon: "📖"
                         <td class="chinese">競爭；比賽；競爭的</td>
                     </tr>
                     <tr>
-                        <td class="word">cooperate</td>
+                        <td class="word" onclick="speakBubble(this)">cooperate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> cooperate<br>
                             <span class="form-type">n.</span> cooperation<br>
@@ -813,7 +864,7 @@ icon: "📖"
                         <td class="chinese">合作；協作；合作的</td>
                     </tr>
                     <tr>
-                        <td class="word">organize</td>
+                        <td class="word" onclick="speakBubble(this)">organize</td>
                         <td class="forms">
                             <span class="form-type">v.</span> organize<br>
                             <span class="form-type">n.</span> organization, organizer<br>
@@ -822,7 +873,7 @@ icon: "📖"
                         <td class="chinese">組織；安排；組織者</td>
                     </tr>
                     <tr>
-                        <td class="word">participate</td>
+                        <td class="word" onclick="speakBubble(this)">participate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> participate<br>
                             <span class="form-type">n.</span> participation, participant<br>
@@ -836,7 +887,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">不同/相似/相等 | Different/Similar/Equivalent</td>
                     </tr>
                     <tr>
-                        <td class="word">alternative</td>
+                        <td class="word" onclick="speakBubble(this)">alternative</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> alternative<br>
                             <span class="form-type">n.</span> alternative<br>
@@ -845,7 +896,7 @@ icon: "📖"
                         <td class="chinese">替代的；替代方案</td>
                     </tr>
                     <tr>
-                        <td class="word">different</td>
+                        <td class="word" onclick="speakBubble(this)">different</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> different<br>
                             <span class="form-type">n.</span> difference<br>
@@ -855,7 +906,7 @@ icon: "📖"
                         <td class="chinese">不同的；差異；不同地</td>
                     </tr>
                     <tr>
-                        <td class="word">equivalent</td>
+                        <td class="word" onclick="speakBubble(this)">equivalent</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> equivalent<br>
                             <span class="form-type">n.</span> equivalent, equivalence
@@ -863,7 +914,7 @@ icon: "📖"
                         <td class="chinese">相等的；等價物；等值</td>
                     </tr>
                     <tr>
-                        <td class="word">similar</td>
+                        <td class="word" onclick="speakBubble(this)">similar</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> similar<br>
                             <span class="form-type">n.</span> similarity<br>
@@ -877,7 +928,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">優越/優勢/挑戰 | Superior/Advantage/Challenge</td>
                     </tr>
                     <tr>
-                        <td class="word">advantage</td>
+                        <td class="word" onclick="speakBubble(this)">advantage</td>
                         <td class="forms">
                             <span class="form-type">n.</span> advantage, disadvantage<br>
                             <span class="form-type">adj.</span> advantageous, disadvantageous<br>
@@ -886,7 +937,7 @@ icon: "📖"
                         <td class="chinese">優勢；劣勢；有利的</td>
                     </tr>
                     <tr>
-                        <td class="word">challenge</td>
+                        <td class="word" onclick="speakBubble(this)">challenge</td>
                         <td class="forms">
                             <span class="form-type">v.</span> challenge<br>
                             <span class="form-type">n.</span> challenge, challenger<br>
@@ -895,14 +946,14 @@ icon: "📖"
                         <td class="chinese">挑戰；質疑；挑戰性的</td>
                     </tr>
                     <tr>
-                        <td class="word">obstacle</td>
+                        <td class="word" onclick="speakBubble(this)">obstacle</td>
                         <td class="forms">
                             <span class="form-type">n.</span> obstacle
                         </td>
                         <td class="chinese">障礙；阻礙</td>
                     </tr>
                     <tr>
-                        <td class="word">superior</td>
+                        <td class="word" onclick="speakBubble(this)">superior</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> superior, inferior<br>
                             <span class="form-type">n.</span> superiority, inferiority
@@ -915,7 +966,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">有效/實用/靈活 | Efficient/Practical/Flexible</td>
                     </tr>
                     <tr>
-                        <td class="word">efficient</td>
+                        <td class="word" onclick="speakBubble(this)">efficient</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> efficient, inefficient<br>
                             <span class="form-type">n.</span> efficiency, inefficiency<br>
@@ -924,7 +975,7 @@ icon: "📖"
                         <td class="chinese">有效率的；效率</td>
                     </tr>
                     <tr>
-                        <td class="word">flexible</td>
+                        <td class="word" onclick="speakBubble(this)">flexible</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> flexible, inflexible<br>
                             <span class="form-type">n.</span> flexibility<br>
@@ -933,7 +984,7 @@ icon: "📖"
                         <td class="chinese">靈活的；彈性</td>
                     </tr>
                     <tr>
-                        <td class="word">practical</td>
+                        <td class="word" onclick="speakBubble(this)">practical</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> practical, impractical<br>
                             <span class="form-type">n.</span> practice, practicality<br>
@@ -948,7 +999,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">可用/可靠/可持續 | Available/Reliable/Sustainable</td>
                     </tr>
                     <tr>
-                        <td class="word">available</td>
+                        <td class="word" onclick="speakBubble(this)">available</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> available, unavailable<br>
                             <span class="form-type">n.</span> availability
@@ -956,7 +1007,7 @@ icon: "📖"
                         <td class="chinese">可用的；可得性</td>
                     </tr>
                     <tr>
-                        <td class="word">reliable</td>
+                        <td class="word" onclick="speakBubble(this)">reliable</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> reliable, unreliable<br>
                             <span class="form-type">n.</span> reliability<br>
@@ -966,7 +1017,7 @@ icon: "📖"
                         <td class="chinese">可靠的；依賴；可靠性</td>
                     </tr>
                     <tr>
-                        <td class="word">sustainable</td>
+                        <td class="word" onclick="speakBubble(this)">sustainable</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> sustainable, unsustainable<br>
                             <span class="form-type">n.</span> sustainability<br>
@@ -981,7 +1032,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">適當/相關/具體 | Appropriate/Relevant/Specific</td>
                     </tr>
                     <tr>
-                        <td class="word">appropriate</td>
+                        <td class="word" onclick="speakBubble(this)">appropriate</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> appropriate, inappropriate<br>
                             <span class="form-type">v.</span> appropriate<br>
@@ -990,7 +1041,7 @@ icon: "📖"
                         <td class="chinese">適當的；佔用；適當地</td>
                     </tr>
                     <tr>
-                        <td class="word">relevant</td>
+                        <td class="word" onclick="speakBubble(this)">relevant</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> relevant, irrelevant<br>
                             <span class="form-type">n.</span> relevance<br>
@@ -999,7 +1050,7 @@ icon: "📖"
                         <td class="chinese">相關的；無關的；相關性</td>
                     </tr>
                     <tr>
-                        <td class="word">specific</td>
+                        <td class="word" onclick="speakBubble(this)">specific</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> specific, general<br>
                             <span class="form-type">n.</span> specificity<br>
@@ -1014,7 +1065,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">複雜/簡單/細緻 | Complex/Meticulous</td>
                     </tr>
                     <tr>
-                        <td class="word">complex</td>
+                        <td class="word" onclick="speakBubble(this)">complex</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> complex, simple<br>
                             <span class="form-type">n.</span> complexity, simplicity<br>
@@ -1023,7 +1074,7 @@ icon: "📖"
                         <td class="chinese">複雜的；簡單的；複雜性</td>
                     </tr>
                     <tr>
-                        <td class="word">meticulous</td>
+                        <td class="word" onclick="speakBubble(this)">meticulous</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> meticulous<br>
                             <span class="form-type">adv.</span> meticulously
@@ -1036,7 +1087,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">證據/證明 | Evidence/Demonstrate</td>
                     </tr>
                     <tr>
-                        <td class="word">evidence</td>
+                        <td class="word" onclick="speakBubble(this)">evidence</td>
                         <td class="forms">
                             <span class="form-type">n.</span> evidence<br>
                             <span class="form-type">v.</span> evidence<br>
@@ -1051,7 +1102,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">概念/理論/原則 | Concept/Theory/Principle</td>
                     </tr>
                     <tr>
-                        <td class="word">concept</td>
+                        <td class="word" onclick="speakBubble(this)">concept</td>
                         <td class="forms">
                             <span class="form-type">n.</span> concept<br>
                             <span class="form-type">adj.</span> conceptual<br>
@@ -1060,7 +1111,7 @@ icon: "📖"
                         <td class="chinese">概念；觀念；概念性的</td>
                     </tr>
                     <tr>
-                        <td class="word">objective</td>
+                        <td class="word" onclick="speakBubble(this)">objective</td>
                         <td class="forms">
                             <span class="form-type">n.</span> objective<br>
                             <span class="form-type">adj.</span> objective, subjective<br>
@@ -1069,14 +1120,14 @@ icon: "📖"
                         <td class="chinese">目標；客觀的；主觀的</td>
                     </tr>
                     <tr>
-                        <td class="word">perspective</td>
+                        <td class="word" onclick="speakBubble(this)">perspective</td>
                         <td class="forms">
                             <span class="form-type">n.</span> perspective
                         </td>
                         <td class="chinese">觀點；視角；遠景</td>
                     </tr>
                     <tr>
-                        <td class="word">phenomenon</td>
+                        <td class="word" onclick="speakBubble(this)">phenomenon</td>
                         <td class="forms">
                             <span class="form-type">n.</span> phenomenon, phenomena<br>
                             <span class="form-type">adj.</span> phenomenal<br>
@@ -1085,7 +1136,7 @@ icon: "📖"
                         <td class="chinese">現象；非凡的</td>
                     </tr>
                     <tr>
-                        <td class="word">principle</td>
+                        <td class="word" onclick="speakBubble(this)">principle</td>
                         <td class="forms">
                             <span class="form-type">n.</span> principle<br>
                             <span class="form-type">adj.</span> principled
@@ -1093,7 +1144,7 @@ icon: "📖"
                         <td class="chinese">原則；原理；有原則的</td>
                     </tr>
                     <tr>
-                        <td class="word">strategy</td>
+                        <td class="word" onclick="speakBubble(this)">strategy</td>
                         <td class="forms">
                             <span class="form-type">n.</span> strategy<br>
                             <span class="form-type">adj.</span> strategic<br>
@@ -1102,7 +1153,7 @@ icon: "📖"
                         <td class="chinese">策略；戰略；策略性的</td>
                     </tr>
                     <tr>
-                        <td class="word">theory</td>
+                        <td class="word" onclick="speakBubble(this)">theory</td>
                         <td class="forms">
                             <span class="form-type">n.</span> theory<br>
                             <span class="form-type">adj.</span> theoretical<br>
@@ -1116,7 +1167,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">社會/環境/文化/科技 | Society/Environment/Culture/Technology</td>
                     </tr>
                     <tr>
-                        <td class="word">culture</td>
+                        <td class="word" onclick="speakBubble(this)">culture</td>
                         <td class="forms">
                             <span class="form-type">n.</span> culture<br>
                             <span class="form-type">adj.</span> cultural<br>
@@ -1125,7 +1176,7 @@ icon: "📖"
                         <td class="chinese">文化；文化的</td>
                     </tr>
                     <tr>
-                        <td class="word">economy</td>
+                        <td class="word" onclick="speakBubble(this)">economy</td>
                         <td class="forms">
                             <span class="form-type">n.</span> economy<br>
                             <span class="form-type">adj.</span> economic, economical<br>
@@ -1134,7 +1185,7 @@ icon: "📖"
                         <td class="chinese">經濟；經濟的；節約的</td>
                     </tr>
                     <tr>
-                        <td class="word">educate</td>
+                        <td class="word" onclick="speakBubble(this)">educate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> educate<br>
                             <span class="form-type">n.</span> education, educator<br>
@@ -1144,7 +1195,7 @@ icon: "📖"
                         <td class="chinese">教育；教育的；受教育的</td>
                     </tr>
                     <tr>
-                        <td class="word">environment</td>
+                        <td class="word" onclick="speakBubble(this)">environment</td>
                         <td class="forms">
                             <span class="form-type">n.</span> environment<br>
                             <span class="form-type">adj.</span> environmental<br>
@@ -1153,7 +1204,7 @@ icon: "📖"
                         <td class="chinese">環境；環保的</td>
                     </tr>
                     <tr>
-                        <td class="word">politics</td>
+                        <td class="word" onclick="speakBubble(this)">politics</td>
                         <td class="forms">
                             <span class="form-type">n.</span> politics<br>
                             <span class="form-type">adj.</span> political<br>
@@ -1162,7 +1213,7 @@ icon: "📖"
                         <td class="chinese">政治；政治的</td>
                     </tr>
                     <tr>
-                        <td class="word">society</td>
+                        <td class="word" onclick="speakBubble(this)">society</td>
                         <td class="forms">
                             <span class="form-type">n.</span> society<br>
                             <span class="form-type">adj.</span> social, societal<br>
@@ -1171,7 +1222,7 @@ icon: "📖"
                         <td class="chinese">社會；社交的</td>
                     </tr>
                     <tr>
-                        <td class="word">technology</td>
+                        <td class="word" onclick="speakBubble(this)">technology</td>
                         <td class="forms">
                             <span class="form-type">n.</span> technology<br>
                             <span class="form-type">adj.</span> technological<br>
@@ -1185,7 +1236,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">時間相關 | Time-related: Past/Present/Duration</td>
                     </tr>
                     <tr>
-                        <td class="word">ancient</td>
+                        <td class="word" onclick="speakBubble(this)">ancient</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> ancient, modern<br>
                             <span class="form-type">n.</span> antiquity, modernity
@@ -1193,7 +1244,7 @@ icon: "📖"
                         <td class="chinese">古代的；現代的；古代</td>
                     </tr>
                     <tr>
-                        <td class="word">constant</td>
+                        <td class="word" onclick="speakBubble(this)">constant</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> constant<br>
                             <span class="form-type">n.</span> constancy<br>
@@ -1202,7 +1253,7 @@ icon: "📖"
                         <td class="chinese">持續的；恆定；不斷地</td>
                     </tr>
                     <tr>
-                        <td class="word">contemporary</td>
+                        <td class="word" onclick="speakBubble(this)">contemporary</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> contemporary<br>
                             <span class="form-type">n.</span> contemporary
@@ -1210,7 +1261,7 @@ icon: "📖"
                         <td class="chinese">當代的；同時代的人</td>
                     </tr>
                     <tr>
-                        <td class="word">ephemeral</td>
+                        <td class="word" onclick="speakBubble(this)">ephemeral</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> ephemeral<br>
                             <span class="form-type">adv.</span> ephemerally
@@ -1218,7 +1269,7 @@ icon: "📖"
                         <td class="chinese">短暫的；瞬息的</td>
                     </tr>
                     <tr>
-                        <td class="word">frequent</td>
+                        <td class="word" onclick="speakBubble(this)">frequent</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> frequent, infrequent<br>
                             <span class="form-type">n.</span> frequency<br>
@@ -1227,7 +1278,7 @@ icon: "📖"
                         <td class="chinese">頻繁的；頻率；常常</td>
                     </tr>
                     <tr>
-                        <td class="word">recent</td>
+                        <td class="word" onclick="speakBubble(this)">recent</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> recent<br>
                             <span class="form-type">adv.</span> recently
@@ -1235,7 +1286,7 @@ icon: "📖"
                         <td class="chinese">最近的；近來</td>
                     </tr>
                     <tr>
-                        <td class="word">temporary</td>
+                        <td class="word" onclick="speakBubble(this)">temporary</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> temporary, permanent<br>
                             <span class="form-type">adv.</span> temporarily, permanently
@@ -1248,7 +1299,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">情緒/態度 | Emotions/Attitudes</td>
                     </tr>
                     <tr>
-                        <td class="word">anxious</td>
+                        <td class="word" onclick="speakBubble(this)">anxious</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> anxious<br>
                             <span class="form-type">n.</span> anxiety<br>
@@ -1257,7 +1308,7 @@ icon: "📖"
                         <td class="chinese">焦慮的；擔心的</td>
                     </tr>
                     <tr>
-                        <td class="word">confident</td>
+                        <td class="word" onclick="speakBubble(this)">confident</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> confident<br>
                             <span class="form-type">n.</span> confidence<br>
@@ -1266,7 +1317,7 @@ icon: "📖"
                         <td class="chinese">自信的；信心</td>
                     </tr>
                     <tr>
-                        <td class="word">determined</td>
+                        <td class="word" onclick="speakBubble(this)">determined</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> determined<br>
                             <span class="form-type">n.</span> determination<br>
@@ -1276,7 +1327,7 @@ icon: "📖"
                         <td class="chinese">堅定的；決心</td>
                     </tr>
                     <tr>
-                        <td class="word">disappoint</td>
+                        <td class="word" onclick="speakBubble(this)">disappoint</td>
                         <td class="forms">
                             <span class="form-type">v.</span> disappoint<br>
                             <span class="form-type">n.</span> disappointment<br>
@@ -1286,7 +1337,7 @@ icon: "📖"
                         <td class="chinese">使失望；失望</td>
                     </tr>
                     <tr>
-                        <td class="word">enthusiastic</td>
+                        <td class="word" onclick="speakBubble(this)">enthusiastic</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> enthusiastic<br>
                             <span class="form-type">n.</span> enthusiasm, enthusiast<br>
@@ -1295,7 +1346,7 @@ icon: "📖"
                         <td class="chinese">熱情的；熱心；狂熱者</td>
                     </tr>
                     <tr>
-                        <td class="word">motivate</td>
+                        <td class="word" onclick="speakBubble(this)">motivate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> motivate<br>
                             <span class="form-type">n.</span> motivation<br>
@@ -1305,7 +1356,7 @@ icon: "📖"
                         <td class="chinese">激勵；動機；有動力的</td>
                     </tr>
                     <tr>
-                        <td class="word">optimistic</td>
+                        <td class="word" onclick="speakBubble(this)">optimistic</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> optimistic, pessimistic<br>
                             <span class="form-type">n.</span> optimism, pessimism<br>
@@ -1314,7 +1365,7 @@ icon: "📖"
                         <td class="chinese">樂觀的；悲觀的</td>
                     </tr>
                     <tr>
-                        <td class="word">satisfied</td>
+                        <td class="word" onclick="speakBubble(this)">satisfied</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> satisfied, unsatisfied, satisfactory<br>
                             <span class="form-type">n.</span> satisfaction<br>
@@ -1324,7 +1375,7 @@ icon: "📖"
                         <td class="chinese">滿意的；滿足</td>
                     </tr>
                     <tr>
-                        <td class="word">tenacious</td>
+                        <td class="word" onclick="speakBubble(this)">tenacious</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> tenacious<br>
                             <span class="form-type">n.</span> tenacity<br>
@@ -1338,7 +1389,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">足夠/充分 | Adequate/Sufficient</td>
                     </tr>
                     <tr>
-                        <td class="word">adequate</td>
+                        <td class="word" onclick="speakBubble(this)">adequate</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> adequate, inadequate<br>
                             <span class="form-type">n.</span> adequacy<br>
@@ -1347,7 +1398,7 @@ icon: "📖"
                         <td class="chinese">足夠的；充分的</td>
                     </tr>
                     <tr>
-                        <td class="word">sufficient</td>
+                        <td class="word" onclick="speakBubble(this)">sufficient</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> sufficient, insufficient<br>
                             <span class="form-type">n.</span> sufficiency<br>
@@ -1356,7 +1407,7 @@ icon: "📖"
                         <td class="chinese">充足的；足夠的</td>
                     </tr>
                     <tr>
-                        <td class="word">ample</td>
+                        <td class="word" onclick="speakBubble(this)">ample</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> ample<br>
                             <span class="form-type">adv.</span> amply
@@ -1369,7 +1420,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">建立/確立 | Establish/Found</td>
                     </tr>
                     <tr>
-                        <td class="word">establish</td>
+                        <td class="word" onclick="speakBubble(this)">establish</td>
                         <td class="forms">
                             <span class="form-type">v.</span> establish, establishes, established, establishing<br>
                             <span class="form-type">n.</span> establishment<br>
@@ -1378,7 +1429,7 @@ icon: "📖"
                         <td class="chinese">建立；確立；設立</td>
                     </tr>
                     <tr>
-                        <td class="word">found</td>
+                        <td class="word" onclick="speakBubble(this)">found</td>
                         <td class="forms">
                             <span class="form-type">v.</span> found, founds, founded, founding<br>
                             <span class="form-type">n.</span> foundation, founder<br>
@@ -1387,7 +1438,7 @@ icon: "📖"
                         <td class="chinese">創立；建立；基礎</td>
                     </tr>
                     <tr>
-                        <td class="word">constitute</td>
+                        <td class="word" onclick="speakBubble(this)">constitute</td>
                         <td class="forms">
                             <span class="form-type">v.</span> constitute, constitutes, constituted, constituting<br>
                             <span class="form-type">n.</span> constitution<br>
@@ -1401,14 +1452,14 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">確保/確認 | Ensure/Confirm</td>
                     </tr>
                     <tr>
-                        <td class="word">ensure</td>
+                        <td class="word" onclick="speakBubble(this)">ensure</td>
                         <td class="forms">
                             <span class="form-type">v.</span> ensure, ensures, ensured, ensuring
                         </td>
                         <td class="chinese">確保；保證</td>
                     </tr>
                     <tr>
-                        <td class="word">confirm</td>
+                        <td class="word" onclick="speakBubble(this)">confirm</td>
                         <td class="forms">
                             <span class="form-type">v.</span> confirm, confirms, confirmed, confirming<br>
                             <span class="form-type">n.</span> confirmation<br>
@@ -1417,7 +1468,7 @@ icon: "📖"
                         <td class="chinese">證實；確認；確定</td>
                     </tr>
                     <tr>
-                        <td class="word">verify</td>
+                        <td class="word" onclick="speakBubble(this)">verify</td>
                         <td class="forms">
                             <span class="form-type">v.</span> verify, verifies, verified, verifying<br>
                             <span class="form-type">n.</span> verification<br>
@@ -1431,7 +1482,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">消除/減少 | Eliminate/Reduce</td>
                     </tr>
                     <tr>
-                        <td class="word">eliminate</td>
+                        <td class="word" onclick="speakBubble(this)">eliminate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> eliminate, eliminates, eliminated, eliminating<br>
                             <span class="form-type">n.</span> elimination
@@ -1439,7 +1490,7 @@ icon: "📖"
                         <td class="chinese">消除；排除；淘汰</td>
                     </tr>
                     <tr>
-                        <td class="word">reduce</td>
+                        <td class="word" onclick="speakBubble(this)">reduce</td>
                         <td class="forms">
                             <span class="form-type">v.</span> reduce, reduces, reduced, reducing<br>
                             <span class="form-type">n.</span> reduction<br>
@@ -1448,7 +1499,7 @@ icon: "📖"
                         <td class="chinese">減少；降低；縮小</td>
                     </tr>
                     <tr>
-                        <td class="word">diminish</td>
+                        <td class="word" onclick="speakBubble(this)">diminish</td>
                         <td class="forms">
                             <span class="form-type">v.</span> diminish, diminishes, diminished, diminishing<br>
                             <span class="form-type">adj.</span> diminished
@@ -1456,7 +1507,7 @@ icon: "📖"
                         <td class="chinese">減少；削弱；縮小</td>
                     </tr>
                     <tr>
-                        <td class="word">decline</td>
+                        <td class="word" onclick="speakBubble(this)">decline</td>
                         <td class="forms">
                             <span class="form-type">v.</span> decline, declines, declined, declining<br>
                             <span class="form-type">n.</span> decline
@@ -1469,7 +1520,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">出現/發生 | Emerge/Occur</td>
                     </tr>
                     <tr>
-                        <td class="word">emerge</td>
+                        <td class="word" onclick="speakBubble(this)">emerge</td>
                         <td class="forms">
                             <span class="form-type">v.</span> emerge, emerges, emerged, emerging<br>
                             <span class="form-type">n.</span> emergence<br>
@@ -1478,7 +1529,7 @@ icon: "📖"
                         <td class="chinese">出現；浮現；顯露</td>
                     </tr>
                     <tr>
-                        <td class="word">occur</td>
+                        <td class="word" onclick="speakBubble(this)">occur</td>
                         <td class="forms">
                             <span class="form-type">v.</span> occur, occurs, occurred, occurring<br>
                             <span class="form-type">n.</span> occurrence
@@ -1486,7 +1537,7 @@ icon: "📖"
                         <td class="chinese">發生；出現；存在</td>
                     </tr>
                     <tr>
-                        <td class="word">arise</td>
+                        <td class="word" onclick="speakBubble(this)">arise</td>
                         <td class="forms">
                             <span class="form-type">v.</span> arise, arises, arose, arisen, arising
                         </td>
@@ -1498,14 +1549,14 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">包含/組成 | Comprise/Consist</td>
                     </tr>
                     <tr>
-                        <td class="word">comprise</td>
+                        <td class="word" onclick="speakBubble(this)">comprise</td>
                         <td class="forms">
                             <span class="form-type">v.</span> comprise, comprises, comprised, comprising
                         </td>
                         <td class="chinese">包含；組成；構成</td>
                     </tr>
                     <tr>
-                        <td class="word">consist</td>
+                        <td class="word" onclick="speakBubble(this)">consist</td>
                         <td class="forms">
                             <span class="form-type">v.</span> consist, consists, consisted, consisting<br>
                             <span class="form-type">n.</span> consistency<br>
@@ -1515,7 +1566,7 @@ icon: "📖"
                         <td class="chinese">組成；構成；一致</td>
                     </tr>
                     <tr>
-                        <td class="word">component</td>
+                        <td class="word" onclick="speakBubble(this)">component</td>
                         <td class="forms">
                             <span class="form-type">n.</span> component, components<br>
                             <span class="form-type">adj.</span> component
@@ -1528,7 +1579,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">獲得/取得 | Acquire/Obtain</td>
                     </tr>
                     <tr>
-                        <td class="word">acquire</td>
+                        <td class="word" onclick="speakBubble(this)">acquire</td>
                         <td class="forms">
                             <span class="form-type">v.</span> acquire, acquires, acquired, acquiring<br>
                             <span class="form-type">n.</span> acquisition<br>
@@ -1537,7 +1588,7 @@ icon: "📖"
                         <td class="chinese">獲得；取得；學到</td>
                     </tr>
                     <tr>
-                        <td class="word">obtain</td>
+                        <td class="word" onclick="speakBubble(this)">obtain</td>
                         <td class="forms">
                             <span class="form-type">v.</span> obtain, obtains, obtained, obtaining<br>
                             <span class="form-type">adj.</span> obtainable
@@ -1545,7 +1596,7 @@ icon: "📖"
                         <td class="chinese">獲得；得到；買到</td>
                     </tr>
                     <tr>
-                        <td class="word">attain</td>
+                        <td class="word" onclick="speakBubble(this)">attain</td>
                         <td class="forms">
                             <span class="form-type">v.</span> attain, attains, attained, attaining<br>
                             <span class="form-type">n.</span> attainment<br>
@@ -1559,7 +1610,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">消費/使用 | Consume/Utilize</td>
                     </tr>
                     <tr>
-                        <td class="word">consume</td>
+                        <td class="word" onclick="speakBubble(this)">consume</td>
                         <td class="forms">
                             <span class="form-type">v.</span> consume, consumes, consumed, consuming<br>
                             <span class="form-type">n.</span> consumption, consumer<br>
@@ -1568,7 +1619,7 @@ icon: "📖"
                         <td class="chinese">消費；消耗；吃喝</td>
                     </tr>
                     <tr>
-                        <td class="word">utilize</td>
+                        <td class="word" onclick="speakBubble(this)">utilize</td>
                         <td class="forms">
                             <span class="form-type">v.</span> utilize, utilizes, utilized, utilizing<br>
                             <span class="form-type">n.</span> utilization<br>
@@ -1577,7 +1628,7 @@ icon: "📖"
                         <td class="chinese">利用；使用；運用</td>
                     </tr>
                     <tr>
-                        <td class="word">exploit</td>
+                        <td class="word" onclick="speakBubble(this)">exploit</td>
                         <td class="forms">
                             <span class="form-type">v.</span> exploit, exploits, exploited, exploiting<br>
                             <span class="form-type">n.</span> exploitation<br>
@@ -1591,7 +1642,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">支配/控制 | Dominate/Control</td>
                     </tr>
                     <tr>
-                        <td class="word">dominate</td>
+                        <td class="word" onclick="speakBubble(this)">dominate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> dominate, dominates, dominated, dominating<br>
                             <span class="form-type">n.</span> dominance, domination<br>
@@ -1600,7 +1651,7 @@ icon: "📖"
                         <td class="chinese">支配；統治；主導</td>
                     </tr>
                     <tr>
-                        <td class="word">regulate</td>
+                        <td class="word" onclick="speakBubble(this)">regulate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> regulate, regulates, regulated, regulating<br>
                             <span class="form-type">n.</span> regulation, regulator<br>
@@ -1609,7 +1660,7 @@ icon: "📖"
                         <td class="chinese">管制；調節；規範</td>
                     </tr>
                     <tr>
-                        <td class="word">restrict</td>
+                        <td class="word" onclick="speakBubble(this)">restrict</td>
                         <td class="forms">
                             <span class="form-type">v.</span> restrict, restricts, restricted, restricting<br>
                             <span class="form-type">n.</span> restriction<br>
@@ -1623,7 +1674,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">察覺/檢測 | Detect/Perceive</td>
                     </tr>
                     <tr>
-                        <td class="word">detect</td>
+                        <td class="word" onclick="speakBubble(this)">detect</td>
                         <td class="forms">
                             <span class="form-type">v.</span> detect, detects, detected, detecting<br>
                             <span class="form-type">n.</span> detection, detector<br>
@@ -1632,7 +1683,7 @@ icon: "📖"
                         <td class="chinese">察覺；發現；偵測</td>
                     </tr>
                     <tr>
-                        <td class="word">perceive</td>
+                        <td class="word" onclick="speakBubble(this)">perceive</td>
                         <td class="forms">
                             <span class="form-type">v.</span> perceive, perceives, perceived, perceiving<br>
                             <span class="form-type">n.</span> perception<br>
@@ -1642,7 +1693,7 @@ icon: "📖"
                         <td class="chinese">感知；察覺；理解</td>
                     </tr>
                     <tr>
-                        <td class="word">recognize</td>
+                        <td class="word" onclick="speakBubble(this)">recognize</td>
                         <td class="forms">
                             <span class="form-type">v.</span> recognize, recognizes, recognized, recognizing<br>
                             <span class="form-type">n.</span> recognition<br>
@@ -1656,7 +1707,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">強調/突出 | Emphasize/Highlight</td>
                     </tr>
                     <tr>
-                        <td class="word">emphasize</td>
+                        <td class="word" onclick="speakBubble(this)">emphasize</td>
                         <td class="forms">
                             <span class="form-type">v.</span> emphasize, emphasizes, emphasized, emphasizing<br>
                             <span class="form-type">n.</span> emphasis<br>
@@ -1666,7 +1717,7 @@ icon: "📖"
                         <td class="chinese">強調；著重；突出</td>
                     </tr>
                     <tr>
-                        <td class="word">highlight</td>
+                        <td class="word" onclick="speakBubble(this)">highlight</td>
                         <td class="forms">
                             <span class="form-type">v.</span> highlight, highlights, highlighted, highlighting<br>
                             <span class="form-type">n.</span> highlight
@@ -1674,7 +1725,7 @@ icon: "📖"
                         <td class="chinese">強調；突出；最精彩部分</td>
                     </tr>
                     <tr>
-                        <td class="word">stress</td>
+                        <td class="word" onclick="speakBubble(this)">stress</td>
                         <td class="forms">
                             <span class="form-type">v.</span> stress, stresses, stressed, stressing<br>
                             <span class="form-type">n.</span> stress<br>
@@ -1688,7 +1739,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">假設/推測 | Assume/Presume</td>
                     </tr>
                     <tr>
-                        <td class="word">assume</td>
+                        <td class="word" onclick="speakBubble(this)">assume</td>
                         <td class="forms">
                             <span class="form-type">v.</span> assume, assumes, assumed, assuming<br>
                             <span class="form-type">n.</span> assumption<br>
@@ -1697,7 +1748,7 @@ icon: "📖"
                         <td class="chinese">假設；認為；承擔</td>
                     </tr>
                     <tr>
-                        <td class="word">presume</td>
+                        <td class="word" onclick="speakBubble(this)">presume</td>
                         <td class="forms">
                             <span class="form-type">v.</span> presume, presumes, presumed, presuming<br>
                             <span class="form-type">n.</span> presumption<br>
@@ -1707,7 +1758,7 @@ icon: "📖"
                         <td class="chinese">假定；推測；可能</td>
                     </tr>
                     <tr>
-                        <td class="word">speculate</td>
+                        <td class="word" onclick="speakBubble(this)">speculate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> speculate, speculates, speculated, speculating<br>
                             <span class="form-type">n.</span> speculation<br>
@@ -1721,7 +1772,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">定義/分類 | Define/Classify</td>
                     </tr>
                     <tr>
-                        <td class="word">define</td>
+                        <td class="word" onclick="speakBubble(this)">define</td>
                         <td class="forms">
                             <span class="form-type">v.</span> define, defines, defined, defining<br>
                             <span class="form-type">n.</span> definition<br>
@@ -1731,7 +1782,7 @@ icon: "📖"
                         <td class="chinese">定義；界定；明確</td>
                     </tr>
                     <tr>
-                        <td class="word">classify</td>
+                        <td class="word" onclick="speakBubble(this)">classify</td>
                         <td class="forms">
                             <span class="form-type">v.</span> classify, classifies, classified, classifying<br>
                             <span class="form-type">n.</span> classification<br>
@@ -1740,7 +1791,7 @@ icon: "📖"
                         <td class="chinese">分類；歸類；劃分</td>
                     </tr>
                     <tr>
-                        <td class="word">categorize</td>
+                        <td class="word" onclick="speakBubble(this)">categorize</td>
                         <td class="forms">
                             <span class="form-type">v.</span> categorize, categorizes, categorized, categorizing<br>
                             <span class="form-type">n.</span> category, categorization<br>
@@ -1754,7 +1805,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">估計/評估 | Estimate/Assess</td>
                     </tr>
                     <tr>
-                        <td class="word">estimate</td>
+                        <td class="word" onclick="speakBubble(this)">estimate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> estimate, estimates, estimated, estimating<br>
                             <span class="form-type">n.</span> estimate, estimation<br>
@@ -1763,7 +1814,7 @@ icon: "📖"
                         <td class="chinese">估計；估算；評估</td>
                     </tr>
                     <tr>
-                        <td class="word">assess</td>
+                        <td class="word" onclick="speakBubble(this)">assess</td>
                         <td class="forms">
                             <span class="form-type">v.</span> assess, assesses, assessed, assessing<br>
                             <span class="form-type">n.</span> assessment<br>
@@ -1772,7 +1823,7 @@ icon: "📖"
                         <td class="chinese">評估；評定；估價</td>
                     </tr>
                     <tr>
-                        <td class="word">calculate</td>
+                        <td class="word" onclick="speakBubble(this)">calculate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> calculate, calculates, calculated, calculating<br>
                             <span class="form-type">n.</span> calculation, calculator<br>
@@ -1786,7 +1837,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">致力/投入 | Devote/Commit</td>
                     </tr>
                     <tr>
-                        <td class="word">devote</td>
+                        <td class="word" onclick="speakBubble(this)">devote</td>
                         <td class="forms">
                             <span class="form-type">v.</span> devote, devotes, devoted, devoting<br>
                             <span class="form-type">n.</span> devotion<br>
@@ -1795,7 +1846,7 @@ icon: "📖"
                         <td class="chinese">致力於；獻身於；專心</td>
                     </tr>
                     <tr>
-                        <td class="word">commit</td>
+                        <td class="word" onclick="speakBubble(this)">commit</td>
                         <td class="forms">
                             <span class="form-type">v.</span> commit, commits, committed, committing<br>
                             <span class="form-type">n.</span> commitment<br>
@@ -1804,7 +1855,7 @@ icon: "📖"
                         <td class="chinese">承諾；致力；犯罪</td>
                     </tr>
                     <tr>
-                        <td class="word">dedicate</td>
+                        <td class="word" onclick="speakBubble(this)">dedicate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> dedicate, dedicates, dedicated, dedicating<br>
                             <span class="form-type">n.</span> dedication<br>
@@ -1818,7 +1869,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">分配/分發 | Distribute/Allocate</td>
                     </tr>
                     <tr>
-                        <td class="word">distribute</td>
+                        <td class="word" onclick="speakBubble(this)">distribute</td>
                         <td class="forms">
                             <span class="form-type">v.</span> distribute, distributes, distributed, distributing<br>
                             <span class="form-type">n.</span> distribution, distributor<br>
@@ -1827,7 +1878,7 @@ icon: "📖"
                         <td class="chinese">分配；分發；散佈</td>
                     </tr>
                     <tr>
-                        <td class="word">allocate</td>
+                        <td class="word" onclick="speakBubble(this)">allocate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> allocate, allocates, allocated, allocating<br>
                             <span class="form-type">n.</span> allocation
@@ -1835,7 +1886,7 @@ icon: "📖"
                         <td class="chinese">分配；撥出；劃撥</td>
                     </tr>
                     <tr>
-                        <td class="word">assign</td>
+                        <td class="word" onclick="speakBubble(this)">assign</td>
                         <td class="forms">
                             <span class="form-type">v.</span> assign, assigns, assigned, assigning<br>
                             <span class="form-type">n.</span> assignment<br>
@@ -1849,7 +1900,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">展示/呈現 | Exhibit/Display</td>
                     </tr>
                     <tr>
-                        <td class="word">exhibit</td>
+                        <td class="word" onclick="speakBubble(this)">exhibit</td>
                         <td class="forms">
                             <span class="form-type">v.</span> exhibit, exhibits, exhibited, exhibiting<br>
                             <span class="form-type">n.</span> exhibition, exhibit<br>
@@ -1858,7 +1909,7 @@ icon: "📖"
                         <td class="chinese">展示；顯示；展覽</td>
                     </tr>
                     <tr>
-                        <td class="word">display</td>
+                        <td class="word" onclick="speakBubble(this)">display</td>
                         <td class="forms">
                             <span class="form-type">v.</span> display, displays, displayed, displaying<br>
                             <span class="form-type">n.</span> display
@@ -1866,7 +1917,7 @@ icon: "📖"
                         <td class="chinese">陳列；展示；顯示</td>
                     </tr>
                     <tr>
-                        <td class="word">reveal</td>
+                        <td class="word" onclick="speakBubble(this)">reveal</td>
                         <td class="forms">
                             <span class="form-type">v.</span> reveal, reveals, revealed, revealing<br>
                             <span class="form-type">n.</span> revelation<br>
@@ -1880,7 +1931,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">引用/提及 | Cite/Refer</td>
                     </tr>
                     <tr>
-                        <td class="word">cite</td>
+                        <td class="word" onclick="speakBubble(this)">cite</td>
                         <td class="forms">
                             <span class="form-type">v.</span> cite, cites, cited, citing<br>
                             <span class="form-type">n.</span> citation
@@ -1888,7 +1939,7 @@ icon: "📖"
                         <td class="chinese">引用；引證；舉例</td>
                     </tr>
                     <tr>
-                        <td class="word">refer</td>
+                        <td class="word" onclick="speakBubble(this)">refer</td>
                         <td class="forms">
                             <span class="form-type">v.</span> refer, refers, referred, referring<br>
                             <span class="form-type">n.</span> reference<br>
@@ -1897,7 +1948,7 @@ icon: "📖"
                         <td class="chinese">提到；參考；查閱</td>
                     </tr>
                     <tr>
-                        <td class="word">quote</td>
+                        <td class="word" onclick="speakBubble(this)">quote</td>
                         <td class="forms">
                             <span class="form-type">v.</span> quote, quotes, quoted, quoting<br>
                             <span class="form-type">n.</span> quote, quotation
@@ -1910,7 +1961,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">排除/省略 | Exclude/Omit</td>
                     </tr>
                     <tr>
-                        <td class="word">exclude</td>
+                        <td class="word" onclick="speakBubble(this)">exclude</td>
                         <td class="forms">
                             <span class="form-type">v.</span> exclude, excludes, excluded, excluding<br>
                             <span class="form-type">n.</span> exclusion<br>
@@ -1920,7 +1971,7 @@ icon: "📖"
                         <td class="chinese">排除；不包括；獨家的</td>
                     </tr>
                     <tr>
-                        <td class="word">omit</td>
+                        <td class="word" onclick="speakBubble(this)">omit</td>
                         <td class="forms">
                             <span class="form-type">v.</span> omit, omits, omitted, omitting<br>
                             <span class="form-type">n.</span> omission
@@ -1928,7 +1979,7 @@ icon: "📖"
                         <td class="chinese">省略；遺漏；刪除</td>
                     </tr>
                     <tr>
-                        <td class="word">neglect</td>
+                        <td class="word" onclick="speakBubble(this)">neglect</td>
                         <td class="forms">
                             <span class="form-type">v.</span> neglect, neglects, neglected, neglecting<br>
                             <span class="form-type">n.</span> neglect<br>
@@ -1942,7 +1993,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">超過/勝過 | Exceed/Surpass</td>
                     </tr>
                     <tr>
-                        <td class="word">exceed</td>
+                        <td class="word" onclick="speakBubble(this)">exceed</td>
                         <td class="forms">
                             <span class="form-type">v.</span> exceed, exceeds, exceeded, exceeding<br>
                             <span class="form-type">adv.</span> exceedingly
@@ -1950,7 +2001,7 @@ icon: "📖"
                         <td class="chinese">超過；超出；勝過</td>
                     </tr>
                     <tr>
-                        <td class="word">surpass</td>
+                        <td class="word" onclick="speakBubble(this)">surpass</td>
                         <td class="forms">
                             <span class="form-type">v.</span> surpass, surpasses, surpassed, surpassing<br>
                             <span class="form-type">adj.</span> surpassing
@@ -1958,7 +2009,7 @@ icon: "📖"
                         <td class="chinese">超過；勝過；優於</td>
                     </tr>
                     <tr>
-                        <td class="word">outweigh</td>
+                        <td class="word" onclick="speakBubble(this)">outweigh</td>
                         <td class="forms">
                             <span class="form-type">v.</span> outweigh, outweighs, outweighed, outweighing
                         </td>
@@ -1970,7 +2021,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">遭遇/經歷 | Encounter/Experience</td>
                     </tr>
                     <tr>
-                        <td class="word">encounter</td>
+                        <td class="word" onclick="speakBubble(this)">encounter</td>
                         <td class="forms">
                             <span class="form-type">v.</span> encounter, encounters, encountered, encountering<br>
                             <span class="form-type">n.</span> encounter
@@ -1978,7 +2029,7 @@ icon: "📖"
                         <td class="chinese">遭遇；遇到；邂逅</td>
                     </tr>
                     <tr>
-                        <td class="word">experience</td>
+                        <td class="word" onclick="speakBubble(this)">experience</td>
                         <td class="forms">
                             <span class="form-type">v.</span> experience, experiences, experienced, experiencing<br>
                             <span class="form-type">n.</span> experience<br>
@@ -1987,7 +2038,7 @@ icon: "📖"
                         <td class="chinese">經歷；體驗；經驗</td>
                     </tr>
                     <tr>
-                        <td class="word">undergo</td>
+                        <td class="word" onclick="speakBubble(this)">undergo</td>
                         <td class="forms">
                             <span class="form-type">v.</span> undergo, undergoes, underwent, undergone, undergoing
                         </td>
@@ -1999,7 +2050,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">衍生/源於 | Derive/Originate</td>
                     </tr>
                     <tr>
-                        <td class="word">derive</td>
+                        <td class="word" onclick="speakBubble(this)">derive</td>
                         <td class="forms">
                             <span class="form-type">v.</span> derive, derives, derived, deriving<br>
                             <span class="form-type">n.</span> derivation, derivative<br>
@@ -2008,7 +2059,7 @@ icon: "📖"
                         <td class="chinese">衍生；源於；獲得</td>
                     </tr>
                     <tr>
-                        <td class="word">originate</td>
+                        <td class="word" onclick="speakBubble(this)">originate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> originate, originates, originated, originating<br>
                             <span class="form-type">n.</span> origin, origination<br>
@@ -2018,7 +2069,7 @@ icon: "📖"
                         <td class="chinese">起源；發源；創始</td>
                     </tr>
                     <tr>
-                        <td class="word">stem</td>
+                        <td class="word" onclick="speakBubble(this)">stem</td>
                         <td class="forms">
                             <span class="form-type">v.</span> stem, stems, stemmed, stemming<br>
                             <span class="form-type">n.</span> stem
@@ -2031,7 +2082,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">使能夠/促進 | Enable/Facilitate</td>
                     </tr>
                     <tr>
-                        <td class="word">enable</td>
+                        <td class="word" onclick="speakBubble(this)">enable</td>
                         <td class="forms">
                             <span class="form-type">v.</span> enable, enables, enabled, enabling<br>
                             <span class="form-type">adj.</span> enabling
@@ -2039,7 +2090,7 @@ icon: "📖"
                         <td class="chinese">使能夠；使可能；促進</td>
                     </tr>
                     <tr>
-                        <td class="word">facilitate</td>
+                        <td class="word" onclick="speakBubble(this)">facilitate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> facilitate, facilitates, facilitated, facilitating<br>
                             <span class="form-type">n.</span> facilitation, facilitator<br>
@@ -2048,7 +2099,7 @@ icon: "📖"
                         <td class="chinese">促進；使便利；推動</td>
                     </tr>
                     <tr>
-                        <td class="word">empower</td>
+                        <td class="word" onclick="speakBubble(this)">empower</td>
                         <td class="forms">
                             <span class="form-type">v.</span> empower, empowers, empowered, empowering<br>
                             <span class="form-type">n.</span> empowerment<br>
@@ -2062,7 +2113,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">產生/生成 | Generate/Produce</td>
                     </tr>
                     <tr>
-                        <td class="word">generate</td>
+                        <td class="word" onclick="speakBubble(this)">generate</td>
                         <td class="forms">
                             <span class="form-type">v.</span> generate, generates, generated, generating<br>
                             <span class="form-type">n.</span> generation, generator<br>
@@ -2071,7 +2122,7 @@ icon: "📖"
                         <td class="chinese">產生；生成；引起</td>
                     </tr>
                     <tr>
-                        <td class="word">produce</td>
+                        <td class="word" onclick="speakBubble(this)">produce</td>
                         <td class="forms">
                             <span class="form-type">v.</span> produce, produces, produced, producing<br>
                             <span class="form-type">n.</span> production, producer, product<br>
@@ -2081,7 +2132,7 @@ icon: "📖"
                         <td class="chinese">生產；製造；產品</td>
                     </tr>
                     <tr>
-                        <td class="word">yield</td>
+                        <td class="word" onclick="speakBubble(this)">yield</td>
                         <td class="forms">
                             <span class="form-type">v.</span> yield, yields, yielded, yielding<br>
                             <span class="form-type">n.</span> yield
@@ -2094,7 +2145,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">潛在/可能 | Potential/Possible</td>
                     </tr>
                     <tr>
-                        <td class="word">potential</td>
+                        <td class="word" onclick="speakBubble(this)">potential</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> potential<br>
                             <span class="form-type">n.</span> potential, potentiality<br>
@@ -2103,7 +2154,7 @@ icon: "📖"
                         <td class="chinese">潛在的；可能的；潛力</td>
                     </tr>
                     <tr>
-                        <td class="word">probable</td>
+                        <td class="word" onclick="speakBubble(this)">probable</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> probable, improbable<br>
                             <span class="form-type">n.</span> probability<br>
@@ -2112,7 +2163,7 @@ icon: "📖"
                         <td class="chinese">可能的；大概的；概率</td>
                     </tr>
                     <tr>
-                        <td class="word">likely</td>
+                        <td class="word" onclick="speakBubble(this)">likely</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> likely, unlikely<br>
                             <span class="form-type">n.</span> likelihood<br>
@@ -2126,7 +2177,7 @@ icon: "📖"
                         <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">其他重要詞彙 | Other Important Words</td>
                     </tr>
                     <tr>
-                        <td class="word">implicit</td>
+                        <td class="word" onclick="speakBubble(this)">implicit</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> implicit, explicit<br>
                             <span class="form-type">adv.</span> implicitly, explicitly
@@ -2134,7 +2185,7 @@ icon: "📖"
                         <td class="chinese">含蓄的；隱含的；明確的</td>
                     </tr>
                     <tr>
-                        <td class="word">prevent</td>
+                        <td class="word" onclick="speakBubble(this)">prevent</td>
                         <td class="forms">
                             <span class="form-type">v.</span> prevent, prevents, prevented, preventing<br>
                             <span class="form-type">n.</span> prevention<br>
@@ -2144,7 +2195,7 @@ icon: "📖"
                         <td class="chinese">防止；預防；可預防的</td>
                     </tr>
                     <tr>
-                        <td class="word">redundant</td>
+                        <td class="word" onclick="speakBubble(this)">redundant</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> redundant<br>
                             <span class="form-type">n.</span> redundancy<br>
@@ -2153,7 +2204,7 @@ icon: "📖"
                         <td class="chinese">多餘的；冗餘的</td>
                     </tr>
                     <tr>
-                        <td class="word">tangible</td>
+                        <td class="word" onclick="speakBubble(this)">tangible</td>
                         <td class="forms">
                             <span class="form-type">adj.</span> tangible, intangible<br>
                             <span class="form-type">adv.</span> tangibly
@@ -2164,3 +2215,29 @@ icon: "📖"
             </table>
         </div>
 
+
+<script>
+    function filterVocab() {
+        const input = document.getElementById('vocabSearch');
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById('vocabTable');
+        const tr = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < tr.length; i++) {
+            // Skip category headers in search or handle them
+            if (tr[i].style.background && tr[i].style.background.includes('e3f2fd')) {
+                 continue; 
+            }
+            
+            let found = false;
+            const tds = tr[i].getElementsByTagName('td');
+            for (let j = 0; j < tds.length; j++) {
+                if (tds[j].textContent.toLowerCase().includes(filter)) {
+                    found = true;
+                    break;
+                }
+            }
+            tr[i].style.display = found ? "" : "none";
+        }
+    }
+</script>

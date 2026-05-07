@@ -1,304 +1,62 @@
 ---
 layout: default
-title: "Tenses"
+title: "Tenses Overview"
 category: "Grammar"
 icon: "🧩"
 ---
 
+<h3>📊 Teaching Slides</h3>
+<div style="text-align: center; margin: 30px 0;">
+    <a href="https://docs.google.com/presentation/d/e/2PACX-1vQCgsVFa96ZelhZbopaI4M3-4eQhPx7fIh1lfCegBF6o2Ew3GrJkcAPZRUupc60eg/pub" target="_blank" class="btn" style="padding: 12px 24px; font-size: 1.1rem;">📖 Open Teaching Slides</a>
+</div>
+
 <hr>
 
-        <h2>Select a Tense</h2>
-        <div class="tense-grid">
-            <div class="tense-card active" onclick="switchTense('present', this)">Simple Present</div>
-            <div class="tense-card" onclick="switchTense('past', this)">Simple Past</div>
-            <div class="tense-card" onclick="switchTense('future', this)">Simple Future</div>
-            <div class="tense-card" onclick="switchTense('pres-cont', this)">Present Continuous</div>
-            <div class="tense-card" onclick="switchTense('past-cont', this)">Past Continuous</div>
-        </div>
+<h3>📖 Practice: Tense Comparison</h3>
+<table>
+    <tr>
+        <th>Tense</th>
+        <th>Example Sentence</th>
+    </tr>
+    <tr>
+        <td>Simple Present</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">I __________ (eat) breakfast every day.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-red">eat</span> <span class="grammar-bubble bubble-yellow">breakfast</span> <span class="grammar-bubble bubble-green">every day</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Present Continuous</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">I __________ (be/eat) breakfast now.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">am</span> <span class="v-bubble v-red">eating</span> <span class="grammar-bubble bubble-yellow">breakfast</span> <span class="grammar-bubble bubble-green">now</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td>Simple Past</td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">I __________ (eat) breakfast yesterday.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-red">ate</span> <span class="grammar-bubble bubble-yellow">breakfast</span> <span class="grammar-bubble bubble-green">yesterday</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+</table>
 
-        <!-- SIMPLE PRESENT TENSE -->
-        <div id="present" class="content-section show">
-            <h3>💡 Simple Present Tense</h3>
-            
-            <ul>
-                <li><strong>When to use:</strong> Habits, routines, general truths, permanent situations, scheduled events</li>
-                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">verb (base form / +s for 3rd person singular)</mark> + <mark class="yellow">(object/complement)</mark></li>
-                <li><strong>Examples:</strong>
-                    <ul>
-                        <li><mark class="cyan">I</mark> <mark class="red">study</mark> <mark class="yellow">English</mark> <mark class="green">every day</mark>.</li>
-                        <li><mark class="cyan">She</mark> <mark class="red">works</mark> <mark class="yellow">at a hospital</mark>.</li>
-                        <li><mark class="cyan">The sun</mark> <mark class="red">rises</mark> <mark class="yellow">in the east</mark>.</li>
-                    </ul>
-                </li>
-                <li><strong>Time markers:</strong> <mark class="green">always, usually, often, sometimes, never, every day/week/month, on Mondays</mark></li>
-            </ul>
-
-            <hr>
-                <h3>📊 Teaching Slides</h3>
-                <div style="text-align: center; margin: 30px 0;">
-                    <a href="https://docs.google.com/presentation/d/1NTHAZxbgT_6z_4zc6sm7Tcau6y-FKnSrQepUOnqlXyc/view" target="_blank" class="btn" style="padding: 12px 24px; font-size: 1.1rem;">📖 Open Reading Material</a>
-                </div>
-            <hr>
-            <h3>📖 Practice</h3>
-            <table>
-                <tr>
-                    <th>Exercise Type</th>
-                    <th>Practice Sentence</th>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Affirmative Sentences</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">drink</mark> <mark class="yellow">coffee</mark> <mark class="green">every morning</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">She</mark> <mark class="red">__________ (go)</mark> <mark class="yellow">to school</mark> <mark class="green">by bus</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">They</mark> <mark class="red">__________ (play)</mark> <mark class="yellow">soccer</mark> <mark class="green">on weekends</mark>.</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Negative Sentences</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">do not (don't) like</mark> <mark class="yellow">spicy food</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">He</mark> <mark class="red">__________ (not/watch)</mark> <mark class="yellow">TV</mark> <mark class="green">at night</mark>.</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- SIMPLE PAST TENSE -->
-        <div id="past" class="content-section">
-            <h3>💡 Simple Past Tense</h3>
-            
-            <ul>
-                <li><strong>When to use:</strong> Completed actions in the past, past habits, historical events</li>
-                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">verb (past form / -ed or irregular)</mark> + <mark class="yellow">(object/complement)</mark></li>
-                <li><strong>Examples:</strong>
-                    <ul>
-                        <li><mark class="cyan">I</mark> <mark class="red">visited</mark> <mark class="yellow">London</mark> <mark class="green">last year</mark>.</li>
-                        <li><mark class="cyan">She</mark> <mark class="red">wrote</mark> <mark class="yellow">a letter</mark> <mark class="green">yesterday</mark>.</li>
-                        <li><mark class="cyan">They</mark> <mark class="red">lived</mark> <mark class="yellow">in Japan</mark> <mark class="green">in 2010</mark>.</li>
-                    </ul>
-                </li>
-                <li><strong>Time markers:</strong> <mark class="green">yesterday, last (week/month/year), ago, in (year), when I was young</mark></li>
-            </ul>
-
-            <hr>
-            <h3>📊 Teaching Slides</h3>
-            <div style="text-align: center; margin: 30px 0; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 16px; border: 1px dashed rgba(110, 193, 228, 0.3);">
-                <p style="color: #9ab5d1; margin: 0;">📊 Teaching slides for this tense are coming soon!</p>
-            </div>
-
-            <hr>
-            <h3>📖 Practice</h3>
-            <table>
-                <tr>
-                    <th>Exercise Type</th>
-                    <th>Practice Sentence</th>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Regular Verbs (+ ed)</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">watched</mark> <mark class="yellow">a movie</mark> <mark class="green">last night</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">She</mark> <mark class="red">__________ (cook)</mark> <mark class="yellow">dinner</mark> <mark class="green">two hours ago</mark>.</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Irregular Verbs</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">He</mark> <mark class="red">went</mark> <mark class="yellow">to Paris</mark> <mark class="green">in 2019</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">__________ (buy)</mark> <mark class="yellow">a new phone</mark> <mark class="green">yesterday</mark>.</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- SIMPLE FUTURE TENSE -->
-        <div id="future" class="content-section">
-            <h3>💡 Simple Future Tense</h3>
-            
-            <ul>
-                <li><strong>When to use:</strong> Future plans, predictions, promises, spontaneous decisions</li>
-                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">will + base verb</mark> + <mark class="yellow">(object/complement)</mark></li>
-                <li><strong>Alternative:</strong> <mark class="cyan">Subject</mark> + <mark class="red">be going to + base verb</mark> (for planned actions)</li>
-                <li><strong>Examples:</strong>
-                    <ul>
-                        <li><mark class="cyan">I</mark> <mark class="red">will travel</mark> <mark class="yellow">to Japan</mark> <mark class="green">next year</mark>.</li>
-                        <li><mark class="cyan">She</mark> <mark class="red">is going to study</mark> <mark class="yellow">medicine</mark>.</li>
-                        <li><mark class="cyan">They</mark> <mark class="red">will arrive</mark> <mark class="green">tomorrow</mark>.</li>
-                    </ul>
-                </li>
-                <li><strong>Time markers:</strong> <mark class="green">tomorrow, next (week/month/year), soon, in the future, later</mark></li>
-            </ul>
-
-            <hr>
-            <h3>📊 Teaching Slides</h3>
-            <div style="text-align: center; margin: 30px 0; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 16px; border: 1px dashed rgba(110, 193, 228, 0.3);">
-                <p style="color: #9ab5d1; margin: 0;">📊 Teaching slides for this tense are coming soon!</p>
-            </div>
-
-            <hr>
-            <h3>📖 Practice</h3>
-            <table>
-                <tr>
-                    <th>Exercise Type</th>
-                    <th>Practice Sentence</th>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Using 'will'</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">will call</mark> <mark class="yellow">you</mark> <mark class="green">later</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">She</mark> <mark class="red">__________ (help)</mark> <mark class="yellow">us</mark> <mark class="green">tomorrow</mark>.</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Using 'be going to'</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">am going to visit</mark> <mark class="yellow">my grandparents</mark> <mark class="green">this weekend</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">He</mark> <mark class="red">__________ (buy)</mark> <mark class="yellow">a new car</mark> <mark class="green">next month</mark>.</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- PRESENT CONTINUOUS TENSE -->
-        <div id="pres-cont" class="content-section">
-            <h3>💡 Present Continuous Tense</h3>
-            
-            <ul>
-                <li><strong>When to use:</strong> Actions happening now, temporary situations, future arrangements</li>
-                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">am/is/are + verb-ing</mark> + <mark class="yellow">(object/complement)</mark></li>
-                <li><strong>Examples:</strong>
-                    <ul>
-                        <li><mark class="cyan">I</mark> <mark class="red">am studying</mark> <mark class="yellow">English</mark> <mark class="green">right now</mark>.</li>
-                        <li><mark class="cyan">She</mark> <mark class="red">is working</mark> <mark class="yellow">on a project</mark>.</li>
-                        <li><mark class="cyan">They</mark> <mark class="red">are playing</mark> <mark class="yellow">soccer</mark> <mark class="green">at the moment</mark>.</li>
-                    </ul>
-                </li>
-                <li><strong>Spelling rules:</strong> drop final 'e' (make→making), double consonant (run→running), change 'ie' to 'y' (lie→lying)</li>
-                <li><strong>Time markers:</strong> <mark class="green">now, right now, at the moment, currently, today, this week</mark></li>
-            </ul>
-
-            <hr>
-            <h3>📊 Teaching Slides</h3>
-            <div style="text-align: center; margin: 30px 0; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 16px; border: 1px dashed rgba(110, 193, 228, 0.3);">
-                <p style="color: #9ab5d1; margin: 0;">📊 Teaching slides for this tense are coming soon!</p>
-            </div>
-
-            <hr>
-            <h3>📖 Practice</h3>
-            <table>
-                <tr>
-                    <th>Exercise Type</th>
-                    <th>Practice Sentence</th>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Affirmative Sentences</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">am reading</mark> <mark class="yellow">a book</mark> <mark class="green">right now</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">She</mark> <mark class="red">__________ (cook)</mark> <mark class="yellow">dinner</mark> <mark class="green">at the moment</mark>.</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Spelling Changes</strong></td>
-                </tr>
-                <tr>
-                    <td>Drop 'e'</td>
-                    <td><mark class="cyan">He</mark> <mark class="red">is making</mark> <mark class="yellow">breakfast</mark>. (make → making)</td>
-                </tr>
-                <tr>
-                    <td>Double consonant</td>
-                    <td><mark class="cyan">She</mark> <mark class="red">is running</mark> <mark class="yellow">in the park</mark>. (run → running)</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- PAST CONTINUOUS TENSE -->
-        <div id="past-cont" class="content-section">
-            <h3>💡 Past Continuous Tense</h3>
-            
-            <ul>
-                <li><strong>When to use:</strong> Actions in progress at a specific time in the past, interrupted actions, parallel actions</li>
-                <li><strong>Structure:</strong> <mark class="cyan">Subject</mark> + <mark class="red">was/were + verb-ing</mark> + <mark class="yellow">(object/complement)</mark></li>
-                <li><strong>Examples:</strong>
-                    <ul>
-                        <li><mark class="cyan">I</mark> <mark class="red">was studying</mark> <mark class="green">at 8pm last night</mark>.</li>
-                        <li><mark class="cyan">She</mark> <mark class="red">was reading</mark> <mark class="yellow">a book</mark> when <mark class="cyan">I</mark> called.</li>
-                        <li><mark class="cyan">They</mark> <mark class="red">were playing</mark> <mark class="yellow">soccer</mark> while <mark class="cyan">we</mark> <mark class="red">were watching</mark>.</li>
-                    </ul>
-                </li>
-                <li><strong>Common with:</strong> when (for interruption) and while (for parallel actions)</li>
-                <li><strong>Time markers:</strong> <mark class="green">at (time) yesterday, while, when, as, all day/night/morning</mark></li>
-            </ul>
-
-            <hr>
-            <h3>📊 Teaching Slides</h3>
-            <div style="text-align: center; margin: 30px 0;">
-                <a href="https://drive.google.com/file/d/1WaQT7NYJn7Kcl34OwC6LllaS9RGYfogd/view" target="_blank" class="btn" style="padding: 12px 24px; font-size: 1.1rem;">📖 Open Reading Material</a>
-            </div>
-
-
-            <hr>
-            <h3>📖 Practice</h3>
-            <table>
-                <tr>
-                    <th>Exercise Type</th>
-                    <th>Practice Sentence</th>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Basic Affirmative</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">was sleeping</mark> <mark class="green">at midnight</mark>.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">She</mark> <mark class="red">__________ (cook)</mark> <mark class="yellow">dinner</mark> <mark class="green">at 6pm yesterday</mark>.</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Interrupted Actions (with 'when')</strong></td>
-                </tr>
-                <tr>
-                    <td>Example</td>
-                    <td><mark class="cyan">I</mark> <mark class="red">was walking</mark> <mark class="yellow">home</mark> when <mark class="cyan">it</mark> started to rain.</td>
-                </tr>
-                <tr>
-                    <td>Fill in the blank</td>
-                    <td><mark class="cyan">She</mark> <mark class="red">__________ (study)</mark> when <mark class="cyan">her friend</mark> called.</td>
-                </tr>
-            </table>
-        </div>
-
-        <hr>
+<hr>
 
 <div style="text-align: center; margin: 30px 0;">
     <a href="../Quizzes/Tenses - Quiz.html" class="btn">📝 Take the Quiz</a>
@@ -306,126 +64,41 @@ icon: "🧩"
 
 <hr>
 
-        <h3>📦 Concept Compressed</h3>
-        <p>English tenses express when an action happens (time) and its aspect (completion, duration, or relation to other events). The main time frames are past, present, and future, each with simple, continuous (progressive), perfect, and perfect continuous forms.</p>
+<h3>📦 Concept Compressed</h3>
+<p>English tenses express when an action happens (time) and its aspect (duration, completion, etc.).</p>
 
-        <h4>The 12 Main Tenses</h4>
-        <table>
-            <tr>
-                <th>Tense</th>
-                <th>Structure</th>
-                <th>Use</th>
-                <th>Example</th>
-            </tr>
-            <tr>
-                <td colspan="4" style="background: #f0f9ff; font-weight: bold;">PRESENT</td>
-            </tr>
-            <tr>
-                <td><strong>Simple Present</strong></td>
-                <td>base verb (+s for he/she/it)</td>
-                <td>Habits, facts, routines</td>
-                <td>She works every day.</td>
-            </tr>
-            <tr>
-                <td><strong>Present Continuous</strong></td>
-                <td>am/is/are + verb-ing</td>
-                <td>Actions happening now, temporary</td>
-                <td>She is working right now.</td>
-            </tr>
-            <tr>
-                <td><strong>Present Perfect</strong></td>
-                <td>have/has + past participle</td>
-                <td>Past actions with present relevance</td>
-                <td>She has worked here for 5 years.</td>
-            </tr>
-            <tr>
-                <td><strong>Present Perfect Continuous</strong></td>
-                <td>have/has been + verb-ing</td>
-                <td>Actions started in past, continuing now</td>
-                <td>She has been working since 9 AM.</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="background: #f0f9ff; font-weight: bold;">PAST</td>
-            </tr>
-            <tr>
-                <td><strong>Simple Past</strong></td>
-                <td>verb-ed / irregular past</td>
-                <td>Completed past actions</td>
-                <td>She worked yesterday.</td>
-            </tr>
-            <tr>
-                <td><strong>Past Continuous</strong></td>
-                <td>was/were + verb-ing</td>
-                <td>Actions in progress in the past</td>
-                <td>She was working at 5 PM.</td>
-            </tr>
-            <tr>
-                <td><strong>Past Perfect</strong></td>
-                <td>had + past participle</td>
-                <td>Actions completed before another past action</td>
-                <td>She had worked there before moving.</td>
-            </tr>
-            <tr>
-                <td><strong>Past Perfect Continuous</strong></td>
-                <td>had been + verb-ing</td>
-                <td>Duration before another past action</td>
-                <td>She had been working for 2 hours when I called.</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="background: #f0f9ff; font-weight: bold;">FUTURE</td>
-            </tr>
-            <tr>
-                <td><strong>Simple Future</strong></td>
-                <td>will + base verb</td>
-                <td>Future predictions, decisions</td>
-                <td>She will work tomorrow.</td>
-            </tr>
-            <tr>
-                <td><strong>Future Continuous</strong></td>
-                <td>will be + verb-ing</td>
-                <td>Actions in progress at a future time</td>
-                <td>She will be working at 5 PM tomorrow.</td>
-            </tr>
-            <tr>
-                <td><strong>Future Perfect</strong></td>
-                <td>will have + past participle</td>
-                <td>Actions completed before a future time</td>
-                <td>She will have worked 10 years by 2025.</td>
-            </tr>
-            <tr>
-                <td><strong>Future Perfect Continuous</strong></td>
-                <td>will have been + verb-ing</td>
-                <td>Duration up to a future point</td>
-                <td>She will have been working for 5 hours by then.</td>
-            </tr>
-        </table>
+<h4>The Main Tenses</h4>
+<table>
+    <tr>
+        <th>Tense</th>
+        <th>Structure</th>
+        <th>Use</th>
+    </tr>
+    <tr>
+        <td><strong>Simple Present</strong></td>
+        <td>Base Verb</td>
+        <td>Habits/Facts</td>
+    </tr>
+    <tr>
+        <td><strong>Present Continuous</strong></td>
+        <td>am/is/are + verb-ing</td>
+        <td>Actions now</td>
+    </tr>
+    <tr>
+        <td><strong>Simple Past</strong></td>
+        <td>Past form (-ed)</td>
+        <td>Completed actions</td>
+    </tr>
+    <tr>
+        <td><strong>Simple Future</strong></td>
+        <td>will + base verb</td>
+        <td>Future actions</td>
+    </tr>
+</table>
 
-        <h4>Choosing the Right Tense</h4>
-        <ul>
-            <li><strong>Simple:</strong> General facts, complete actions (I eat breakfast every day. I ate breakfast yesterday.)</li>
-            <li><strong>Continuous/Progressive:</strong> Actions in progress, temporary situations (I am eating breakfast now.)</li>
-            <li><strong>Perfect:</strong> Completed actions with a connection to another time (I have eaten breakfast already.)</li>
-            <li><strong>Perfect Continuous:</strong> Duration and continuity emphasized (I have been eating for 20 minutes.)</li>
-        </ul>
-
-        <h4>Key Time Markers</h4>
-        <ul>
-            <li><strong>Simple Present:</strong> always, usually, often, every day, on Mondays</li>
-            <li><strong>Simple Past:</strong> yesterday, last week, ago, in 2010</li>
-            <li><strong>Simple Future:</strong> tomorrow, next week, soon, will</li>
-            <li><strong>Present Perfect:</strong> already, yet, just, ever, never, for, since</li>
-            <li><strong>Continuous:</strong> now, right now, at the moment, currently</li>
-        </ul>
-
-<script>
-    function switchTense(tenseId, btn) {
-        // Remove active class from all buttons and content sections
-        document.querySelectorAll('.tense-card').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('show'));
-        
-        // Add active class to clicked button and target content section
-        btn.classList.add('active');
-        const target = document.getElementById(tenseId);
-        if (target) target.classList.add('show');
-    }
-</script>
+<h4>Key Rules</h4>
+<ul>
+    <li><strong>Simple:</strong> Used for general facts and routines.</li>
+    <li><strong>Continuous:</strong> Used for actions in progress.</li>
+    <li><strong>Perfect:</strong> Used for actions connected to another time.</li>
+</ul>
