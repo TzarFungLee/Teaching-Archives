@@ -6,22 +6,22 @@ icon: "📝"
 ---
 
 <div class="quiz-container">
-        <div class="progress-container" id="progressContainer">
-            <span class="progress-text" id="progressText">Answer the questions below</span>
-            <button class="reset-btn" onclick="resetQuiz()">Reset All</button>
-        </div>
-
-        <form id="quizForm">
-            <!-- Questions will be dynamically generated here -->
-        </form>
+    <div class="progress-container" id="progressContainer">
+        <span class="progress-text" id="progressText">Answer the questions below</span>
+        <button class="reset-btn" onclick="resetQuiz()">Reset All</button>
     </div>
+
+    <form id="quizForm">
+        <!-- Questions will be dynamically generated here -->
+    </form>
+</div>
 </div>
 
 <script>
     let checkedQuestions = new Set();
     let currentQuestions = [];
     let answers = {};
-    
+
     // Scenario bank for dynamic question generation
     const scenarioBank = [
         // --- CATEGORY: School & Student Life ---
@@ -524,13 +524,13 @@ icon: "📝"
     // Generate quiz on page load
     function generateQuiz() {
         const shuffledScenarios = shuffle(scenarioBank).slice(0, 12);
-        
+
         // Define the 4 logic combinations (3 times each for 12 questions total)
         const logicBank = [];
         for (let i = 0; i < 3; i++) {
-            logicBank.push({ testIfClause: true,  isIfFirst: true  });
-            logicBank.push({ testIfClause: false, isIfFirst: true  });
-            logicBank.push({ testIfClause: true,  isIfFirst: false });
+            logicBank.push({ testIfClause: true, isIfFirst: true });
+            logicBank.push({ testIfClause: false, isIfFirst: true });
+            logicBank.push({ testIfClause: true, isIfFirst: false });
             logicBank.push({ testIfClause: false, isIfFirst: false });
         }
         const shuffledLogic = shuffle(logicBank);
@@ -540,13 +540,13 @@ icon: "📝"
             const logic = shuffledLogic[index];
             const testIfClause = logic.testIfClause;
             const isIfFirst = logic.isIfFirst;
-            
+
             let questionText, options, explanation;
-            
+
             // Define the components
             const ifPartFull = `${scenario.ifSubj} ${scenario.ifVerbCorrect} ${scenario.ifPred}`;
             const ifPartBlank = `${scenario.ifSubj} __________ ${scenario.ifPred}`;
-            
+
             const mainPartFull = `${scenario.mainSubj} ${scenario.mainVerbCorrect} ${scenario.mainPred}`;
             const mainPartBlank = `${scenario.mainSubj} __________ ${scenario.mainPred}`;
 
@@ -591,18 +591,18 @@ icon: "📝"
                 explanation: explanation
             };
         });
-        
+
         // Generate HTML for questions
         const quizForm = document.getElementById('quizForm');
         quizForm.innerHTML = '';
-        
+
         currentQuestions.forEach((q, index) => {
             const questionNum = index + 1;
             const questionId = `q${questionNum}`;
-            
+
             // Note: Options are already shuffled in the map function above
             answers[questionId] = String.fromCharCode(97 + q.correct); // 'a', 'b', 'c', etc.
-            
+
             // Build question HTML
             const questionHTML = `
             <div class="question">
@@ -620,7 +620,7 @@ icon: "📝"
                 </div>
                 <button type="button" class="check-btn" onclick="checkQuestion(${questionNum})">Check Answer</button>
             </div>`;
-            
+
             quizForm.innerHTML += questionHTML;
         });
     }
@@ -631,7 +631,7 @@ icon: "📝"
     function checkQuestion(questionNum) {
         const question = `q${questionNum}`;
         const selected = document.querySelector(`input[name="${question}"]:checked`);
-        
+
         if (!selected) {
             alert('Please select an answer first.');
             return;
@@ -639,20 +639,20 @@ icon: "📝"
 
         const isCorrect = (selected.value === answers[question]);
         renderSemanticFeedback(questionNum, isCorrect);
-        
+
         const button = event.target;
         button.disabled = true;
         button.textContent = 'Checked ✓';
-        
+
         checkedQuestions.add(questionNum);
         updateProgress();
     }
-    
+
     function updateProgress() {
         const totalQuestions = Object.keys(answers).length;
         const checked = checkedQuestions.size;
         const progressText = document.getElementById('progressText');
-        
+
         if (checked === 0) {
             progressText.textContent = 'Answer the questions below';
         } else if (checked === totalQuestions) {
@@ -661,7 +661,7 @@ icon: "📝"
                 const selected = document.querySelector(`input[name="${question}"]:checked`);
                 return selected && selected.value === answers[question];
             }).length;
-            
+
             progressText.textContent = `Quiz Complete! Score: ${correctCount}/${totalQuestions}`;
         } else {
             progressText.textContent = `Progress: ${checked}/${totalQuestions} questions checked`;
@@ -671,11 +671,11 @@ icon: "📝"
     function resetQuiz() {
         // Regenerate the quiz with new random questions
         generateQuiz();
-        
+
         // Reset progress
         checkedQuestions.clear();
         updateProgress();
-        
+
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }

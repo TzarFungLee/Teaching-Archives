@@ -204,9 +204,9 @@ icon: "🏠"
     {% if p.title and p.category and p.url != '/' %}
     {% unless first %}, {% endunless %}
     {
-        title: { { p.title | jsonify } },
-        category: { { p.category | jsonify } },
-        icon: { { p.icon | jsonify } },
+        title: {{ p.title | jsonify }},
+        category: {{ p.category | jsonify }},
+        icon: {{ p.icon | jsonify }},
         file: "{{ p.url | relative_url | replace: ' ', '%20' }}"
     } {% assign first = false %}
     {% endif %}
