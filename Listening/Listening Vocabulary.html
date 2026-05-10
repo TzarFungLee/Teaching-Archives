@@ -3,6 +3,7 @@ layout: default
 title: "📚 HKDSE Listening - Key Vocabulary"
 category: "Listening"
 icon: "🎧"
+hide_toc: true
 ---
 
     <style>
@@ -17,6 +18,35 @@ icon: "🎧"
             display: inline; 
             text-decoration: none;
         }
+        /* --- INTERACTIVE CARDS (Pillar 2.4) --- */
+        .features-box, .structure-box, .sample-box, .example-box, .step-box, .warning-box, .tips-box, .visual-anchor {
+            padding: 24px;
+            margin: 25px 0;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08) !important; /* Pillar 2.4: Unified High-Contrast Opacity */
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+            backdrop-filter: blur(8px);
+        }
+
+        .tense-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 22px 18px;
+            text-align: center;
+            transition: all 0.25s ease;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .tense-card:hover {
+            border-color: rgba(110, 193, 228, 0.45);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
         .speak-item:hover {
             color: var(--primary);
             background: rgba(110, 193, 228, 0.15);
@@ -43,6 +73,93 @@ icon: "🎧"
             padding: 20px !important;
             font-size: 1.1rem;
             letter-spacing: 0.05em;
+        }
+        .chinese {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .chinese {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Immersive Dictation Module */
+        .dictation-container {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(110, 193, 228, 0.05)) !important;
+            border: 2px solid var(--primary);
+            border-radius: 32px;
+            padding: 60px;
+            margin: 60px auto;
+            max-width: 1000px; /* Centered focus */
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .dictation-input {
+            background: rgba(0,0,0,0.4);
+            border: 2px solid rgba(110, 193, 228, 0.3);
+            border-radius: 16px;
+            padding: 20px 30px;
+            font-size: 1.6rem; /* Larger for focus */
+            color: #fff;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin: 30px auto;
+            display: block;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .dictation-input:focus {
+            border-color: var(--accent);
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(110, 193, 228, 0.3);
+        }
+
+        .dictation-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            color: #fff;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 16px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dictation-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(110, 193, 228, 0.3);
+            filter: brightness(1.15);
+        }
+
+        .feedback-area {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 30px;
+            min-height: 1.5em;
+            transition: all 0.3s;
+        }
+
+        .streak-counter {
+            font-size: 1rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            font-weight: 800;
+            opacity: 0.8;
         }
     </style>
 
@@ -105,8 +222,80 @@ icon: "🎧"
             }
         };
 
+        // Dictation Game Logic
+        let currentWord = "";
+        let streak = 0;
+        let vocabList = [];
+
+        function initDictation() {
+            // Collect all words from the table
+            const cells = document.querySelectorAll('.word');
+            const words = [];
+            cells.forEach(cell => {
+                const text = cell.innerText;
+                // Split by slashes and remove hints in parentheses
+                text.split('/').forEach(part => {
+                    const clean = part.replace(/\(.*?\)/g, '').trim();
+                    if (clean && clean.length > 1) words.push(clean);
+                });
+            });
+            vocabList = [...new Set(words)]; // Remove duplicates
+            console.log('📝 Dictation list ready: ' + vocabList.length + ' words');
+        }
+
+        function playNewWord() {
+            if (vocabList.length === 0) initDictation();
+            
+            currentWord = vocabList[Math.floor(Math.random() * vocabList.length)];
+            SpeechManager.speak(currentWord);
+            
+            const feedback = document.getElementById('dictationFeedback');
+            feedback.innerText = "Listening...";
+            feedback.style.color = "var(--muted)";
+            
+            const input = document.getElementById('dictationInput');
+            input.value = "";
+            input.focus();
+            input.style.borderColor = "rgba(255,255,255,0.1)";
+        }
+
+        function replayWord() {
+            if (currentWord) SpeechManager.speak(currentWord);
+        }
+
+        function checkDictation() {
+            const input = document.getElementById('dictationInput');
+            const userVal = input.value.trim().toLowerCase();
+            const targetVal = currentWord.toLowerCase();
+            const feedback = document.getElementById('dictationFeedback');
+            const streakEl = document.getElementById('streakCount');
+
+            if (!userVal) return;
+
+            if (userVal === targetVal) {
+                feedback.innerText = "✨ Correct! Well done.";
+                feedback.style.color = "#4ade80";
+                input.style.borderColor = "#4ade80";
+                streak++;
+                streakEl.innerText = streak;
+                setTimeout(playNewWord, 1500);
+            } else {
+                feedback.innerText = "❌ Not quite. Try again!";
+                feedback.style.color = "#f87171";
+                input.style.borderColor = "#f87171";
+                streak = 0;
+                streakEl.innerText = streak;
+                
+                // Shake animation
+                input.style.transform = "translateX(10px)";
+                setTimeout(() => input.style.transform = "translateX(-10px)", 100);
+                setTimeout(() => input.style.transform = "translateX(0)", 200);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             SpeechManager.init();
+            initDictation();
 
             // Handle the Word/Phrase column (split by slashes)
             document.querySelectorAll('.word').forEach(cell => {
@@ -167,40 +356,40 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">時間表達 | Time Expressions</td>
                 </tr>
                 <tr>
-                    <td class="word">3 o'clock / quarter past / half past</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">3 o'clock / quarter past / half past</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Meet me at <strong>3 o'clock sharp</strong>"<br>
                         "The train leaves at <strong>quarter past two</strong>"<br>
                         "Let's meet at <strong>half past six</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">三點正 / 兩點十五分 / 六點半<br><em>Listen for exact times in appointments and schedules</em></td>
                 </tr>
                 <tr>
-                    <td class="word">in the morning / afternoon / evening</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">in the morning / afternoon / evening</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "The meeting is <strong>in the afternoon</strong>"<br>
                         "Classes start <strong>in the morning</strong>"<br>
                         "We'll arrive <strong>in the evening</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">早上 / 下午 / 晚上<br><em>Common in daily schedule discussions</em></td>
                 </tr>
                 <tr>
-                    <td class="word">by / before / after / around</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">by / before / after / around</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Submit <strong>by Friday</strong>"<br>
                         "Come <strong>before 9am</strong>"<br>
                         "Call me <strong>after 5pm</strong>"<br>
                         "I'll be there <strong>around noon</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">在...之前 / 在...之後 / 大約<br><em>Time prepositions - listen carefully!</em></td>
                 </tr>
                 <tr>
-                    <td class="word">postpone / delay / reschedule</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">postpone / delay / reschedule</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "We need to <strong>postpone</strong> the event"<br>
                         "The flight was <strong>delayed</strong> by 2 hours"<br>
                         "Can we <strong>reschedule</strong> for next week?"
-                    </td>
+                    </span></td>
                     <td class="chinese">延期；推遲；延誤；改期<br><em>Schedule changes are common</em></td>
                 </tr>
 
@@ -209,39 +398,39 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">香港地點與港鐵 | HK Places & MTR</td>
                 </tr>
                 <tr>
-                    <td class="word">Central / Admiralty / Tsim Sha Tsui</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">Central / Admiralty / Tsim Sha Tsui</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Let's meet at <strong>Central Station</strong>"<br>
                         "Transfer at <strong>Admiralty</strong>"<br>
                         "Get off at <strong>Tsim Sha Tsui</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">中環 / 金鐘 / 尖沙咀<br><em>Major MTR interchange stations</em></td>
                 </tr>
                 <tr>
-                    <td class="word">Mong Kok / Causeway Bay / Wan Chai</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">Mong Kok / Causeway Bay / Wan Chai</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "The shop is near <strong>Mong Kok</strong>"<br>
                         "Meet me at <strong>Causeway Bay</strong>"<br>
                         "Exit at <strong>Wan Chai</strong> station"
-                    </td>
+                    </span></td>
                     <td class="chinese">旺角 / 銅鑼灣 / 灣仔<br><em>Popular shopping/business districts</em></td>
                 </tr>
                 <tr>
-                    <td class="word">Exit A / Exit B / Platform 1</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">Exit A / Exit B / Platform 1</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Use <strong>Exit A</strong> for the mall"<br>
                         "Meet at <strong>Exit B</strong>"<br>
                         "Board on <strong>Platform 1</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">A出口 / B出口 / 1號月台<br><em>MTR directions - very common!</em></td>
                 </tr>
                 <tr>
-                    <td class="word">Island Line / Tsuen Wan Line</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">Island Line / Tsuen Wan Line</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Take the <strong>Island Line</strong> to Chai Wan"<br>
                         "Change to <strong>Tsuen Wan Line</strong>"<br>
                         "The <strong>Kwun Tong Line</strong> is faster"
-                    </td>
+                    </span></td>
                     <td class="chinese">港島線 / 荃灣線 / 觀塘線<br><em>MTR line names</em></td>
                 </tr>
 
@@ -250,30 +439,30 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">數字與價錢 | Numbers & Prices</td>
                 </tr>
                 <tr>
-                    <td class="word">$50 / $150 / $500</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">$50 / $150 / $500</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "It costs <strong>fifty dollars</strong>"<br>
                         "The ticket is <strong>one hundred and fifty</strong>"<br>
                         "Rent is <strong>five hundred</strong> per month"
-                    </td>
+                    </span></td>
                     <td class="chinese">五十元 / 一百五十元 / 五百元<br><em>Listen for prices carefully</em></td>
                 </tr>
                 <tr>
-                    <td class="word">discount / 20% off / half price</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">discount / 20% off / half price</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Get a <strong>20% discount</strong>"<br>
                         "It's <strong>20% off</strong> today"<br>
                         "Everything is <strong>half price</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">折扣 / 八折 / 半價<br><em>Shopping contexts</em></td>
                 </tr>
                 <tr>
-                    <td class="word">dozen / a couple of / several</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">dozen / a couple of / several</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Buy <strong>a dozen</strong> eggs" (12)<br>
                         "<strong>A couple of</strong> days" (2-3)<br>
                         "<strong>Several</strong> people came" (3-7)
-                    </td>
+                    </span></td>
                     <td class="chinese">一打（12個）/ 幾個 / 數個<br><em>Quantity expressions</em></td>
                 </tr>
 
@@ -282,30 +471,30 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">學校與活動 | School & Activities</td>
                 </tr>
                 <tr>
-                    <td class="word">assignment / deadline / submit</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">assignment / deadline / submit</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Hand in the <strong>assignment</strong> by Friday"<br>
                         "The <strong>deadline</strong> is next Monday"<br>
                         "Please <strong>submit</strong> your work online"
-                    </td>
+                    </span></td>
                     <td class="chinese">作業；功課 / 截止日期 / 提交<br><em>Academic contexts</em></td>
                 </tr>
                 <tr>
-                    <td class="word">sign up / register / enroll</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">sign up / register / enroll</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "<strong>Sign up</strong> for the club"<br>
                         "<strong>Register</strong> before Friday"<br>
                         "<strong>Enroll</strong> in the course"
-                    </td>
+                    </span></td>
                     <td class="chinese">報名；登記；註冊<br><em>Activities and courses</em></td>
                 </tr>
                 <tr>
-                    <td class="word">cancel / withdraw / drop</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">cancel / withdraw / drop</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "We have to <strong>cancel</strong> the event"<br>
                         "I need to <strong>withdraw</strong> from the class"<br>
                         "Can I <strong>drop</strong> this course?"
-                    </td>
+                    </span></td>
                     <td class="chinese">取消 / 退出 / 放棄<br><em>Changing plans</em></td>
                 </tr>
 
@@ -314,30 +503,30 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">方向與位置 | Directions & Locations</td>
                 </tr>
                 <tr>
-                    <td class="word">turn left / right / go straight</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">turn left / right / go straight</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "<strong>Turn left</strong> at the traffic lights"<br>
                         "<strong>Turn right</strong> after the bank"<br>
                         "<strong>Go straight</strong> for 2 blocks"
-                    </td>
+                    </span></td>
                     <td class="chinese">左轉 / 右轉 / 直走<br><em>Basic directions - very common</em></td>
                 </tr>
                 <tr>
-                    <td class="word">opposite / next to / between</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">opposite / next to / between</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "It's <strong>opposite</strong> the post office"<br>
                         "The cafe is <strong>next to</strong> the bank"<br>
                         "It's <strong>between</strong> the library and park"
-                    </td>
+                    </span></td>
                     <td class="chinese">對面 / 旁邊 / 之間<br><em>Location prepositions</em></td>
                 </tr>
                 <tr>
-                    <td class="word">on the corner / at the end of</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">on the corner / at the end of</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "The shop is <strong>on the corner</strong>"<br>
                         "Walk to the <strong>end of the street</strong>"<br>
                         "It's <strong>at the end of</strong> the corridor"
-                    </td>
+                    </span></td>
                     <td class="chinese">在轉角處 / 在...盡頭<br><em>Specific locations</em></td>
                 </tr>
 
@@ -346,21 +535,21 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">電話與訊息 | Telephone & Messages</td>
                 </tr>
                 <tr>
-                    <td class="word">leave a message / call back / get back to</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">leave a message / call back / get back to</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Can I <strong>leave a message</strong>?"<br>
                         "I'll <strong>call you back</strong> later"<br>
                         "I'll <strong>get back to you</strong> tomorrow"
-                    </td>
+                    </span></td>
                     <td class="chinese">留言 / 回電 / 回覆你<br><em>Phone conversations</em></td>
                 </tr>
                 <tr>
-                    <td class="word">hold on / hang up / put through</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">hold on / hang up / put through</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "<strong>Hold on</strong>, please" (wait)<br>
                         "Don't <strong>hang up</strong>"<br>
                         "I'll <strong>put you through</strong> to the manager"
-                    </td>
+                    </span></td>
                     <td class="chinese">請稍等 / 掛斷 / 轉接<br><em>Phone etiquette</em></td>
                 </tr>
 
@@ -369,22 +558,22 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">天氣與狀況 | Weather & Conditions</td>
                 </tr>
                 <tr>
-                    <td class="word">sunny / cloudy / rainy / typhoon</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">sunny / cloudy / rainy / typhoon</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "It'll be <strong>sunny</strong> tomorrow"<br>
                         "Expect <strong>cloudy</strong> skies"<br>
                         "It's <strong>rainy</strong> today"<br>
                         "There's a <strong>typhoon</strong> warning"
-                    </td>
+                    </span></td>
                     <td class="chinese">晴天 / 多雲 / 下雨 / 颱風<br><em>HK weather - typhoons common!</em></td>
                 </tr>
                 <tr>
-                    <td class="word">degrees / temperature / humid</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">degrees / temperature / humid</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "It's <strong>25 degrees</strong> today"<br>
                         "The <strong>temperature</strong> will drop"<br>
                         "It's very <strong>humid</strong> in summer"
-                    </td>
+                    </span></td>
                     <td class="chinese">度 / 溫度 / 潮濕<br><em>Weather descriptions</em></td>
                 </tr>
 
@@ -393,48 +582,48 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">常見動詞 | Common Verbs</td>
                 </tr>
                 <tr>
-                    <td class="word">arrange / organize / prepare</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">arrange / organize / prepare</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I'll <strong>arrange</strong> a meeting"<br>
                         "Can you <strong>organize</strong> the event?"<br>
                         "We need to <strong>prepare</strong> for the exam"
-                    </td>
+                    </span></td>
                     <td class="chinese">安排 / 組織 / 準備<br><em>Planning activities</em></td>
                 </tr>
                 <tr>
-                    <td class="word">confirm / check / make sure</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">confirm / check / make sure</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Please <strong>confirm</strong> your booking"<br>
                         "Let me <strong>check</strong> the schedule"<br>
                         "<strong>Make sure</strong> you bring your ID"
-                    </td>
+                    </span></td>
                     <td class="chinese">確認 / 檢查 / 確保<br><em>Verification</em></td>
                 </tr>
                 <tr>
-                    <td class="word">remind / inform / notify</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">remind / inform / notify</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Can you <strong>remind</strong> me tomorrow?"<br>
                         "I'll <strong>inform</strong> you later"<br>
                         "We'll <strong>notify</strong> you by email"
-                    </td>
+                    </span></td>
                     <td class="chinese">提醒 / 通知 / 告知<br><em>Communication</em></td>
                 </tr>
                 <tr>
-                    <td class="word">recommend / suggest / advise</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">recommend / suggest / advise</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I <strong>recommend</strong> the seafood pasta"<br>
                         "I <strong>suggest</strong> taking the MTR"<br>
                         "I'd <strong>advise</strong> against going there"
-                    </td>
+                    </span></td>
                     <td class="chinese">推薦 / 建議 / 勸告<br><em>Giving suggestions</em></td>
                 </tr>
                 <tr>
-                    <td class="word">prefer / would rather / choose</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">prefer / would rather / choose</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I <strong>prefer</strong> the morning session"<br>
                         "I'd <strong>rather</strong> go on Saturday"<br>
                         "Let's <strong>choose</strong> the blue one"
-                    </td>
+                    </span></td>
                     <td class="chinese">偏好 / 寧願 / 選擇<br><em>Expressing preferences</em></td>
                 </tr>
 
@@ -443,39 +632,39 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">購物與服務 | Shopping & Services</td>
                 </tr>
                 <tr>
-                    <td class="word">refund / exchange / return</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">refund / exchange / return</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Can I get a <strong>refund</strong>?"<br>
                         "I'd like to <strong>exchange</strong> this"<br>
                         "I need to <strong>return</strong> this item"
-                    </td>
+                    </span></td>
                     <td class="chinese">退款 / 調換 / 退貨<br><em>Customer service</em></td>
                 </tr>
                 <tr>
-                    <td class="word">receipt / warranty / guarantee</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">receipt / warranty / guarantee</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Keep your <strong>receipt</strong>"<br>
                         "It has a 2-year <strong>warranty</strong>"<br>
                         "We <strong>guarantee</strong> quality"
-                    </td>
+                    </span></td>
                     <td class="chinese">收據 / 保修 / 保證<br><em>Purchase documents</em></td>
                 </tr>
                 <tr>
-                    <td class="word">bargain / deal / sale</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">bargain / deal / sale</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "That's a real <strong>bargain</strong>!"<br>
                         "What a great <strong>deal</strong>!"<br>
                         "There's a <strong>sale</strong> on this weekend"
-                    </td>
+                    </span></td>
                     <td class="chinese">便宜貨 / 划算 / 減價<br><em>Shopping opportunities</em></td>
                 </tr>
                 <tr>
-                    <td class="word">try on / fit / size</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">try on / fit / size</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Can I <strong>try this on</strong>?"<br>
                         "Does it <strong>fit</strong> well?"<br>
                         "What <strong>size</strong> do you need?"
-                    </td>
+                    </span></td>
                     <td class="chinese">試穿 / 合身 / 尺寸<br><em>Clothing shopping</em></td>
                 </tr>
 
@@ -484,40 +673,40 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">食物與餐廳 | Food & Restaurants</td>
                 </tr>
                 <tr>
-                    <td class="word">reservation / book / table for</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">reservation / book / table for</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I have a <strong>reservation</strong> at 7pm"<br>
                         "I'd like to <strong>book</strong> a table"<br>
                         "A <strong>table for</strong> four, please"
-                    </td>
+                    </span></td>
                     <td class="chinese">預訂 / 訂位 / ...人的桌子<br><em>Restaurant booking</em></td>
                 </tr>
                 <tr>
-                    <td class="word">appetizer / main course / dessert</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">appetizer / main course / dessert</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Start with an <strong>appetizer</strong>?"<br>
                         "What's the <strong>main course</strong>?"<br>
                         "Would you like <strong>dessert</strong>?"
-                    </td>
+                    </span></td>
                     <td class="chinese">頭盤 / 主菜 / 甜品<br><em>Meal structure</em></td>
                 </tr>
                 <tr>
-                    <td class="word">spicy / bland / tasty / delicious</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">spicy / bland / tasty / delicious</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "It's too <strong>spicy</strong> for me"<br>
                         "This is quite <strong>bland</strong>"<br>
                         "Very <strong>tasty</strong>!"<br>
                         "Absolutely <strong>delicious</strong>!"
-                    </td>
+                    </span></td>
                     <td class="chinese">辣 / 淡而無味 / 美味 / 好吃<br><em>Food descriptions</em></td>
                 </tr>
                 <tr>
-                    <td class="word">vegetarian / vegan / allergic to</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">vegetarian / vegan / allergic to</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I'm <strong>vegetarian</strong>"<br>
                         "Is it <strong>vegan</strong>?"<br>
                         "I'm <strong>allergic to</strong> nuts"
-                    </td>
+                    </span></td>
                     <td class="chinese">素食者 / 純素食者 / 對...過敏<br><em>Dietary restrictions</em></td>
                 </tr>
 
@@ -526,40 +715,40 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">健康與醫療 | Health & Medical</td>
                 </tr>
                 <tr>
-                    <td class="word">appointment / check-up / consultation</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">appointment / check-up / consultation</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I have an <strong>appointment</strong> at 3pm"<br>
                         "It's time for your <strong>check-up</strong>"<br>
                         "Book a <strong>consultation</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">預約 / 檢查 / 諮詢<br><em>Medical visits</em></td>
                 </tr>
                 <tr>
-                    <td class="word">prescription / medicine / dosage</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">prescription / medicine / dosage</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Here's your <strong>prescription</strong>"<br>
                         "Take this <strong>medicine</strong> twice daily"<br>
                         "Follow the <strong>dosage</strong> instructions"
-                    </td>
+                    </span></td>
                     <td class="chinese">處方 / 藥物 / 劑量<br><em>Medication</em></td>
                 </tr>
                 <tr>
-                    <td class="word">symptoms / fever / headache / sore throat</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">symptoms / fever / headache / sore throat</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "What are your <strong>symptoms</strong>?"<br>
                         "I have a <strong>fever</strong>"<br>
                         "I've got a <strong>headache</strong>"<br>
                         "My throat is <strong>sore</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">症狀 / 發燒 / 頭痛 / 喉嚨痛<br><em>Common ailments</em></td>
                 </tr>
                 <tr>
-                    <td class="word">recover / improve / get better</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">recover / improve / get better</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "You'll <strong>recover</strong> soon"<br>
                         "Your condition should <strong>improve</strong>"<br>
                         "Hope you <strong>get better</strong> quickly"
-                    </td>
+                    </span></td>
                     <td class="chinese">康復 / 改善 / 好轉<br><em>Recovery</em></td>
                 </tr>
 
@@ -568,40 +757,40 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">交通 | Transportation</td>
                 </tr>
                 <tr>
-                    <td class="word">bus / minibus / tram / taxi</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">bus / minibus / tram / taxi</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Take the <strong>bus</strong> to Kowloon"<br>
                         "Catch a <strong>minibus</strong> to Central"<br>
                         "Ride the <strong>tram</strong> on HK Island"<br>
                         "Hail a <strong>taxi</strong> outside"
-                    </td>
+                    </span></td>
                     <td class="chinese">巴士 / 小巴 / 電車 / 的士<br><em>HK transport types</em></td>
                 </tr>
                 <tr>
-                    <td class="word">fare / Octopus card / top up</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">fare / Octopus card / top up</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "The <strong>fare</strong> is $10.50"<br>
                         "Use your <strong>Octopus card</strong>"<br>
                         "I need to <strong>top up</strong> my card"
-                    </td>
+                    </span></td>
                     <td class="chinese">車費 / 八達通卡 / 增值<br><em>Payment for transport</em></td>
                 </tr>
                 <tr>
-                    <td class="word">transfer / change / connect</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">transfer / change / connect</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "<strong>Transfer</strong> at Admiralty"<br>
                         "You need to <strong>change</strong> trains"<br>
                         "This line <strong>connects</strong> to the Airport Express"
-                    </td>
+                    </span></td>
                     <td class="chinese">轉乘 / 換乘 / 連接<br><em>Transit connections</em></td>
                 </tr>
                 <tr>
-                    <td class="word">crowded / rush hour / peak time</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">crowded / rush hour / peak time</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "It's very <strong>crowded</strong> now"<br>
                         "Avoid <strong>rush hour</strong>"<br>
                         "Travel during off-<strong>peak times</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">擁擠 / 繁忙時間 / 高峰期<br><em>Traffic conditions</em></td>
                 </tr>
 
@@ -610,39 +799,39 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">感受與意見 | Feelings & Opinions</td>
                 </tr>
                 <tr>
-                    <td class="word">disappointed / frustrated / upset</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">disappointed / frustrated / upset</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I'm really <strong>disappointed</strong>"<br>
                         "She feels <strong>frustrated</strong>"<br>
                         "He's quite <strong>upset</strong> about it"
-                    </td>
+                    </span></td>
                     <td class="chinese">失望 / 沮喪 / 不高興<br><em>Negative feelings</em></td>
                 </tr>
                 <tr>
-                    <td class="word">excited / thrilled / delighted</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">excited / thrilled / delighted</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I'm so <strong>excited</strong>!"<br>
                         "We're <strong>thrilled</strong> about the news"<br>
                         "She was <strong>delighted</strong> to hear"
-                    </td>
+                    </span></td>
                     <td class="chinese">興奮 / 激動 / 高興<br><em>Positive feelings</em></td>
                 </tr>
                 <tr>
-                    <td class="word">worried / concerned / anxious</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">worried / concerned / anxious</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I'm <strong>worried</strong> about the exam"<br>
                         "We're <strong>concerned</strong> about safety"<br>
                         "She feels <strong>anxious</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">擔心 / 關注 / 焦慮<br><em>Worry & concern</em></td>
                 </tr>
                 <tr>
-                    <td class="word">agree / disagree / object</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">agree / disagree / object</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I <strong>agree</strong> with you"<br>
                         "I have to <strong>disagree</strong>"<br>
                         "I <strong>object</strong> to that idea"
-                    </td>
+                    </span></td>
                     <td class="chinese">同意 / 不同意 / 反對<br><em>Expressing opinions</em></td>
                 </tr>
 
@@ -651,41 +840,41 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">問題與解決 | Problems & Solutions</td>
                 </tr>
                 <tr>
-                    <td class="word">issue / problem / trouble / matter</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">issue / problem / trouble / matter</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "We have an <strong>issue</strong> to discuss"<br>
                         "There's a <strong>problem</strong> with the system"<br>
                         "Are you in <strong>trouble</strong>?"<br>
                         "It's a serious <strong>matter</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">問題 / 麻煩 / 困難 / 事項<br><em>Identifying problems (synonyms!)</em></td>
                 </tr>
                 <tr>
-                    <td class="word">solve / resolve / fix / deal with</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">solve / resolve / fix / deal with</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Let's <strong>solve</strong> this problem"<br>
                         "We need to <strong>resolve</strong> the conflict"<br>
                         "Can you <strong>fix</strong> this?"<br>
                         "I'll <strong>deal with</strong> it"
-                    </td>
+                    </span></td>
                     <td class="chinese">解決 / 處理 / 修理 / 應對<br><em>Finding solutions (synonyms!)</em></td>
                 </tr>
                 <tr>
-                    <td class="word">complain / complaint / feedback</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">complain / complaint / feedback</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I need to <strong>complain</strong> about the service"<br>
                         "Make a formal <strong>complaint</strong>"<br>
                         "We welcome your <strong>feedback</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">投訴 / 抱怨 / 意見回饋<br><em>Expressing dissatisfaction</em></td>
                 </tr>
                 <tr>
-                    <td class="word">apologize / sorry / excuse</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">apologize / sorry / excuse</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I'd like to <strong>apologize</strong>"<br>
                         "I'm <strong>sorry</strong> for the delay"<br>
                         "Please <strong>excuse</strong> the inconvenience"
-                    </td>
+                    </span></td>
                     <td class="chinese">道歉 / 抱歉 / 原諒<br><em>Making apologies</em></td>
                 </tr>
 
@@ -694,40 +883,40 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">工作與職業 | Work & Jobs</td>
                 </tr>
                 <tr>
-                    <td class="word">apply for / application / interview</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">apply for / application / interview</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I want to <strong>apply for</strong> this job"<br>
                         "Submit your <strong>application</strong> online"<br>
                         "The <strong>interview</strong> is on Monday"
-                    </td>
+                    </span></td>
                     <td class="chinese">申請 / 申請表 / 面試<br><em>Job hunting</em></td>
                 </tr>
                 <tr>
-                    <td class="word">hire / employ / recruit</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">hire / employ / recruit</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "We'll <strong>hire</strong> 5 new staff"<br>
                         "The company <strong>employs</strong> 200 people"<br>
                         "We're <strong>recruiting</strong> now"
-                    </td>
+                    </span></td>
                     <td class="chinese">聘請 / 僱用 / 招聘<br><em>Employment (synonyms!)</em></td>
                 </tr>
                 <tr>
-                    <td class="word">resign / quit / retire</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">resign / quit / retire</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I've decided to <strong>resign</strong>"<br>
                         "He's going to <strong>quit</strong> his job"<br>
                         "She'll <strong>retire</strong> next year"
-                    </td>
+                    </span></td>
                     <td class="chinese">辭職 / 離職 / 退休<br><em>Leaving employment</em></td>
                 </tr>
                 <tr>
-                    <td class="word">salary / wage / income / bonus</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">salary / wage / income / bonus</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "My <strong>salary</strong> is $20,000/month"<br>
                         "The hourly <strong>wage</strong> is $60"<br>
                         "What's your monthly <strong>income</strong>?"<br>
                         "I got a year-end <strong>bonus</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">薪金 / 工資 / 收入 / 獎金<br><em>Pay & compensation</em></td>
                 </tr>
 
@@ -736,41 +925,41 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">常用形容詞 | Common Adjectives</td>
                 </tr>
                 <tr>
-                    <td class="word">convenient / suitable / appropriate</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">convenient / suitable / appropriate</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Is this time <strong>convenient</strong> for you?"<br>
                         "Find a <strong>suitable</strong> date"<br>
                         "That's not <strong>appropriate</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">方便 / 合適 / 適當<br><em>Suitability (synonyms!)</em></td>
                 </tr>
                 <tr>
-                    <td class="word">available / vacant / free</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">available / vacant / free</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Is the room <strong>available</strong>?"<br>
                         "Any <strong>vacant</strong> seats?"<br>
                         "Are you <strong>free</strong> tomorrow?"
-                    </td>
+                    </span></td>
                     <td class="chinese">可用的 / 空的 / 有空的<br><em>Availability (synonyms!)</em></td>
                 </tr>
                 <tr>
-                    <td class="word">essential / necessary / required / compulsory</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">essential / necessary / required / compulsory</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "It's <strong>essential</strong> to arrive early"<br>
                         "Is it <strong>necessary</strong>?"<br>
                         "ID is <strong>required</strong>"<br>
                         "Attendance is <strong>compulsory</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">必要的 / 需要的 / 必須的 / 強制的<br><em>Necessity (synonyms!)</em></td>
                 </tr>
                 <tr>
-                    <td class="word">difficult / challenging / tough / hard</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">difficult / challenging / tough / hard</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "It's very <strong>difficult</strong>"<br>
                         "A <strong>challenging</strong> task"<br>
                         "This is <strong>tough</strong>"<br>
                         "The exam was <strong>hard</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">困難的 / 有挑戰性的 / 艱難的 / 難的<br><em>Difficulty (synonyms!)</em></td>
                 </tr>
 
@@ -779,44 +968,44 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">頻率與時長 | Frequency & Duration</td>
                 </tr>
                 <tr>
-                    <td class="word">always / usually / often / sometimes / rarely / never</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">always / usually / often / sometimes / rarely / never</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I <strong>always</strong> take the MTR" (100%)<br>
                         "I <strong>usually</strong> eat at home" (80%)<br>
                         "I <strong>often</strong> go there" (60%)<br>
                         "I <strong>sometimes</strong> forget" (40%)<br>
                         "I <strong>rarely</strong> drink coffee" (10%)<br>
                         "I <strong>never</strong> smoke" (0%)
-                    </td>
+                    </span></td>
                     <td class="chinese">總是 / 通常 / 經常 / 有時 / 很少 / 從不<br><em>Frequency adverbs - listen carefully!</em></td>
                 </tr>
                 <tr>
-                    <td class="word">once / twice / three times a week</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">once / twice / three times a week</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I exercise <strong>once</strong> a week"<br>
                         "We meet <strong>twice</strong> a month"<br>
                         "Go <strong>three times</strong> a day"
-                    </td>
+                    </span></td>
                     <td class="chinese">一次 / 兩次 / 一週三次<br><em>Specific frequency</em></td>
                 </tr>
                 <tr>
-                    <td class="word">for / since / during / throughout</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">for / since / during / throughout</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I've lived here <strong>for</strong> 5 years"<br>
                         "I've been sick <strong>since</strong> Monday"<br>
                         "It rained <strong>during</strong> the night"<br>
                         "Open <strong>throughout</strong> the year"
-                    </td>
+                    </span></td>
                     <td class="chinese">...時長 / 自從 / 在...期間 / 整個<br><em>Duration prepositions</em></td>
                 </tr>
                 <tr>
-                    <td class="word">immediately / instantly / right away / at once</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">immediately / instantly / right away / at once</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Call <strong>immediately</strong>!"<br>
                         "Reply <strong>instantly</strong>"<br>
                         "Do it <strong>right away</strong>"<br>
                         "Come here <strong>at once</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">立即 / 馬上 / 現在 / 立刻<br><em>Urgency (synonyms!)</em></td>
                 </tr>
 
@@ -825,35 +1014,56 @@ icon: "🎧"
                     <td colspan="3" style="text-align: center; font-weight: bold; color: #0b3d91; padding: 15px;">興趣與休閒 | Hobbies & Leisure</td>
                 </tr>
                 <tr>
-                    <td class="word">hobby / pastime / interest</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">hobby / pastime / interest</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Reading is my <strong>hobby</strong>"<br>
                         "A favorite <strong>pastime</strong>"<br>
                         "What are your <strong>interests</strong>?"
-                    </td>
+                    </span></td>
                     <td class="chinese">愛好 / 消遣 / 興趣<br><em>Leisure activities</em></td>
                 </tr>
                 <tr>
-                    <td class="word">attend / participate / join / take part</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">attend / participate / join / take part</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "I'll <strong>attend</strong> the concert"<br>
                         "<strong>Participate</strong> in the competition"<br>
                         "Can I <strong>join</strong> the club?"<br>
                         "<strong>Take part</strong> in the activity"
-                    </td>
+                    </span></td>
                     <td class="chinese">參加 / 參與 / 加入 / 參與<br><em>Participation (synonyms!)</em></td>
                 </tr>
                 <tr>
-                    <td class="word">entertaining / enjoyable / fun / boring</td>
-                    <td class="forms">
+                    <td class="word"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">entertaining / enjoyable / fun / boring</span></td>
+                    <td class="forms"><span class="speak-item" onclick="SpeechManager.speak(this.innerText)">
                         "Very <strong>entertaining</strong> show"<br>
                         "An <strong>enjoyable</strong> experience"<br>
                         "It was <strong>fun</strong>!"<br>
                         "The lecture was <strong>boring</strong>"
-                    </td>
+                    </span></td>
                     <td class="chinese">有趣的 / 愉快的 / 好玩 / 沉悶<br><em>Activity descriptions</em></td>
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- Interactive Dictation Game Section -->
+    <div class="content" style="margin-top: 60px;">
+        <hr>
+        <div class="dictation-container">
+            <div class="streak-counter">Current Streak: <span id="streakCount">0</span></div>
+            <h3>🎯 Listening Dictation Master</h3>
+            <p style="color: var(--muted); margin-bottom: 30px;">Can you spell what you hear? We will pick a random word from the 300+ phrases above.</p>
+            
+            <div id="dictationGame">
+                <button class="dictation-btn" onclick="playNewWord()">🔊 Play Random Word</button>
+                <button class="dictation-btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--primary);" onclick="replayWord()">🔁 Replay</button>
+                
+                <input type="text" id="dictationInput" class="dictation-input" placeholder="Type what you hear..." onkeyup="if(event.key === 'Enter') checkDictation()" autocomplete="off">
+                
+                <button class="btn" style="padding: 12px 40px;" onclick="checkDictation()">Check Answer</button>
+                
+                <div id="dictationFeedback" class="feedback-area">Ready when you are!</div>
+            </div>
+        </div>
     </div>
 

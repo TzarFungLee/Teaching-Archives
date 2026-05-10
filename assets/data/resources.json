@@ -1,0 +1,19 @@
+---
+layout: null
+---
+[
+  {% assign sorted_pages = site.pages | sort: "title" %}
+  {% assign first = true %}
+  {% for p in sorted_pages %}
+    {% if p.title and p.category and p.url != '/' %}
+      {% unless first %}, {% endunless %}
+      {
+        "title": {{ p.title | jsonify }},
+        "category": {{ p.category | jsonify }},
+        "icon": {{ p.icon | jsonify }},
+        "file": "{{ p.url | relative_url | replace: ' ', '%20' }}"
+      }
+      {% assign first = false %}
+    {% endif %}
+  {% endfor %}
+]

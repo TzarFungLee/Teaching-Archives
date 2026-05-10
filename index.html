@@ -2,108 +2,86 @@
 layout: default
 title: "Home"
 icon: "🏠"
+hide_toc: true
 ---
 <style>
     .hero-section {
-        padding: 60px 20px;
+        padding: 120px 20px; /* Pillar: Hero Height */
         text-align: center;
+        background: radial-gradient(circle at center, rgba(110, 193, 228, 0.15), transparent 70%);
+        margin-bottom: 60px;
     }
 
     .hero-title {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 40px;
-        background: linear-gradient(135deg, #fff, #b7e6ff);
+        font-size: 5rem;
+        font-weight: 900;
+        margin-bottom: 25px;
+        background: linear-gradient(to bottom, #fff, #9ab5d1);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        letter-spacing: -0.04em;
+        letter-spacing: -3px;
+        line-height: 1;
     }
 
     .hero-subtitle {
-        color: rgba(231, 238, 247, 0.7);
-        font-size: 1.25rem;
-        margin-bottom: 40px;
-    }
-
-    .search-wrapper {
-        max-width: 800px;
-        margin: 0 auto 60px auto;
-        position: relative;
-    }
-
-    input {
-        width: 100%;
-        padding: 24px 30px 24px 70px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 30px;
-        font-size: 1.25rem;
-        background: rgba(255, 255, 255, 0.05);
-        color: #fff;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
-    }
-
-    input:focus {
-        border-color: var(--primary);
-        background: rgba(255, 255, 255, 0.08);
-        outline: none;
-        box-shadow: 0 15px 50px rgba(110, 193, 228, 0.2);
-    }
-
-    .search-icon {
-        position: absolute;
-        left: 25px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1.8rem;
-        opacity: 0.6;
+        color: var(--muted);
+        font-size: 1.5rem;
+        max-width: 900px;
+        margin: 0 auto 80px auto;
+        line-height: 1.6;
     }
 
     .category-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 20px;
-        max-width: 1100px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Centers the odd box */
+        gap: 30px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
     .category-box {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        flex: 0 1 220px; /* Consistent width */
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 24px;
-        padding: 40px 20px;
+        padding: 35px 20px;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         text-decoration: none;
         color: inherit;
+        backdrop-filter: blur(16px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     .category-box:hover {
         transform: translateY(-8px);
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.1);
         border-color: var(--primary);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
 
     .category-box i {
-        font-size: 3rem;
+        font-size: 3.2rem;
         margin-bottom: 20px;
         display: block;
     }
 
     .category-box span {
         font-weight: 700;
-        font-size: 1.1rem;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.3rem;
+        color: #fff;
     }
 
-    /* Results section - hidden by default */
     .results-container {
         margin-top: 60px;
-        display: none;
+        display: none; /* Crucial: Hidden by default */
+        animation: fadeIn 0.4s ease;
+        padding-top: 40px;
     }
 
     .results-container.active {
@@ -111,38 +89,76 @@ icon: "🏠"
     }
 
     .resource-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Pillar: Auto-Balance */
+        gap: 20px;
+        margin-top: 60px;
     }
 
     .resource-card {
-        background: rgba(255, 255, 255, 0.06);
-        padding: 24px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        flex: 1 1 320px;
+        max-width: 420px;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 30px;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
         text-decoration: none;
         color: #fff;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center content horizontally */
+        justify-content: center;
+        text-align: center; /* Center text */
+        gap: 12px;
     }
 
     .resource-card:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--primary);
-        transform: scale(1.02);
+        background: rgba(255, 255, 255, 0.12);
+        border-color: var(--accent);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
 
     .resource-card h3 {
         margin: 0;
-        font-size: 1.25rem;
+        font-size: 1.2rem;
+        line-height: 1.4;
     }
 
-    .resource-card .cat-tag {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        opacity: 0.6;
-        margin-bottom: 8px;
-        display: block;
+    .search-container {
+        max-width: 600px;
+        margin: 0 auto 50px auto;
+        position: relative;
+    }
+
+    .search-input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        padding: 18px 30px 18px 60px;
+        font-size: 1.1rem;
+        color: #fff;
+        outline: none;
+        transition: all 0.3s;
+        backdrop-filter: blur(10px);
+    }
+
+    .search-input:focus {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--primary);
+        box-shadow: 0 0 30px rgba(110, 193, 228, 0.2);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        opacity: 0.5;
     }
 
     .no-results {
@@ -150,15 +166,20 @@ icon: "🏠"
         padding: 40px;
         opacity: 0.6;
     }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 </style>
 
 <div class="hero-section">
-    <h1 class="hero-title">LTF Archives</h1>
+    <h1 class="hero-title">LTF Teaching Archives</h1>
+    <p class="hero-subtitle">Interactive English Resources & Scaffolding for Every Learner</p>
 
-    <div class="search-wrapper">
+    <div class="search-container">
         <span class="search-icon">🔍</span>
-        <input type="text" id="search" placeholder="Type to search lessons, grammar, text types..."
-            onkeyup="handleSearch()">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search resources (e.g. 'Tense', 'Vocabulary')..." oninput="handleSearch(this.value)">
     </div>
 
     <div class="category-grid" id="categoryGrid">
@@ -174,6 +195,10 @@ icon: "🏠"
             <i>✍️</i>
             <span>Writing</span>
         </a>
+        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Speaking')">
+            <i>🗣️</i>
+            <span>Speaking</span>
+        </a>
         <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Listening')">
             <i>🎧</i>
             <span>Listening</span>
@@ -185,163 +210,122 @@ icon: "🏠"
     </div>
 
     <div id="resultsWrapper" class="results-container">
-        <div
-            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
-            <h2 id="resultsTitle" style="margin: 0; font-size: 1.5rem; color: var(--primary);">Search Results</h2>
-            <button onclick="clearSearch()"
-                style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-weight: bold;">✕
-                Close</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;">
+            <h2 id="resultsTitle" style="margin: 0; font-size: 1.5rem; color: var(--primary);">Resources</h2>
+            <button onclick="closeResults()" style="background: none; border: none; color: #ff6b6b; cursor: pointer; font-weight: bold; font-size: 1.1rem;">✕ Close</button>
         </div>
         <div id="list" class="resource-list"></div>
     </div>
 </div>
 
 <script>
-    const resources = [
-        {% assign sorted_pages = site.pages | sort: "title" %}
-    {% assign first = true %}
-    {% for p in sorted_pages %}
-    {% if p.title and p.category and p.url != '/' %}
-    {% unless first %}, {% endunless %}
-    {
-        title: {{ p.title | jsonify }},
-        category: {{ p.category | jsonify }},
-        icon: {{ p.icon | jsonify }},
-        file: "{{ p.url | relative_url | replace: ' ', '%20' }}"
-    } {% assign first = false %}
-    {% endif %}
-    {% endfor %}
-        ];
+    let resources = [];
 
-    function handleSearch() {
-        const query = document.getElementById('search').value.toLowerCase();
-        if (query.length > 0) {
-            renderList(query, 'Search Results');
-        } else {
-            closeResults();
+    async function init() {
+        try {
+            const resp = await fetch('{{ "/assets/data/resources.json" | relative_url }}');
+            resources = await resp.json();
+            resources.sort((a, b) => a.title.localeCompare(b.title));
+            console.log('📦 Resources loaded');
+        } catch (e) {
+            console.error('Failed to load resources:', e);
         }
     }
 
-    function filterCategory(cat) {
-        document.getElementById('search').value = '';
-        renderList('', cat, cat);
-    }
+    init();
 
-    function clearSearch() {
-        document.getElementById('search').value = '';
-        closeResults();
+    function filterCategory(cat) {
+        if (resources.length === 0) {
+            setTimeout(() => filterCategory(cat), 100);
+            return;
+        }
+        renderList(cat);
     }
 
     function closeResults() {
         document.getElementById('resultsWrapper').classList.remove('active');
         document.getElementById('categoryGrid').style.opacity = '1';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function renderList(query, title, categoryFilter = null) {
+    function handleSearch(query) {
+        if (!query.trim()) {
+            closeResults();
+            return;
+        }
+        renderList('Search Results', query.trim().toLowerCase());
+    }
+
+    function renderList(categoryFilter, searchQuery = null) {
         const container = document.getElementById('list');
         const wrapper = document.getElementById('resultsWrapper');
         const grid = document.getElementById('categoryGrid');
         const titleEl = document.getElementById('resultsTitle');
 
+        if (!container || !wrapper || !grid || !titleEl) return;
+
         container.innerHTML = '';
-        titleEl.innerText = title;
+        titleEl.innerText = searchQuery ? `Results for "${searchQuery}"` : categoryFilter;
         wrapper.classList.add('active');
         grid.style.opacity = '0.3';
 
-        const filtered = resources.filter(item => {
-            const matchSearch = query ? (item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)) : true;
-            const matchCat = categoryFilter ? (item.category === categoryFilter) : true;
-            return matchSearch && matchCat;
+        const filtered = resources.filter(res => {
+            if (searchQuery) {
+                return (res.title && res.title.toLowerCase().includes(searchQuery)) || 
+                       (res.category && res.category.toLowerCase().includes(searchQuery)) ||
+                       (res.tags && res.tags.some(t => t.toLowerCase().includes(searchQuery)));
+            }
+            return res.category === categoryFilter;
         });
 
-        if (!filtered.length) {
-            container.innerHTML = `<div class="no-results">No lessons found matching "${query || categoryFilter}".</div>`;
-            return;
-        }
-
-        const getBaseTitle = (t) => t.replace(/^Quiz[:\s-]+/i, '').replace(/[:\-\s]+Quiz$/i, '').trim();
-
-        // Only pair Grammar/Quizzes if searching everything
-        if (!categoryFilter) {
-            container.style.display = 'block'; // Reset to block for paired rows
-            const groups = new Map();
-            filtered.forEach(item => {
-                const base = getBaseTitle(item.title);
-                if (!groups.has(base)) groups.set(base, { grammar: null, quiz: null, others: [] });
-                
-                const group = groups.get(base);
-                if (item.category === 'Grammar') group.grammar = item;
-                else if (item.category === 'Quizzes') group.quiz = item;
-                else group.others.push(item);
-            });
-
-            groups.forEach((group, baseTitle) => {
-                if (group.grammar || group.quiz) {
-                    const row = document.createElement('div');
-                    row.style.display = 'grid';
-                    row.style.gridTemplateColumns = '1fr 1fr';
-                    row.style.gap = '20px';
-                    row.style.marginBottom = '20px';
-                    row.style.width = '100%';
-
-                    if (group.grammar) {
-                        row.appendChild(createCard(group.grammar, baseTitle));
-                    } else {
-                        row.appendChild(document.createElement('div'));
-                    }
-
-                    if (group.quiz) {
-                        row.appendChild(createCard(group.quiz, baseTitle));
-                    } else {
-                        row.appendChild(document.createElement('div'));
-                    }
-                    container.appendChild(row);
-                }
-
-                group.others.forEach(item => {
-                    container.appendChild(createCard(item));
-                });
-            });
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="no-results">No resources found matching your criteria.</div>';
         } else {
-            // Standard Grid for single categories
-            container.style.display = 'grid';
-            container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
-            container.style.gap = '24px';
-            
-            filtered.forEach(item => {
-                container.appendChild(createCard(item));
+            filtered.forEach(res => {
+                const card = document.createElement('a');
+                card.className = 'resource-card';
+                // Property name in resources.json is "file"
+                const link = res.file || res.url || "#";
+                card.href = link.startsWith('http') ? link : '{{ "" | relative_url }}' + link;
+                
+                card.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-size: 1.5rem;">${res.icon || '📄'}</span>
+                        <h3 style="margin:0;">${res.title}</h3>
+                    </div>
+                    <span style="font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px;">${res.category}</span>
+                `;
+                container.appendChild(card);
             });
         }
 
+        // Always scroll to results for better UX
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-        function createCard(item, overrideTitle = null) {
-            const link = document.createElement('a');
-            link.className = 'resource-card';
-            link.href = item.file;
-            link.style.height = '100%';
-            
-            const displayTitle = overrideTitle || item.title.replace(/^Quiz[:\s-]+/i, '').trim();
+    function createCard(item, overrideTitle = null) {
+        const link = document.createElement('a');
+        link.className = 'resource-card';
+        link.href = item.file;
+        
+        const displayTitle = overrideTitle || item.title.replace(/^Quiz[:\s-]+/i, '').trim();
 
-            let tagColor = 'rgba(255,255,255,0.2)';
-            if (item.category === 'Grammar') tagColor = 'rgba(110, 193, 228, 0.3)';
-            else if (item.category === 'Quizzes') tagColor = 'rgba(255, 107, 107, 0.3)';
-            else if (item.category === 'Reading') tagColor = 'rgba(74, 222, 128, 0.3)';
-            else if (item.category === 'Listening') tagColor = 'rgba(167, 139, 250, 0.3)';
-            else if (item.category === 'Writing') tagColor = 'rgba(251, 159, 67, 0.3)';
+        let tagColor = 'rgba(255,255,255,0.2)';
+        if (item.category === 'Grammar') tagColor = 'rgba(110, 193, 228, 0.3)';
+        else if (item.category === 'Quizzes') tagColor = 'rgba(255, 107, 107, 0.3)';
+        else if (item.category === 'Reading') tagColor = 'rgba(74, 222, 128, 0.3)';
+        else if (item.category === 'Listening') tagColor = 'rgba(167, 139, 250, 0.3)';
+        else if (item.category === 'Writing') tagColor = 'rgba(251, 159, 67, 0.3)';
 
-            link.innerHTML = `
-                <span class="cat-tag" style="background: ${tagColor}; padding: 4px 10px; border-radius: 6px; color: #fff;">${item.icon} ${item.category}</span>
-                <h3 style="text-align: center; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 2px; margin: 15px auto 0 auto; width: fit-content;">${displayTitle}</h3>
-            `;
-            link.style.display = 'flex';
-            link.style.flexDirection = 'column';
-            link.style.alignItems = 'center';
-            link.style.justifyContent = 'center';
-            return link;
-        }
-
-    // Sort alphabetically by title initially
-    resources.sort((a, b) => a.title.localeCompare(b.title));
+        link.innerHTML = `
+            <span class="cat-tag" style="background: ${tagColor}; padding: 4px 10px; border-radius: 6px; color: #fff; margin-bottom: 12px; display: inline-block;">${item.icon} ${item.category}</span>
+            <h3 style="text-align: center; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 2px; margin: 0; width: fit-content;">${displayTitle}</h3>
+        `;
+        link.style.display = 'flex';
+        link.style.flexDirection = 'column';
+        link.style.alignItems = 'center';
+        link.style.justifyContent = 'center';
+        link.style.textAlign = 'center';
+        return link;
+    }
 </script>

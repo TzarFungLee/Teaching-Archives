@@ -46,8 +46,9 @@
         }
 
         .container {
-            max-width: 1080px;
+            max-width: 1300px; /* Pillar: Immersive Full-Width */
             margin: 0 auto;
+            position: relative;
         }
 
         .nav-bar {
@@ -122,12 +123,13 @@
 
         .content {
             background: rgba(10, 20, 37, 0.96);
-            padding: 48px;
-            border-radius: 28px;
+            padding: 60px; /* Increased padding for "More Content" feel */
+            border-radius: 32px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: var(--shadow);
             position: relative;
             backdrop-filter: blur(14px);
+            margin-bottom: 60px;
         }
 
         ul {
@@ -312,13 +314,16 @@
         }
 
         .tense-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Pillar: Auto-Balance */
             gap: 16px;
             margin-bottom: 30px;
         }
 
         .tense-card {
+            flex: 1 1 240px; /* Pillar: Grow to fill, base at 240px */
+            max-width: 350px; /* Prevent over-stretching */
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
@@ -329,6 +334,10 @@
             font-weight: 700;
             font-size: 1.1rem;
             color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .tense-card:hover {
@@ -663,10 +672,19 @@
             border-color: var(--primary);
             outline: none;
         }
+
+        /* Full-Width immersive overrides */
+        .visual-anchor {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 
 <body>
+
+
 
     <div class="container">
         <header>
