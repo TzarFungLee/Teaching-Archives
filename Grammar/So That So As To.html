@@ -56,10 +56,13 @@ icon: "🧩"
         </td>
     </tr>
     <tr>
-        <td>hungry / ate</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">hungry</span> / 
+            <span onclick="togglePart(event, this, 2)">ate</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">I was hungry, so I ate a sandwich.</span>
+                <span class="placeholder">I was hungry, __________ (so) I ate a sandwich.</span>
                 <span class="answer">
                     <span class="grammar-bubble bubble-cyan">I was hungry</span>, <span class="v-bubble v-green">so</span> <span class="grammar-bubble bubble-yellow">I ate a sandwich</span>.
                 </span>
@@ -72,17 +75,23 @@ icon: "🧩"
         <td colspan="2"><strong>Using "SO THAT" (Purpose)</strong></td>
     </tr>
     <tr>
-        <td>study / pass</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">study</span> / 
+            <span onclick="togglePart(event, this, 2)">pass</span>
+        </td>
         <td>
             <span class="grammar-bubble bubble-cyan">I study hard</span> <span class="v-bubble v-green">so that</span> <span class="grammar-bubble bubble-yellow">I can pass the exam</span>.
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>save money / buy car</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">saves money</span> / 
+            <span onclick="togglePart(event, this, 2)">buy car</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">She saves money so that she can buy a car.</span>
+                <span class="placeholder">She saves money __________ (so that) she can buy a car.</span>
                 <span class="answer">
                     <span class="grammar-bubble bubble-cyan">She saves money</span> <span class="v-bubble v-green">so that</span> <span class="grammar-bubble bubble-yellow">she can buy a car</span>.
                 </span>

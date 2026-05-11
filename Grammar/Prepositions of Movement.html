@@ -50,10 +50,13 @@ icon: "🧩"
         <th>Movement</th>
     </tr>
     <tr>
-        <td>The cat jumped _____ the wall.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">jumped</span> / 
+            <span onclick="togglePart(event, this, 2)">wall</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">over</span>
+                <span class="placeholder">The cat jumped __________ (over) the wall.</span>
                 <span class="answer">
                     <span class="grammar-bubble bubble-cyan">The cat</span> <span class="v-bubble v-green">jumped</span> <span class="v-bubble v-red">over</span> <span class="grammar-bubble bubble-yellow">the wall</span>.
                 </span>
@@ -62,10 +65,13 @@ icon: "🧩"
         </td>
     </tr>
     <tr>
-        <td>The train went _____ the tunnel.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">went</span> / 
+            <span onclick="togglePart(event, this, 2)">tunnel</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">through</span>
+                <span class="placeholder">The train went __________ (through) the tunnel.</span>
                 <span class="answer">
                     <span class="grammar-bubble bubble-cyan">The train</span> <span class="v-bubble v-green">went</span> <span class="v-bubble v-red">through</span> <span class="grammar-bubble bubble-yellow">the tunnel</span>.
                 </span>
@@ -74,10 +80,13 @@ icon: "🧩"
         </td>
     </tr>
     <tr>
-        <td>She walked _____ the room.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">walked</span> / 
+            <span onclick="togglePart(event, this, 2)">room</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">into</span>
+                <span class="placeholder">She walked __________ (into) the room.</span>
                 <span class="answer">
                     <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-green">walked</span> <span class="v-bubble v-red">into</span> <span class="grammar-bubble bubble-yellow">the room</span>.
                 </span>

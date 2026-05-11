@@ -46,39 +46,57 @@ icon: "🧩"
         <th>Superlative</th>
     </tr>
     <tr>
-        <td>tall</td>
-        <td>
-            <span class="v-bubble v-green">taller</span>
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">tall</span>
         </td>
-        <td>
-            <span class="v-bubble v-yellow">tallest</span>
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
-        </td>
-    </tr>
-    <tr>
-        <td>beautiful</td>
-        <td>
-            <span class="v-bubble v-green">more beautiful</span>
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
-        </td>
-        <td>
-            <span class="v-bubble v-yellow">most beautiful</span>
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
-        </td>
-    </tr>
-    <tr>
-        <td>good</td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">better</span>
+                <span class="placeholder">__________ (taller)</span>
+                <span class="answer"><span class="v-bubble v-green">taller</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (tallest)</span>
+                <span class="answer"><span class="v-bubble v-yellow">tallest</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">beautiful</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (more beautiful)</span>
+                <span class="answer"><span class="v-bubble v-green">more beautiful</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (most beautiful)</span>
+                <span class="answer"><span class="v-bubble v-yellow">most beautiful</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">good</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (better)</span>
                 <span class="answer"><span class="v-bubble v-green">better</span></span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">best</span>
+                <span class="placeholder">__________ (best)</span>
                 <span class="answer"><span class="v-bubble v-yellow">best</span></span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>

@@ -21,8 +21,8 @@ icon: "🕒"
         <div style="background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 18px; border-top: 4px solid #f87171; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
             <div style="font-size: 1.8rem; margin-bottom: 10px;">❌</div>
             <strong style="color: #f87171; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Negative</strong>
-            <div style="font-size: 1.25rem; font-weight: 800; margin: 8px 0;"><span style="text-decoration: underline;">don't / doesn't</span> + Verb</div>
-            <div style="font-size: 0.9rem; color: var(--muted);">"He <span style="border-bottom: 1px solid;">doesn't eat</span>..."</div>
+            <div style="font-size: 1.25rem; font-weight: 800; margin: 8px 0;"><span style="text-decoration: underline;">do not / does not</span> + Verb</div>
+            <div style="font-size: 0.9rem; color: var(--muted);">"He <span style="border-bottom: 1px solid;">does not eat</span>..."</div>
         </div>
         <div style="background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 18px; border-top: 4px solid #fbbf24; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
             <div style="font-size: 1.8rem; margin-bottom: 10px;">❓</div>
@@ -79,36 +79,63 @@ icon: "🕒"
         </td>
     </tr>
     <tr>
-        <td>Fill in the blank</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">go</span> / 
+            <span onclick="togglePart(event, this, 2)">school</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">She __________ (go) to school by bus.</span>
+                <span class="placeholder">She __________ (go)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-red">goes</span> <span class="grammar-bubble bubble-yellow">to school</span> <span class="grammar-bubble bubble-green">by bus</span>.
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-red">goes</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">to school by bus.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">to school</span> <span class="grammar-bubble bubble-green">by bus</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>Fill in the blank</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">play</span> / 
+            <span onclick="togglePart(event, this, 2)">soccer</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">They __________ (play) soccer on weekends.</span>
+                <span class="placeholder">They __________ (play)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-red">play</span> <span class="grammar-bubble bubble-yellow">soccer</span> <span class="grammar-bubble bubble-green">on weekends</span>.
+                    <span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-red">play</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">soccer on weekends.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">soccer</span> <span class="grammar-bubble bubble-green">on weekends</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>Complete sentence</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">read</span> / 
+            <span onclick="togglePart(event, this, 2)">evening</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">My brother __________ (read) every evening.</span>
+                <span class="placeholder">My brother __________ (read)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">My brother</span> <span class="v-bubble v-red">reads</span> <span class="grammar-bubble bubble-yellow">books</span> <span class="grammar-bubble bubble-green">every evening</span>.
+                    <span class="grammar-bubble bubble-cyan">My brother</span> <span class="v-bubble v-red">reads</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">books every evening.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">books</span> <span class="grammar-bubble bubble-green">every evening</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -119,31 +146,40 @@ icon: "🕒"
         <td colspan="2"><strong>Negative Sentences</strong></td>
     </tr>
     <tr>
-        <td>Example</td>
-        <td>
-            <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">do not</span> <span class="v-bubble v-red">like</span> <span class="grammar-bubble bubble-yellow">spicy food</span>.
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">not / watch</span>
         </td>
-    </tr>
-    <tr>
-        <td>Fill in the blank</td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">He __________ (not/watch) TV at night.</span>
+                <span class="placeholder">He __________ (not / watch)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">doesn't</span> <span class="v-bubble v-red">watch</span> <span class="grammar-bubble bubble-yellow">TV</span> <span class="grammar-bubble bubble-green">at night</span>.
+                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">does not</span> <span class="v-bubble v-red">watch</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">TV at night.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">TV</span> <span class="grammar-bubble bubble-green">at night</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>Fill in the blank</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">not / eat</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">We __________ (not/eat) meat.</span>
+                <span class="placeholder">We __________ (not / eat)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">We</span> <span class="v-bubble v-orange">don't</span> <span class="v-bubble v-red">eat</span> <span class="grammar-bubble bubble-yellow">meat</span>.
+                    <span class="grammar-bubble bubble-cyan">We</span> <span class="v-bubble v-orange">do not</span> <span class="v-bubble v-red">eat</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">meat.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">meat</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -154,19 +190,20 @@ icon: "🕒"
         <td colspan="2"><strong>Question Forms</strong></td>
     </tr>
     <tr>
-        <td>Example</td>
-        <td>
-            <span class="v-bubble v-orange">Do</span> <span class="grammar-bubble bubble-cyan">you</span> <span class="v-bubble v-red">speak</span> <span class="grammar-bubble bubble-yellow">French</span>?
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">she / work</span>
         </td>
-    </tr>
-    <tr>
-        <td>Fill in the blank</td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">__________ she (work) here?</span>
+                <span class="placeholder">__________ she (work)</span>
                 <span class="answer">
-                    <span class="v-bubble v-orange">Does</span> <span class="grammar-bubble bubble-cyan">she</span> <span class="v-bubble v-red">work</span> <span class="grammar-bubble bubble-yellow">here</span>?
+                    <span class="v-bubble v-orange">Does</span> <span class="grammar-bubble bubble-cyan">she</span> <span class="v-bubble v-red">work</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">here?</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">here</span>?
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>

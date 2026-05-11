@@ -26,11 +26,11 @@ icon: "🧩"
             <div style="font-size: 0.9rem; color: var(--muted); margin-top: 10px;">"You <span style="text-decoration: underline;">must not</span> smoke."</div>
         </div>
 
-        <!-- Don't have to -->
+        <!-- Do not have to -->
         <div style="background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 18px; border-top: 4px solid #fbbf24; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-            <div style="font-size: 1.8rem; margin-bottom: 10px;">⚪ Don't have to</div>
+            <div style="font-size: 1.8rem; margin-bottom: 10px;">⚪ Do not have to</div>
             <strong style="color: #fbbf24; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Optional</strong>
-            <div style="font-size: 0.9rem; color: var(--muted); margin-top: 10px;">"You <span style="text-decoration: underline;">don't have to</span> come."</div>
+            <div style="font-size: 0.9rem; color: var(--muted); margin-top: 10px;">"You <span style="text-decoration: underline;">do not have to</span> come."</div>
         </div>
     </div>
 </div>
@@ -50,48 +50,84 @@ icon: "🧩"
         <th>Modal Sentence</th>
     </tr>
     <tr>
-        <td>You _____ wear a uniform at school. (Rule)</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">rule</span> / 
+            <span onclick="togglePart(event, this, 2)">wear a uniform</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">You __________ (rule) wear a uniform.</span>
+                <span class="placeholder">You __________ (have to)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">You</span> <span class="v-bubble v-red">have to</span> <span class="v-bubble v-orange">wear</span> <span class="grammar-bubble bubble-yellow">a uniform</span> <span class="grammar-bubble bubble-green">at school</span>.
+                    <span class="grammar-bubble bubble-cyan">You</span> <span class="v-bubble v-red">have to</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">wear a uniform at school.</span>
+                <span class="answer">
+                    <span class="v-bubble v-orange">wear</span> <span class="grammar-bubble bubble-yellow">a uniform</span> <span class="grammar-bubble bubble-green">at school</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>I _____ finish this homework. (Personal)</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">personal</span> / 
+            <span onclick="togglePart(event, this, 2)">finish homework</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">I __________ (personal) finish this.</span>
+                <span class="placeholder">I __________ (must)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-red">must</span> <span class="v-bubble v-orange">finish</span> <span class="grammar-bubble bubble-yellow">this homework</span>.
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-red">must</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">finish this.</span>
+                <span class="answer">
+                    <span class="v-bubble v-orange">finish</span> <span class="grammar-bubble bubble-yellow">this homework</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>You _____ not smoke here. (Forbidden)</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">forbidden</span> / 
+            <span onclick="togglePart(event, this, 2)">smoke here</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">You __________ (forbidden) smoke here.</span>
+                <span class="placeholder">You __________ (must not)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">You</span> <span class="v-bubble v-red">must not</span> <span class="v-bubble v-orange">smoke</span> <span class="grammar-bubble bubble-green">here</span>.
+                    <span class="grammar-bubble bubble-cyan">You</span> <span class="v-bubble v-red">must not</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">smoke here.</span>
+                <span class="answer">
+                    <span class="v-bubble v-orange">smoke</span> <span class="grammar-bubble bubble-green">here</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>They _____ not bring a gift. (Optional)</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">optional</span> / 
+            <span onclick="togglePart(event, this, 2)">bring a gift</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">They __________ (optional) bring a gift.</span>
+                <span class="placeholder">They __________ (do not have to)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-orange">don't have to</span> <span class="v-bubble v-red">bring</span> <span class="grammar-bubble bubble-yellow">a gift</span>.
+                    <span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-orange">do not have to</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">bring a gift.</span>
+                <span class="answer">
+                    <span class="v-bubble v-red">bring</span> <span class="grammar-bubble bubble-yellow">a gift</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -144,17 +180,17 @@ icon: "🧩"
     <tr>
         <td><span class="v-bubble v-red">must not</span></td>
         <td><strong>PROHIBITION</strong> (Forbidden)</td>
-        <td>You <span class="v-bubble v-red">mustn't</span> smoke here.</td>
+        <td>You <span class="v-bubble v-red">must not</span> smoke here.</td>
     </tr>
     <tr>
-        <td><span class="v-bubble v-orange">don't have to</span></td>
+        <td><span class="v-bubble v-orange">do not have to</span></td>
         <td><strong>OPTIONAL</strong> (Not necessary)</td>
-        <td>You <span class="v-bubble v-orange">don't have to</span> come.</td>
+        <td>You <span class="v-bubble v-orange">do not have to</span> come.</td>
     </tr>
 </table>
 
 <h4>Critical Rule</h4>
 <ul>
     <li><strong>Must not:</strong> You are <em>forbidden</em> to do it.</li>
-    <li><strong>Don't have to:</strong> You are <em>not required</em> to do it (it's your choice).</li>
+    <li><strong>Do not have to:</strong> You are <em>not required</em> to do it (it's your choice).</li>
 </ul>

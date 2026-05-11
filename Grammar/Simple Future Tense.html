@@ -81,24 +81,42 @@ icon: "🕒"
         </td>
     </tr>
     <tr>
-        <td>Fill in the blank</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">help</span> / 
+            <span onclick="togglePart(event, this, 2)">tomorrow</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">She __________ (will/help) us tomorrow.</span>
+                <span class="placeholder">She __________ (will / help)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">will</span> <span class="v-bubble v-red">help</span> <span class="grammar-bubble bubble-yellow">us</span> <span class="grammar-bubble bubble-green">tomorrow</span>.
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">will</span> <span class="v-bubble v-red">help</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">us tomorrow.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">us</span> <span class="grammar-bubble bubble-green">tomorrow</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>Fill in the blank</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">finish</span> / 
+            <span onclick="togglePart(event, this, 2)">next week</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">They __________ (will/finish) the project next week.</span>
+                <span class="placeholder">They __________ (will / finish)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-orange">will</span> <span class="v-bubble v-red">finish</span> <span class="grammar-bubble bubble-yellow">the project</span> <span class="grammar-bubble bubble-green">next week</span>.
+                    <span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-orange">will</span> <span class="v-bubble v-red">finish</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">the project next week.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">the project</span> <span class="grammar-bubble bubble-green">next week</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -109,19 +127,21 @@ icon: "🕒"
         <td colspan="2"><strong>Using 'be going to'</strong></td>
     </tr>
     <tr>
-        <td>Example</td>
-        <td>
-            <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">am going to visit</span> <span class="grammar-bubble bubble-yellow">my grandparents</span> <span class="grammar-bubble bubble-green">this weekend</span>.
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">buy</span> / 
+            <span onclick="togglePart(event, this, 2)">next month</span>
         </td>
-    </tr>
-    <tr>
-        <td>Fill in the blank</td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">He __________ (is going to buy) a new car next month.</span>
+                <span class="placeholder">He __________ (be going to / buy)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">is going to buy</span> <span class="grammar-bubble bubble-yellow">a new car</span> <span class="grammar-bubble bubble-green">next month</span>.
+                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">is going to buy</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">a new car next month.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">a new car</span> <span class="grammar-bubble bubble-green">next month</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -129,27 +149,42 @@ icon: "🕒"
     </tr>
 
     <tr>
-        <td colspan="2"><strong>Negative & Questions</strong></td>
-    </tr>
-    <tr>
-        <td>Negative</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">will not</span> / 
+            <span onclick="togglePart(event, this, 2)">go</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">I __________ (will not/go) to the party.</span>
+                <span class="placeholder">I __________</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">won't</span> <span class="v-bubble v-red">go</span> <span class="grammar-bubble bubble-yellow">to the party</span>.
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">will not</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">to the party.</span>
+                <span class="answer">
+                    <span class="v-bubble v-red">go</span> <span class="grammar-bubble bubble-yellow">to the party</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>Question</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">will</span> / 
+            <span onclick="togglePart(event, this, 2)">join us</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">__________ you (join) us tomorrow?</span>
+                <span class="placeholder">__________ you</span>
                 <span class="answer">
-                    <span class="v-bubble v-orange">Will</span> <span class="grammar-bubble bubble-cyan">you</span> <span class="v-bubble v-red">join</span> <span class="grammar-bubble bubble-yellow">us</span> <span class="grammar-bubble bubble-green">tomorrow</span>?
+                    <span class="v-bubble v-orange">Will</span> <span class="grammar-bubble bubble-cyan">you</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">us tomorrow?</span>
+                <span class="answer">
+                    <span class="v-bubble v-red">join</span> <span class="grammar-bubble bubble-yellow">us</span> <span class="grammar-bubble bubble-green">tomorrow</span>?
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -184,12 +219,12 @@ icon: "🕒"
     <tr>
         <td><strong>will</strong></td>
         <td>Spontaneous decisions, promises, predictions</td>
-        <td>I'll help you. / It will rain tomorrow.</td>
+        <td>I will help you. / It will rain tomorrow.</td>
     </tr>
     <tr>
         <td><strong>be going to</strong></td>
         <td>Planned actions, intentions, evidence-based predictions</td>
-        <td>I'm going to study tonight. / Look at those clouds—it's going to rain.</td>
+        <td>I am going to study tonight. / Look at those clouds—it is going to rain.</td>
     </tr>
 </table>
 

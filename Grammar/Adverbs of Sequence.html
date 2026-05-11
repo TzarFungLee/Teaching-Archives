@@ -50,13 +50,17 @@ icon: "🧩"
 <table>
     <tr>
         <th>Step</th>
+        <th>Situation</th>
         <th>Instruction</th>
     </tr>
     <tr>
         <td>1</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">bread</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">__________ (1st), take two slices of bread.</span>
+                <span class="placeholder">__________ (First), take two slices of bread.</span>
                 <span class="answer">
                     <span class="v-bubble v-green">First,</span> <span class="grammar-bubble bubble-cyan">take</span> <span class="grammar-bubble bubble-yellow">two slices of bread</span>.
                 </span>
@@ -66,6 +70,9 @@ icon: "🧩"
     </tr>
     <tr>
         <td>2</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">butter</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
                 <span class="placeholder">__________ (Next), spread butter on the bread.</span>
@@ -78,9 +85,12 @@ icon: "🧩"
     </tr>
     <tr>
         <td>3</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">top</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">__________ (Final), put the bread on top.</span>
+                <span class="placeholder">__________ (Finally), put the bread on top.</span>
                 <span class="answer">
                     <span class="v-bubble v-red">Finally,</span> <span class="grammar-bubble bubble-cyan">put</span> the second slice of bread on top.
                 </span>

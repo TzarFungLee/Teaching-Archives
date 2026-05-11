@@ -60,12 +60,21 @@ icon: "🧩"
         </td>
     </tr>
     <tr>
-        <td>The book / I borrowed / is on the table</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">book</span> / 
+            <span onclick="togglePart(event, this, 2)">table</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">The book __________ I borrowed is on the table.</span>
+                <span class="placeholder">The book __________ (that / which) I borrowed</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">The book</span> <span class="v-bubble v-green">that</span> <span class="grammar-bubble bubble-yellow">I borrowed</span> is on the table.
+                    <span class="grammar-bubble bubble-cyan">The book</span> <span class="v-bubble v-green">that</span> <span class="grammar-bubble bubble-yellow">I borrowed</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">is on the table.</span>
+                <span class="answer">
+                    is on the table.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -76,9 +85,23 @@ icon: "🧩"
         <td colspan="2"><strong>Non-Defining Relative Clauses (Extra Info)</strong></td>
     </tr>
     <tr>
-        <td>My brother / lives in Tokyo / is a doctor</td>
-        <td>
-            <span class="grammar-bubble bubble-cyan">My brother</span><span class="v-bubble v-red">,</span> <span class="v-bubble v-green">who</span> <span class="grammar-bubble bubble-yellow">lives in Tokyo</span><span class="v-bubble v-red">,</span> is a doctor.
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">brother</span> / 
+            <span onclick="togglePart(event, this, 2)">Tokyo</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">My brother, __________ (who) lives in Tokyo,</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">My brother</span><span class="v-bubble v-red">,</span> <span class="v-bubble v-green">who</span> <span class="grammar-bubble bubble-yellow">lives in Tokyo</span><span class="v-bubble v-red">,</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">is a doctor.</span>
+                <span class="answer">
+                    is a doctor.
+                </span>
+            </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>

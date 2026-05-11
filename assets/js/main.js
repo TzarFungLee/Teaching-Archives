@@ -1,8 +1,23 @@
-// --- GLOBAL ARCHIVE LOGIC --- //
+console.log('🚀 LTF Archive Engine Loaded');
 
-// --- INTERACTIVE COMPONENTS --- //
+// Global Keyboard Shortcuts
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const path = window.location.pathname;
+        const isHome = path === '/' || path.endsWith('/index.html') || path.endsWith('/');
+        
+        console.log('⌨️ Esc detected. Path:', path, 'isHome:', isHome);
 
-// Table Interaction
+        if (!isHome) {
+            e.preventDefault();
+            const cat = window.pageCategory || '';
+            const target = cat ? `/#cat=${encodeURIComponent(cat)}` : '/';
+            console.log('🚀 Triggering Smart Back to:', target);
+            window.location.assign(target);
+        }
+    }
+});
+
 function togglePart(event, element, partNum) {
     if (event) event.stopPropagation();
     const row = element.closest('tr');
@@ -221,8 +236,65 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     });
 
+    // Dynamic row handlers for revealing full answers
+    document.querySelectorAll('.clickable-sentence').forEach(td => {
+        td.onclick = function(event) {
+            if (event.target.closest('.grammar-bubble, .v-bubble, .audio-icon')) return;
+            toggleFullRow(this);
+        };
+    });
+
     // TOC
     generateTOC();
+
+    // --- AUTO-TOGGLE INJECTOR --- //
+    // 1. Transform "A / B" situations into clickable triggers
+    document.querySelectorAll('tr').forEach(row => {
+        const situationTd = row.cells[0];
+        const practiceTd = row.cells[1];
+        if (situationTd && practiceTd && practiceTd.classList.contains('clickable-sentence')) {
+            const rawText = situationTd.textContent.trim();
+            if (rawText.includes('/') && !situationTd.querySelector('span[onclick]')) {
+                const parts = rawText.split('/').map(p => p.trim());
+                if (parts.length > 1) {
+                    situationTd.classList.add('clickable-situation');
+                    let newHtml = '';
+                    parts.forEach((p, idx) => {
+                        newHtml += `<span onclick="togglePart(event, this, ${idx + 1})">${p}</span>`;
+                        if (idx < parts.length - 1) newHtml += ' / ';
+                    });
+                    situationTd.innerHTML = newHtml;
+                }
+            } else if (!rawText.includes('/') && rawText.length > 0 && !situationTd.querySelector('span[onclick]') && !situationTd.getAttribute('colspan')) {
+                situationTd.classList.add('clickable-situation');
+                situationTd.innerHTML = `<span onclick="togglePart(event, this, 1)">${situationTd.innerHTML}</span>`;
+            }
+        }
+    });
+
+    // 2. Transform "(word/word)" hints in placeholders into clickable triggers
+    document.querySelectorAll('.clickable-sentence').forEach(sentenceTd => {
+        let rowHintIndex = 0;
+        sentenceTd.querySelectorAll('.placeholder').forEach(p => {
+            const text = p.innerHTML;
+            const regex = /\(([^)]+)\)/g;
+            if (regex.test(text)) {
+                regex.lastIndex = 0; 
+                const newHtml = text.replace(regex, (match, content) => {
+                    rowHintIndex++; 
+                    const parts = content.split('/').map(part => part.trim());
+                    let result = '(';
+                    parts.forEach((part, idx) => {
+                        result += `<span class="hint-toggle" onclick="togglePart(event, this, ${rowHintIndex})">${part}</span>`;
+                        if (idx < parts.length - 1) result += '/';
+                    });
+                    result += ')';
+                    return result;
+                });
+                p.innerHTML = newHtml;
+            }
+        });
+    });
 });
 
 

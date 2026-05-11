@@ -3,7 +3,7 @@ layout: null
 permalink: /assets/js/search-data.json
 ---
 [
-  {% assign collections = "Grammar,Reading,Writing,Listening,Quizzes,Speaking" | split: "," %}
+  {% assign collections = "Grammar,Reading,Writing,Listening,Speaking" | split: "," %}
   {% assign first = true %}
   {% for collection in collections %}
     {% for post in site.pages %}

@@ -37,49 +37,42 @@ icon: "🕒"
 
 <h3>📖 Practice</h3>
 
-<!-- ING Transformer Lab (Reused) -->
-<div class="interactive-lab card" style="margin-bottom: 30px; padding: 25px; border-left: 5px solid var(--primary); background: rgba(255,255,255,0.02); border-radius: 12px;">
-    <h4 style="margin-top: 0;">🧪 ING Transformer Lab</h4>
-    <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">Type a base verb (e.g., 'sleep', 'cook', 'watch') to see its -ing form!</p>
-    
-    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-        <input type="text" id="verbInputINGPast" class="verb-lab-input" placeholder="Enter base verb..." onkeyup="if(event.key === 'Enter') transformVerbINGPast()">
-        <button onclick="transformVerbINGPast()" class="btn" style="padding: 12px 24px; border-radius: 8px;">Transform ✨</button>
-    </div>
-
-    <div id="transformResultINGPast" style="margin-top: 25px; display: none; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 10px; animation: fadeIn 0.3s ease;">
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div>
-                <span style="font-size: 0.85rem; display: block; margin-bottom: 8px; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Past Continuous Form:</span>
-                <span class="grammar-bubble bubble-cyan" style="font-size: 1.1rem;">I <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red" id="ingVerbResultPast" style="font-weight: bold;">---</span> ...</span>
-            </div>
-        </div>
-    </div>
-</div>
-
 <table>
     <tr>
-        <th>Exercise Type</th>
-        <th>Practice Sentence</th>
+        <th>Situation</th>
+        <th>Past Continuous Sentence</th>
     </tr>
 
     <tr>
-        <td colspan="2"><strong>Basic Affirmative</strong></td>
+        <td colspan="2"><strong>Complete Sentences (Example)</strong></td>
     </tr>
     <tr>
-        <td>Example</td>
+        <td>Sleep / at midnight</td>
         <td>
             <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">sleeping</span> <span class="grammar-bubble bubble-green">at midnight</span>.
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
+
     <tr>
-        <td>Fill in the blank</td>
+        <td colspan="2"><strong>Your Turn - Fill in the Blanks</strong></td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">cook</span> / 
+            <span onclick="togglePart(event, this, 2)">6pm</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">She __________ (was/cook) dinner at 6pm yesterday.</span>
+                <span class="placeholder">She __________ (was / cook)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">cooking</span> <span class="grammar-bubble bubble-yellow">dinner</span> <span class="grammar-bubble bubble-green">at 6pm yesterday</span>.
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">cooking</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">dinner at 6pm yesterday.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">dinner</span> <span class="grammar-bubble bubble-green">at 6pm yesterday</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -90,32 +83,23 @@ icon: "🕒"
         <td colspan="2"><strong>Interrupted Actions (with 'when')</strong></td>
     </tr>
     <tr>
-        <td>Example</td>
-        <td>
-            <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">walking</span> <span class="grammar-bubble bubble-yellow">home</span> <span class="grammar-bubble bubble-green">when it started to rain</span>.
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">study</span> / 
+            <span onclick="togglePart(event, this, 2)">called</span>
         </td>
-    </tr>
-    <tr>
-        <td>Fill in the blank</td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">She __________ (was/study) when her friend called.</span>
+                <span class="placeholder">She __________ (was / study)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">studying</span> <span class="grammar-bubble bubble-green">when her friend called</span>.
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">studying</span>
                 </span>
             </span>
-            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="2"><strong>Parallel Actions (with 'while')</strong></td>
-    </tr>
-    <tr>
-        <td>Example</td>
-        <td>
-            <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">cooking</span> <span class="grammar-bubble bubble-green">while</span> <span class="grammar-bubble bubble-cyan">he</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">cleaning</span>.
+            <span class="part part-2">
+                <span class="placeholder">when her friend called.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-green">when her friend called</span>.
+                </span>
+            </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
@@ -130,44 +114,24 @@ icon: "🕒"
 <hr>
 
 <h3>📦 Concept Compressed</h3>
-<p>The Past Continuous (also called Past Progressive) describes actions that were in progress at a specific moment in the past. It uses <em>was/were</em> + verb-<em>ing</em>.</p>
+<p>The Past Continuous describes actions that were in progress at a specific moment in the past. It uses <em>was/were</em> + verb-<em>ing</em>.</p>
 
 <h4>Formation</h4>
 <ul>
-    <li><strong>Structure (Affirmative):</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-orange">was/were</span> + <span class="v-bubble v-red">Verb-ing</span> + <span class="grammar-bubble bubble-yellow">Object</span></li>
-    <li><strong>Structure (Negative):</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-orange">was/were not</span> + <span class="v-bubble v-red">Verb-ing</span> + <span class="grammar-bubble bubble-yellow">Object</span></li>
-    <li><strong>Structure (Question):</strong> <span class="v-bubble v-orange">Was/Were</span> + <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-red">Verb-ing</span> + <span class="grammar-bubble bubble-yellow">Object</span>?</li>
+    <li><strong>Structure:</strong> <span class="grammar-bubble bubble-cyan">Subject</span> + <span class="v-bubble v-orange">was/were</span> + <span class="v-bubble v-red">Verb-ing</span> + <span class="grammar-bubble bubble-yellow">Object</span></li>
 </ul>
 
 <h4>When to Use</h4>
 <ul>
-    <li><strong>Action in progress at a specific past time:</strong> I was sleeping at 10 PM last night.</li>
-    <li><strong>Interrupted action:</strong> She was cooking when the phone rang. (Past Continuous + when + Simple Past)</li>
-    <li><strong>Two parallel actions:</strong> While I was studying, my brother was playing games.</li>
+    <li><strong>Action in progress:</strong> I was sleeping at 10 PM.</li>
+    <li><strong>Interrupted action:</strong> She was cooking when the phone rang.</li>
 </ul>
-
-<h4>Common Patterns</h4>
-<table>
-    <tr>
-        <th>Pattern</th>
-        <th>Example</th>
-    </tr>
-    <tr>
-        <td>Past Continuous + when + Simple Past</td>
-        <td>I <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">walking</span> when it started raining.</td>
-    </tr>
-    <tr>
-        <td>Past Continuous + while + Past Continuous</td>
-        <td>She <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">reading</span> while he <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">cooking</span>.</td>
-    </tr>
-</table>
 
 <script>
     function transformVerbINGPast() {
         const input = document.getElementById('verbInputINGPast');
         const verb = input.value.trim().toLowerCase();
         if (!verb) return;
-
         let result;
         if (verb.endsWith('ie')) {
             result = verb.slice(0, -2) + 'ying';
@@ -178,7 +142,6 @@ icon: "🕒"
         } else {
             result = verb + 'ing';
         }
-
         document.getElementById('ingVerbResultPast').textContent = result;
         document.getElementById('transformResultINGPast').style.display = 'block';
     }

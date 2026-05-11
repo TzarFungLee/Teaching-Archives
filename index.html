@@ -6,16 +6,22 @@ hide_toc: true
 ---
 <style>
     .hero-section {
-        padding: 120px 20px; /* Pillar: Hero Height */
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         text-align: center;
         background: radial-gradient(circle at center, rgba(110, 193, 228, 0.15), transparent 70%);
-        margin-bottom: 60px;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 15vh; /* Shift content up optically */
     }
 
     .hero-title {
-        font-size: 5rem;
+        font-size: 4.2rem;
         font-weight: 900;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
         background: linear-gradient(to bottom, #fff, #9ab5d1);
         -webkit-background-clip: text;
         background-clip: text;
@@ -33,20 +39,19 @@ hide_toc: true
     }
 
     .category-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center; /* Centers the odd box */
-        gap: 30px;
-        max-width: 1200px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        max-width: 1100px;
+        width: 100%;
         margin: 0 auto;
     }
 
     .category-box {
-        flex: 0 1 220px; /* Consistent width */
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 24px;
-        padding: 35px 20px;
+        border-radius: 20px;
+        padding: 25px 15px;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -57,6 +62,7 @@ hide_toc: true
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        height: 150px;
     }
 
     .category-box:hover {
@@ -79,14 +85,25 @@ hide_toc: true
     }
 
     .results-container {
-        margin-top: 60px;
-        display: none; /* Crucial: Hidden by default */
-        animation: fadeIn 0.4s ease;
-        padding-top: 40px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--bg);
+        z-index: 999;
+        display: none;
+        padding: 60px;
+        overflow-y: auto;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
     }
 
     .results-container.active {
         display: block;
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .resource-list {
@@ -129,8 +146,9 @@ hide_toc: true
     }
 
     .search-container {
-        max-width: 600px;
-        margin: 0 auto 50px auto;
+        max-width: 550px;
+        width: 100%;
+        margin: 0 auto 35px auto;
         position: relative;
     }
 
@@ -177,7 +195,7 @@ hide_toc: true
 
 <div class="hero-section">
     <h1 class="hero-title">LTF Teaching Archives</h1>
-    <p class="hero-subtitle">Interactive English Resources & Scaffolding for Every Learner</p>
+
 
     <div class="search-container">
         <span class="search-icon">🔍</span>
@@ -204,10 +222,6 @@ hide_toc: true
         <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Listening')">
             <i>🎧</i>
             <span>Listening</span>
-        </a>
-        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Quizzes')">
-            <i>📝</i>
-            <span>Quizzes</span>
         </a>
     </div>
 
@@ -243,12 +257,44 @@ hide_toc: true
             });
             
             console.log('📦 Search index built with ' + resources.length + ' items');
+
+            // Handle incoming category filter from URL (Smart Back)
+            handleHashNavigation();
         } catch (e) {
             console.error('Failed to load search data:', e);
         }
     }
 
+    function handleHashNavigation() {
+        const hash = window.location.hash;
+        console.log('🔎 Checking hash navigation:', hash);
+        if (hash.startsWith('#cat=')) {
+            const cat = decodeURIComponent(hash.substring(5));
+            if (cat) {
+                console.log('🎯 Smart Back: Filtering for category:', cat);
+                filterCategory(cat);
+                // Clear the hash after a short delay to ensure it's not re-triggered but looks clean
+                setTimeout(() => {
+                    window.history.replaceState(null, null, window.location.pathname);
+                }, 100);
+            }
+        }
+    }
+
+    window.addEventListener('hashchange', handleHashNavigation);
+
     init();
+    
+    // Prevent scrolling on home page
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    // Keyboard shortcuts
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeResults();
+        }
+    });
 
     function filterCategory(cat) {
         if (resources.length === 0) {
@@ -259,8 +305,14 @@ hide_toc: true
     }
 
     function closeResults() {
-        document.getElementById('resultsWrapper').classList.remove('active');
-        document.getElementById('categoryGrid').style.opacity = '1';
+        const wrapper = document.getElementById('resultsWrapper');
+        wrapper.style.opacity = '0';
+        
+        setTimeout(() => {
+            wrapper.classList.remove('active');
+            wrapper.style.display = 'none';
+            document.getElementById('categoryGrid').style.opacity = '1';
+        }, 200);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -286,15 +338,40 @@ hide_toc: true
 
         container.innerHTML = '';
         titleEl.innerText = searchQuery ? `Results for "${searchQuery}"` : categoryFilter;
+        wrapper.style.display = 'block';
+        wrapper.style.opacity = '1';
+        wrapper.offsetHeight; // Force reflow
         wrapper.classList.add('active');
         grid.style.opacity = '0.3';
 
         let filtered = [];
         
         if (searchQuery) {
-            const searchResults = idx.search(searchQuery);
-            filtered = searchResults.map(result => {
+            // 1. Predictable Title Match (e.g. "pass" -> "Passive Voice")
+            const titleMatches = resources.filter(res => 
+                res.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            // 2. Advanced Full-text Search with Lunr
+            const terms = searchQuery.split(/\s+/).filter(t => t.length > 0);
+            const queryStr = terms.map(t => `${t}*`).join(' ');
+            const searchResults = idx.search(queryStr);
+            console.log(`🔍 Search for "${queryStr}" found ${searchResults.length} matches`);
+            
+            const lunrMatches = searchResults.map(result => {
                 return resources.find(res => res.url === result.ref);
+            }).filter(Boolean);
+
+            // Merge results and de-duplicate by URL
+            const combined = [...titleMatches, ...lunrMatches];
+            const uniqueUrls = new Set();
+            filtered = [];
+            
+            combined.forEach(res => {
+                if (!uniqueUrls.has(res.url)) {
+                    uniqueUrls.add(res.url);
+                    filtered.push(res);
+                }
             });
         } else {
             filtered = resources.filter(res => res.category === categoryFilter);

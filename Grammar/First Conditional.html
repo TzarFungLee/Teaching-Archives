@@ -79,28 +79,34 @@ icon: "🧩"
         <td colspan="2"><strong>Your Turn - Fill in the Blanks</strong></td>
     </tr>
     <tr>
-        <td>Rain tomorrow / stay home</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">Rain</span> / 
+            <span onclick="togglePart(event, this, 2)">stay home</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
                 <span class="placeholder">If it __________ (rain) tomorrow</span>
                 <span class="answer"><span class="grammar-bubble bubble-cyan">If it <span class="v-bubble v-green">rains</span> tomorrow</span></span>
             </span>, 
             <span class="part part-2">
-                <span class="placeholder">we __________ (will/stay) home.</span>
+                <span class="placeholder">we __________ (will / stay) home.</span>
                 <span class="answer"><span class="grammar-bubble bubble-yellow">we <span class="v-bubble v-red">will stay</span> home</span></span>
             </span>.
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>Not hurry / miss the bus</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">Not hurry</span> / 
+            <span onclick="togglePart(event, this, 2)">miss the bus</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">If he __________ (not/hurry)</span>
-                <span class="answer"><span class="grammar-bubble bubble-cyan">If he <span class="v-bubble v-green">doesn't hurry</span></span></span>
+                <span class="placeholder">If he __________ (not hurry)</span>
+                <span class="answer"><span class="grammar-bubble bubble-cyan">If he <span class="v-bubble v-green">does not hurry</span></span></span>
             </span>, 
             <span class="part part-2">
-                <span class="placeholder">he __________ (will/miss) the bus.</span>
+                <span class="placeholder">he __________ (miss) the bus.</span>
                 <span class="answer"><span class="grammar-bubble bubble-yellow">he <span class="v-bubble v-red">will miss</span> the bus</span></span>
             </span>.
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -124,9 +130,9 @@ icon: "🧩"
 
 <h4>When to Use</h4>
 <ul>
-    <li><strong>Real future possibilities:</strong> If I have time, I'll visit you.</li>
-    <li><strong>Predictions:</strong> If you don't hurry, you'll miss the bus.</li>
-    <li><strong>Promises/threats:</strong> If you help me, I'll buy you dinner.</li>
+    <li><strong>Real future possibilities:</strong> If I have time, I will visit you.</li>
+    <li><strong>Predictions:</strong> If you do not hurry, you will miss the bus.</li>
+    <li><strong>Promises/threats:</strong> If you help me, I will buy you dinner.</li>
 </ul>
 
 <h4>Modal Variations</h4>

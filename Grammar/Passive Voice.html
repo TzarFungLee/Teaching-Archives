@@ -81,36 +81,63 @@ icon: "🧩"
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-red">complete</span> <span class="grammar-bubble bubble-yellow">the project</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">complete</span> / 
+            <span onclick="togglePart(event, this, 2)">project</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">The project __________ completed __________ them.</span>
+                <span class="placeholder">The project __________ (is / complete)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">The project</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-green">completed</span> <span class="grammar-bubble bubble-cyan">by them</span>.
+                    <span class="grammar-bubble bubble-yellow">The project</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-green">completed</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by them.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by them</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">The news</span> <span class="v-bubble v-red">shocks</span> <span class="grammar-bubble bubble-yellow">everyone</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">shock</span> / 
+            <span onclick="togglePart(event, this, 2)">news</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">Everyone __________ __________ the news.</span>
+                <span class="placeholder">Everyone __________ (is / shock)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">Everyone</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-green">shocked</span> <span class="grammar-bubble bubble-cyan">by the news</span>.
+                    <span class="grammar-bubble bubble-yellow">Everyone</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-green">shocked</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by the news.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by the news</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">The chef</span> <span class="v-bubble v-red">prepares</span> <span class="grammar-bubble bubble-yellow">the meal</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">prepare</span> / 
+            <span onclick="togglePart(event, this, 2)">meal</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">The meal __________ __________.</span>
+                <span class="placeholder">The meal __________ (is / prepare)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">The meal</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-green">prepared</span> <span class="grammar-bubble bubble-cyan">by the chef</span>.
+                    <span class="grammar-bubble bubble-yellow">The meal</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-green">prepared</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by the chef.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by the chef</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -128,36 +155,63 @@ icon: "🧩"
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-red">completed</span> <span class="grammar-bubble bubble-yellow">the project</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">complete</span> / 
+            <span onclick="togglePart(event, this, 2)">project</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">The project __________ completed __________ them.</span>
+                <span class="placeholder">The project __________ (was / complete)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">The project</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-green">completed</span> <span class="grammar-bubble bubble-cyan">by them</span>.
+                    <span class="grammar-bubble bubble-yellow">The project</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-green">completed</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by them.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by them</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">The news</span> <span class="v-bubble v-red">shocked</span> <span class="grammar-bubble bubble-yellow">everyone</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">shock</span> / 
+            <span onclick="togglePart(event, this, 2)">news</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">Everyone __________ __________ the news.</span>
+                <span class="placeholder">Everyone __________ (was / shock)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">Everyone</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-green">shocked</span> <span class="grammar-bubble bubble-cyan">by the news</span>.
+                    <span class="grammar-bubble bubble-yellow">Everyone</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-green">shocked</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by the news.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by the news</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">The chef</span> <span class="v-bubble v-red">prepared</span> <span class="grammar-bubble bubble-yellow">the meal</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">prepare</span> / 
+            <span onclick="togglePart(event, this, 2)">meal</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">The meal __________ __________.</span>
+                <span class="placeholder">The meal __________ (was / prepare)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">The meal</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-green">prepared</span> <span class="grammar-bubble bubble-cyan">by the chef</span>.
+                    <span class="grammar-bubble bubble-yellow">The meal</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-green">prepared</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by the chef.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by the chef</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -175,36 +229,63 @@ icon: "🧩"
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">They</span> <span class="v-bubble v-red">will complete</span> <span class="grammar-bubble bubble-yellow">the project</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">complete</span> / 
+            <span onclick="togglePart(event, this, 2)">project</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">The project __________ __________ completed __________ them.</span>
+                <span class="placeholder">The project __________ (will be / complete)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">The project</span> <span class="v-bubble v-orange">will be</span> <span class="v-bubble v-green">completed</span> <span class="grammar-bubble bubble-cyan">by them</span>.
+                    <span class="grammar-bubble bubble-yellow">The project</span> <span class="v-bubble v-orange">will be</span> <span class="v-bubble v-green">completed</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by them.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by them</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">The news</span> <span class="v-bubble v-red">will shock</span> <span class="grammar-bubble bubble-yellow">everyone</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">shock</span> / 
+            <span onclick="togglePart(event, this, 2)">news</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">Everyone __________ __________ __________ the news.</span>
+                <span class="placeholder">Everyone __________ (will be / shock)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">Everyone</span> <span class="v-bubble v-orange">will be</span> <span class="v-bubble v-green">shocked</span> <span class="grammar-bubble bubble-cyan">by the news</span>.
+                    <span class="grammar-bubble bubble-yellow">Everyone</span> <span class="v-bubble v-orange">will be</span> <span class="v-bubble v-green">shocked</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by the news.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by the news</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td><span class="grammar-bubble bubble-cyan">The chef</span> <span class="v-bubble v-red">will prepare</span> <span class="grammar-bubble bubble-yellow">the meal</span>.</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">prepare</span> / 
+            <span onclick="togglePart(event, this, 2)">meal</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">The meal __________ __________ __________.</span>
+                <span class="placeholder">The meal __________ (will be / prepare)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-yellow">The meal</span> <span class="v-bubble v-orange">will be</span> <span class="v-bubble v-green">prepared</span> <span class="grammar-bubble bubble-cyan">by the chef</span>.
+                    <span class="grammar-bubble bubble-yellow">The meal</span> <span class="v-bubble v-orange">will be</span> <span class="v-bubble v-green">prepared</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">by the chef.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">by the chef</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>

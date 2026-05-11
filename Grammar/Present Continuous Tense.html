@@ -80,12 +80,21 @@ icon: "🕒"
         </td>
     </tr>
     <tr>
-        <td>Fill in the blank</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">cook</span> / 
+            <span onclick="togglePart(event, this, 2)">at the moment</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">She __________ (is/cook) dinner at the moment.</span>
+                <span class="placeholder">She __________ (be / cook)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">cooking</span> <span class="grammar-bubble bubble-yellow">dinner</span> <span class="grammar-bubble bubble-green">at the moment</span>.
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">cooking</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">dinner at the moment.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">dinner</span> <span class="grammar-bubble bubble-green">at the moment</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -96,24 +105,42 @@ icon: "🕒"
         <td colspan="2"><strong>Spelling Changes</strong></td>
     </tr>
     <tr>
-        <td>Drop 'e'</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">make</span> / 
+            <span onclick="togglePart(event, this, 2)">breakfast</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">He __________ (is/make) breakfast. (make → making)</span>
+                <span class="placeholder">He __________ (be / make)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">making</span> <span class="grammar-bubble bubble-yellow">breakfast</span>.
+                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">making</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">breakfast.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">breakfast</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>Double consonant</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">run</span> / 
+            <span onclick="togglePart(event, this, 2)">park</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">She __________ (is/run) in the park. (run → running)</span>
+                <span class="placeholder">She __________ (be / run)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">running</span> <span class="grammar-bubble bubble-yellow">in the park</span>.
+                    <span class="grammar-bubble bubble-cyan">She</span> <span class="v-bubble v-orange">is</span> <span class="v-bubble v-red">running</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">in the park.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">in the park</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
@@ -124,24 +151,40 @@ icon: "🕒"
         <td colspan="2"><strong>Negative & Questions</strong></td>
     </tr>
     <tr>
-        <td>Negative</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">not / listen</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">I __________ (am not/listen) to music.</span>
+                <span class="placeholder">I __________ (be not / listen)</span>
                 <span class="answer">
-                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">am not</span> <span class="v-bubble v-red">listening</span> <span class="grammar-bubble bubble-yellow">to music</span>.
+                    <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">am not</span> <span class="v-bubble v-red">listening</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">to music.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">to music</span>.
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
     <tr>
-        <td>Question</td>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">be / study</span>
+        </td>
         <td class="clickable-sentence" onclick="toggleFullRow(this)">
             <span class="part part-1">
-                <span class="placeholder">__________ you (study) now?</span>
+                <span class="placeholder">__________ you (be / study)</span>
                 <span class="answer">
-                    <span class="v-bubble v-orange">Are</span> <span class="grammar-bubble bubble-cyan">you</span> <span class="v-bubble v-red">studying</span> <span class="grammar-bubble bubble-green">now</span>?
+                    <span class="v-bubble v-orange">Are</span> <span class="grammar-bubble bubble-cyan">you</span> <span class="v-bubble v-red">studying</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">now?</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-green">now</span>?
                 </span>
             </span>
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
