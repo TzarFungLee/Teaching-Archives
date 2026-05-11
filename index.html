@@ -18,6 +18,7 @@ hide_toc: true
         margin-bottom: 25px;
         background: linear-gradient(to bottom, #fff, #9ab5d1);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
         letter-spacing: -3px;
         line-height: 1;
@@ -172,6 +173,7 @@ hide_toc: true
         to { opacity: 1; transform: translateY(0); }
     }
 </style>
+<script src="https://unpkg.com/lunr/lunr.js"></script>
 
 <div class="hero-section">
     <h1 class="hero-title">LTF Teaching Archives</h1>
@@ -220,15 +222,29 @@ hide_toc: true
 
 <script>
     let resources = [];
+    let idx;
 
     async function init() {
         try {
-            const resp = await fetch('{{ "/assets/data/resources.json" | relative_url }}');
+            const resp = await fetch('{{ "/assets/js/search-data.json" | relative_url }}');
             resources = await resp.json();
             resources.sort((a, b) => a.title.localeCompare(b.title));
-            console.log('📦 Resources loaded');
+            
+            // Initialize Lunr index
+            idx = lunr(function () {
+                this.ref('url');
+                this.field('title', { boost: 10 });
+                this.field('category', { boost: 5 });
+                this.field('content');
+
+                resources.forEach(doc => {
+                    this.add(doc);
+                });
+            });
+            
+            console.log('📦 Search index built with ' + resources.length + ' items');
         } catch (e) {
-            console.error('Failed to load resources:', e);
+            console.error('Failed to load search data:', e);
         }
     }
 
@@ -248,12 +264,16 @@ hide_toc: true
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    let searchTimeout;
     function handleSearch(query) {
-        if (!query.trim()) {
-            closeResults();
-            return;
-        }
-        renderList('Search Results', query.trim().toLowerCase());
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            if (!query.trim()) {
+                closeResults();
+                return;
+            }
+            renderList('Search Results', query.trim().toLowerCase());
+        }, 300);
     }
 
     function renderList(categoryFilter, searchQuery = null) {
@@ -269,14 +289,16 @@ hide_toc: true
         wrapper.classList.add('active');
         grid.style.opacity = '0.3';
 
-        const filtered = resources.filter(res => {
-            if (searchQuery) {
-                return (res.title && res.title.toLowerCase().includes(searchQuery)) || 
-                       (res.category && res.category.toLowerCase().includes(searchQuery)) ||
-                       (res.tags && res.tags.some(t => t.toLowerCase().includes(searchQuery)));
-            }
-            return res.category === categoryFilter;
-        });
+        let filtered = [];
+        
+        if (searchQuery) {
+            const searchResults = idx.search(searchQuery);
+            filtered = searchResults.map(result => {
+                return resources.find(res => res.url === result.ref);
+            });
+        } else {
+            filtered = resources.filter(res => res.category === categoryFilter);
+        }
 
         if (filtered.length === 0) {
             container.innerHTML = '<div class="no-results">No resources found matching your criteria.</div>';
@@ -284,17 +306,33 @@ hide_toc: true
             filtered.forEach(res => {
                 const card = document.createElement('a');
                 card.className = 'resource-card';
-                // Property name in resources.json is "file"
-                const link = res.file || res.url || "#";
-                card.href = link.startsWith('http') ? link : '{{ "" | relative_url }}' + link;
+                card.href = res.url || "#";
                 
-                card.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <span style="font-size: 1.5rem;">${res.icon || '📄'}</span>
-                        <h3 style="margin:0;">${res.title}</h3>
-                    </div>
-                    <span style="font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px;">${res.category}</span>
-                `;
+                const inner = document.createElement('div');
+                inner.style.display = 'flex';
+                inner.style.alignItems = 'center';
+                inner.style.gap = '15px';
+                
+                const iconSpan = document.createElement('span');
+                iconSpan.style.fontSize = '1.5rem';
+                iconSpan.textContent = res.icon || '📄';
+                
+                const titleH3 = document.createElement('h3');
+                titleH3.style.margin = '0';
+                titleH3.textContent = res.title;
+                
+                inner.appendChild(iconSpan);
+                inner.appendChild(titleH3);
+                
+                const categorySpan = document.createElement('span');
+                categorySpan.style.fontSize = '0.85rem';
+                categorySpan.style.color = 'var(--muted)';
+                categorySpan.style.textTransform = 'uppercase';
+                categorySpan.style.letterSpacing = '1px';
+                categorySpan.textContent = res.category;
+
+                card.appendChild(inner);
+                card.appendChild(categorySpan);
                 container.appendChild(card);
             });
         }

@@ -2,7 +2,7 @@ import os
 import re
 
 directories = ['Grammar', 'Listening', 'Reading', 'Writing', 'Quizzes']
-base_dir = '/Users/tfl/Documents/GitHub/Teaching-Archives'
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 for d in directories:
     dir_path = os.path.join(base_dir, d)

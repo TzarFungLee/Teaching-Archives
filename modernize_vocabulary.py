@@ -1,7 +1,7 @@
 import re
 import os
 
-filepath = '/Users/tfl/Documents/GitHub/Teaching-Archives/Reading/Reading Vocabulary.html'
+filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Reading/Reading Vocabulary.html')
 
 with open(filepath, 'r', encoding='utf-8') as f:
     content = f.read()

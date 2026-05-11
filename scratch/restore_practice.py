@@ -1,7 +1,7 @@
 import re
 import os
 
-file_path = "/Users/tfl/Documents/GitHub/Teaching-Archives/Listening/Listening Vocabulary.html"
+file_path = "./Listening/Listening Vocabulary.html"
 
 with open(file_path, "r", encoding="utf-8") as f:
     content = f.read()

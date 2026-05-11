@@ -1,24 +1,10 @@
 // --- GLOBAL ARCHIVE LOGIC --- //
 
-// Disable right-click
-document.addEventListener('contextmenu', event => event.preventDefault());
-
-// Disable common copy shortcuts
-document.addEventListener('keydown', function (e) {
-    if ((e.ctrlKey && e.key === 'c') || (e.metaKey && e.key === 'c')) {
-        e.preventDefault();
-        alert('Copying is disabled on this page.');
-    }
-});
-
-// Disable text drag
-document.addEventListener('dragstart', event => event.preventDefault());
-
 // --- INTERACTIVE COMPONENTS --- //
 
 // Table Interaction
-function togglePart(element, partNum) {
-    if (window.event) window.event.stopPropagation();
+function togglePart(event, element, partNum) {
+    if (event) event.stopPropagation();
     const row = element.closest('tr');
     const targetPart = row.querySelector('.part-' + partNum);
     if (!targetPart) return;
@@ -193,21 +179,25 @@ function generateTOC() {
         ul.appendChild(li);
     });
 
-    // Highlight active heading on scroll
+    // Highlight active heading on scroll (Throttled)
+    let isScrolling;
     window.addEventListener('scroll', () => {
-        let current = '';
-        headings.forEach(h3 => {
-            const top = h3.offsetTop;
-            if (pageYOffset >= top - 150) {
-                current = h3.id;
-            }
-        });
+        window.cancelAnimationFrame(isScrolling);
+        isScrolling = window.requestAnimationFrame(() => {
+            let current = '';
+            headings.forEach(h3 => {
+                const top = h3.offsetTop;
+                if (pageYOffset >= top - 150) {
+                    current = h3.id;
+                }
+            });
 
-        tocContainer.querySelectorAll('a').forEach(a => {
-            a.classList.remove('active');
-            if (a.getAttribute('href') === '#' + current) {
-                a.classList.add('active');
-            }
+            tocContainer.querySelectorAll('a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
         });
     });
 }

@@ -1,7 +1,7 @@
 import os
 import re
 
-dir_path = '/Users/tfl/Documents/GitHub/Teaching-Archives/Quizzes'
+dir_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Quizzes')
 
 def optimize_quiz(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:

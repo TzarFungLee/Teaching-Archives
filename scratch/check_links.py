@@ -2,7 +2,7 @@ import os
 import re
 from pathlib import Path
 
-root_dir = Path('/Users/tfl/Documents/GitHub/Teaching-Archives')
+root_dir = Path('.')
 html_files = list(root_dir.glob('**/*.html'))
 
 for html_file in html_files:

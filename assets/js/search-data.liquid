@@ -1,0 +1,23 @@
+---
+layout: null
+permalink: /assets/js/search-data.json
+---
+[
+  {% assign collections = "Grammar,Reading,Writing,Listening,Quizzes,Speaking" | split: "," %}
+  {% assign first = true %}
+  {% for collection in collections %}
+    {% for post in site.pages %}
+      {% if post.category == collection %}
+        {% unless first %},{% endunless %}
+        {
+          "title": {{ post.title | jsonify }},
+          "url": {{ post.url | relative_url | jsonify }},
+          "category": {{ post.category | jsonify }},
+          "icon": {{ post.icon | jsonify }},
+          "content": {{ post.content | strip_html | strip_newlines | jsonify }}
+        }
+        {% assign first = false %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+]
