@@ -6,10 +6,13 @@ icon: "📝"
 ---
 
 <div class="visual-anchor" style="padding: 30px;">
-    <div class="anchor-title">📖 Reading Comprehension Lab</div>
-    <p style="margin-top: -15px; color: var(--muted); font-size: 1.1rem; margin-bottom: 30px;">
-        Master <strong>Referencing</strong>, <strong>Vocabulary</strong>, and <strong>Inferencing</strong> skills.
+    <div class="anchor-title">🔬 Reading Skills Lab</div>
+    <p style="margin-top: -15px; color: var(--muted); font-size: 1.1rem; margin-bottom: 20px;">
+        Master <strong>Referencing</strong>, <strong>Vocabulary</strong>, and <strong>Inferencing</strong>.
     </p>
+    <div id="random-info" style="display: inline-block; background: rgba(110, 193, 228, 0.15); padding: 8px 16px; border-radius: 99px; border: 1px solid var(--primary); font-size: 0.9rem; color: var(--accent);">
+        ⚡ Generating Random Challenge...
+    </div>
 </div>
 
 <div class="content-section">
@@ -186,11 +189,58 @@ icon: "📝"
     }
 </style>
 
+<div style="text-align: center; margin: 40px 0;">
+    <button onclick="pickRandomPassage()" class="btn" style="background: rgba(255, 255, 255, 0.08); border: 1px dashed var(--primary); font-size: 1rem; padding: 12px 24px;">
+        🔄 Try Another Passage
+    </button>
+</div>
+
 <script>
+    function pickRandomPassage() {
+        const sections = document.querySelectorAll('.content-section');
+        if (sections.length === 0) return;
+
+        // Hide all
+        sections.forEach(s => s.classList.remove('show'));
+
+        // Pick random
+        const randomIndex = Math.floor(Math.random() * sections.length);
+        const selected = sections[randomIndex];
+        
+        // Show selected
+        selected.classList.add('show');
+
+        // Update info text
+        const info = document.getElementById('random-info');
+        if (info) {
+            info.innerHTML = `⚡ Challenge: <strong>${selected.querySelector('h3').innerText.replace('📝 ', '')}</strong>`;
+        }
+
+        // Scroll to top of content
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Run on load
+    document.addEventListener('DOMContentLoaded', () => {
+        // Short delay to allow transitions to feel smooth if needed
+        setTimeout(pickRandomPassage, 100);
+    });
+
     // Extend the toggle logic to show explanations if they exist
     const originalTogglePart = window.togglePart;
     window.togglePart = function(event, element, partNum) {
-        originalTogglePart(event, element, partNum);
+        if (typeof originalTogglePart === 'function') {
+            originalTogglePart(event, element, partNum);
+        } else {
+            // Fallback if main.js isn't fully loaded
+            const row = element.closest('tr');
+            const targetPart = row.querySelector('.part-' + partNum);
+            const answer = targetPart.querySelector('.answer');
+            const placeholder = targetPart.querySelector('.placeholder');
+            answer.classList.toggle('show');
+            placeholder.classList.toggle('hide');
+        }
+
         const row = element.closest('tr');
         const explanation = row.querySelector('.explanation-box');
         if (explanation) {
@@ -205,7 +255,19 @@ icon: "📝"
 
     const originalToggleFullRow = window.toggleFullRow;
     window.toggleFullRow = function(td) {
-        originalToggleFullRow(td);
+        if (typeof originalToggleFullRow === 'function') {
+            originalToggleFullRow(td);
+        } else {
+            // Fallback
+            const row = td.closest('tr');
+            const firstAnswer = row.querySelector('.part-1 .answer');
+            const shouldShow = !firstAnswer.classList.contains('show');
+            row.querySelectorAll('.part').forEach(part => {
+                part.querySelector('.answer').classList.toggle('show', shouldShow);
+                part.querySelector('.placeholder').classList.toggle('hide', shouldShow);
+            });
+        }
+
         const row = td.closest('tr');
         const explanation = row.querySelector('.explanation-box');
         if (explanation) {
