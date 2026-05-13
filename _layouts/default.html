@@ -713,6 +713,56 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        /* Perfectly Centered Gutter Floating Buttons */
+        .floating-side-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            color: var(--text);
+            padding: 10px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-align: center;
+            min-width: 65px;
+            text-decoration: none;
+        }
+
+        .floating-side-btn:hover {
+            border-color: rgba(110, 193, 228, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-50%) scale(1.05);
+            color: #fff;
+        }
+
+        .floating-left {
+            left: max(15px, calc((100vw - 1300px) / 4 - 32px));
+        }
+
+        .floating-right {
+            right: max(15px, calc((100vw - 1300px) / 4 - 32px));
+        }
+
+        @media (max-width: 1450px) {
+            .floating-side-btn {
+                transform: translateY(-50%) scale(0.9);
+            }
+            .floating-side-btn:hover {
+                transform: translateY(-50%) scale(0.95);
+            }
+        }
     </style>
 </head>
 
@@ -732,13 +782,24 @@
 
         <div class="content">
             {% if page.url != '/' and page.url != '/index.html' %}
-            <div class="nav-bar">
-                <a href="/" class="back-btn">← Back to Home</a>
-            </div>
             {% endif %}
             {{ content }}
         </div>
     </div>
+
+    {% if page.url != '/' and page.url != '/index.html' %}
+    <a href="/" class="floating-side-btn floating-left">
+        <span style="font-size: 0.85rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; margin-bottom: 3px; color: var(--accent);">BACK</span>
+        <span style="font-size: 0.75rem; line-height: 1; opacity: 0.85;">Home</span>
+    </a>
+    {% endif %}
+
+    {% if page.category != 'Writing' and page.url != '/' and page.url != '/index.html' %}
+    <button type="button" id="speedToggleBtn" class="floating-side-btn floating-right" onclick="toggleAudioSpeed()">
+        <span style="font-size: 0.85rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; margin-bottom: 3px; color: var(--accent);">AUDIO</span>
+        <span style="font-size: 0.75rem; line-height: 1; opacity: 0.85;">Slower</span>
+    </button>
+    {% endif %}
 
     <script>window.pageCategory = "{{ page.category }}";</script>
     <script src="{{ '/assets/js/main.js' | relative_url }}"></script>

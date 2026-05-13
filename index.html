@@ -27,7 +27,8 @@ hide_toc: true
         background-clip: text;
         -webkit-text-fill-color: transparent;
         letter-spacing: -3px;
-        line-height: 1;
+        line-height: 1.2;
+        padding-bottom: 0.1em;
     }
 
     .hero-subtitle {
@@ -48,6 +49,7 @@ hide_toc: true
     }
 
     .category-box {
+        outline: none;
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 20px;
@@ -203,26 +205,26 @@ hide_toc: true
     </div>
 
     <div class="category-grid" id="categoryGrid">
-        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Reading')">
-            <i>📖</i>
-            <span>Reading</span>
-        </a>
-        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Grammar')">
+        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Grammar')">
             <i>🧩</i>
             <span>Grammar</span>
-        </a>
-        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Writing')">
+        </div>
+        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Reading')">
+            <i>📖</i>
+            <span>Reading</span>
+        </div>
+        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Writing')">
             <i>✍️</i>
             <span>Writing</span>
-        </a>
-        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Speaking')">
-            <i>🗣️</i>
-            <span>Speaking</span>
-        </a>
-        <a href="javascript:void(0)" class="category-box" onclick="filterCategory('Listening')">
+        </div>
+        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Listening')">
             <i>🎧</i>
             <span>Listening</span>
-        </a>
+        </div>
+        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Speaking')">
+            <i>🗣️</i>
+            <span>Speaking</span>
+        </div>
     </div>
 
     <div id="resultsWrapper" class="results-container">
@@ -347,32 +349,12 @@ hide_toc: true
         let filtered = [];
         
         if (searchQuery) {
-            // 1. Predictable Title Match (e.g. "pass" -> "Passive Voice")
-            const titleMatches = resources.filter(res => 
-                res.title.toLowerCase().includes(searchQuery.toLowerCase())
+            const queryLower = searchQuery.toLowerCase();
+            
+            // Strict Title-Only Search (No full-text noise)
+            filtered = resources.filter(res => 
+                res.title.toLowerCase().includes(queryLower)
             );
-
-            // 2. Advanced Full-text Search with Lunr
-            const terms = searchQuery.split(/\s+/).filter(t => t.length > 0);
-            const queryStr = terms.map(t => `${t}*`).join(' ');
-            const searchResults = idx.search(queryStr);
-            console.log(`🔍 Search for "${queryStr}" found ${searchResults.length} matches`);
-            
-            const lunrMatches = searchResults.map(result => {
-                return resources.find(res => res.url === result.ref);
-            }).filter(Boolean);
-
-            // Merge results and de-duplicate by URL
-            const combined = [...titleMatches, ...lunrMatches];
-            const uniqueUrls = new Set();
-            filtered = [];
-            
-            combined.forEach(res => {
-                if (!uniqueUrls.has(res.url)) {
-                    uniqueUrls.add(res.url);
-                    filtered.push(res);
-                }
-            });
         } else {
             filtered = resources.filter(res => res.category === categoryFilter);
         }
@@ -432,10 +414,17 @@ hide_toc: true
         else if (item.category === 'Listening') tagColor = 'rgba(167, 139, 250, 0.3)';
         else if (item.category === 'Writing') tagColor = 'rgba(251, 159, 67, 0.3)';
 
-        link.innerHTML = `
-            <span class="cat-tag" style="background: ${tagColor}; padding: 4px 10px; border-radius: 6px; color: #fff; margin-bottom: 12px; display: inline-block;">${item.icon} ${item.category}</span>
-            <h3 style="text-align: center; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 2px; margin: 0; width: fit-content;">${displayTitle}</h3>
-        `;
+        const tagSpan = document.createElement('span');
+        tagSpan.className = 'cat-tag';
+        tagSpan.style.cssText = `background: ${tagColor}; padding: 4px 10px; border-radius: 6px; color: #fff; margin-bottom: 12px; display: inline-block;`;
+        tagSpan.textContent = `${item.icon || '📄'} ${item.category}`;
+
+        const titleH3 = document.createElement('h3');
+        titleH3.style.cssText = 'text-align: center; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 2px; margin: 0; width: fit-content;';
+        titleH3.textContent = displayTitle;
+
+        link.appendChild(tagSpan);
+        link.appendChild(titleH3);
         link.style.display = 'flex';
         link.style.flexDirection = 'column';
         link.style.alignItems = 'center';

@@ -10,14 +10,19 @@ for root, dirs, files in os.walk(dir_path):
             with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
 
+            from bs4 import BeautifulSoup
+            soup = BeautifulSoup(content, 'html.parser')
+            
             # Extract title
-            title_match = re.search(r'<title>(.*?)</title>', content)
-            title = title_match.group(1) if title_match else file.replace('.html', '')
+            title_tag = soup.find('title')
+            title = title_tag.text.strip() if title_tag else file.replace('.html', '')
             
             # Try to extract the h1 title instead of the <title> tag for better naming
-            h1_match = re.search(r'<h1>(?:.*?(?:🎧|📖|✍️|🧩|📝)\s*)?(.*?)(?:</h1>)', content)
-            if h1_match:
-                h1_title = re.sub(r'<.*?>', '', h1_match.group(1)).strip()
+            h1_tag = soup.find('h1')
+            if h1_tag:
+                h1_title = h1_tag.get_text(separator=' ', strip=True)
+                # Remove common icons from the title
+                h1_title = re.sub(r'[🎧📖✍️🧩📝]\s*', '', h1_title).strip()
                 if h1_title:
                     title = h1_title
 

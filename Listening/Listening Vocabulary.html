@@ -170,33 +170,14 @@ hide_toc: true
                 const setVoice = () => {
                     const voices = window.speechSynthesis.getVoices();
                     
-                    // Priority List for Natural British Voices (Prioritizing Female)
-                    const priorityNames = [
-                        'Serena',           // Premium Female macOS
-                        'Martha',           // Premium Female macOS
-                        'Google UK English Female', 
-                        'Stephanie',        // Female macOS
-                        'Daniel (Premium)', // High-quality Male macOS (backup)
-                        'Arthur', 
-                        'Daniel',
-                        'Microsoft Hazel',
-                        'English (United Kingdom)'
-                    ];
-
-                    for (const name of priorityNames) {
-                        const v = voices.find(v => v.name.includes(name) && v.lang.startsWith('en-G'));
-                        if (v) {
-                            this.voice = v;
-                            console.log('%c Pronunciation Voice Selected: ' + v.name, 'color: #007bff; font-weight: bold;');
-                            break;
-                        }
-                    }
-
-                    if (!this.voice) {
-                        this.voice = voices.find(v => v.lang.startsWith('en-G')) || 
-                                     voices.find(v => v.lang.startsWith('en')) || 
-                                     voices[0];
-                    }
+                    // Force strictly Serena or a Female voice fallback
+                    this.voice = voices.find(v => v.name.includes("Serena")) || 
+                                 voices.find(v => v.name.includes("Google UK English Female")) ||
+                                 voices.find(v => v.name.includes("Samantha")) ||
+                                 voices.find(v => v.name.includes("Female") && v.lang.includes("en")) ||
+                                 voices.find(v => v.lang === "en-GB") || 
+                                 voices[0];
+                    console.log('%c Pronunciation Voice Selected: ' + (this.voice ? this.voice.name : 'none'), 'color: #007bff; font-weight: bold;');
                 };
 
                 if (speechSynthesis.onvoiceschanged !== undefined) {
@@ -214,7 +195,7 @@ hide_toc: true
                 utterance.voice = this.voice;
                 
                 // Fine-tuning for "Natural" feel
-                utterance.rate = 0.9;   // Clear but natural
+                utterance.rate = (window.audioSpeed === 'slow') ? 0.55 : 0.9;
                 utterance.pitch = 1.0;  // Neutral pitch
                 utterance.volume = 1.0;
 

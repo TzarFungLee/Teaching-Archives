@@ -70,9 +70,97 @@ hide_toc: true
     </div>
 </div>
 
+<style>
+    /* Chat Bubble Styles */
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin: 30px 0;
+        padding: 30px 20px;
+        background: rgba(0,0,0,0.2);
+        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.05);
+        box-shadow: inset 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .chat-message {
+        display: flex;
+        flex-direction: column;
+        max-width: 85%;
+    }
+    .chat-message.left { align-self: flex-start; }
+    .chat-message.right { align-self: flex-end; }
+    
+    .chat-bubble {
+        padding: 18px 24px;
+        border-radius: 20px;
+        font-size: 1.15rem;
+        line-height: 1.6;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    
+    .chat-message.left .chat-bubble {
+        background: rgba(110, 193, 228, 0.12);
+        border: 1px solid rgba(110, 193, 228, 0.25);
+        border-bottom-left-radius: 4px;
+        color: #e7eef7;
+    }
+
+    .chat-message.right .chat-bubble {
+        background: rgba(34, 197, 129, 0.12);
+        border: 1px solid rgba(34, 197, 129, 0.25);
+        border-bottom-right-radius: 4px;
+        color: #e7eef7;
+    }
+    
+    .speaker-name {
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+    .chat-message.left .speaker-name { margin-left: 12px; }
+    .chat-message.right .speaker-name { margin-right: 12px; text-align: right; }
+    
+    /* Sub-tabs */
+    .topic-tabs {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+    .topic-tab {
+        padding: 12px 24px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1.05rem;
+        color: var(--muted);
+        transition: all 0.25s ease;
+    }
+    .topic-tab:hover { background: rgba(255,255,255,0.1); color: #fff; transform: translateY(-2px); }
+    .topic-tab.active {
+        background: linear-gradient(135deg, #6ec1e4, #3f8dbc);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: 0 8px 20px rgba(110, 193, 228, 0.3);
+    }
+    
+    .topic-content { display: none; animation: fadeIn 0.4s ease; }
+    .topic-content.show { display: block; }
+</style>
+
 <!-- GROUP DISCUSSION -->
 <div id="discussion" class="content-section">
-    <h3>💡 💬 Group Discussion (Filler Content)</h3>
+    <h3>💡 💬 Group Discussion</h3>
     
     <div style="text-align: right; margin-bottom: 20px;">
         <a href="#" class="btn" style="padding: 10px 20px; font-size: 0.9rem; opacity: 0.6; cursor: not-allowed;">📊 Discussion Slides (Coming Soon)</a>
@@ -91,7 +179,7 @@ hide_toc: true
         </ul>
     </div>
 
-    <div class="structure-box">
+    <div class="structure-box" style="margin-bottom: 40px;">
         <strong>Common Phrases for Discussions</strong>
         <ul>
             <li><mark class="cyan">Agreeing:</mark> "I completely agree with you on that..."</li>
@@ -99,7 +187,93 @@ hide_toc: true
             <li><mark class="cyan">Clarifying:</mark> "Could you explain what you mean by..."</li>
         </ul>
     </div>
+
+    <hr style="border: 1px dashed rgba(255,255,255,0.1); margin: 50px 0;">
+
+    <h4>📝 Transcripts</h4>
+    <p style="margin-bottom: 30px;">Analyze how top candidates interact. Pay attention to the highlighted phrases used to <mark class="green">agree</mark>, <mark class="cyan">manage flow</mark>, and <mark class="yellow">disagree politely</mark>. Click the 🔊 icon to hear the pacing!</p>
+
+    <!-- Sub Tabs -->
+    <div class="topic-tabs">
+        <div class="topic-tab active" onclick="switchTopic('topic1', this)">📝 Topic 1: Artificial Intelligence</div>
+        <div class="topic-tab" onclick="switchTopic('topic2', this)">📝 Topic 2: Fast Fashion</div>
+    </div>
+
+    <!-- Topic 1 Content -->
+    <div id="topic1" class="topic-content show">
+        <div class="chat-container">
+            <!-- Candidate A (Left) -->
+            <div class="chat-message left">
+                <div class="speaker-name">Candidate A</div>
+                <div class="chat-bubble">
+                    <div>
+                        <mark class="cyan">I'd like to start by saying</mark> that AI is inevitably going to change how students learn. For instance, ChatGPT can help brainstorm ideas. <mark class="cyan">Does anyone else agree?</mark>
+                    </div>
+                    <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+                </div>
+            </div>
+
+            <!-- Candidate B (Right) -->
+            <div class="chat-message right">
+                <div class="speaker-name">Candidate B</div>
+                <div class="chat-bubble">
+                    <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+                    <div>
+                        <mark class="green">I completely agree with you.</mark> It’s a great tool. <mark class="yellow">However, we must also consider</mark> the risk of plagiarism. Students might rely on it too heavily instead of thinking critically.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Candidate C (Left) -->
+            <div class="chat-message left">
+                <div class="speaker-name">Candidate C</div>
+                <div class="chat-bubble">
+                    <div>
+                        <mark class="green">That's a very valid concern</mark>, Candidate B. <mark class="cyan">Building on that point,</mark> I think schools need to implement strict guidelines rather than banning AI altogether.
+                    </div>
+                    <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topic 2 Content -->
+    <div id="topic2" class="topic-content">
+        <div class="chat-container">
+            <!-- Candidate A (Left) -->
+            <div class="chat-message left">
+                <div class="speaker-name">Candidate A</div>
+                <div class="chat-bubble">
+                    <div>
+                        The main issue with fast fashion is the environmental impact. <mark class="cyan">To tackle this problem,</mark> we could launch a second-hand clothing exchange program at school.
+                    </div>
+                    <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+                </div>
+            </div>
+
+            <!-- Candidate C (Right) -->
+            <div class="chat-message right">
+                <div class="speaker-name">Candidate C</div>
+                <div class="chat-bubble">
+                    <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+                    <div>
+                        <mark class="green">I see where you're coming from</mark>, but <mark class="yellow">I'm afraid</mark> students might not want to wear second-hand clothes due to hygiene concerns. <mark class="cyan">Instead, why don't we</mark> host an upcycling workshop?
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    // Make sure switchTopic is in the global scope if this script runs isolated
+    window.switchTopic = function(topicId, element) {
+        document.querySelectorAll('.topic-tab').forEach(tab => tab.classList.remove('active'));
+        element.classList.add('active');
+        document.querySelectorAll('.topic-content').forEach(content => content.classList.remove('show'));
+        document.getElementById(topicId).classList.add('show');
+    };
+</script>
 
 <!-- INTERVIEW SKILLS -->
 <div id="interview" class="content-section">

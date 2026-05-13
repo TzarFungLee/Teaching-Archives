@@ -55,17 +55,38 @@ function toggleFullRow(td) {
 }
 
 // --- AUDIO ENGINE --- //
+window.audioSpeed = 'normal';
+function toggleAudioSpeed() {
+    window.audioSpeed = window.audioSpeed === 'normal' ? 'slow' : 'normal';
+    const btn = document.getElementById('speedToggleBtn');
+    if (btn) {
+        if (window.audioSpeed === 'normal') {
+            btn.innerHTML = '<span style="font-size: 0.85rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; margin-bottom: 3px; color: var(--accent);">AUDIO</span><span style="font-size: 0.75rem; line-height: 1; opacity: 0.85;">Slower</span>';
+            btn.style.background = 'rgba(255, 255, 255, 0.06)';
+            btn.style.color = 'var(--text)';
+            btn.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+        } else {
+            btn.innerHTML = '<span style="font-size: 0.85rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; margin-bottom: 3px; color: #fff;">AUDIO</span><span style="font-size: 0.75rem; line-height: 1; opacity: 1;">Slow: ON</span>';
+            btn.style.background = 'rgba(110, 193, 228, 0.2)';
+            btn.style.color = '#fff';
+            btn.style.borderColor = 'rgba(110, 193, 228, 0.4)';
+        }
+    }
+}
+
 let cachedBestVoice = null;
 function loadBestVoice() {
     if (cachedBestVoice) return;
     const voices = window.speechSynthesis.getVoices();
     if (voices.length === 0) return;
-    const targets = ["Serena", "Google UK English Female", "Martha", "Google UK English Male", "Daniel", "Samantha"];
-    for (let name of targets) {
-        cachedBestVoice = voices.find(v => v.name.includes(name));
-        if (cachedBestVoice) break;
-    }
-    if (!cachedBestVoice) cachedBestVoice = voices.find(v => v.lang.includes("en-GB"));
+    
+    // Force strictly Serena or a Female voice fallback
+    cachedBestVoice = voices.find(v => v.name.includes("Serena")) || 
+                      voices.find(v => v.name.includes("Google UK English Female")) ||
+                      voices.find(v => v.name.includes("Samantha")) ||
+                      voices.find(v => v.name.includes("Female") && v.lang.includes("en")) ||
+                      voices.find(v => v.lang === "en-GB") || 
+                      voices[0];
 }
 
 if (window.speechSynthesis) {
@@ -90,9 +111,9 @@ function speakBubble(bubble) {
         utterance.lang = 'en-GB';
     }
     
-    // Pillar 1, Rec 1: Default to clear slow speed
-    utterance.rate = 0.7; 
-    utterance.pitch = 1.1;
+    // Default to a natural speed, or slow down if toggled
+    utterance.rate = window.audioSpeed === 'slow' ? 0.55 : 0.9; 
+    utterance.pitch = 1.0;
     
     const originalTransform = bubble.style.transform || 'none';
     bubble.style.transform = "scale(1.15)";
@@ -143,8 +164,8 @@ function speakSentence(icon) {
             } else {
                 utterance.lang = 'en-GB';
             }
-            utterance.rate = 0.7;
-            utterance.pitch = 1.1;
+            utterance.rate = window.audioSpeed === 'slow' ? 0.55 : 0.9;
+            utterance.pitch = 1.0;
 
             utterance.onend = () => {
                 if (chunksToSpeak.length > 0) {
@@ -194,27 +215,22 @@ function generateTOC() {
         ul.appendChild(li);
     });
 
-    // Highlight active heading on scroll (Throttled)
-    let isScrolling;
-    window.addEventListener('scroll', () => {
-        window.cancelAnimationFrame(isScrolling);
-        isScrolling = window.requestAnimationFrame(() => {
-            let current = '';
-            headings.forEach(h3 => {
-                const top = h3.offsetTop;
-                if (pageYOffset >= top - 150) {
-                    current = h3.id;
-                }
-            });
-
-            tocContainer.querySelectorAll('a').forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href') === '#' + current) {
-                    a.classList.add('active');
-                }
-            });
+    // Highlight active heading on scroll using IntersectionObserver (Highly Performant)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const currentId = entry.target.id;
+                tocContainer.querySelectorAll('a').forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href') === '#' + currentId) {
+                        a.classList.add('active');
+                    }
+                });
+            }
         });
-    });
+    }, { rootMargin: '-10% 0px -80% 0px' }); // Trigger when heading is near the top
+
+    headings.forEach(h3 => observer.observe(h3));
 }
 
 // --- DOM READY --- //
@@ -227,14 +243,6 @@ document.addEventListener('DOMContentLoaded', function() {
             speakBubble(bubble);
         }
     }, true);
-
-    // Dynamic row handlers
-    document.querySelectorAll('.clickable-sentence').forEach(td => {
-        td.onclick = function(event) {
-            if (event.target.closest('.grammar-bubble, .v-bubble, .audio-icon')) return;
-            toggleFullRow(this);
-        };
-    });
 
     // Dynamic row handlers for revealing full answers
     document.querySelectorAll('.clickable-sentence').forEach(td => {
@@ -302,6 +310,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function renderSemanticFeedback(questionNum, isCorrect, explanation) {
     const feedbackEl = document.getElementById(`feedback${questionNum}`);
     const explanationEl = document.getElementById(`explanation${questionNum}`);
+    
+    if (!feedbackEl || !explanationEl) return;
     
     if (isCorrect) {
         feedbackEl.className = 'feedback correct';
