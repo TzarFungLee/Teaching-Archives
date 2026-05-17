@@ -62,11 +62,13 @@ function toggleAudioSpeed() {
     if (btn) {
         if (window.audioSpeed === 'normal') {
             btn.innerHTML = '<span style="font-size: 0.85rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; margin-bottom: 3px; color: var(--accent);">AUDIO</span><span style="font-size: 0.75rem; line-height: 1; opacity: 0.85;">Slower</span>';
-            btn.style.background = 'rgba(255, 255, 255, 0.06)';
-            btn.style.color = 'var(--text)';
-            btn.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+            btn.classList.remove('active');
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.style.borderColor = '';
         } else {
             btn.innerHTML = '<span style="font-size: 0.85rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; margin-bottom: 3px; color: #fff;">AUDIO</span><span style="font-size: 0.75rem; line-height: 1; opacity: 1;">Slow: ON</span>';
+            btn.classList.add('active');
             btn.style.background = 'rgba(110, 193, 228, 0.2)';
             btn.style.color = '#fff';
             btn.style.borderColor = 'rgba(110, 193, 228, 0.4)';

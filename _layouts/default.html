@@ -11,19 +11,25 @@
         rel="stylesheet">
     <style>
         :root {
-            --bg: #07131f;
-            --bg-alt: #0f1d31;
-            --surface: rgba(10, 20, 37, 0.94);
-            --surface-soft: rgba(14, 26, 46, 0.96);
-            --surface-hover: rgba(23, 40, 72, 0.95);
-            --text: #e7eef7;
-            --muted: #9ab5d1;
-            --border: rgba(255, 255, 255, 0.1);
-            --primary: #6ec1e4;
-            --primary-2: #3f8dbc;
-            --accent: #88d6ff;
-            --shadow: 0 30px 70px rgba(0, 0, 0, 0.24);
+            /* Stealth & Ice Theme */
+            --bg: #09090b;
+            --bg-alt: #18181b;
+            --surface: rgba(24, 24, 27, 0.85);
+            --surface-soft: rgba(39, 39, 42, 0.8);
+            --surface-hover: rgba(63, 63, 70, 0.85);
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.08);
+            --primary: #06b6d4; /* Electric Cyan */
+            --primary-2: #0891b2; /* Deep Cyan */
+            --accent: #22d3ee; /* Bright Ice Blue */
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --gradient-bg: radial-gradient(circle at top left, rgba(6, 182, 212, 0.08), transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(34, 211, 238, 0.05), transparent 25%),
+                linear-gradient(180deg, #09090b 0%, #18181b 50%, #000000 100%);
+            --hero-glow: radial-gradient(circle at center, rgba(6, 182, 212, 0.12), transparent 60%);
         }
+
 
         * {
             box-sizing: border-box;
@@ -35,9 +41,8 @@
 
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            background: radial-gradient(circle at top left, rgba(110, 193, 228, 0.18), transparent 20%),
-                radial-gradient(circle at 80% 10%, rgba(138, 196, 255, 0.12), transparent 18%),
-                linear-gradient(180deg, #07131f 0%, #06111f 42%, #091a2f 100%);
+            background: var(--gradient-bg);
+            background-attachment: fixed;
             color: var(--text);
             padding: 32px;
             line-height: 1.8;
@@ -108,7 +113,7 @@
         }
 
         h1 {
-            color: #f5fbff;
+            color: var(--text);
             margin-bottom: 12px;
             font-size: 3.4em;
             font-weight: 800;
@@ -117,7 +122,7 @@
         }
 
         h2 {
-            color: #9eb8d8;
+            color: var(--muted);
             margin-top: 0;
             margin-bottom: 24px;
             font-size: 1.6em;
@@ -134,14 +139,14 @@
         }
 
         h4 {
-            color: #d7e4f3;
+            color: var(--text);
             font-size: 1.45em;
             margin: 20px 0 10px 0;
             font-weight: 700;
         }
 
         .content {
-            background: rgba(10, 20, 37, 0.96);
+            background: var(--surface);
             padding: 60px; /* Increased padding for "More Content" feel */
             border-radius: 32px;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -160,14 +165,16 @@
         li {
             margin-bottom: 16px;
             font-size: 1.12rem;
-            color: #c7d5ed;
+            color: var(--text);
+            opacity: 0.9;
         }
 
         p {
             margin: 18px 0;
             font-size: 1.12rem;
             line-height: 1.85;
-            color: #c7d5ed;
+            color: var(--text);
+            opacity: 0.9;
         }
 
         mark {
@@ -278,15 +285,15 @@
         }
 
         .btn {
-            background: linear-gradient(135deg, #6ec1e4, #3f8dbc);
-            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--primary-2));
+            color: #fff !important;
             padding: 16px 34px;
             border-radius: 16px;
-            text-decoration: none;
+            text-decoration: none !important;
             border: none;
             font-size: 1.18rem;
             font-weight: 700;
-            box-shadow: 0 18px 40px rgba(26, 58, 92, 0.32);
+            box-shadow: 0 18px 40px rgba(26, 58, 92, 0.2);
             display: inline-block;
             margin: 18px 0;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -747,6 +754,12 @@
             color: #fff;
         }
 
+        .floating-side-btn.active {
+            background: var(--primary);
+            color: #07131f;
+            border-color: transparent;
+        }
+
         .floating-left {
             left: max(15px, calc((100vw - 1300px) / 4 - 32px));
         }
@@ -764,6 +777,7 @@
             }
         }
     </style>
+</head>
 </head>
 
 <body class="{% if page.url == '/' or page.url == '/index.html' %}home-page{% endif %}">
