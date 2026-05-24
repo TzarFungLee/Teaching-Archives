@@ -26,10 +26,219 @@ icon: "🧩"
 
 
 
-<h3>📊 Teaching Slides</h3>
-<div style="text-align: center; margin: 30px 0;">
-    <a href="https://docs.google.com/presentation/d/1-gP-MqyCADVQ6kIvGItkF4A0F7_HwgYs/preview" target="_blank" class="btn" style="padding: 12px 24px; font-size: 1.1rem;">📖 Open Teaching Slides</a>
+<div class="split-teaching-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin: 40px 0;">
+    <!-- Left Side: Slides -->
+    <div class="teaching-slides-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); padding: 30px; border-radius: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+        <h3 style="margin-top: 0; font-size: 1.6rem; color: var(--accent);">📊 Teaching Slides</h3>
+        <p style="font-size: 0.95rem; color: var(--muted); margin: 10px 0 20px 0;">Access the interactive lecture slides on the Second Conditional.</p>
+        <a href="https://docs.google.com/presentation/d/1-gP-MqyCADVQ6kIvGItkF4A0F7_HwgYs/preview" target="_blank" class="btn" style="margin: 0; padding: 12px 24px; font-size: 1.1rem; width: 100%;">📖 Open Teaching Slides</a>
+    </div>
+
+    <!-- Right Side: Song -->
+    <div class="teaching-song-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); padding: 30px; border-radius: 20px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+        <h3 style="margin-top: 0; font-size: 1.6rem; color: var(--primary);">🎵 Teaching Song</h3>
+        <p style="font-size: 0.95rem; color: var(--muted); margin: 10px 0 20px 0;">Study grammar structures in music with color-coded lyrics highlights.</p>
+        <button id="songToggleBtn" onclick="toggleSong()" class="btn" style="margin: 0; padding: 12px 24px; font-size: 1.1rem; width: 100%; cursor: pointer;">🎤 Open Teaching Song</button>
+    </div>
 </div>
+
+<div id="songContainer" style="display: none; background: rgba(10, 20, 37, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 35px; margin-top: 20px; box-shadow: var(--shadow); backdrop-filter: blur(12px); margin-bottom: 40px;">
+    
+    <!-- Hidden HTML5 Audio Element -->
+    <audio id="songAudio" src="{{ '/assets/audio/second-conditional-song.mp3' | relative_url }}"></audio>
+
+    <!-- Header & Info -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+        <h4 style="margin: 0; font-size: 1.4rem; color: var(--accent);">🎵 "Neon Glows Bright" - Teaching Song</h4>
+        <div class="legend" style="font-size: 0.95rem; color: var(--muted); user-select: none; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <strong>Grammar Focus:</strong> 
+            <strong class="g-if">If-Clause (Past Simple Verb)</strong> 
+            <span style="color: rgba(255,255,255,0.2);">|</span> 
+            <strong class="g-result">Main Clause (would / modal + base verb)</strong>
+        </div>
+    </div>
+
+    <!-- Custom Glassmorphic Audio Player Controls -->
+    <div class="audio-player-wrapper" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 15px 25px; margin-bottom: 30px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <!-- Play/Pause Button -->
+        <button id="playPauseBtn" onclick="togglePlay()" style="background: linear-gradient(135deg, var(--primary), var(--primary-2)); border: none; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(110, 193, 228, 0.3); outline: none;">
+            <span id="playIcon" style="font-size: 1.4rem; color: white; margin-left: 2px; user-select: none;">▶</span>
+        </button>
+
+        <!-- Timeline & Time Info -->
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 5px; min-width: 200px;">
+            <div id="timelineContainer" onclick="seekAudio(event)" style="background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; width: 100%; cursor: pointer; position: relative; overflow: hidden;">
+                <div id="audioProgress" style="background: var(--primary); height: 100%; width: 0%; border-radius: 4px; transition: width 0.1s linear;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); user-select: none;">
+                <span id="currentTime">0:00</span>
+                <span id="durationTime">0:00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lyrics Body -->
+    <div class="lyrics-body" style="font-family: inherit; font-size: 1.15rem; line-height: 2.4; text-align: center; color: #d7e4f4; max-height: 500px; overflow-y: auto; padding: 10px 20px; background: rgba(0,0,0,0.15); border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); scroll-behavior: smooth;">
+        <style>
+            /* Base lyric line spacing and transition */
+            .lyric-line {
+                color: rgba(215, 228, 244, 0.4); /* Muted blue-grey for inactive lines */
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                display: inline-block;
+                width: 100%;
+                padding: 4px 0;
+            }
+
+            /* Active line text brightness */
+            .lyric-line.active {
+                color: #ffffff;
+                text-shadow: 0 0 12px rgba(136, 214, 255, 0.2);
+                transform: scale(1.01);
+            }
+
+            /* Legend Indicator Badges */
+            .legend strong.g-if {
+                color: #00f0ff;
+                text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+                border: 1px solid rgba(0, 240, 255, 0.25);
+                background: rgba(0, 240, 255, 0.05);
+                padding: 2px 8px;
+                border-radius: 6px;
+                display: inline-block;
+            }
+            .legend strong.g-result {
+                color: #ffde59;
+                text-shadow: 0 0 8px rgba(255, 222, 89, 0.3);
+                border: 1px solid rgba(255, 222, 89, 0.25);
+                background: rgba(255, 222, 89, 0.05);
+                padding: 2px 8px;
+                border-radius: 6px;
+                display: inline-block;
+            }
+
+            /* Base style for target grammar elements */
+            .lyric-line strong {
+                font-weight: 800;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                padding: 2px 6px;
+                border-radius: 6px;
+                border: 1px solid transparent;
+                display: inline-block;
+                position: relative; /* For pseudo-element underline positioning */
+            }
+
+            /* Pseudo-element for expanding underline */
+            .lyric-line strong::after {
+                content: '';
+                position: absolute;
+                bottom: 2px;
+                left: 6px;
+                right: 6px;
+                height: 2px;
+                border-radius: 2px;
+                transform: scaleX(0);
+                transform-origin: center;
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            /* -- IF-CLAUSE (Cyan) -- */
+            /* Inactive: semi-transparent, readable color */
+            .lyric-line strong.g-if {
+                color: rgba(92, 225, 230, 0.65);
+            }
+            /* Active: bright cyan glow and expanding underline */
+            .lyric-line.active strong.g-if {
+                color: #00f0ff;
+                text-shadow: 0 0 8px rgba(0, 240, 255, 0.8), 0 0 20px rgba(0, 240, 255, 0.4);
+                border-color: rgba(0, 240, 255, 0.3);
+                background: rgba(0, 240, 255, 0.06);
+                transform: scale(1.08);
+            }
+            .lyric-line.active strong.g-if::after {
+                background: #00f0ff;
+                box-shadow: 0 0 8px #00f0ff;
+                transform: scaleX(1);
+            }
+
+            /* -- RESULT-CLAUSE (Yellow/Orange) -- */
+            /* Inactive: semi-transparent, readable color */
+            .lyric-line strong.g-result {
+                color: rgba(255, 222, 89, 0.65);
+            }
+            /* Active: bright yellow glow and expanding underline */
+            .lyric-line.active strong.g-result {
+                color: #ffde59;
+                text-shadow: 0 0 8px rgba(255, 222, 89, 0.8), 0 0 20px rgba(255, 222, 89, 0.4);
+                border-color: rgba(255, 222, 89, 0.3);
+                background: rgba(255, 222, 89, 0.06);
+                transform: scale(1.08);
+            }
+            .lyric-line.active strong.g-result::after {
+                background: #ffde59;
+                box-shadow: 0 0 8px #ffde59;
+                transform: scaleX(1);
+            }
+        </style>
+        <!-- Intro -->
+        <p style="margin-bottom: 30px;">
+            <span class="lyric-line" id="line-1" data-start="14.45" data-end="21.0">If I <strong class="g-if">stayed</strong> silent, I <strong class="g-result">would hear</strong> the constant hum.</span><br>
+            <span class="lyric-line" id="line-2" data-start="22.2" data-end="29.0">If I <strong class="g-if">drove</strong> further, I <strong class="g-result">would see</strong> where I came from.</span>
+        </p>
+        
+        <!-- Verse 1 -->
+        <p style="margin-bottom: 30px;">
+            <span class="lyric-line" id="line-3" data-start="31.3" data-end="35.0">If I <strong class="g-if">drove</strong> faster, I <strong class="g-result">would escape</strong> the stress,</span><br>
+            <span class="lyric-line" id="line-4" data-start="35.2" data-end="39.0">If the streets <strong class="g-if">were</strong> empty, I <strong class="g-result">would fix</strong> this mess.</span><br>
+            <span class="lyric-line" id="line-5" data-start="39.1" data-end="43.0">If I <strong class="g-if">turned</strong> left where the neon glows bright,</span><br>
+            <span class="lyric-line" id="line-6" data-start="43.1" data-end="47.0">I <strong class="g-result">would find</strong> a reason to change the night.</span>
+        </p>
+
+        <!-- Buildup -->
+        <p style="margin-bottom: 30px; font-style: italic; opacity: 0.85;">
+            <span class="lyric-line" id="line-7" data-start="47.1" data-end="54.0">If I <strong class="g-if">voiced</strong> my thoughts, I <strong class="g-result">would feel</strong> the sound,</span><br>
+            <span class="lyric-line" id="line-8" data-start="55.0" data-end="64.0">If I <strong class="g-if">stopped</strong> the car, I <strong class="g-result">would look</strong> around.</span>
+        </p>
+
+        <!-- Chorus -->
+        <p style="margin-bottom: 30px; font-weight: bold; border-left: 2px solid rgba(110, 193, 228, 0.3); border-right: 2px solid rgba(110, 193, 228, 0.3); padding: 0 15px; background: rgba(255, 255, 255, 0.01); border-radius: 8px;">
+            <span class="lyric-line" id="line-9" data-start="63.5" data-end="71.9">If the city lights <strong class="g-if">were</strong> dimmer, I <strong class="g-result">would not be</strong> alone,</span><br>
+            <span class="lyric-line" id="line-10" data-start="72.0" data-end="79.0">If you <strong class="g-if">were</strong> here, I <strong class="g-result">would call</strong> your secret phone.</span><br>
+            <span class="lyric-line" id="line-11" data-start="79.2" data-end="86.0">If I <strong class="g-if">were</strong> courageous, I <strong class="g-result">would stop</strong> the car,</span><br>
+            <span class="lyric-line" id="line-12" data-start="86.2" data-end="94.0">If I <strong class="g-if">knew</strong> the destination, I <strong class="g-result">would not be</strong> far.</span>
+        </p>
+
+        <!-- Verse 2 -->
+        <p style="margin-bottom: 30px;">
+            <span class="lyric-line" id="line-13" data-start="94.8" data-end="100.0">If I <strong class="g-if">reached</strong> the horizon, I <strong class="g-result">would see</strong> the sea,</span><br>
+            <span class="lyric-line" id="line-14" data-start="100.2" data-end="109.0">If I <strong class="g-if">let</strong> go of the past, I <strong class="g-result">would finally be</strong> free.</span><br>
+            <span class="lyric-line" id="line-15" data-start="109.1" data-end="113.0">If the radio <strong class="g-if">played</strong> a song that we once knew,</span><br>
+            <span class="lyric-line" id="line-16" data-start="113.1" data-end="120.0">I <strong class="g-result">would see</strong> my reflection and <strong class="g-result">think</strong> of you.</span>
+        </p>
+
+        <!-- Buildup -->
+        <p style="margin-bottom: 30px; font-style: italic; opacity: 0.85;">
+            <span class="lyric-line" id="line-17" data-start="120.1" data-end="126.0">If I <strong class="g-if">changed</strong> my mind, I <strong class="g-result">would turn</strong> around,</span><br>
+            <span class="lyric-line" id="line-18" data-start="126.1" data-end="135.0">If I <strong class="g-if">heard</strong> your whisper, I <strong class="g-result">would like</strong> the sound.</span>
+        </p>
+
+        <!-- Chorus -->
+        <p style="margin-bottom: 30px; font-weight: bold; border-left: 2px solid rgba(110, 193, 228, 0.3); border-right: 2px solid rgba(110, 193, 228, 0.3); padding: 0 15px; background: rgba(255, 255, 255, 0.01); border-radius: 8px;">
+            <span class="lyric-line" id="line-19" data-start="135.2" data-end="143.0">If the city lights <strong class="g-if">were</strong> dimmer, I <strong class="g-result">would not be</strong> alone,</span><br>
+            <span class="lyric-line" id="line-20" data-start="143.1" data-end="150.0">If you <strong class="g-if">were</strong> here, I <strong class="g-result">would call</strong> your secret phone.</span><br>
+            <span class="lyric-line" id="line-21" data-start="150.1" data-end="157.0">If I <strong class="g-if">were</strong> courageous, I <strong class="g-result">would stop</strong> the car,</span><br>
+            <span class="lyric-line" id="line-22" data-start="157.1" data-end="167.0">If I <strong class="g-if">knew</strong> the destination, I <strong class="g-result">would not be</strong> far.</span>
+        </p>
+
+        <!-- Outro -->
+        <p style="margin-bottom: 30px; color: var(--muted);">
+            <span class="lyric-line" id="line-23" data-start="167.6" data-end="174.0">If I <strong class="g-if">stayed</strong> here, <strong class="g-result">would</strong> you <strong class="g-result">stay</strong> too?</span><br>
+            <span class="lyric-line" id="line-24" data-start="174.1" data-end="183.0">If I <strong class="g-if">were</strong> a phantom, <strong class="g-result">would</strong> I still <strong class="g-result">love</strong> you?</span><br>
+            <span class="lyric-line" id="line-25" data-start="183.1" data-end="191.0">If I <strong class="g-if">were</strong> you, <strong class="g-result">would</strong> I <strong class="g-result">feel</strong> this regret?</span><br>
+            <span class="lyric-line" id="line-26" data-start="191.1" data-end="202.0">If I <strong class="g-if">were</strong> you, <strong class="g-result">would</strong> I ever <strong class="g-result">forget</strong>?</span>
+        </p>
+    </div>
+</div>
+
 
         <hr>
 
@@ -516,5 +725,132 @@ icon: "🧩"
         document.getElementById('ifClauseVerb').textContent = pastSimple;
         document.getElementById('mainClauseVerb').textContent = verb;
         document.getElementById('transformResult').style.display = 'block';
+    }
+
+    // --- Custom Audio Player & Toggle Song Lyrics Logic ---
+    let audio;
+    let playPauseBtn;
+    let playIcon;
+    let progressBar;
+    let currentTimeText;
+    let durationTimeText;
+
+    function initAudioPlayer() {
+        audio = document.getElementById('songAudio');
+        playPauseBtn = document.getElementById('playPauseBtn');
+        playIcon = document.getElementById('playIcon');
+        progressBar = document.getElementById('audioProgress');
+        currentTimeText = document.getElementById('currentTime');
+        durationTimeText = document.getElementById('durationTime');
+
+        if (!audio) return;
+
+        // Time Update Listener
+        audio.addEventListener('timeupdate', () => {
+            const current = audio.currentTime;
+            const duration = audio.duration;
+            if (!isNaN(duration)) {
+                const percentage = (current / duration) * 100;
+                progressBar.style.width = percentage + '%';
+                currentTimeText.textContent = formatTime(current);
+            }
+
+            // Karaoke Style Highlight & Center Auto-Scroll
+            const lines = document.querySelectorAll('.lyric-line');
+            const container = document.querySelector('.lyrics-body');
+            let activeLine = null;
+
+            lines.forEach(line => {
+                const start = parseFloat(line.getAttribute('data-start'));
+                const end = parseFloat(line.getAttribute('data-end'));
+                if (current >= start && current <= end) {
+                    line.classList.add('active');
+                    activeLine = line;
+                } else {
+                    line.classList.remove('active');
+                }
+            });
+
+            if (activeLine && container) {
+                if (container.dataset.activeId !== activeLine.id) {
+                    container.dataset.activeId = activeLine.id;
+                    const containerHeight = container.clientHeight;
+                    // Calculate position relative to container by subtracting container's offsetTop if needed
+                    const lineOffsetTop = activeLine.offsetTop - container.offsetTop;
+                    const lineLimit = container.scrollHeight - containerHeight;
+                    const targetScroll = Math.min(lineLimit, Math.max(0, lineOffsetTop - (containerHeight / 2) + 20));
+                    container.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                }
+            }
+        });
+
+        // Duration Loaded Listener
+        audio.addEventListener('loadedmetadata', () => {
+            durationTimeText.textContent = formatTime(audio.duration);
+        });
+
+        // Reset Player when Song Ends
+        audio.addEventListener('ended', () => {
+            playIcon.textContent = '▶';
+            progressBar.style.width = '0%';
+            currentTimeText.textContent = '0:00';
+        });
+    }
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function togglePlay() {
+        if (!audio) initAudioPlayer();
+        if (!audio) return;
+        
+        if (audio.paused) {
+            audio.play();
+            playIcon.textContent = '⏸';
+        } else {
+            audio.pause();
+            playIcon.textContent = '▶';
+        }
+    }
+
+    function seekAudio(event) {
+        if (!audio) initAudioPlayer();
+        if (!audio) return;
+        
+        const rect = document.getElementById('timelineContainer').getBoundingClientRect();
+        const clickX = event.clientX - rect.left;
+        const width = rect.width;
+        const duration = audio.duration;
+        
+        if (!isNaN(duration)) {
+            audio.currentTime = (clickX / width) * duration;
+        }
+    }
+
+    function toggleSong() {
+        const container = document.getElementById('songContainer');
+        const btn = document.getElementById('songToggleBtn');
+        if (!container || !btn) return;
+        
+        if (container.style.display === 'none' || !container.style.display) {
+            container.style.display = 'block';
+            container.style.animation = 'fadeIn 0.4s ease';
+            btn.innerHTML = '✕ Close Teaching Song';
+            initAudioPlayer();
+            setTimeout(() => {
+                container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        } else {
+            container.style.display = 'none';
+            btn.innerHTML = '🎤 Open Teaching Song';
+            // Pause song if closed
+            if (audio && !audio.paused) {
+                audio.pause();
+                playIcon.textContent = '▶';
+            }
+        }
     }
 </script>

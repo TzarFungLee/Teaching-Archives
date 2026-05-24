@@ -10,3 +10,4 @@ exclude:
   - vendor
   - node_modules
   - Gemfile.lock
+  - gemini.md
