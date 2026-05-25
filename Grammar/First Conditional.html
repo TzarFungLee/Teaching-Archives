@@ -231,13 +231,11 @@ icon: "🧩"
 
         <!-- Outro -->
         <p style="margin-bottom: 30px; color: var(--muted);">
-            <span class="lyric-line" id="line-25" data-start="139.8" data-end="143.2">If the time <strong class="g-if">is</strong> up, I <strong class="g-result">will drop</strong> the pen.</span><br>
-            <span class="lyric-line" id="line-26" data-start="143.3" data-end="148.0">If they <strong class="g-if">take</strong> the sheet, I <strong class="g-result">will breathe</strong> again.</span><br>
-            <span class="lyric-line" id="line-27" data-start="148.1" data-end="151.2">If we <strong class="g-if">walk</strong> outside, we <strong class="g-result">will feel</strong> the sun.</span><br>
-            <span class="lyric-line" id="line-28" data-start="151.3" data-end="157.0">If we <strong class="g-if">walk</strong> outside, we <strong class="g-result">will be</strong> done.</span>
+            <span class="lyric-line" id="line-25" data-start="98.0" data-end="101.5">If the time <strong class="g-if">is</strong> up, I <strong class="g-result">will drop</strong> the pen.</span><br>
+            <span class="lyric-line" id="line-26" data-start="101.6" data-end="106.2">If they <strong class="g-if">take</strong> the sheet, I <strong class="g-result">will breathe</strong> again.</span><br>
+            <span class="lyric-line" id="line-27" data-start="106.9" data-end="109.2">If we <strong class="g-if">walk</strong> outside, we <strong class="g-result">will feel</strong> the sun.</span><br>
+            <span class="lyric-line" id="line-28" data-start="109.3" data-end="112.0">If we <strong class="g-if">walk</strong> outside, we <strong class="g-result">will be</strong> done.</span>
         </p>
-    </div>
-</div>
     </div>
 </div>
 
@@ -443,7 +441,7 @@ icon: "🧩"
                     const lineOffsetTop = activeLine.offsetTop - container.offsetTop;
                     const lineLimit = container.scrollHeight - containerHeight;
                     const targetScroll = Math.min(lineLimit, Math.max(0, lineOffsetTop - (containerHeight / 2) + 20));
-                    container.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                    container.scrollTop = targetScroll;
                 }
             }
         });
@@ -489,8 +487,11 @@ icon: "🧩"
         const width = rect.width;
         const duration = audio.duration;
         
-        if (!isNaN(duration)) {
-            audio.currentTime = (clickX / width) * duration;
+        if (!isNaN(duration) && isFinite(duration) && duration > 0 && width > 0) {
+            let targetTime = (clickX / width) * duration;
+            if (targetTime < 0) targetTime = 0;
+            if (targetTime > duration) targetTime = duration;
+            audio.currentTime = targetTime;
         }
     }
 
