@@ -18,11 +18,7 @@ icon: "📝"
 </div>
 
 <script>
-    let checkedQuestions = new Set();
-    let currentQuestions = [];
-    let answers = {};
-    
-    // Question bank with all possible questions
+    // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
     const questionBank = [
         {
             question: "I _____ visit my grandmother tomorrow.",
@@ -145,113 +141,5 @@ icon: "📝"
             explanation: "Use 'will' to express possibility about future events."
         }
     ];
-
-    // Shuffle array function
-    function shuffle(array) {
-        const newArray = [...array];
-        for (let i = newArray.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-        }
-        return newArray;
-    }
-
-    // Generate quiz on page load
-    function generateQuiz() {
-        // Shuffle and select 12 random questions
-        const shuffled = shuffle(questionBank);
-        currentQuestions = shuffled.slice(0, 12);
-        
-        // Generate HTML for questions
-        const quizForm = document.getElementById('quizForm');
-        quizForm.innerHTML = '';
-        
-        currentQuestions.forEach((q, index) => {
-            const questionNum = index + 1;
-            const questionId = `q${questionNum}`;
-            
-            // Shuffle options
-            const shuffledOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
-            const shuffledOptionsArray = shuffle(shuffledOptions);
-            
-            // Find correct answer index after shuffle
-            const correctIndex = shuffledOptionsArray.findIndex(opt => opt.isCorrect);
-            answers[questionId] = String.fromCharCode(97 + correctIndex); // 'a', 'b', 'c', etc.
-            
-            // Build question HTML
-            const questionHTML = `
-            <div class="question">
-                <div class="question-text">${questionNum}. ${q.question} <span class="audio-icon" onclick="speakSentence(this)">🔊</span></div>
-                <div class="options">
-                    ${shuffledOptionsArray.map((opt, idx) => `
-                    <label class="option">
-                        <input type="radio" name="${questionId}" value="${String.fromCharCode(97 + idx)}">
-                        ${opt.text}
-                    </label>`).join('')}
-                </div>
-                <div class="feedback" id="feedback${questionNum}"></div>
-                <div class="explanation" id="explanation${questionNum}">
-                    ${q.explanation}
-                </div>
-                <button type="button" class="check-btn" onclick="checkQuestion(${questionNum})">Check Answer</button>
-            </div>`;
-            
-            quizForm.innerHTML += questionHTML;
-        });
-    }
-
-    // Initialize quiz on page load
-    window.addEventListener('DOMContentLoaded', generateQuiz);
-
-    function checkQuestion(questionNum) {
-        const question = `q${questionNum}`;
-        const selected = document.querySelector(`input[name="${question}"]:checked`);
-        
-        if (!selected) {
-            alert('Please select an answer first.');
-            return;
-        }
-
-        const isCorrect = (selected.value === answers[question]);
-        renderSemanticFeedback(questionNum, isCorrect);
-        
-        const button = event.target;
-        button.disabled = true;
-        button.textContent = 'Checked ✓';
-        
-        checkedQuestions.add(questionNum);
-        updateProgress();
-    }
-    
-    function updateProgress() {
-        const totalQuestions = Object.keys(answers).length;
-        const checked = checkedQuestions.size;
-        const progressText = document.getElementById('progressText');
-        
-        if (checked === 0) {
-            progressText.textContent = 'Answer the questions below';
-        } else if (checked === totalQuestions) {
-            const correctCount = Array.from(checkedQuestions).filter(num => {
-                const question = `q${num}`;
-                const selected = document.querySelector(`input[name="${question}"]:checked`);
-                return selected && selected.value === answers[question];
-            }).length;
-            
-            progressText.textContent = `Quiz Complete! Score: ${correctCount}/${totalQuestions}`;
-        } else {
-            progressText.textContent = `Progress: ${checked}/${totalQuestions} questions checked`;
-        }
-    }
-
-    function resetQuiz() {
-        // Regenerate the quiz with new random questions
-        generateQuiz();
-        
-        // Reset progress
-        checkedQuestions.clear();
-        updateProgress();
-        
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 </script>
+<script src="{{ '/assets/js/quiz-engine.js' | relative_url }}"></script>

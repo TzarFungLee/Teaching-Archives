@@ -14,11 +14,13 @@ This file serves as persistent memory and instructions for Gemini (Antigravity) 
 ## 🛠️ Key Coding & Design Guidelines
 
 ### 1. Interactivity & Quizzes
-* All quiz HTML files in `/Quizzes` use embedded script tags for interactive grading, feedback, and scoring.
-* **CRITICAL**: When modifying quiz files, preserve the original interactive script logic unless explicitly asked to upgrade the quiz engine.
+* All quizzes share one engine: `/assets/js/quiz-engine.js` (rendering, checking, scoring, progress, reset).
+* Each quiz HTML file in `/Quizzes` contains ONLY its data: a `questionBank` array of `{ question, options, correct, explanation }`, or a `buildQuestions()` function returning 12 ready questions (see `Second Conditional - Quiz.html`), followed by the engine `<script src>` tag.
+* **CRITICAL**: Fix engine bugs once in `quiz-engine.js` — never re-embed engine logic in individual quiz files. New quizzes = question data + engine script tag only.
 
 ### 2. Design & Aesthetics
-* Maintain a premium, modern, cohesive look. Use glassmorphic elements (`backdrop-filter`), CSS variables for themes (defined in `/assets/css/main.css`), clean typography, and smooth transitions.
+* Maintain a premium, modern, cohesive look. Use glassmorphic elements (`backdrop-filter`), CSS variables for themes, clean typography, and smooth transitions.
+* The entire design system ("Stealth & Ice" theme) lives in `/assets/css/main.css`, linked from `_layouts/default.html`. Do NOT add `<style>` blocks to the layout; add shared styles to the stylesheet.
 * Ensure cards, grid items, and lists are responsive, center-balanced, and highly legible.
 
 ### 3. File Organization
@@ -55,6 +57,7 @@ When implementing or modifying interactive teaching songs with synchronized lyri
 ## 📝 Persistent Session Notes
 *Use this section to store notes, preferences, or variables that need to persist across sessions.*
 
-* **Current State**: Second Conditional song player fully implemented and audited.
+* **Current State**: Second Conditional song player fully implemented and audited. July 2026 refactor: quiz engine centralized in `/assets/js/quiz-engine.js`, layout CSS extracted to `/assets/css/main.css`, Lunr.js removed (search is strict title-substring by design), home-page category tiles are real `<button>` elements with a 2-column mobile grid.
 * **Preferences**: 
-  - Excluded `gemini.md` from Jekyll builds in `_config.yml`.
+  - Excluded `gemini.md`, `scratch/`, `README.md` from Jekyll builds in `_config.yml`.
+  - One-off migration scripts live in `/scratch` and must never be re-run against converted pages.

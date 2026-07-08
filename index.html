@@ -49,7 +49,7 @@ hide_toc: true
     }
 
     .category-box {
-        outline: none;
+        font-family: inherit;
         background: var(--surface-soft);
         border: 1px solid var(--border);
         border-radius: 20px;
@@ -67,7 +67,8 @@ hide_toc: true
         height: 150px;
     }
 
-    .category-box:hover {
+    .category-box:hover,
+    .category-box:focus-visible {
         transform: translateY(-8px);
         background: var(--surface-hover);
         border-color: var(--primary);
@@ -192,9 +193,39 @@ hide_toc: true
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
-</style>
-<script src="https://unpkg.com/lunr/lunr.js"></script>
 
+    /* Small screens: let the portal scroll and stack the category tiles */
+    @media (max-width: 820px) {
+        body.home-page {
+            overflow: auto;
+        }
+
+        .hero-section {
+            height: auto;
+            min-height: 100vh;
+            padding: 60px 20px 10vh;
+        }
+
+        .hero-title {
+            font-size: 2.6rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            margin-bottom: 40px;
+        }
+
+        .category-grid {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 500px;
+        }
+
+        .results-container {
+            padding: 30px 16px;
+        }
+    }
+</style>
 <div class="hero-section">
     <h1 class="hero-title">LTF Teaching Archives</h1>
 
@@ -205,26 +236,26 @@ hide_toc: true
     </div>
 
     <div class="category-grid" id="categoryGrid">
-        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Grammar')">
+        <button type="button" class="category-box" onclick="filterCategory('Grammar')">
             <i>🧩</i>
             <span>Grammar</span>
-        </div>
-        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Reading')">
+        </button>
+        <button type="button" class="category-box" onclick="filterCategory('Reading')">
             <i>📖</i>
             <span>Reading</span>
-        </div>
-        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Writing')">
+        </button>
+        <button type="button" class="category-box" onclick="filterCategory('Writing')">
             <i>✍️</i>
             <span>Writing</span>
-        </div>
-        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Listening')">
+        </button>
+        <button type="button" class="category-box" onclick="filterCategory('Listening')">
             <i>🎧</i>
             <span>Listening</span>
-        </div>
-        <div tabindex="0" role="button" class="category-box" onclick="filterCategory('Speaking')">
+        </button>
+        <button type="button" class="category-box" onclick="filterCategory('Speaking')">
             <i>🗣️</i>
             <span>Speaking</span>
-        </div>
+        </button>
     </div>
 
     <div id="resultsWrapper" class="results-container">
@@ -238,26 +269,13 @@ hide_toc: true
 
 <script>
     let resources = [];
-    let idx;
 
     async function init() {
         try {
             const resp = await fetch('{{ "/assets/js/search-data.json" | relative_url }}');
             resources = await resp.json();
             resources.sort((a, b) => a.title.localeCompare(b.title));
-            
-            // Initialize Lunr index
-            idx = lunr(function () {
-                this.ref('url');
-                this.field('title', { boost: 10 });
-                this.field('category', { boost: 5 });
-                this.field('content');
 
-                resources.forEach(doc => {
-                    this.add(doc);
-                });
-            });
-            
             console.log('📦 Search index built with ' + resources.length + ' items');
 
             // Handle incoming category filter from URL (Smart Back)
@@ -286,10 +304,6 @@ hide_toc: true
     window.addEventListener('hashchange', handleHashNavigation);
 
     init();
-    
-    // Prevent scrolling on home page
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
 
     // Keyboard shortcuts
     window.addEventListener('keydown', (e) => {
@@ -398,38 +412,5 @@ hide_toc: true
 
         // Always scroll to results for better UX
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function createCard(item, overrideTitle = null) {
-        const link = document.createElement('a');
-        link.className = 'resource-card';
-        link.href = item.file;
-        
-        const displayTitle = overrideTitle || item.title.replace(/^Quiz[:\s-]+/i, '').trim();
-
-        let tagColor = 'rgba(255,255,255,0.2)';
-        if (item.category === 'Grammar') tagColor = 'rgba(110, 193, 228, 0.3)';
-        else if (item.category === 'Quizzes') tagColor = 'rgba(255, 107, 107, 0.3)';
-        else if (item.category === 'Reading') tagColor = 'rgba(74, 222, 128, 0.3)';
-        else if (item.category === 'Listening') tagColor = 'rgba(167, 139, 250, 0.3)';
-        else if (item.category === 'Writing') tagColor = 'rgba(251, 159, 67, 0.3)';
-
-        const tagSpan = document.createElement('span');
-        tagSpan.className = 'cat-tag';
-        tagSpan.style.cssText = `background: ${tagColor}; padding: 4px 10px; border-radius: 6px; color: #fff; margin-bottom: 12px; display: inline-block;`;
-        tagSpan.textContent = `${item.icon || '📄'} ${item.category}`;
-
-        const titleH3 = document.createElement('h3');
-        titleH3.style.cssText = 'text-align: center; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 2px; margin: 0; width: fit-content;';
-        titleH3.textContent = displayTitle;
-
-        link.appendChild(tagSpan);
-        link.appendChild(titleH3);
-        link.style.display = 'flex';
-        link.style.flexDirection = 'column';
-        link.style.alignItems = 'center';
-        link.style.justifyContent = 'center';
-        link.style.textAlign = 'center';
-        return link;
     }
 </script>

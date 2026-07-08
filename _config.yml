@@ -11,3 +11,6 @@ exclude:
   - node_modules
   - Gemfile.lock
   - gemini.md
+  - scratch
+  - README.md
+  - jekyll.log
