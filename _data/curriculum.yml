@@ -1,0 +1,75 @@
+# LTF Teaching Archives — curriculum structure.
+# THE single source of truth for unit grouping and lesson order.
+#
+# Adding a lesson  = one line under its unit (slug + optional quiz).
+# Adding a unit    = a new block (unit / icon / lessons).
+# Reordering       = move lines. Nothing else on the site needs editing.
+#
+# Fail-soft: pages NOT listed here still appear in a "More resources"
+# section at the bottom of their category — nothing can go invisible.
+#
+# Future (Writing): lessons there will also carry `level:` (e.g. P4/P5/DSE)
+# for multi-level filtering. Grammar stays single-level by design.
+
+grammar:
+  - unit: "Foundations"
+    icon: "🧱"
+    lessons:
+      - slug: /grammar/pronoun-table/
+        quiz: /quizzes/pronoun-table-quiz/
+
+  - unit: "Tenses"
+    icon: "🕒"
+    lessons:
+      - slug: /grammar/tenses/          # overview first: the map before the territory
+        quiz: /quizzes/tenses-quiz/
+      - slug: /grammar/simple-present-tense/
+        quiz: /quizzes/simple-present-tense-quiz/
+      - slug: /grammar/present-continuous-tense/
+        quiz: /quizzes/present-continuous-tense-quiz/
+      - slug: /grammar/simple-past-tense/
+        quiz: /quizzes/simple-past-tense-quiz/
+      - slug: /grammar/past-continuous-tense/
+        quiz: /quizzes/past-continuous-tense-quiz/
+      - slug: /grammar/simple-future-tense/
+        quiz: /quizzes/simple-future-tense-quiz/
+
+  - unit: "Describing Things"
+    icon: "🎨"
+    lessons:
+      - slug: /grammar/comparative-and-superlative-adjectives/
+        quiz: /quizzes/comparative-and-superlative-adjectives-quiz/
+      - slug: /grammar/prepositions-of-movement/
+        quiz: /quizzes/prepositions-of-movement-quiz/
+
+  - unit: "Linking Ideas"
+    icon: "🔗"
+    lessons:
+      - slug: /grammar/connectives-because-since-so/
+        quiz: /quizzes/connectives-because-since-so-quiz/
+      - slug: /grammar/connectives-so-therefore-as-a-result/
+        quiz: /quizzes/connectives-so-therefore-as-a-result-quiz/
+      - slug: /grammar/so-that-so-as-to/
+        quiz: /quizzes/so-that-so-as-to-quiz/
+      - slug: /grammar/adverbs-of-sequence/
+        quiz: /quizzes/adverbs-of-sequence-quiz/
+
+  - unit: "Modality & Condition"
+    icon: "⚖️"
+    lessons:
+      - slug: /grammar/must-have-to-need-to/
+        quiz: /quizzes/must-have-to-need-to-quiz/
+      - slug: /grammar/first-conditional/
+        quiz: /quizzes/first-conditional-quiz/
+      - slug: /grammar/unless/
+        quiz: /quizzes/unless-quiz/
+      - slug: /grammar/second-conditional/
+        quiz: /quizzes/second-conditional-quiz/
+
+  - unit: "Sentence Structures"
+    icon: "🏗️"
+    lessons:
+      - slug: /grammar/passive-voice/
+        quiz: /quizzes/passive-voice-quiz/
+      - slug: /grammar/defining-non-defining-relative-clauses/
+        quiz: /quizzes/defining-non-defining-relative-clauses-quiz/

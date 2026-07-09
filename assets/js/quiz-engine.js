@@ -11,6 +11,7 @@
  */
 
 const QUESTION_COUNT = 12;
+const STORAGE_KEY = 'ltf-quiz:' + window.location.pathname;
 
 let checkedQuestions = new Set();
 let currentQuestions = [];
@@ -49,7 +50,7 @@ function generateQuiz() {
         answers[questionId] = String.fromCharCode(97 + q.correct); // 'a', 'b', 'c', ...
 
         const questionHTML = `
-        <div class="question">
+        <div class="question" id="question${questionNum}">
             <div class="question-text">${questionNum}. ${q.question} <span class="audio-icon" onclick="speakSentence(this)">🔊</span></div>
             <div class="options">
                 ${q.options.map((opt, idx) => `
@@ -67,6 +68,8 @@ function generateQuiz() {
 
         quizForm.innerHTML += questionHTML;
     });
+
+    showLastAttempt();
 }
 
 window.addEventListener('DOMContentLoaded', generateQuiz);
@@ -74,9 +77,11 @@ window.addEventListener('DOMContentLoaded', generateQuiz);
 function checkQuestion(questionNum) {
     const question = `q${questionNum}`;
     const selected = document.querySelector(`input[name="${question}"]:checked`);
+    const feedbackEl = document.getElementById(`feedback${questionNum}`);
 
     if (!selected) {
-        alert('Please select an answer first.');
+        feedbackEl.className = 'feedback nudge';
+        feedbackEl.innerHTML = '<span>👆 Choose an answer first.</span>';
         return;
     }
 
@@ -91,29 +96,82 @@ function checkQuestion(questionNum) {
     updateProgress();
 }
 
+function isQuestionCorrect(num) {
+    const selected = document.querySelector(`input[name="q${num}"]:checked`);
+    return selected && selected.value === answers[`q${num}`];
+}
+
 function updateProgress() {
     const totalQuestions = Object.keys(answers).length;
     const checked = checkedQuestions.size;
     const progressText = document.getElementById('progressText');
+    const summary = getSummaryEl();
 
     if (checked === 0) {
         progressText.textContent = 'Answer the questions below';
+        summary.innerHTML = '';
     } else if (checked === totalQuestions) {
-        const correctCount = Array.from(checkedQuestions).filter(num => {
-            const question = `q${num}`;
-            const selected = document.querySelector(`input[name="${question}"]:checked`);
-            return selected && selected.value === answers[question];
-        }).length;
-
+        const missed = Array.from(checkedQuestions).filter(num => !isQuestionCorrect(num)).sort((a, b) => a - b);
+        const correctCount = totalQuestions - missed.length;
         progressText.textContent = `Quiz Complete! Score: ${correctCount}/${totalQuestions}`;
+        saveAttempt(correctCount, totalQuestions);
+
+        if (missed.length === 0) {
+            summary.innerHTML = '<span class="quiz-perfect">🌟 Perfect score — well done!</span>';
+        } else {
+            summary.innerHTML = 'Review your mistakes: ' + missed.map(num =>
+                `<button type="button" class="missed-q-btn" onclick="goToQuestion(${num})">Q${num}</button>`
+            ).join(' ');
+        }
     } else {
         progressText.textContent = `Progress: ${checked}/${totalQuestions} questions checked`;
+        summary.innerHTML = '';
     }
 }
 
+function goToQuestion(num) {
+    const el = document.getElementById(`question${num}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function getSummaryEl() {
+    let summary = document.getElementById('quizSummary');
+    if (!summary) {
+        summary = document.createElement('div');
+        summary.id = 'quizSummary';
+        summary.className = 'quiz-summary';
+        const container = document.getElementById('progressContainer') ||
+            document.getElementById('progressText').parentElement;
+        container.appendChild(summary);
+    }
+    return summary;
+}
+
+function saveAttempt(score, total) {
+    try {
+        let prev = {};
+        try { prev = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (e) { }
+        // Keep the best run separately: the home portal shows it on the quiz chip
+        const best = (prev.best && prev.best.score >= score) ? prev.best : { score, total };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ score, total, when: Date.now(), best }));
+    } catch (e) { /* private mode: persistence is best-effort */ }
+}
+
+function showLastAttempt() {
+    if (checkedQuestions.size > 0) return;
+    try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (saved && typeof saved.score === 'number') {
+            getSummaryEl().innerHTML =
+                `<span class="last-attempt">Last attempt: ${saved.score}/${saved.total}</span>`;
+        }
+    } catch (e) { /* no saved attempt */ }
+}
+
 function resetQuiz() {
-    generateQuiz();
     checkedQuestions.clear();
+    generateQuiz();
     updateProgress();
+    showLastAttempt();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }

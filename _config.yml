@@ -3,6 +3,8 @@ description: "A curated archive of teaching lessons, reading, listening, writing
 url: "https://archives.tzarfunglee.com"
 baseurl: ""
 markdown: kramdown
+plugins:
+  - jekyll-redirect-from
 exclude:
   - .git
   - .jekyll-cache

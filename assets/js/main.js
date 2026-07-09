@@ -3,18 +3,28 @@ console.log('🚀 LTF Archive Engine Loaded');
 // Global Keyboard Shortcuts
 window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        const path = window.location.pathname;
-        const isHome = path === '/' || path.endsWith('/index.html') || path.endsWith('/');
-        
-        console.log('⌨️ Esc detected. Path:', path, 'isHome:', isHome);
-
-        if (!isHome) {
-            e.preventDefault();
-            const cat = window.pageCategory || '';
-            const target = cat ? `/#cat=${encodeURIComponent(cat)}` : '/';
-            console.log('🚀 Triggering Smart Back to:', target);
-            window.location.assign(target);
+        // Esc inside a form control should only leave the control, never the page
+        const el = document.activeElement;
+        if (el && (el.matches('input, textarea, select') || el.isContentEditable)) {
+            el.blur();
+            return;
         }
+
+        // With pretty permalinks every page URL ends in '/', so home must be an exact match
+        const path = window.location.pathname;
+        const isHome = path === '/' || path === '/index.html';
+        if (isHome) return;
+
+        // Don't silently discard quiz progress (checkedQuestions comes from quiz-engine.js)
+        if (typeof checkedQuestions !== 'undefined' && checkedQuestions.size > 0 &&
+            !window.confirm('Leave this quiz? Your progress will be lost.')) {
+            return;
+        }
+
+        e.preventDefault();
+        const cat = window.pageCategory || '';
+        const target = cat ? `/#cat=${encodeURIComponent(cat)}` : '/';
+        window.location.assign(target);
     }
 });
 
@@ -58,6 +68,10 @@ function toggleFullRow(td) {
 window.audioSpeed = 'normal';
 function toggleAudioSpeed() {
     window.audioSpeed = window.audioSpeed === 'normal' ? 'slow' : 'normal';
+    // Slow down song/audio players too, not just text-to-speech
+    document.querySelectorAll('audio').forEach(a => {
+        a.playbackRate = window.audioSpeed === 'slow' ? 0.8 : 1.0;
+    });
     const btn = document.getElementById('speedToggleBtn');
     if (btn) {
         if (window.audioSpeed === 'normal') {
@@ -82,12 +96,16 @@ function loadBestVoice() {
     const voices = window.speechSynthesis.getVoices();
     if (voices.length === 0) return;
     
-    // Force strictly Serena or a Female voice fallback
-    cachedBestVoice = voices.find(v => v.name.includes("Serena")) || 
+    // Preferred voices per platform: Serena (macOS), Google UK (Chrome),
+    // Microsoft natural voices (Windows/Edge), then any local English voice
+    cachedBestVoice = voices.find(v => v.name.includes("Serena")) ||
                       voices.find(v => v.name.includes("Google UK English Female")) ||
+                      voices.find(v => /Microsoft.*(Sonia|Libby|Hazel|Mia|Susan)/i.test(v.name)) ||
                       voices.find(v => v.name.includes("Samantha")) ||
-                      voices.find(v => v.name.includes("Female") && v.lang.includes("en")) ||
-                      voices.find(v => v.lang === "en-GB") || 
+                      voices.find(v => v.lang === "en-GB" && v.localService) ||
+                      voices.find(v => v.lang.startsWith("en") && v.localService) ||
+                      voices.find(v => v.lang === "en-GB") ||
+                      voices.find(v => v.lang.startsWith("en")) ||
                       voices[0];
 }
 
@@ -235,8 +253,71 @@ function generateTOC() {
     headings.forEach(h3 => observer.observe(h3));
 }
 
+// --- LESSON PREV/NEXT NAVIGATION (driven by _data/curriculum.yml) --- //
+async function buildLessonNav() {
+    const cat = (window.pageCategory || '').toLowerCase();
+    const content = document.querySelector('.content');
+    if (!cat || !content) return;
+    try {
+        const [curResp, resResp] = await Promise.all([
+            fetch('/assets/js/curriculum.json'),
+            fetch('/assets/js/search-data.json')
+        ]);
+        const curriculum = await curResp.json();
+        const units = curriculum && curriculum[cat];
+        if (!units) return;
+        const resources = await resResp.json();
+        const titleByUrl = {};
+        resources.forEach(r => { titleByUrl[r.url] = r.title; });
+
+        const flat = [];
+        units.forEach(u => (u.lessons || []).forEach(l => flat.push({ slug: l.slug, unit: u.unit })));
+        let path = window.location.pathname;
+        if (!path.endsWith('/')) path += '/';
+        const idx = flat.findIndex(l => l.slug === path);
+        if (idx === -1) return;
+
+        // Remember this lesson so the home portal can offer "Continue: …"
+        try {
+            localStorage.setItem('ltf-last-lesson', JSON.stringify({
+                url: path,
+                title: titleByUrl[path] || document.title.split('|')[0].trim(),
+                when: Date.now()
+            }));
+        } catch (e) { /* best-effort */ }
+
+        const nav = document.createElement('nav');
+        nav.className = 'lesson-nav';
+        nav.setAttribute('aria-label', 'Lesson sequence');
+
+        const slot = (lesson, cls, arrowBefore) => {
+            if (!lesson) {
+                const spacer = document.createElement('span');
+                nav.appendChild(spacer);
+                return;
+            }
+            const a = document.createElement('a');
+            a.className = 'lesson-nav-link ' + cls;
+            a.href = lesson.slug;
+            const title = titleByUrl[lesson.slug] || 'Lesson';
+            a.textContent = arrowBefore ? '← ' + title : title + ' →';
+            nav.appendChild(a);
+        };
+
+        slot(flat[idx - 1], 'prev', true);
+        const mid = document.createElement('span');
+        mid.className = 'lesson-nav-unit';
+        mid.textContent = flat[idx].unit;
+        nav.appendChild(mid);
+        slot(flat[idx + 1], 'next', false);
+
+        content.appendChild(nav);
+    } catch (e) { /* nav is progressive enhancement; the page works without it */ }
+}
+
 // --- DOM READY --- //
 document.addEventListener('DOMContentLoaded', function() {
+    buildLessonNav();
     // Global bubble listener
     document.addEventListener('click', function(event) {
         const bubble = event.target.closest('.grammar-bubble, .v-bubble');
@@ -256,6 +337,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // TOC
     generateTOC();
+
+    // Tabbed pages must not load looking empty: activate the first tab
+    // when the page has content sections but none is shown by default
+    if (document.querySelector('.content-section') && !document.querySelector('.content-section.show')) {
+        const firstTab = document.querySelector('.tense-card');
+        if (firstTab) firstTab.click();
+    }
 
     // --- AUTO-TOGGLE INJECTOR --- //
     // 1. Transform "A / B" situations into clickable triggers

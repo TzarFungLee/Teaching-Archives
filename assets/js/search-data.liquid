@@ -3,7 +3,7 @@ layout: null
 permalink: /assets/js/search-data.json
 ---
 [
-  {% assign collections = "Grammar,Reading,Writing,Listening,Speaking" | split: "," %}
+  {% assign collections = "Grammar,Reading,Writing,Listening,Speaking,Quizzes" | split: "," %}
   {% assign first = true %}
   {% for collection in collections %}
     {% for post in site.pages %}
@@ -13,7 +13,8 @@ permalink: /assets/js/search-data.json
           "title": {{ post.title | jsonify }},
           "url": {{ post.url | relative_url | jsonify }},
           "category": {{ post.category | jsonify }},
-          "icon": {{ post.icon | jsonify }}
+          "icon": {{ post.icon | jsonify }},
+          "order": {{ post.order | default: 999 }}
         }
         {% assign first = false %}
       {% endif %}

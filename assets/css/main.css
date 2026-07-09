@@ -242,7 +242,7 @@ tr:nth-child(even) {
     background: rgba(255, 255, 255, 0.03);
 }
 
-td[colspan="2"] {
+td[colspan] {
     background: rgba(110, 193, 228, 0.15);
     color: #e4fbff;
     font-size: 1.18rem;
@@ -786,14 +786,125 @@ td[colspan="2"] {
     right: max(15px, calc((100vw - 1300px) / 4 - 32px));
 }
 
-@media (max-width: 1450px) {
+/* Below ~1460px the side gutters vanish and the buttons would sit on top of
+   the content column, so dock them to the bottom corners instead */
+@media (max-width: 1460px) {
     .floating-side-btn {
-        transform: translateY(-50%) scale(0.9);
+        top: auto;
+        bottom: 18px;
+        transform: none;
+        flex-direction: row;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: rgba(24, 24, 27, 0.9);
     }
 
     .floating-side-btn:hover {
-        transform: translateY(-50%) scale(0.95);
+        transform: scale(1.05);
     }
+
+    .floating-left {
+        left: 14px;
+    }
+
+    .floating-right {
+        right: 14px;
+    }
+}
+
+/* --- Readability: cap prose line length for language learners --- */
+.content p,
+.content li {
+    max-width: 75ch;
+}
+
+/* Prose-heavy skill guides read better in a narrower column;
+   Grammar/Quizzes keep the wide card canvas */
+body.category-Reading .container,
+body.category-Listening .container,
+body.category-Writing .container,
+body.category-Speaking .container {
+    max-width: 980px;
+}
+
+/* --- Quiz progress summary --- */
+.feedback.nudge {
+    background: rgba(110, 193, 228, 0.12);
+    color: #cfeefc;
+    border: 1px solid rgba(110, 193, 228, 0.3);
+    display: block;
+}
+
+.quiz-summary {
+    margin-top: 12px;
+    font-size: 1rem;
+    color: var(--muted);
+}
+
+.quiz-summary .quiz-perfect {
+    color: #b8f2d5;
+    font-weight: 700;
+}
+
+.quiz-summary .last-attempt {
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+.missed-q-btn {
+    background: rgba(244, 63, 94, 0.15);
+    color: #ffd9de;
+    border: 1px solid rgba(244, 63, 94, 0.35);
+    border-radius: 999px;
+    padding: 4px 14px;
+    margin: 2px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.missed-q-btn:hover {
+    background: rgba(244, 63, 94, 0.3);
+    color: #fff;
+}
+
+/* --- Prev/next lesson navigation (built by main.js from curriculum.json) --- */
+.lesson-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    padding-top: 26px;
+    border-top: 1px solid var(--border);
+}
+
+.lesson-nav-link {
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: none !important;
+    padding: 12px 20px;
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    border-radius: 14px;
+    transition: all 0.2s ease;
+}
+
+.lesson-nav-link:hover {
+    background: rgba(34, 211, 238, 0.12);
+    color: #fff !important;
+    transform: translateY(-2px);
+}
+
+.lesson-nav-unit {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: center;
 }
 
 /* --- Mobile refinements --- */
@@ -829,5 +940,65 @@ td[colspan="2"] {
 
     .anchor-title {
         font-size: 1.2rem;
+    }
+}
+
+/* Content pages hardcode multi-column grids inline (minmax(280-300px));
+   on phones those minimums overflow their parent cards — force one column */
+@media (max-width: 640px) {
+    .content [style*="minmax(300px"],
+    .content [style*="minmax(280px"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* --- Print: worksheets on white paper, chrome hidden --- */
+@media print {
+    body {
+        background: #fff !important;
+        color: #000;
+        padding: 0;
+        font-size: 12pt;
+    }
+
+    .content,
+    .question,
+    .option,
+    .quiz-container,
+    .visual-anchor,
+    .tips-box,
+    .example-box,
+    .warning-box,
+    .rules-box,
+    .features-box,
+    .structure-box,
+    .sample-box,
+    .step-box,
+    table,
+    th,
+    td,
+    tr:nth-child(even) {
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        border-color: #bbb !important;
+    }
+
+    h1, h2, h3, h4, p, li, .question-text, .anchor-title, .progress-text {
+        color: #000 !important;
+        opacity: 1 !important;
+    }
+
+    .floating-side-btn,
+    .audio-icon,
+    .check-btn,
+    .reset-btn,
+    .search-container {
+        display: none !important;
+    }
+
+    .content a {
+        color: #000;
     }
 }

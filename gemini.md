@@ -23,10 +23,14 @@ This file serves as persistent memory and instructions for Gemini (Antigravity) 
 * The entire design system ("Stealth & Ice" theme) lives in `/assets/css/main.css`, linked from `_layouts/default.html`. Do NOT add `<style>` blocks to the layout; add shared styles to the stylesheet.
 * Ensure cards, grid items, and lists are responsive, center-balanced, and highly legible.
 
-### 3. File Organization
+### 3. File Organization & URLs
 * **Grammar lessons** go under `/Grammar` as raw HTML pages.
 * **Interactive quizzes** go under `/Quizzes` as `*- Quiz.html`.
 * **Reading/Listening/Writing/Speaking resources** go under their respective directories.
+* Every page declares a kebab-case `permalink:` (`/grammar/first-conditional/`) and a `redirect_from:` for its legacy `.html` path (served by `jekyll-redirect-from`). New pages must follow the same pattern; internal links always use the permalink form.
+* **`_data/curriculum.yml` is the single source of truth for units, lesson order and lesson↔quiz pairing.** The home portal renders category overlays as unit sections from it (via `/assets/js/curriculum.json`), and `main.js` builds prev/next lesson navigation from it. Adding a lesson = one line under its unit. Pages missing from it still appear in a "More resources" fallback section (fail-soft) — but always register new pages properly.
+* The per-page `order:` front matter is legacy; curriculum.yml order wins wherever both exist.
+* Each quiz links back to its lesson ("Review the Lesson") and each lesson links to its quiz.
 * Do not place any temporary build files or scratchpads in production folders.
 
 ### 4. Interactive Songs & Synchronized Lyrics Player
@@ -53,6 +57,10 @@ When implementing or modifying interactive teaching songs with synchronized lyri
   - Always clean up the temporary `.m4a` file after timing extraction is complete.
 
 ---
+
+## 🗺️ Content Roadmap (owner's plan)
+* **Grammar**: up to ~20 more lessons (max ~40 total). Single-level by design — no `level:` field for grammar. Slot new lessons into existing units in `_data/curriculum.yml`, or add a unit when a topic cluster reaches 3+ lessons.
+* **Writing**: will become **multi-level** (e.g. P4/P5/DSE). When that work starts, add a `level:` field to writing lesson entries in `curriculum.yml` and a level filter in the portal overlay — the data structure already anticipates this.
 
 ## 📝 Persistent Session Notes
 *Use this section to store notes, preferences, or variables that need to persist across sessions.*
