@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Adverbs of Sequence - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: First/Next/Then/After that/Finally ordering,
+    // before/after + -ing, and Meanwhile for simultaneous actions.
     const questionBank = [
         {
             question: "_____, I woke up at 7 AM. Then I had breakfast.",
-            options: ["First", "Finally", "After that"],
+            options: ["First", "Finally", "After that", "Meanwhile"],
             correct: 0,
-            explanation: "Use 'First' to introduce the beginning action in a sequence."
+            explanation: "The opening step of a sequence: First."
         },
         {
             question: "I finished my homework. _____, I watched TV.",
-            options: ["After that", "First", "Before"],
+            options: ["After that", "First", "Before", "Firstly"],
             correct: 0,
-            explanation: "Use 'After that' or 'Then' to show what happened next."
+            explanation: "A following step: After that."
         },
         {
-            question: "_____, we arrived at the airport safely.",
-            options: ["Finally", "First", "Next"],
+            question: "_____, we arrived at the campsite safely after the long hike.",
+            options: ["Finally", "First", "Next", "Before"],
             correct: 0,
-            explanation: "Use 'Finally' to indicate the last action in a sequence."
+            explanation: "The last step: Finally."
         },
         {
             question: "First, mix the ingredients. _____, bake for 30 minutes.",
-            options: ["Next", "Finally", "Before"],
+            options: ["Next", "Finally", "Before", "First"],
             correct: 0,
-            explanation: "Use 'Next' or 'Then' to show the following step."
+            explanation: "A middle step: Next."
         },
         {
             question: "I got dressed. _____ I left the house.",
-            options: ["Then", "First", "Finally"],
+            options: ["Then", "First", "Finally", "Before"],
             correct: 0,
-            explanation: "Use 'Then' to connect consecutive actions."
+            explanation: "Then links to the following action."
         },
         {
             question: "Which adverb introduces the FIRST step?",
-            options: ["First", "Then", "Finally"],
+            options: ["First", "Then", "Finally", "After that"],
             correct: 0,
-            explanation: "'First' or 'Firstly' introduces the beginning of a sequence."
+            explanation: "First (or Firstly / To begin with) opens a sequence."
         },
         {
-            question: "First, boil water. Next, add pasta. _____, drain the water.",
-            options: ["Finally", "First", "Then"],
+            question: "First, boil the water. Next, add the noodles. _____, drain the water.",
+            options: ["Finally", "First", "Firstly", "Before"],
             correct: 0,
-            explanation: "Use 'Finally' to conclude the sequence of steps."
+            explanation: "The last of three steps: Finally."
         },
         {
             question: "_____ going to bed, I brush my teeth.",
-            options: ["Before", "After", "Then"],
+            options: ["Before", "After", "Then", "Finally"],
             correct: 0,
-            explanation: "Use 'Before' to show what happens earlier in time."
-        },
-        {
-            question: "I studied hard. _____, I passed the exam.",
-            options: ["As a result", "First", "Next"],
-            correct: 0,
-            explanation: "Use 'As a result' to show consequence, though it's more of a result connector than sequence."
-        },
-        {
-            question: "Which is the CORRECT order?",
-            options: ["First, Next, Finally", "Finally, First, Next", "Next, Finally, First"],
-            correct: 0,
-            explanation: "The logical sequence order is: First, Next/Then, Finally."
-        },
-        {
-            question: "We arrived at the station. _____ we bought tickets.",
-            options: ["Then", "Finally", "Before"],
-            correct: 0,
-            explanation: "Use 'Then' or 'After that' for the next action in sequence."
+            explanation: "Brushing happens FIRST, before bed: Before + -ing."
         },
         {
             question: "_____ eating dinner, I did the dishes.",
-            options: ["After", "Before", "First"],
+            options: ["After", "Before", "First", "Then"],
             correct: 0,
-            explanation: "Use 'After' to show an action that follows another."
+            explanation: "The dishes come after dinner: After + -ing."
+        },
+        {
+            question: "Which is the CORRECT order for a recipe?",
+            options: ["First, Next, Finally", "Finally, First, Next", "Next, Finally, First", "Then, First, Finally"],
+            correct: 0,
+            explanation: "Sequence flows First, then middle steps, then Finally."
+        },
+        {
+            question: "We arrived at the station. _____ we bought tickets.",
+            options: ["Then", "Finally", "Before", "Firstly"],
+            correct: 0,
+            explanation: "The next action: Then."
         },
         {
             question: "Turn on the computer. _____, open the program.",
-            options: ["Next", "Finally", "Before"],
+            options: ["Next", "Finally", "Before", "First"],
             correct: 0,
-            explanation: "Use 'Next' or 'Then' for the subsequent step."
+            explanation: "A middle step: Next."
         },
         {
             question: "Which word shows the LAST action?",
-            options: ["Finally", "First", "Next"],
+            options: ["Finally", "First", "Next", "Meanwhile"],
             correct: 0,
-            explanation: "'Finally' or 'Lastly' indicates the concluding action."
+            explanation: "Finally (or Lastly / In the end) closes the sequence."
         },
         {
             question: "_____, preheat the oven. Then, prepare the ingredients.",
-            options: ["First", "Finally", "After"],
+            options: ["First", "Finally", "After", "Meanwhile"],
             correct: 0,
-            explanation: "Use 'First' to begin a sequence of instructions."
+            explanation: "Opening step: First."
         },
         {
-            question: "She read the instructions. _____, she assembled the furniture.",
-            options: ["After that", "Before", "Finally"],
+            question: "She read the instructions. _____, she assembled the shelf.",
+            options: ["After that", "Before", "Firstly", "To begin with"],
             correct: 0,
-            explanation: "Use 'After that' or 'Then' to show the following action."
+            explanation: "A following step: After that."
         },
         {
-            question: "Add sugar. _____, stir well. Finally, serve.",
-            options: ["Then", "First", "Before"],
+            question: "Boil the rice. _____, chop the vegetables at the same time.",
+            options: ["Meanwhile", "Finally", "Before", "Afterwards only"],
             correct: 0,
-            explanation: "Use 'Then' or 'Next' for middle steps in a sequence."
+            explanation: "Two things at once: Meanwhile."
         },
         {
-            question: "_____ leaving, I locked the door.",
-            options: ["Before", "After", "Then"],
+            question: "_____ leaving the flat, I locked the door.",
+            options: ["Before", "After", "Then", "Next"],
             correct: 0,
-            explanation: "Use 'Before' to show what happens prior to another action."
+            explanation: "Locking happens at the moment of leaving, before you go: Before + -ing."
         },
         {
-            question: "I woke up, got dressed, had breakfast, and _____ left for work.",
-            options: ["then", "first", "before"],
+            question: "I woke up, got dressed, had breakfast, and _____ left for school.",
+            options: ["then", "first", "before", "meanwhile"],
             correct: 0,
-            explanation: "Use 'then' or 'finally' for the last action in a list."
+            explanation: "The final action in the chain: then."
         },
         {
             question: "Which is INCORRECT sequencing?",
-            options: ["Finally, First, Next", "First, Then, Finally", "First, Next, Finally"],
+            options: ["Finally, First, Next", "First, Then, Finally", "First, Next, Finally", "To begin with, After that, Lastly"],
             correct: 0,
-            explanation: "'Finally' should come at the end, not the beginning of a sequence."
+            explanation: "You cannot end first and begin last — order must run start to finish."
+        },
+        {
+            question: "Which sentence uses before/after correctly?",
+            options: ["After finishing the exam, we compared answers.", "After finish the exam, we compared answers.", "Before to finish the exam, we compared answers.", "After we finishing the exam, we compared answers."],
+            correct: 0,
+            explanation: "Before/After + verb-ing: After finishing…"
         }
     ];
 </script>

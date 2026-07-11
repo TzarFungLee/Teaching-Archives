@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Present Continuous Tense - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: am/is/are agreement, -ing spelling changes,
+    // and when to use continuous vs simple present.
     const questionBank = [
         {
             question: "She _____ reading a book right now.",
-            options: ["is", "are", "am"],
+            options: ["is", "are", "am", "be"],
             correct: 0,
-            explanation: "Use 'is' with third person singular subjects (he/she/it) in present continuous."
+            explanation: "Third person singular (she) takes 'is'."
         },
         {
             question: "They _____ playing football at the moment.",
-            options: ["is", "are", "am"],
-            correct: 1,
-            explanation: "Use 'are' with plural subjects (they/we/you) in present continuous."
+            options: ["are", "is", "am", "be"],
+            correct: 0,
+            explanation: "Plural subject (they) takes 'are'."
         },
         {
             question: "I _____ studying for my exam now.",
-            options: ["am", "is", "are"],
+            options: ["am", "is", "are", "be"],
             correct: 0,
-            explanation: "Use 'am' with 'I' in present continuous tense."
-        },
-        {
-            question: "He _____ not listening to music.",
-            options: ["is", "are", "am"],
-            correct: 0,
-            explanation: "Use 'is not' (isn't) with third person singular in negative present continuous."
+            explanation: "'I' always takes 'am'."
         },
         {
             question: "_____ you working on your project?",
-            options: ["Is", "Are", "Am"],
-            correct: 1,
-            explanation: "Use 'Are' with 'you' in present continuous questions."
+            options: ["Are", "Is", "Am", "Do"],
+            correct: 0,
+            explanation: "Questions: move am/is/are before the subject. You → are."
         },
         {
             question: "The children _____ sleeping upstairs.",
-            options: ["is", "are", "am"],
-            correct: 1,
-            explanation: "Use 'are' with plural subjects like 'children' in present continuous."
-        },
-        {
-            question: "My mother _____ cooking dinner now.",
-            options: ["is", "are", "am"],
+            options: ["are", "is", "am", "be"],
             correct: 0,
-            explanation: "Use 'is' with third person singular subjects in present continuous."
-        },
-        {
-            question: "We _____ watching a movie currently.",
-            options: ["is", "are", "am"],
-            correct: 1,
-            explanation: "Use 'are' with 'we' in present continuous tense."
-        },
-        {
-            question: "_____ she coming to the party?",
-            options: ["Is", "Are", "Am"],
-            correct: 0,
-            explanation: "Use 'Is' with third person singular in present continuous questions."
-        },
-        {
-            question: "Which sentence is CORRECT?",
-            options: ["He is run in the park.", "He is running in the park.", "He are running in the park."],
-            correct: 1,
-            explanation: "Present continuous uses 'is/am/are + verb-ing'. 'He is running' is correct."
-        },
-        {
-            question: "The dog _____ barking loudly.",
-            options: ["is", "are", "am"],
-            correct: 0,
-            explanation: "Use 'is' with singular subjects like 'dog' in present continuous."
-        },
-        {
-            question: "You _____ making too much noise!",
-            options: ["is", "are", "am"],
-            correct: 1,
-            explanation: "Use 'are' with 'you' in present continuous tense."
-        },
-        {
-            question: "I _____ not feeling well today.",
-            options: ["am", "is", "are"],
-            correct: 0,
-            explanation: "Use 'am not' with 'I' in negative present continuous sentences."
-        },
-        {
-            question: "What _____ you doing right now?",
-            options: ["is", "are", "am"],
-            correct: 1,
-            explanation: "Use 'are' with 'you' in wh-questions in present continuous."
-        },
-        {
-            question: "The students _____ taking a test.",
-            options: ["is", "are", "am"],
-            correct: 1,
-            explanation: "Use 'are' with plural subjects like 'students' in present continuous."
-        },
-        {
-            question: "Which is INCORRECT?",
-            options: ["They is playing.", "They are playing.", "We are playing."],
-            correct: 0,
-            explanation: "'They' is plural, so use 'are', not 'is'."
+            explanation: "'The children' is plural → are."
         },
         {
             question: "It _____ raining outside.",
-            options: ["is", "are", "am"],
+            options: ["is", "are", "am", "be"],
             correct: 0,
-            explanation: "Use 'is' with 'it' in present continuous tense."
+            explanation: "'It' takes 'is'."
         },
         {
-            question: "Where _____ he going?",
-            options: ["is", "are", "am"],
+            question: "He is _____ in the park.",
+            options: ["running", "runing", "runting", "runng"],
             correct: 0,
-            explanation: "Use 'is' with third person singular in wh-questions in present continuous."
+            explanation: "Spelling: short vowel + consonant → double the consonant (run → running)."
         },
         {
-            question: "My friends _____ arriving soon.",
-            options: ["is", "are", "am"],
-            correct: 1,
-            explanation: "Use 'are' with plural subjects like 'friends' in present continuous."
+            question: "She is _____ a letter.",
+            options: ["writing", "writeing", "writting", "writng"],
+            correct: 0,
+            explanation: "Spelling: drop the silent 'e' before -ing (write → writing)."
         },
         {
-            question: "She _____ wearing a beautiful dress today.",
-            options: ["is", "are", "am"],
+            question: "They are _____ in the pool.",
+            options: ["swimming", "swiming", "swimmng", "swimeing"],
             correct: 0,
-            explanation: "Use 'is' with third person singular subjects in present continuous."
+            explanation: "Spelling: swim → swimming (double the final consonant)."
+        },
+        {
+            question: "I am _____ dinner for the family.",
+            options: ["making", "makeing", "makking", "makng"],
+            correct: 0,
+            explanation: "Spelling: drop the 'e' (make → making)."
+        },
+        {
+            question: "The children are _____ on the floor.",
+            options: ["lying", "lieing", "lying down on", "liying"],
+            correct: 0,
+            explanation: "Spelling: lie → lying (ie changes to y before -ing)."
+        },
+        {
+            question: "We are _____ for the bus.",
+            options: ["waiting", "waitting", "waiteing", "waitng"],
+            correct: 0,
+            explanation: "Just add -ing: wait → waiting (no doubling after two vowels)."
+        },
+        {
+            question: "Which sentence is happening RIGHT NOW?",
+            options: ["She is practising the piano.", "She practises the piano daily.", "She practised the piano.", "She will practise the piano."],
+            correct: 0,
+            explanation: "Present continuous (is practising) = in progress at this moment."
+        },
+        {
+            question: "I usually walk to school, but today I _____ the bus.",
+            options: ["am taking", "take", "took", "will take"],
+            correct: 0,
+            explanation: "'Today' contrasts with the usual habit — use present continuous."
+        },
+        {
+            question: "Listen! Someone _____ at the door.",
+            options: ["is knocking", "knocks", "knocked", "knock"],
+            correct: 0,
+            explanation: "'Listen!' signals something happening now — present continuous."
+        },
+        {
+            question: "Which sentence needs SIMPLE PRESENT (not continuous)?",
+            options: ["Water _____ at 0 degrees. (freeze)", "Look, it _____! (snow)", "Shh! The baby _____. (sleep)", "Right now I _____ TV. (watch)"],
+            correct: 0,
+            explanation: "General facts use the simple present: water freezes at 0 degrees."
+        },
+        {
+            question: "He _____ not listening to the teacher.",
+            options: ["is", "are", "am", "does"],
+            correct: 0,
+            explanation: "Negative: is/are/am + not + verb-ing. He → is not listening."
+        },
+        {
+            question: "What _____ you doing right now?",
+            options: ["are", "is", "am", "do"],
+            correct: 0,
+            explanation: "Wh-question: What + are + you + verb-ing?"
+        },
+        {
+            question: "Which sentence is CORRECT?",
+            options: ["He is running in the park.", "He is run in the park.", "He are running in the park.", "He running in the park."],
+            correct: 0,
+            explanation: "Present continuous needs BOTH parts: is/are/am + verb-ing."
+        },
+        {
+            question: "Which sentence is INCORRECT?",
+            options: ["They is playing chess.", "They are playing chess.", "She is playing chess.", "I am playing chess."],
+            correct: 0,
+            explanation: "'They' needs 'are', not 'is': They are playing."
         }
     ];
 </script>

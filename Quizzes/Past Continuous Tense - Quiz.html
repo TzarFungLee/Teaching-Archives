@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Past Continuous Tense - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: was/were agreement, interrupted actions with 'when',
+    // parallel actions with 'while', negatives and questions.
     const questionBank = [
         {
             question: "She _____ reading when I called her.",
-            options: ["was", "were", "is"],
+            options: ["was", "were", "is", "did"],
             correct: 0,
-            explanation: "Use 'was' with singular subjects (I/he/she/it) in past continuous."
+            explanation: "Third person singular (she) takes 'was'."
         },
         {
             question: "They _____ playing football at 5 PM yesterday.",
-            options: ["was", "were", "are"],
-            correct: 1,
-            explanation: "Use 'were' with plural subjects (they/we/you) in past continuous."
+            options: ["were", "was", "are", "did"],
+            correct: 0,
+            explanation: "Plural subject (they) takes 'were'."
         },
         {
             question: "I _____ studying when the power went out.",
-            options: ["was", "were", "am"],
+            options: ["was", "were", "am", "did"],
             correct: 0,
-            explanation: "Use 'was' with 'I' in past continuous tense."
-        },
-        {
-            question: "He _____ not listening during the class.",
-            options: ["was", "were", "is"],
-            correct: 0,
-            explanation: "Use 'was not' (wasn't) with singular subjects in negative past continuous."
+            explanation: "'I' takes 'was' in the past continuous."
         },
         {
             question: "_____ you sleeping when I knocked?",
-            options: ["Was", "Were", "Are"],
-            correct: 1,
-            explanation: "Use 'Were' with 'you' in past continuous questions."
+            options: ["Were", "Was", "Are", "Did"],
+            correct: 0,
+            explanation: "Question: Was/Were before the subject. You → were."
         },
         {
             question: "The children _____ playing outside all afternoon.",
-            options: ["was", "were", "are"],
-            correct: 1,
-            explanation: "Use 'were' with plural subjects like 'children' in past continuous."
-        },
-        {
-            question: "My mother _____ cooking dinner at 7 PM.",
-            options: ["was", "were", "is"],
+            options: ["were", "was", "are", "be"],
             correct: 0,
-            explanation: "Use 'was' with singular subjects in past continuous."
+            explanation: "'The children' is plural → were."
         },
         {
-            question: "We _____ watching TV when you arrived.",
-            options: ["was", "were", "are"],
-            correct: 1,
-            explanation: "Use 'were' with 'we' in past continuous tense."
-        },
-        {
-            question: "What _____ she doing at that time?",
-            options: ["was", "were", "is"],
+            question: "I was _____ dinner when you arrived.",
+            options: ["cooking", "cook", "cooked", "cooks"],
             correct: 0,
-            explanation: "Use 'was' with third person singular in past continuous questions."
+            explanation: "Past continuous = was/were + verb-ing: was cooking."
+        },
+        {
+            question: "He was _____ in the library at 4 pm.",
+            options: ["sitting", "siting", "sitt", "sat"],
+            correct: 0,
+            explanation: "Spelling: sit → sitting (double the final consonant)."
+        },
+        {
+            question: "She was _____ a letter when the bell rang.",
+            options: ["writing", "writting", "writeing", "wrote"],
+            correct: 0,
+            explanation: "Spelling: drop the silent 'e' — write → writing."
+        },
+        {
+            question: "I was watching TV _____ the typhoon signal was raised.",
+            options: ["when", "while during", "what", "who"],
+            correct: 0,
+            explanation: "Long action in progress + 'when' + the shorter event."
+        },
+        {
+            question: "_____ I was doing my homework, my brother was playing games.",
+            options: ["While", "During", "Until when", "What"],
+            correct: 0,
+            explanation: "'While' joins two longer actions happening at the same time."
+        },
+        {
+            question: "She was cooking dinner when the phone _____.",
+            options: ["rang", "was ringing", "rings", "ring"],
+            correct: 0,
+            explanation: "The short interrupting action uses the SIMPLE past: …when the phone rang."
+        },
+        {
+            question: "When the fire alarm went off, everyone _____ lunch.",
+            options: ["was eating", "ate", "is eating", "eats"],
+            correct: 0,
+            explanation: "The action already in progress uses the past continuous."
         },
         {
             question: "Which sentence is CORRECT?",
-            options: ["He was run in the park.", "He was running in the park.", "He were running in the park."],
-            correct: 1,
-            explanation: "Past continuous uses 'was/were + verb-ing'. 'He was running' is correct."
-        },
-        {
-            question: "The dog _____ barking all night long.",
-            options: ["was", "were", "is"],
+            options: ["He was running in the park.", "He was run in the park.", "He were running in the park.", "He was runs in the park."],
             correct: 0,
-            explanation: "Use 'was' with singular subjects like 'dog' in past continuous."
+            explanation: "Past continuous needs was/were + verb-ing: was running."
         },
         {
-            question: "You _____ making noise during the movie.",
-            options: ["was", "were", "are"],
-            correct: 1,
-            explanation: "Use 'were' with 'you' in past continuous tense."
-        },
-        {
-            question: "I _____ not feeling well yesterday.",
-            options: ["was", "were", "am"],
+            question: "Which sentence is INCORRECT?",
+            options: ["They was watching a film.", "They were watching a film.", "She was watching a film.", "I was watching a film."],
             correct: 0,
-            explanation: "Use 'was not' with 'I' in negative past continuous sentences."
+            explanation: "'They' needs 'were', not 'was'."
+        },
+        {
+            question: "He _____ not listening during the class.",
+            options: ["was", "were", "did", "is"],
+            correct: 0,
+            explanation: "Negative: was/were + not + verb-ing. He → was not listening."
+        },
+        {
+            question: "We _____ paying attention, so we missed the announcement.",
+            options: ["weren't", "wasn't", "didn't", "aren't"],
+            correct: 0,
+            explanation: "'We' takes 'were' → weren't (were not) + verb-ing."
+        },
+        {
+            question: "What _____ she doing at that time?",
+            options: ["was", "were", "is", "did"],
+            correct: 0,
+            explanation: "Wh-question: What + was/were + subject + verb-ing? She → was."
         },
         {
             question: "Where _____ they going when you saw them?",
-            options: ["was", "were", "are"],
-            correct: 1,
-            explanation: "Use 'were' with 'they' in wh-questions in past continuous."
-        },
-        {
-            question: "The students _____ taking notes during the lecture.",
-            options: ["was", "were", "are"],
-            correct: 1,
-            explanation: "Use 'were' with plural subjects like 'students' in past continuous."
-        },
-        {
-            question: "Which is INCORRECT?",
-            options: ["They was playing.", "They were playing.", "We were playing."],
+            options: ["were", "was", "are", "did"],
             correct: 0,
-            explanation: "'They' is plural, so use 'were', not 'was'."
+            explanation: "'They' takes 'were': Where were they going?"
         },
         {
-            question: "It _____ raining when we left home.",
-            options: ["was", "were", "is"],
+            question: "Which sentence describes an action IN PROGRESS at a past moment?",
+            options: ["At 9 pm I was doing my homework.", "At 9 pm I did my homework.", "I do my homework at 9 pm.", "I will do my homework at 9 pm."],
             correct: 0,
-            explanation: "Use 'was' with 'it' in past continuous tense."
+            explanation: "Past continuous shows the action was ongoing at that exact time."
         },
         {
-            question: "Why _____ he laughing?",
-            options: ["was", "were", "is"],
+            question: "Which time expression fits the PAST CONTINUOUS best?",
+            options: ["at that moment", "every day", "tomorrow", "since 2019"],
             correct: 0,
-            explanation: "Use 'was' with third person singular in wh-questions in past continuous."
-        },
-        {
-            question: "My friends _____ waiting for me at the station.",
-            options: ["was", "were", "are"],
-            correct: 1,
-            explanation: "Use 'were' with plural subjects like 'friends' in past continuous."
-        },
-        {
-            question: "She _____ wearing a red dress at the party.",
-            options: ["was", "were", "is"],
-            correct: 0,
-            explanation: "Use 'was' with third person singular subjects in past continuous."
+            explanation: "'At that moment' pinpoints a past moment when something was happening."
         }
     ];
 </script>

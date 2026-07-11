@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Simple Present Tense - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: s/es/ies forms, do/does negatives and questions,
+    // and when the simple present is the right choice.
     const questionBank = [
         {
-            question: "She _____ to school every day.",
-            options: ["go", "goes", "going"],
-            correct: 1,
-            explanation: "Use 'goes' (verb + s) with third person singular (he/she/it) in simple present tense."
-        },
-        {
-            question: "They _____ football on Sundays.",
-            options: ["play", "plays", "playing"],
+            question: "She _____ to school by bus every day.",
+            options: ["goes", "go", "going", "is go"],
             correct: 0,
-            explanation: "Use the base form 'play' with plural subjects (they, we) in simple present tense."
+            explanation: "He/she/it + verb ending in -o takes -es: goes."
         },
         {
-            question: "He _____ his homework after dinner.",
-            options: ["do", "does", "doing"],
-            correct: 1,
-            explanation: "Use 'does' (verb + es) with third person singular (he/she/it) in simple present tense."
+            question: "My brother _____ English very well.",
+            options: ["speaks", "speak", "speaking", "is speaks"],
+            correct: 0,
+            explanation: "Third person singular adds -s: speaks."
+        },
+        {
+            question: "The baby _____ a lot at night.",
+            options: ["cries", "crys", "cry", "crying"],
+            correct: 0,
+            explanation: "Consonant + y → ies: cry → cries."
+        },
+        {
+            question: "He _____ TV after dinner.",
+            options: ["watches", "watchs", "watch", "watching"],
+            correct: 0,
+            explanation: "Verbs ending in -ch take -es: watches."
+        },
+        {
+            question: "She _____ two dogs and a cat.",
+            options: ["has", "have", "haves", "is have"],
+            correct: 0,
+            explanation: "Special form: he/she/it + have → has."
         },
         {
             question: "I _____ coffee every morning.",
-            options: ["drink", "drinks", "drinking"],
+            options: ["drink", "drinks", "drinking", "am drink"],
             correct: 0,
-            explanation: "Use the base form 'drink' with 'I' in simple present tense."
+            explanation: "'I' uses the base verb — no -s: I drink."
         },
         {
-            question: "The sun _____ in the east.",
-            options: ["rise", "rises", "rising"],
-            correct: 1,
-            explanation: "Use 'rises' (verb + s) with third person singular (the sun = it) for general truths."
-        },
-        {
-            question: "We _____ English at school.",
-            options: ["study", "studies", "studying"],
+            question: "They _____ football on weekends.",
+            options: ["play", "plays", "playing", "are play"],
             correct: 0,
-            explanation: "Use the base form 'study' with plural subject 'we' in simple present tense."
+            explanation: "Plural subjects use the base verb: they play."
         },
         {
-            question: "My brother _____ TV every evening.",
-            options: ["watch", "watches", "watching"],
-            correct: 1,
-            explanation: "Use 'watches' (verb + es) with third person singular (my brother = he) in simple present tense."
-        },
-        {
-            question: "Cats _____ mice.",
-            options: ["catch", "catches", "catching"],
+            question: "The Earth _____ around the Sun.",
+            options: ["orbits", "orbit", "is orbit", "orbiting"],
             correct: 0,
-            explanation: "Use the base form 'catch' with plural subject 'cats' in simple present tense."
+            explanation: "General facts use the simple present; the Earth (it) takes -s."
         },
         {
-            question: "She _____ her teeth twice a day.",
-            options: ["brush", "brushes", "brushing"],
-            correct: 1,
-            explanation: "Use 'brushes' (verb + es) with third person singular (she) in simple present tense."
+            question: "He _____ like spicy food.",
+            options: ["does not", "do not", "is not", "not"],
+            correct: 0,
+            explanation: "Negative for he/she/it: does not + base verb."
+        },
+        {
+            question: "We _____ eat meat.",
+            options: ["don't", "doesn't", "aren't", "not"],
+            correct: 0,
+            explanation: "Negative for I/you/we/they: don't + base verb."
+        },
+        {
+            question: "She _____ play the piano — she plays the violin.",
+            options: ["doesn't", "don't", "isn't", "not"],
+            correct: 0,
+            explanation: "He/she/it → doesn't + base verb."
         },
         {
             question: "Which sentence is CORRECT?",
-            options: ["He go to work by bus.", "He goes to work by bus.", "He going to work by bus."],
-            correct: 1,
-            explanation: "Use 'goes' (verb + s) with third person singular 'he' in simple present tense."
-        },
-        {
-            question: "You _____ very fast.",
-            options: ["run", "runs", "running"],
+            options: ["He doesn't eat breakfast.", "He doesn't eats breakfast.", "He don't eat breakfast.", "He not eats breakfast."],
             correct: 0,
-            explanation: "Use the base form 'run' with 'you' in simple present tense."
+            explanation: "After doesn't, use the BASE verb: doesn't eat (the -s moves to 'does')."
         },
         {
-            question: "The train _____ at 6 PM.",
-            options: ["leave", "leaves", "leaving"],
-            correct: 1,
-            explanation: "Use 'leaves' (verb + s) with third person singular (the train = it) for scheduled events."
-        },
-        {
-            question: "Birds _____ in the sky.",
-            options: ["fly", "flies", "flying"],
+            question: "_____ she work in Central?",
+            options: ["Does", "Do", "Is", "Are"],
             correct: 0,
-            explanation: "Use the base form 'fly' with plural subject 'birds' in simple present tense."
+            explanation: "Question for he/she/it: Does + subject + base verb?"
         },
         {
-            question: "My sister _____ in a hospital.",
-            options: ["work", "works", "working"],
-            correct: 1,
-            explanation: "Use 'works' (verb + s) with third person singular (my sister = she) in simple present tense."
-        },
-        {
-            question: "Which is INCORRECT?",
-            options: ["They likes pizza.", "They like pizza.", "We like pizza."],
+            question: "_____ they live near the school?",
+            options: ["Do", "Does", "Are", "Is"],
             correct: 0,
-            explanation: "'They' is plural, so use the base form 'like', not 'likes'."
+            explanation: "Question for I/you/we/they: Do + subject + base verb?"
         },
         {
-            question: "Water _____ at 100 degrees Celsius.",
-            options: ["boil", "boils", "boiling"],
-            correct: 1,
-            explanation: "Use 'boils' (verb + s) with third person singular (water = it) for scientific facts."
-        },
-        {
-            question: "I _____ my grandparents every weekend.",
-            options: ["visit", "visits", "visiting"],
+            question: "Where _____ your cousin study?",
+            options: ["does", "do", "is", "are"],
             correct: 0,
-            explanation: "Use the base form 'visit' with 'I' in simple present tense."
+            explanation: "Wh-question: Where + does + he/she/it + base verb?"
         },
         {
-            question: "The baby _____ at night.",
-            options: ["cry", "cries", "crying"],
-            correct: 1,
-            explanation: "Use 'cries' (y changes to ies) with third person singular (the baby = it) in simple present tense."
-        },
-        {
-            question: "We _____ our house clean.",
-            options: ["keep", "keeps", "keeping"],
+            question: "Which question is CORRECT?",
+            options: ["Does he like swimming?", "Does he likes swimming?", "Do he like swimming?", "Is he like swimming?"],
             correct: 0,
-            explanation: "Use the base form 'keep' with plural subject 'we' in simple present tense."
+            explanation: "Does + subject + base verb: Does he like…?"
         },
         {
-            question: "She _____ three languages.",
-            options: ["speak", "speaks", "speaking"],
-            correct: 1,
-            explanation: "Use 'speaks' (verb + s) with third person singular (she) in simple present tense."
+            question: "Which sentence describes a HABIT?",
+            options: ["I jog every morning.", "I am jogging now.", "I jogged yesterday.", "I will jog tomorrow."],
+            correct: 0,
+            explanation: "'Every morning' + simple present = a repeated habit."
+        },
+        {
+            question: "Which sentence states a GENERAL FACT?",
+            options: ["Water boils at 100°C.", "The water is boiling now.", "The water boiled.", "The water will boil."],
+            correct: 0,
+            explanation: "Facts that are always true use the simple present."
+        },
+        {
+            question: "The last train _____ at 12:30 am, so don't miss it.",
+            options: ["leaves", "leave", "is leave", "left"],
+            correct: 0,
+            explanation: "Timetables and schedules use the simple present, even for the future."
+        },
+        {
+            question: "Which sentence is INCORRECT?",
+            options: ["She like K-pop.", "She likes K-pop.", "They like K-pop.", "I like K-pop."],
+            correct: 0,
+            explanation: "He/she/it needs -s: She likes K-pop."
         }
     ];
 </script>

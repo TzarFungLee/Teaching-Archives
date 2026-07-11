@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Connectives So Therefore As a result - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: informal so vs formal Therefore / As a result,
+    // punctuation patterns, and register choices.
     const questionBank = [
         {
-            question: "Complete the sentence: It was cold, _____ I wore a jacket.",
-            options: ["so", "Therefore", "As a result"],
+            question: "It was cold, _____ I wore a jacket.",
+            options: ["so", "Therefore", "As a result", "Since"],
             correct: 0,
-            explanation: '"So" is correct here because it connects two clauses with a comma in the same sentence. "Therefore" and "As a result" would need a period before them.'
+            explanation: "Inside one sentence after a comma, use so."
         },
         {
             question: "Which sentence is correctly punctuated?",
-            options: ["The store was closed, therefore we left.", "The store was closed. Therefore, we left.", "The store was closed therefore, we left."],
-            correct: 1,
-            explanation: '"Therefore" starts a new sentence and requires a period before it and a comma after it: "Sentence. Therefore, sentence."'
+            options: ["The store was closed. Therefore, we left.", "The store was closed, therefore we left.", "The store was closed therefore, we left.", "The store was closed therefore we left."],
+            correct: 0,
+            explanation: "Therefore starts a NEW sentence: full stop before, comma after."
         },
         {
-            question: "Complete the formal sentence: Traffic was heavy. ______________, we arrived late.",
-            options: ["so", "As a result", "as a result"],
-            correct: 1,
-            explanation: '"As a result" (with capital A) is correct for a formal sentence that starts after a period. Note: lowercase "so" cannot start a new sentence.'
+            question: "Traffic was heavy. _____, we arrived late.",
+            options: ["As a result", "so", "Because", "Since"],
+            correct: 0,
+            explanation: "After a full stop, use a formal connective with a capital letter."
         },
         {
             question: "Which sentence is INCORRECT?",
-            options: ["I was tired, so I slept early.", "I was tired. Therefore, I slept early.", "I was tired. So, I slept early."],
-            correct: 2,
-            explanation: '"So" cannot start a new sentence after a period. It should be used with a comma: "I was tired, so I slept early."'
-        },
-        {
-            question: "The experiment failed. ______________, we need to try again.",
-            options: ["so", "Therefore,", "Therefore"],
-            correct: 1,
-            explanation: '"Therefore," (with a comma after) is correct. The pattern is: "Sentence. Therefore, sentence."'
-        },
-        {
-            question: "She practiced every day, _____ she won the competition.",
-            options: ["so", "Therefore,", "As a result,"],
+            options: ["I was tired. So, I slept early.", "I was tired, so I slept early.", "I was tired. Therefore, I slept early.", "I was tired. As a result, I slept early."],
             correct: 0,
-            explanation: '"So" is correct because it follows a comma and connects two clauses. "Therefore" and "As a result" would need a period before them.'
+            explanation: "In formal writing, don't start a sentence with So — join with a comma instead."
         },
         {
-            question: "The company lost money. ______________, they had to close several stores.",
-            options: ["So", "As a result,", "so,"],
-            correct: 1,
-            explanation: '"As a result," is correct for formal writing when starting a new sentence after a period. "So" cannot start a new sentence.'
+            question: "The experiment failed. _____ we need to try again.",
+            options: ["Therefore,", "Therefore", "so", "because"],
+            correct: 0,
+            explanation: "Sentence-initial Therefore needs a comma after it."
+        },
+        {
+            question: "She practised every day, _____ she won the competition.",
+            options: ["so", "Therefore,", "As a result,", "since"],
+            correct: 0,
+            explanation: "Mid-sentence after a comma: so."
+        },
+        {
+            question: "The company lost money. _____ they had to close several stores.",
+            options: ["As a result,", "So", "so,", "because"],
+            correct: 0,
+            explanation: "Formal connective + comma after a full stop."
         },
         {
             question: "He didn't study, _____ he failed the test.",
-            options: ["so", "Therefore", "As a result"],
+            options: ["so", "Therefore", "As a result", "since"],
             correct: 0,
-            explanation: '"So" is correct because it connects two clauses with a comma in the same sentence. "Therefore" and "As a result" would need a period before them.'
+            explanation: "Mid-sentence result: comma + so."
         },
         {
             question: "Which sentence is correctly punctuated?",
-            options: ["The weather was bad, as a result we cancelled the trip.", "The weather was bad. As a result, we cancelled the trip.", "The weather was bad as a result, we cancelled the trip."],
-            correct: 1,
-            explanation: '"As a result" starts a new sentence and requires a period before it and a comma after it: "Sentence. As a result, sentence."'
+            options: ["The weather was bad. As a result, we cancelled the trip.", "The weather was bad, as a result we cancelled the trip.", "The weather was bad as a result, we cancelled the trip.", "The weather was bad. As a result we cancelled the trip."],
+            correct: 0,
+            explanation: "As a result starts a new sentence and takes a comma after it."
         },
         {
-            question: "The train was delayed. ______________, I missed my meeting.",
-            options: ["so", "Therefore,", "therefore"],
-            correct: 1,
-            explanation: '"Therefore," (with capital T and a comma after) is correct for a formal sentence after a period. "So" cannot start a new sentence.'
+            question: "The train was delayed. _____ I missed my meeting.",
+            options: ["Therefore,", "so", "therefore", "so,"],
+            correct: 0,
+            explanation: "New sentence: capital T + comma."
         },
         {
             question: "It was getting dark, _____ we turned on the lights.",
-            options: ["so", "Therefore,", "As a result,"],
+            options: ["so", "Therefore,", "As a result,", "Since"],
             correct: 0,
-            explanation: '"So" is correct because it follows a comma and connects two clauses in the same sentence. "Therefore" and "As a result" would need a period before them.'
+            explanation: "Mid-sentence: so after a comma."
         },
         {
             question: "Which sentence is INCORRECT?",
-            options: ["She was sick, so she stayed home.", "She was sick. As a result, she stayed home.", "She was sick, therefore she stayed home."],
-            correct: 2,
-            explanation: '"Therefore" cannot be used with just a comma before it. It needs a period: "She was sick. Therefore, she stayed home."'
+            options: ["She was sick, therefore she stayed home.", "She was sick, so she stayed home.", "She was sick. As a result, she stayed home.", "She was sick. Therefore, she stayed home."],
+            correct: 0,
+            explanation: "Therefore cannot join clauses with just a comma — it needs its own sentence."
         },
         {
             question: "The bus broke down, _____ we had to walk.",
-            options: ["so", "Therefore", "As a result"],
+            options: ["so", "Therefore", "As a result", "since"],
             correct: 0,
-            explanation: '"So" is correct because it connects two clauses with a comma in the same sentence.'
+            explanation: "Comma + so inside one sentence."
         },
         {
-            question: "The meeting was cancelled. ______________, everyone went home.",
-            options: ["So", "Therefore,", "so,"],
-            correct: 1,
-            explanation: '"Therefore," is correct for formal writing when starting a new sentence after a period.'
+            question: "The meeting was cancelled. _____ everyone went home.",
+            options: ["Therefore,", "So,", "so", "because"],
+            correct: 0,
+            explanation: "Formal: Therefore, — the formal option beats starting with So."
         },
         {
-            question: "Which is the FORMAL option?",
-            options: ["It rained, so we cancelled.", "It rained. Therefore, we cancelled.", "It rained so we cancelled."],
-            correct: 1,
-            explanation: '"Therefore" is formal and requires proper punctuation with a period before and comma after.'
+            question: "Which is the most FORMAL option for an essay?",
+            options: ["It rained heavily. Therefore, the match was cancelled.", "It rained heavily, so the match was cancelled.", "It rained so the match was cancelled.", "It rained heavily so, the match was cancelled."],
+            correct: 0,
+            explanation: "Therefore suits essays and reports; so suits speech and informal writing."
         },
         {
             question: "She forgot her keys, _____ she couldn't enter.",
-            options: ["so", "Therefore,", "As a result,"],
+            options: ["so", "Therefore,", "As a result,", "Because"],
             correct: 0,
-            explanation: '"So" connects two clauses with a comma in an informal sentence.'
+            explanation: "Mid-sentence: so."
         },
         {
-            question: "The power went out. ______________, the computers shut down.",
-            options: ["So", "As a result,", "so"],
-            correct: 1,
-            explanation: '"As a result," is correct for formal writing after a period.'
+            question: "The power went out. _____ the computers shut down.",
+            options: ["As a result,", "So", "so", "because,"],
+            correct: 0,
+            explanation: "Formal connective + comma at the start of a new sentence."
         },
         {
             question: "Which sentence is correctly punctuated?",
-            options: ["He was late, therefore he missed the bus.", "He was late. Therefore, he missed the bus.", "He was late therefore, he missed the bus."],
-            correct: 1,
-            explanation: '"Therefore" needs a period before it and comma after: "Sentence. Therefore, sentence."'
-        },
-        {
-            question: "The price was too high, _____ we didn't buy it.",
-            options: ["so", "Therefore", "As a result"],
+            options: ["He was late. Therefore, he missed the bus.", "He was late, therefore he missed the bus.", "He was late therefore, he missed the bus.", "He was late Therefore he missed the bus."],
             correct: 0,
-            explanation: '"So" connects two clauses with a comma in the same sentence.'
+            explanation: "Full stop, Therefore, comma."
         },
         {
-            question: "The deadline was extended. ______________, we had more time.",
-            options: ["So,", "Therefore,", "so"],
-            correct: 1,
-            explanation: '"Therefore," is correct for formal writing after a period with proper capitalization and punctuation.'
+            question: "The rent was too high, _____ we didn't take the flat.",
+            options: ["so", "Therefore", "As a result", "since"],
+            correct: 0,
+            explanation: "Comma + so inside one sentence."
+        },
+        {
+            question: "In your DSE essay, which upgrade makes 'I studied hard, so I passed' MORE formal?",
+            options: ["I studied hard. Therefore, I passed.", "I studied hard so I passed.", "I studied hard, so, I passed.", "So I studied hard, I passed."],
+            correct: 0,
+            explanation: "Swap comma + so for a new sentence with Therefore, — instant register lift."
         }
     ];
 </script>

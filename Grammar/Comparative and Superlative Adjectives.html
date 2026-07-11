@@ -105,6 +105,95 @@ order: 8
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">happy</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (happier)</span>
+                <span class="answer"><span class="v-bubble v-green">happier</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (happiest)</span>
+                <span class="answer"><span class="v-bubble v-yellow">happiest</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">big</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (bigger)</span>
+                <span class="answer"><span class="v-bubble v-green">bigger</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (biggest)</span>
+                <span class="answer"><span class="v-bubble v-yellow">biggest</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">far</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (further)</span>
+                <span class="answer"><span class="v-bubble v-green">further / farther</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ (furthest)</span>
+                <span class="answer"><span class="v-bubble v-yellow">furthest / farthest</span></span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3"><strong>Use them in sentences</strong></td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">tall / class</span>
+        </td>
+        <td colspan="2" class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">Ka Ming is __________ (tall) than me, but Siu Fung is __________ (tall) student in the class.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">Ka Ming</span> is <span class="v-bubble v-green">taller than</span> me, but <span class="grammar-bubble bubble-cyan">Siu Fung</span> is <span class="v-bubble v-yellow">the tallest</span> student in the class.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">busy / MTR</span>
+        </td>
+        <td colspan="2" class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">The MTR is __________ (busy) at 8 am than at noon. Admiralty is __________ (busy) station of all.</span>
+                <span class="answer">
+                    The MTR is <span class="v-bubble v-green">busier</span> at 8 am than at noon. <span class="grammar-bubble bubble-cyan">Admiralty</span> is <span class="v-bubble v-yellow">the busiest</span> station of all.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
 </table>
 
 <hr>
@@ -126,19 +215,29 @@ order: 8
         <th>Superlative</th>
     </tr>
     <tr>
-        <td><strong>1 syllable</strong></td>
-        <td>Add <span class="v-bubble v-green">-er</span></td>
-        <td>Add <span class="v-bubble v-yellow">-est</span></td>
+        <td><strong>1 syllable</strong> (tall, cold)</td>
+        <td>Add <span class="v-bubble v-green">-er</span> → taller</td>
+        <td>Add <span class="v-bubble v-yellow">-est</span> → tallest</td>
     </tr>
     <tr>
-        <td><strong>2+ syllables</strong></td>
+        <td><strong>Short vowel + consonant</strong> (big, hot, thin)</td>
+        <td>Double it: <span class="v-bubble v-green">bigger</span></td>
+        <td><span class="v-bubble v-yellow">biggest</span></td>
+    </tr>
+    <tr>
+        <td><strong>2 syllables ending in -y</strong> (happy, busy, easy)</td>
+        <td>y → <span class="v-bubble v-green">-ier</span>: happier</td>
+        <td>y → <span class="v-bubble v-yellow">-iest</span>: happiest</td>
+    </tr>
+    <tr>
+        <td><strong>Longer adjectives</strong> (beautiful, expensive)</td>
         <td><span class="v-bubble v-green">more</span> + adj</td>
         <td><span class="v-bubble v-yellow">most</span> + adj</td>
     </tr>
     <tr>
         <td><strong>Irregular</strong></td>
-        <td><span class="v-bubble v-red">better/worse</span></td>
-        <td><span class="v-bubble v-red">best/worst</span></td>
+        <td><span class="v-bubble v-red">better / worse / further / less / more</span></td>
+        <td><span class="v-bubble v-red">best / worst / furthest / least / most</span></td>
     </tr>
 </table>
 
@@ -152,5 +251,7 @@ order: 8
 <ul>
     <li><strong>Use "than" with comparatives:</strong> taller than...</li>
     <li><strong>Use "the" with superlatives:</strong> the tallest...</li>
-    <li><strong>Don't mix forms:</strong> ❌ more taller → ✓ taller</li>
+    <li><strong>Don't mix forms:</strong> ❌ more taller → ✓ taller · ❌ most easiest → ✓ easiest</li>
+    <li><strong>Same level? Use as … as:</strong> Kowloon Bay is <em>as busy as</em> Mong Kok. (Negative: <em>not as busy as</em>)</li>
+    <li><strong>Growing change:</strong> The days are getting <em>hotter and hotter</em>.</li>
 </ul>

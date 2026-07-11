@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Connectives Because Since So - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: because/since for reasons, so for results,
+    // sentence position, and the because...so double-marker trap.
     const questionBank = [
         {
             question: "I stayed home _____ I was sick.",
-            options: ["because", "so", "therefore"],
+            options: ["because", "so", "but", "or"],
             correct: 0,
-            explanation: "Use 'because' to introduce the reason (comes before the reason)."
+            explanation: "The blank introduces the REASON — use because."
         },
         {
             question: "It was raining, _____ I took an umbrella.",
-            options: ["so", "because", "since"],
+            options: ["so", "because", "since", "for"],
             correct: 0,
-            explanation: "Use 'so' to show the result or consequence (comes before the result)."
+            explanation: "The blank introduces the RESULT — use so."
         },
         {
             question: "_____ it was late, we went to bed.",
-            options: ["Since", "So", "Therefore"],
+            options: ["Since", "So", "But", "Then"],
             correct: 0,
-            explanation: "Use 'since' at the beginning of a sentence to give the reason."
+            explanation: "Since (= because) can start the sentence to give the reason."
         },
         {
-            question: "She studied hard _____ she wanted to pass.",
-            options: ["because", "so", "therefore"],
+            question: "She studied hard _____ she wanted to pass the DSE.",
+            options: ["because", "so", "therefore", "but"],
             correct: 0,
-            explanation: "Use 'because' to connect a result to its reason."
+            explanation: "A reason follows the blank — because."
         },
         {
-            question: "The weather was bad, _____ the match was cancelled.",
-            options: ["so", "because", "since"],
+            question: "The weather was bad, _____ the picnic was cancelled.",
+            options: ["so", "because", "since", "as"],
             correct: 0,
-            explanation: "Use 'so' to show what happened as a result."
+            explanation: "A result follows — so."
         },
         {
             question: "Which sentence is CORRECT?",
-            options: ["So it was cold, I wore a coat.", "Because it was cold, I wore a coat.", "I wore a coat so it was cold."],
-            correct: 1,
-            explanation: "'Because' introduces the reason and can start a sentence. Pattern: Because + reason, result."
-        },
-        {
-            question: "I was tired, _____ I went to bed early.",
-            options: ["so", "because", "since"],
+            options: ["Because it was cold, I wore a coat.", "So it was cold, I wore a coat.", "Because it was cold, so I wore a coat.", "I wore a coat because so it was cold."],
             correct: 0,
-            explanation: "Use 'so' after stating the reason to show the result."
-        },
-        {
-            question: "_____ he didn't study, he failed the exam.",
-            options: ["Since", "So", "Therefore"],
-            correct: 0,
-            explanation: "Use 'since' or 'because' at the start to introduce the reason."
-        },
-        {
-            question: "The shop was closed _____ it was Sunday.",
-            options: ["because", "so", "therefore"],
-            correct: 0,
-            explanation: "Use 'because' to explain the reason why something happened."
-        },
-        {
-            question: "He was hungry, _____ he made a sandwich.",
-            options: ["so", "because", "since"],
-            correct: 0,
-            explanation: "Use 'so' to show the action taken as a result."
+            explanation: "Because can start a sentence — but NEVER use because and so together."
         },
         {
             question: "Which is INCORRECT?",
-            options: ["I ate because I was hungry.", "I was hungry so I ate.", "Because I was hungry so I ate."],
-            correct: 2,
-            explanation: "Don't use both 'because' and 'so' together. Use one or the other."
+            options: ["Because I was hungry, so I ate.", "I ate because I was hungry.", "I was hungry, so I ate.", "Since I was hungry, I ate."],
+            correct: 0,
+            explanation: "The classic trap: Chinese uses two markers, English uses only ONE."
         },
         {
-            question: "_____ she loves animals, she became a vet.",
-            options: ["Since", "So", "Therefore"],
+            question: "_____ he didn't study, he failed the exam.",
+            options: ["Since", "So", "Therefore", "But"],
             correct: 0,
-            explanation: "Use 'since' or 'because' to introduce the reason at the beginning."
+            explanation: "The first clause is the reason — Since (= because)."
         },
         {
-            question: "I forgot my keys, _____ I couldn't enter.",
-            options: ["so", "because", "since"],
+            question: "The shop was closed _____ it was a public holiday.",
+            options: ["because", "so", "but", "then"],
             correct: 0,
-            explanation: "Use 'so' to show the consequence of forgetting keys."
+            explanation: "A reason follows — because."
+        },
+        {
+            question: "He was hungry, _____ he bought two pineapple buns.",
+            options: ["so", "because", "since", "as"],
+            correct: 0,
+            explanation: "A result follows — so."
+        },
+        {
+            question: "_____ she loves animals, she wants to become a vet.",
+            options: ["Since", "So", "But", "Or"],
+            correct: 0,
+            explanation: "Reason first — Since works at the start of the sentence."
+        },
+        {
+            question: "I forgot my Octopus card, _____ I couldn't take the bus.",
+            options: ["so", "because", "since", "for"],
+            correct: 0,
+            explanation: "A result follows — so."
         },
         {
             question: "We left early _____ we wanted good seats.",
-            options: ["because", "so", "therefore"],
+            options: ["because", "so", "but", "then"],
             correct: 0,
-            explanation: "Use 'because' to explain the reason for an action."
+            explanation: "A reason follows — because."
         },
         {
-            question: "The road was icy, _____ we drove slowly.",
-            options: ["so", "because", "since"],
+            question: "Typhoon signal 8 was raised, _____ school was cancelled.",
+            options: ["so", "because", "since", "as"],
             correct: 0,
-            explanation: "Use 'so' to show what action was taken as a result."
+            explanation: "A result follows — so."
         },
         {
-            question: "_____ I love chocolate, I eat it every day.",
-            options: ["Because", "So", "Therefore"],
+            question: "Which sentence starts with the REASON?",
+            options: ["Because the bus was late, I missed class.", "I missed class, so the bus was late.", "The bus was late, so I missed class.", "I missed class because the bus was late."],
             correct: 0,
-            explanation: "Use 'because' at the start to give the reason."
+            explanation: "'Because + reason' at the start, then a comma, then the result."
         },
         {
-            question: "She was ill, _____ she didn't come to work.",
-            options: ["so", "because", "since"],
+            question: "When 'because' starts the sentence, what comes after the reason clause?",
+            options: ["a comma", "a full stop", "the word 'so'", "nothing"],
             correct: 0,
-            explanation: "Use 'so' to show the result of being ill."
+            explanation: "Because it was cold, I wore a coat. (comma between the clauses)"
         },
         {
-            question: "I'm learning English _____ I want to travel.",
-            options: ["because", "so", "therefore"],
+            question: "She was ill, _____ she didn't come to school.",
+            options: ["so", "because", "since", "but"],
             correct: 0,
-            explanation: "Use 'because' to explain the motivation or reason."
+            explanation: "A result follows — so."
+        },
+        {
+            question: "I'm learning English _____ I want to study overseas.",
+            options: ["because", "so", "but", "then"],
+            correct: 0,
+            explanation: "A reason follows — because."
         },
         {
             question: "_____ the movie was boring, we left early.",
-            options: ["Since", "So", "Therefore"],
+            options: ["Since", "So", "Then", "But"],
             correct: 0,
-            explanation: "Use 'since' or 'because' at the beginning to state the reason."
+            explanation: "Reason first — Since."
         },
         {
-            question: "He missed breakfast, _____ he was very hungry.",
-            options: ["so", "because", "since"],
+            question: "He missed breakfast, _____ he was starving by lunchtime.",
+            options: ["so", "because", "since", "for"],
             correct: 0,
-            explanation: "Use 'so' to show the result of missing breakfast."
+            explanation: "A result follows — so."
         }
     ];
 </script>

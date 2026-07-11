@@ -206,6 +206,37 @@ hide_toc: true
         background: linear-gradient(to right, rgba(34, 211, 238, 0.35), transparent);
     }
 
+    .unit-stats {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--muted);
+        white-space: nowrap;
+    }
+
+    .score-badge {
+        min-width: 3.4em;
+        text-align: center;
+        font-weight: 800;
+        font-size: 0.95rem;
+        font-variant-numeric: tabular-nums;
+        color: var(--muted);
+        padding: 4px 12px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+    }
+
+    .score-badge.attempted {
+        color: #cfeefc;
+        border-color: rgba(34, 211, 238, 0.3);
+        background: rgba(34, 211, 238, 0.08);
+    }
+
+    .score-badge.perfect {
+        color: #b8f2d5;
+        border-color: rgba(34, 197, 129, 0.45);
+        background: rgba(34, 197, 129, 0.1);
+    }
+
     .quiz-chip {
         font-family: inherit;
         font-size: 0.9rem;
@@ -503,7 +534,9 @@ hide_toc: true
 
         const units = !searchQuery && curriculumData[categoryFilter.toLowerCase()];
 
-        if (units && units.length) {
+        if (!searchQuery && categoryFilter === 'Quizzes' && curriculumData.grammar) {
+            renderQuizDashboard(container);
+        } else if (units && units.length) {
             // Curriculum view: numbered lesson rows under unit headers, in teaching order
             const byUrl = {};
             resources.forEach(r => { byUrl[r.url] = r; });
@@ -521,6 +554,10 @@ hide_toc: true
                     lessonNum++;
                     list.appendChild(makeLessonRow(res, { quiz, num: lessonNum }));
                     listed.add(res.url);
+                    // A paired quiz is reachable via its lesson's chip; don't
+                    // duplicate it as a leftover row (matters when the quiz
+                    // shares the lesson's category, e.g. Reading practice)
+                    if (quiz) listed.add(quiz);
                 });
                 container.appendChild(list);
             });
@@ -538,8 +575,17 @@ hide_toc: true
             let filtered = [];
             if (searchQuery) {
                 const queryLower = searchQuery.toLowerCase();
-                // Strict Title-Only Search (No full-text noise)
-                filtered = resources.filter(res => res.title.toLowerCase().includes(queryLower));
+                // Unit names count as search terms: "linking" finds the connectives unit
+                const unitSlugs = new Set();
+                Object.values(curriculumData).forEach(catUnits => catUnits.forEach(u => {
+                    if ((u.unit || '').toLowerCase().includes(queryLower)) {
+                        (u.lessons || []).forEach(l => { unitSlugs.add(l.slug); if (l.quiz) unitSlugs.add(l.quiz); });
+                    }
+                }));
+                // Otherwise strict title-only search (no full-text noise)
+                filtered = resources.filter(res =>
+                    res.title.toLowerCase().includes(queryLower) || unitSlugs.has(res.url)
+                );
             } else {
                 filtered = resources
                     .filter(res => res.category === categoryFilter)
@@ -577,13 +623,110 @@ hide_toc: true
         return list;
     }
 
-    function makeUnitHeader(icon, name) {
+    function makeUnitHeader(icon, name, stats = null) {
         const h = document.createElement('div');
         h.className = 'unit-header';
         h.innerHTML = `<span class="unit-header-icon"></span><span class="unit-header-name"></span><span class="unit-header-rule"></span>`;
         h.querySelector('.unit-header-icon').textContent = icon || '📂';
         h.querySelector('.unit-header-name').textContent = name;
+        if (stats) {
+            const s = document.createElement('span');
+            s.className = 'unit-stats';
+            s.textContent = stats;
+            h.appendChild(s);
+        }
         return h;
+    }
+
+    function getQuizBest(quizUrl) {
+        try {
+            const saved = JSON.parse(localStorage.getItem('ltf-quiz:' + quizUrl));
+            const best = saved && (saved.best || saved);
+            if (best && typeof best.score === 'number') return best;
+        } catch (e) { /* no saved attempt */ }
+        return null;
+    }
+
+    // The Quizzes tab is a progress dashboard: grammar units mirrored from
+    // curriculum.yml, one row per quiz with the student's best score
+    function renderQuizDashboard(container) {
+        const byUrl = {};
+        resources.forEach(r => { byUrl[r.url] = r; });
+        const listed = new Set();
+        let num = 0;
+
+        (curriculumData.grammar || []).forEach(unit => {
+            const entries = (unit.lessons || []).filter(l => l.quiz && byUrl[l.quiz]);
+            if (!entries.length) return;
+
+            let attempted = 0, perfect = 0;
+            entries.forEach(l => {
+                const best = getQuizBest(l.quiz);
+                if (best) { attempted++; if (best.score === best.total) perfect++; }
+            });
+            const stats = attempted
+                ? `${attempted}/${entries.length} attempted · ${perfect} perfect`
+                : `${entries.length} ${entries.length === 1 ? 'quiz' : 'quizzes'}`;
+
+            container.appendChild(makeUnitHeader(unit.icon, unit.unit, stats));
+            const list = makeList();
+            entries.forEach(l => {
+                num++;
+                list.appendChild(makeQuizRow(byUrl[l.quiz], l.slug, num));
+                listed.add(l.quiz);
+            });
+            container.appendChild(list);
+        });
+
+        // Fail-soft: quizzes not paired in curriculum.yml still show up
+        const leftovers = resources.filter(r => r.category === 'Quizzes' && !listed.has(r.url));
+        if (leftovers.length) {
+            container.appendChild(makeUnitHeader('📂', 'More quizzes'));
+            const list = makeList();
+            leftovers.forEach(res => list.appendChild(makeLessonRow(res, {})));
+            container.appendChild(list);
+        }
+    }
+
+    function makeQuizRow(quizRes, lessonUrl, num) {
+        const row = document.createElement('a');
+        row.className = 'lesson-row';
+        row.href = quizRes.url;
+
+        const numSpan = document.createElement('span');
+        numSpan.className = 'lesson-num';
+        numSpan.textContent = num;
+        row.appendChild(numSpan);
+
+        const iconSpan = document.createElement('span');
+        iconSpan.className = 'lesson-row-icon';
+        iconSpan.textContent = quizRes.icon || '📝';
+        row.appendChild(iconSpan);
+
+        const titleH3 = document.createElement('h3');
+        titleH3.textContent = quizRes.title.replace(/^Quiz:\s*/i, '');
+        row.appendChild(titleH3);
+
+        const best = getQuizBest(quizRes.url);
+        const badge = document.createElement('span');
+        badge.className = 'score-badge' + (best ? (best.score === best.total ? ' perfect' : ' attempted') : '');
+        badge.textContent = best ? `${best.score}/${best.total}` : '—';
+        row.appendChild(badge);
+
+        if (lessonUrl) {
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'quiz-chip';
+            chip.textContent = '📖 Lesson';
+            chip.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = lessonUrl;
+            };
+            row.appendChild(chip);
+        }
+
+        return row;
     }
 
     function makeLessonRow(res, { quiz = null, num = null, showCategory = false } = {}) {
@@ -615,14 +758,11 @@ hide_toc: true
             chip.className = 'quiz-chip';
             chip.textContent = '📝 Quiz';
             // Surface the student's best saved score (written by quiz-engine.js)
-            try {
-                const saved = JSON.parse(localStorage.getItem('ltf-quiz:' + quiz));
-                const best = saved && (saved.best || saved);
-                if (best && typeof best.score === 'number') {
-                    chip.textContent = `📝 ${best.score}/${best.total}`;
-                    chip.classList.add(best.score === best.total ? 'perfect' : 'attempted');
-                }
-            } catch (e) { /* no saved attempt */ }
+            const best = getQuizBest(quiz);
+            if (best) {
+                chip.textContent = `📝 ${best.score}/${best.total}`;
+                chip.classList.add(best.score === best.total ? 'perfect' : 'attempted');
+            }
             chip.onclick = (e) => {
                 e.preventDefault();
                 e.stopPropagation();

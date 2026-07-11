@@ -23,127 +23,144 @@ redirect_from: "/Quizzes/Tenses - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Covers ONLY the five taught tenses: simple present, present continuous,
+    // simple past, past continuous, simple future. Focus: choosing the right
+    // tense from time markers and context.
     const questionBank = [
         {
-            question: "I _____ to school every day.",
-            options: ["go", "went", "will go"],
+            question: "I _____ to school by MTR every day.",
+            options: ["go", "am going", "went", "will go"],
             correct: 0,
-            explanation: "Use simple present for habitual actions. 'Every day' indicates a routine."
+            explanation: "'Every day' signals a habit — use the simple present."
         },
         {
-            question: "She _____ a book right now.",
-            options: ["is reading", "reads", "read"],
+            question: "Look! It _____ outside.",
+            options: ["is raining", "rains", "rained", "will rain"],
             correct: 0,
-            explanation: "Use present continuous for actions happening now. 'Right now' is the key word."
+            explanation: "'Look!' means it is happening right now — present continuous."
         },
         {
-            question: "They _____ to Paris last year.",
-            options: ["went", "go", "have gone"],
+            question: "They _____ to Ocean Park last Sunday.",
+            options: ["went", "go", "are going", "will go"],
             correct: 0,
-            explanation: "Use simple past for completed actions. 'Last year' indicates past time."
+            explanation: "'Last Sunday' is finished time — use the simple past."
         },
         {
-            question: "I _____ my homework tomorrow.",
-            options: ["will do", "do", "did"],
+            question: "While I _____ my homework, my brother was watching TV.",
+            options: ["was doing", "did", "am doing", "do"],
             correct: 0,
-            explanation: "Use simple future for actions in the future. 'Tomorrow' indicates future time."
+            explanation: "'While' + two actions in progress at the same past time — past continuous."
         },
         {
-            question: "He _____ for two hours when I arrived.",
-            options: ["had been waiting", "waits", "is waiting"],
+            question: "The Earth _____ around the Sun.",
+            options: ["moves", "is moving", "moved", "will move"],
             correct: 0,
-            explanation: "Use past perfect continuous for an action that was ongoing before another past action."
+            explanation: "A general fact that is always true — simple present."
         },
         {
-            question: "Which tense: 'She has lived here since 2010'?",
-            options: ["Present Perfect", "Past Simple", "Present Continuous"],
+            question: "She _____ her project tomorrow evening.",
+            options: ["will finish", "finishes", "finished", "was finishing"],
             correct: 0,
-            explanation: "Present perfect with 'since' shows an action that started in the past and continues now."
+            explanation: "'Tomorrow evening' points to the future — will + base verb."
         },
         {
-            question: "We _____ watching TV when the phone rang.",
-            options: ["were", "are", "have been"],
+            question: "Shh, be quiet! The baby _____.",
+            options: ["is sleeping", "sleeps", "slept", "will sleep"],
             correct: 0,
-            explanation: "Use past continuous for an ongoing action interrupted by another past action."
+            explanation: "The action is in progress at this moment — present continuous."
         },
         {
-            question: "By next week, I _____ finished my project.",
-            options: ["will have", "have", "had"],
+            question: "What _____ you doing at 9 pm last night?",
+            options: ["were", "are", "did", "do"],
             correct: 0,
-            explanation: "Use future perfect for actions that will be completed before a future time."
+            explanation: "An action in progress at a specific past time — past continuous (was/were + -ing)."
         },
         {
-            question: "She always _____ coffee in the morning.",
-            options: ["drinks", "is drinking", "drank"],
+            question: "My father _____ coffee every morning, but today he _____ tea.",
+            options: ["drinks / is drinking", "is drinking / drinks", "drank / drinks", "drinks / drank"],
             correct: 0,
-            explanation: "Use simple present for habits and routines. 'Always' indicates a habit."
+            explanation: "Habit ('every morning') = simple present; happening now ('today') = present continuous."
         },
         {
-            question: "Which sentence uses PAST CONTINUOUS?",
-            options: ["I was sleeping when you called.", "I slept well last night.", "I sleep 8 hours daily."],
+            question: "Which sentence is about a FINISHED action?",
+            options: ["I watched the match last night.", "I watch matches on TV.", "I am watching the match.", "I will watch the match."],
             correct: 0,
-            explanation: "Past continuous: was/were + verb-ing for ongoing past actions."
+            explanation: "'Watched … last night' is completed past time — simple past."
         },
         {
-            question: "They _____ here for five years.",
-            options: ["have lived", "live", "lived"],
+            question: "They _____ badminton when it started to rain.",
+            options: ["were playing", "play", "are playing", "will play"],
             correct: 0,
-            explanation: "Use present perfect for actions that started in the past and continue to now."
+            explanation: "A longer action interrupted by a short one — past continuous for the longer action."
         },
         {
-            question: "I _____ my keys. Can you help me find them?",
-            options: ["have lost", "lost", "lose"],
+            question: "Don't worry — I _____ you with the project next week.",
+            options: ["will help", "help", "helped", "was helping"],
             correct: 0,
-            explanation: "Use present perfect when the past action has a present result."
-        },
-        {
-            question: "The sun _____ in the east.",
-            options: ["rises", "is rising", "rose"],
-            correct: 0,
-            explanation: "Use simple present for universal truths and facts."
-        },
-        {
-            question: "Which is FUTURE CONTINUOUS?",
-            options: ["I will be working at 3 PM.", "I will work tomorrow.", "I am working now."],
-            correct: 0,
-            explanation: "Future continuous: will be + verb-ing for ongoing future actions."
-        },
-        {
-            question: "He _____ already eaten when I arrived.",
-            options: ["had", "has", "have"],
-            correct: 0,
-            explanation: "Use past perfect for an action completed before another past action."
-        },
-        {
-            question: "Look! It _____.",
-            options: ["is snowing", "snows", "snowed"],
-            correct: 0,
-            explanation: "Use present continuous for actions happening now. 'Look!' indicates now."
-        },
-        {
-            question: "By 2030, they _____ married for 20 years.",
-            options: ["will have been", "have been", "are"],
-            correct: 0,
-            explanation: "Use future perfect continuous for duration up to a future point."
-        },
-        {
-            question: "She _____ her homework before dinner yesterday.",
-            options: ["had finished", "has finished", "finished"],
-            correct: 0,
-            explanation: "Use past perfect when one past action happened before another."
-        },
-        {
-            question: "Which uses PRESENT PERFECT?",
-            options: ["I have seen that movie.", "I saw that movie yesterday.", "I see movies often."],
-            correct: 0,
-            explanation: "Present perfect: have/has + past participle for past actions with present relevance."
+            explanation: "A promise about the future — will + base verb."
         },
         {
             question: "Water _____ at 100 degrees Celsius.",
-            options: ["boils", "is boiling", "boiled"],
+            options: ["boils", "is boiling", "boiled", "will boil"],
             correct: 0,
-            explanation: "Use simple present for scientific facts and general truths."
+            explanation: "A scientific fact — simple present."
+        },
+        {
+            question: "Miss Lee _____ at this school five years ago.",
+            options: ["taught", "teaches", "is teaching", "will teach"],
+            correct: 0,
+            explanation: "'Five years ago' is finished past time — simple past."
+        },
+        {
+            question: "Hurry up! The bus _____ now.",
+            options: ["is leaving", "leaves", "left", "will leave"],
+            correct: 0,
+            explanation: "Happening at this moment — present continuous."
+        },
+        {
+            question: "Which sentence is CORRECT?",
+            options: ["She was reading when I called.", "She reading when I called.", "She were reading when I called.", "She is read when I called."],
+            correct: 0,
+            explanation: "Past continuous = was/were + verb-ing: 'She was reading…'."
+        },
+        {
+            question: "Every weekend, we _____ our grandparents in Sha Tin.",
+            options: ["visit", "are visiting", "visited", "will visit"],
+            correct: 0,
+            explanation: "'Every weekend' signals a routine — simple present."
+        },
+        {
+            question: "The students _____ quietly while the teacher was marking.",
+            options: ["were reading", "read", "are reading", "will read"],
+            correct: 0,
+            explanation: "'While' links two past actions in progress — past continuous."
+        },
+        {
+            question: "The film _____ at 7:30 tonight, so don't be late.",
+            options: ["starts", "started", "was starting", "will have started"],
+            correct: 0,
+            explanation: "Timetabled events use the simple present, even for future time."
+        },
+        {
+            question: "Which time marker goes with the PAST CONTINUOUS?",
+            options: ["at 5 pm yesterday", "every day", "tomorrow", "in general"],
+            correct: 0,
+            explanation: "'At 5 pm yesterday' pinpoints a moment when an action was in progress."
         }
     ];
+
+    /* PARKED — items for future Perfect-tense lessons (not yet taught on this site).
+       Restore once /grammar/present-perfect/ etc. exist:
+       - "She has lived here since 2010."         (present perfect, since/for)
+       - "They have lived here for five years."
+       - "I have lost my keys. Can you help me find them?"
+       - "I have seen that movie." vs "I saw that movie yesterday."
+       - "He had already eaten when I arrived."   (past perfect)
+       - "She had finished her homework before dinner yesterday."
+       - "He had been waiting for two hours when I arrived."
+       - "By next week, I will have finished my project."   (future perfect)
+       - "By 2030, they will have been married for 20 years."
+       - "I will be working at 3 PM."             (future continuous)
+    */
 </script>
 <script src="{{ '/assets/js/quiz-engine.js' | relative_url }}"></script>

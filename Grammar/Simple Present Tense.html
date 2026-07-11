@@ -65,6 +65,16 @@ order: 2
     </div>
 </div>
 
+<div class="rules-box">
+    <strong>Spelling rules for he/she/it:</strong>
+    <ul style="margin: 10px 0 0 0;">
+        <li>Most verbs: <strong>+ s</strong> — work → work<span class="v-bubble v-red">s</span>, play → play<span class="v-bubble v-red">s</span></li>
+        <li>Ends in <em>-s, -z, -x, -ch, -sh, -o</em>: <strong>+ es</strong> — watch → watch<span class="v-bubble v-red">es</span>, go → go<span class="v-bubble v-red">es</span></li>
+        <li>Consonant + <em>y</em>: <strong>y → ies</strong> — study → stud<span class="v-bubble v-red">ies</span> (but play → plays: vowel + y)</li>
+        <li>Special: have → <strong>has</strong>, be → <strong>is</strong></li>
+    </ul>
+</div>
+
 <table>
     <tr>
         <th>Exercise Type</th>
@@ -212,6 +222,40 @@ order: 2
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">they / like</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">__________ they (like)</span>
+                <span class="answer">
+                    <span class="v-bubble v-orange">Do</span> <span class="grammar-bubble bubble-cyan">they</span> <span class="v-bubble v-red">like</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">dim sum?</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">dim sum</span>?
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">where / he / live</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">Where __________ he (live)?</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-green">Where</span> <span class="v-bubble v-orange">does</span> <span class="grammar-bubble bubble-cyan">he</span> <span class="v-bubble v-red">live</span>?
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
 </table>
 
 <hr>
@@ -250,11 +294,13 @@ order: 2
         if (!verb) return;
 
         let result;
-        // Basic s/es/ies logic
-        if (verb.endsWith('ss') || verb.endsWith('x') || verb.endsWith('ch') || verb.endsWith('sh') || verb.endsWith('o')) {
-            result = verb + 'es';
-        } else if (verb.endsWith('y') && !/[aeiou]y$/.test(verb)) {
-            result = verb.slice(0, -1) + 'ies';
+        // s/es/ies spelling rules
+        if (/[aeiou]z$/.test(verb)) {
+            result = verb + 'zes';            // quiz -> quizzes
+        } else if (/(s|z|x|ch|sh|o)$/.test(verb)) {
+            result = verb + 'es';             // pass/buzz/fix/watch/wash/go
+        } else if (/[^aeiou]y$/.test(verb)) {
+            result = verb.slice(0, -1) + 'ies'; // study -> studies
         } else {
             result = verb + 's';
         }

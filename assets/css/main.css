@@ -242,7 +242,8 @@ tr:nth-child(even) {
     background: rgba(255, 255, 255, 0.03);
 }
 
-td[colspan] {
+/* Section-header rows inside tables (exclude spanning practice cells) */
+td[colspan]:not(.clickable-sentence) {
     background: rgba(110, 193, 228, 0.15);
     color: #e4fbff;
     font-size: 1.18rem;
@@ -575,6 +576,36 @@ td[colspan] {
 .v-orange {
     background: #ff7043;
     color: #fff;
+}
+
+.v-yellow {
+    background: #fbc02d;
+    color: #263238;
+}
+
+.v-blue {
+    background: #42a5f5;
+    color: #fff;
+}
+
+.v-cyan {
+    background: #00acc1;
+    color: #fff;
+}
+
+.v-purple {
+    background: #ab47bc;
+    color: #fff;
+}
+
+.bubble-green {
+    border-color: #22c581;
+    background: rgba(34, 197, 129, 0.15);
+}
+
+.bubble-blue {
+    border-color: #6ec1e4;
+    background: rgba(110, 193, 228, 0.15);
 }
 
 /* --- Interactive practice tables --- */

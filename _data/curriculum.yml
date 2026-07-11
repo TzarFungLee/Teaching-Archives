@@ -73,3 +73,37 @@ grammar:
         quiz: /quizzes/passive-voice-quiz/
       - slug: /grammar/defining-non-defining-relative-clauses/
         quiz: /quizzes/defining-non-defining-relative-clauses-quiz/
+
+reading:
+  - unit: "Core Techniques"
+    icon: "🔍"
+    lessons:
+      - slug: /reading/tips/
+
+  - unit: "Question Types"
+    icon: "🎯"
+    lessons:
+      - slug: /reading/question-types/
+        quiz: /reading/question-types-quiz/
+
+  - unit: "Vocabulary Bank"
+    icon: "📚"
+    lessons:
+      - slug: /reading/reading-vocabulary/
+
+listening:
+  - unit: "Core Strategies"
+    icon: "🧭"
+    lessons:
+      - slug: /listening/listening-strategies/
+
+  - unit: "Vocabulary Bank"
+    icon: "📚"
+    lessons:
+      - slug: /listening/listening-vocabulary/
+
+speaking:
+  - unit: "Speaking Formats"
+    icon: "🗣️"
+    lessons:
+      - slug: /speaking/speaking-skills/

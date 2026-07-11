@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Simple Future Tense - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: will (promises, predictions, decisions) AND
+    // be going to (plans, evidence), plus negatives and questions.
     const questionBank = [
         {
             question: "I _____ visit my grandmother tomorrow.",
-            options: ["will", "am", "going"],
+            options: ["will", "am", "going", "did"],
             correct: 0,
-            explanation: "Use 'will' + base form to express future actions."
+            explanation: "Future action: will + base verb."
         },
         {
-            question: "She _____ be late for the meeting.",
-            options: ["won't", "doesn't", "isn't"],
+            question: "She _____ be late for the meeting — the MTR is delayed.",
+            options: ["will", "won't to", "is", "does"],
             correct: 0,
-            explanation: "Use 'won't' (will not) for negative future sentences."
+            explanation: "Prediction about the future: will + base verb."
         },
         {
-            question: "They _____ start the project next week.",
-            options: ["are", "will", "were"],
-            correct: 1,
-            explanation: "Use 'will' to express future plans or intentions."
-        },
-        {
-            question: "_____ you help me with this task?",
-            options: ["Do", "Will", "Are"],
-            correct: 1,
-            explanation: "Use 'Will' for questions about future actions or requests."
-        },
-        {
-            question: "We _____ travel to Spain next summer.",
-            options: ["will", "are", "do"],
+            question: "Don't worry, I _____ tell anyone your secret.",
+            options: ["won't", "don't", "am not", "didn't"],
             correct: 0,
-            explanation: "Use 'will' to express future travel plans."
+            explanation: "Future negative promise: won't (= will not) + base verb."
         },
         {
-            question: "He _____ not attend the party tonight.",
-            options: ["will", "does", "is"],
+            question: "_____ you help me carry these books?",
+            options: ["Will", "Do", "Are", "Did"],
             correct: 0,
-            explanation: "Use 'will not' (won't) for negative future statements."
-        },
-        {
-            question: "_____ it rain tomorrow?",
-            options: ["Does", "Is", "Will"],
-            correct: 2,
-            explanation: "Use 'Will' to ask questions about future predictions."
-        },
-        {
-            question: "The concert _____ begin at 8 PM.",
-            options: ["will", "is", "does"],
-            correct: 0,
-            explanation: "Use 'will' for scheduled future events."
-        },
-        {
-            question: "I think she _____ pass the exam.",
-            options: ["will", "is", "does"],
-            correct: 0,
-            explanation: "Use 'will' for predictions about the future."
-        },
-        {
-            question: "Which sentence is CORRECT?",
-            options: ["He will goes to the store.", "He will go to the store.", "He will going to the store."],
-            correct: 1,
-            explanation: "Use 'will' + base form (not 'goes' or 'going')."
-        },
-        {
-            question: "We _____ buy a new car next month.",
-            options: ["won't", "don't", "aren't"],
-            correct: 0,
-            explanation: "Use 'won't' (will not) for negative future plans."
-        },
-        {
-            question: "They _____ finish the work by Friday.",
-            options: ["will", "are", "were"],
-            correct: 0,
-            explanation: "Use 'will' to express future completion."
-        },
-        {
-            question: "_____ she come to the party?",
-            options: ["Does", "Will", "Is"],
-            correct: 1,
-            explanation: "Use 'Will' for yes/no questions about the future."
+            explanation: "Future request/question: Will + subject + base verb?"
         },
         {
             question: "I promise I _____ be there on time.",
-            options: ["will", "am", "do"],
+            options: ["will", "am", "do", "was"],
             correct: 0,
-            explanation: "Use 'will' to make promises about future actions."
+            explanation: "Promises use will + base verb."
         },
         {
-            question: "The sun _____ rise at 6 AM tomorrow.",
-            options: ["will", "is", "does"],
+            question: "Which sentence is CORRECT?",
+            options: ["He will go to the store.", "He will goes to the store.", "He will going to the store.", "He wills go to the store."],
             correct: 0,
-            explanation: "Use 'will' for predictable future events."
+            explanation: "After 'will', always use the base verb: will go."
+        },
+        {
+            question: "Look at those black clouds! It _____ rain.",
+            options: ["is going to", "will to", "is", "does"],
+            correct: 0,
+            explanation: "Prediction from evidence you can SEE now: be going to + base verb."
+        },
+        {
+            question: "We _____ visit Disneyland next month. We bought the tickets already!",
+            options: ["are going to", "will to", "going to", "would"],
+            correct: 0,
+            explanation: "A plan already decided (tickets bought!) uses be going to."
+        },
+        {
+            question: "The phone is ringing. — OK, I _____ answer it.",
+            options: ["will", "am going to", "was going to", "do"],
+            correct: 0,
+            explanation: "A decision made at this moment (spontaneous) uses will, not going to."
+        },
+        {
+            question: "She _____ study medicine at HKU. She decided last year.",
+            options: ["is going to", "will to", "is", "was"],
+            correct: 0,
+            explanation: "A plan decided in advance uses be going to."
+        },
+        {
+            question: "They _____ going to move to Tseung Kwan O next year.",
+            options: ["are", "will", "is", "be"],
+            correct: 0,
+            explanation: "Be going to: are/is/am + going to. 'They' takes 'are'."
+        },
+        {
+            question: "Which sentence uses 'be going to' CORRECTLY?",
+            options: ["I am going to watch a film tonight.", "I will going to watch a film.", "I am go to watch a film.", "I going to watch a film."],
+            correct: 0,
+            explanation: "Be going to = am/is/are + going to + base verb."
+        },
+        {
+            question: "_____ it rain tomorrow?",
+            options: ["Will", "Does", "Is", "Did"],
+            correct: 0,
+            explanation: "Future question: Will + subject + base verb?"
+        },
+        {
+            question: "The concert _____ begin at 8 PM.",
+            options: ["will", "is going", "wills", "won't to"],
+            correct: 0,
+            explanation: "Will + base verb: will begin."
+        },
+        {
+            question: "I think our team _____ the match.",
+            options: ["will win", "will wins", "wins will", "is win"],
+            correct: 0,
+            explanation: "'I think…' introduces a prediction: will + base verb."
+        },
+        {
+            question: "He _____ not attend the party tonight.",
+            options: ["will", "does", "is going", "was"],
+            correct: 0,
+            explanation: "Future negative: will not (won't) + base verb."
+        },
+        {
+            question: "When _____ you return the library books?",
+            options: ["will", "do", "are", "did"],
+            correct: 0,
+            explanation: "Wh-question about the future: When will you…?"
         },
         {
             question: "Which is INCORRECT?",
-            options: ["They will arrives soon.", "They will arrive soon.", "Will they arrive soon?"],
+            options: ["They will arrives soon.", "They will arrive soon.", "Will they arrive soon?", "They are going to arrive soon."],
             correct: 0,
-            explanation: "After 'will', use the base form 'arrive', not 'arrives'."
+            explanation: "After 'will', use the base verb — 'will arrives' is wrong."
         },
         {
-            question: "You _____ regret this decision.",
-            options: ["will", "are", "do"],
+            question: "Watch out! You _____ drop the plates!",
+            options: ["are going to", "will to", "won't", "are"],
             correct: 0,
-            explanation: "Use 'will' for warnings or predictions."
+            explanation: "Something about to happen based on what you see: be going to."
         },
         {
-            question: "It _____ be difficult to finish on time.",
-            options: ["won't", "isn't", "doesn't"],
+            question: "Maybe they _____ join us later — they haven't decided.",
+            options: ["will", "are going to", "did", "do"],
             correct: 0,
-            explanation: "Use 'won't' for negative future predictions."
-        },
-        {
-            question: "When _____ you return home?",
-            options: ["will", "do", "are"],
-            correct: 0,
-            explanation: "Use 'will' in wh-questions about future actions."
-        },
-        {
-            question: "Maybe they _____ join us later.",
-            options: ["will", "are", "do"],
-            correct: 0,
-            explanation: "Use 'will' to express possibility about future events."
+            explanation: "'Maybe' = uncertain prediction, no fixed plan: will."
         }
     ];
 </script>

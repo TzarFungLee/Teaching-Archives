@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Simple Past Tense - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: affirmative (regular + irregular), negatives with
+    // did not + base verb, and questions with Did + base verb.
     const questionBank = [
         {
             question: "I _____ to Paris last year.",
-            options: ["go", "went", "goes"],
-            correct: 1,
-            explanation: "Use 'went' (past form of 'go') for completed actions in the past."
+            options: ["went", "go", "goes", "gone"],
+            correct: 0,
+            explanation: "'Go' is irregular: go → went. 'Last year' needs the simple past."
         },
         {
             question: "She _____ her homework yesterday.",
-            options: ["finish", "finished", "finishes"],
-            correct: 1,
-            explanation: "Add '-ed' to regular verbs to form the simple past tense."
+            options: ["finished", "finish", "finishes", "finishing"],
+            correct: 0,
+            explanation: "Regular verb: add -ed. Finish → finished."
         },
         {
-            question: "They _____ football last Sunday.",
-            options: ["play", "played", "plays"],
-            correct: 1,
-            explanation: "Use 'played' (past form) for actions completed in the past."
-        },
-        {
-            question: "He _____ a new car two days ago.",
-            options: ["buy", "bought", "buys"],
-            correct: 1,
-            explanation: "'Bought' is the past form of the irregular verb 'buy'."
-        },
-        {
-            question: "We _____ TV last night.",
-            options: ["watch", "watched", "watches"],
-            correct: 1,
-            explanation: "Add '-ed' to regular verbs for simple past tense."
-        },
-        {
-            question: "The train _____ late this morning.",
-            options: ["arrive", "arrived", "arrives"],
-            correct: 1,
-            explanation: "Use 'arrived' (past form) for completed actions in the past."
-        },
-        {
-            question: "I _____ my keys in the car.",
-            options: ["leave", "left", "leaves"],
-            correct: 1,
-            explanation: "'Left' is the past form of the irregular verb 'leave'."
-        },
-        {
-            question: "She _____ a beautiful song at the concert.",
-            options: ["sing", "sang", "sings"],
-            correct: 1,
-            explanation: "'Sang' is the past form of the irregular verb 'sing'."
-        },
-        {
-            question: "They _____ in London for 5 years.",
-            options: ["live", "lived", "lives"],
-            correct: 1,
-            explanation: "Use 'lived' (past form) for past states or situations."
-        },
-        {
-            question: "Which sentence is CORRECT?",
-            options: ["He go to school yesterday.", "He went to school yesterday.", "He goes to school yesterday."],
-            correct: 1,
-            explanation: "Use the past form 'went' with past time expressions like 'yesterday'."
+            question: "He _____ a new bicycle two days ago.",
+            options: ["bought", "buyed", "buys", "buy"],
+            correct: 0,
+            explanation: "'Buy' is irregular: buy → bought (NOT 'buyed')."
         },
         {
             question: "The baby _____ all night.",
-            options: ["cry", "cried", "cries"],
-            correct: 1,
-            explanation: "Change 'y' to 'i' and add '-ed' for verbs ending in consonant + y."
+            options: ["cried", "cryed", "cries", "crying"],
+            correct: 0,
+            explanation: "Spelling rule: consonant + y → change y to i and add -ed (cry → cried)."
         },
         {
-            question: "We _____ our grandmother last week.",
-            options: ["visit", "visited", "visits"],
-            correct: 1,
-            explanation: "Add '-ed' to regular verbs for simple past tense."
+            question: "She _____ a beautiful song at the concert.",
+            options: ["sang", "singed", "sings", "sung"],
+            correct: 0,
+            explanation: "'Sing' is irregular: sing → sang. ('Sung' needs a helping verb: has sung.)"
         },
         {
-            question: "He _____ three languages when he was young.",
-            options: ["speak", "spoke", "speaks"],
-            correct: 1,
-            explanation: "'Spoke' is the past form of the irregular verb 'speak'."
-        },
-        {
-            question: "I _____ my breakfast at 7 AM.",
-            options: ["eat", "ate", "eats"],
-            correct: 1,
-            explanation: "'Ate' is the past form of the irregular verb 'eat'."
-        },
-        {
-            question: "Which is INCORRECT?",
-            options: ["She studied hard.", "They played tennis.", "He goed to work."],
-            correct: 2,
-            explanation: "The past form of 'go' is 'went', not 'goed'. 'Go' is an irregular verb."
-        },
-        {
-            question: "The students _____ the teacher's question.",
-            options: ["answer", "answered", "answers"],
-            correct: 1,
-            explanation: "Add '-ed' to regular verbs for simple past tense."
-        },
-        {
-            question: "She _____ a letter to her friend.",
-            options: ["write", "wrote", "writes"],
-            correct: 1,
-            explanation: "'Wrote' is the past form of the irregular verb 'write'."
-        },
-        {
-            question: "They _____ the movie together.",
-            options: ["watch", "watched", "watches"],
-            correct: 1,
-            explanation: "Add '-ed' to regular verbs for simple past tense."
-        },
-        {
-            question: "I _____ my phone at home.",
-            options: ["forget", "forgot", "forgets"],
-            correct: 1,
-            explanation: "'Forgot' is the past form of the irregular verb 'forget'."
+            question: "I _____ my phone at home this morning.",
+            options: ["forgot", "forgetted", "forget", "forgets"],
+            correct: 0,
+            explanation: "'Forget' is irregular: forget → forgot."
         },
         {
             question: "We _____ pizza for dinner last night.",
-            options: ["have", "had", "has"],
-            correct: 1,
-            explanation: "'Had' is the past form of the irregular verb 'have'."
+            options: ["had", "have", "has", "haved"],
+            correct: 0,
+            explanation: "'Have' is irregular: have → had."
+        },
+        {
+            question: "She _____ a letter to her penfriend.",
+            options: ["wrote", "writed", "writes", "write"],
+            correct: 0,
+            explanation: "'Write' is irregular: write → wrote."
+        },
+        {
+            question: "The students _____ the teacher's question easily.",
+            options: ["answered", "answer", "answers", "answering"],
+            correct: 0,
+            explanation: "Regular verb: answer → answered."
+        },
+        {
+            question: "He _____ three languages when he was young.",
+            options: ["spoke", "speaked", "speaks", "speak"],
+            correct: 0,
+            explanation: "'Speak' is irregular: speak → spoke."
+        },
+        {
+            question: "I _____ TV last night. I went to bed early instead.",
+            options: ["did not watch", "did not watched", "not watched", "do not watch"],
+            correct: 0,
+            explanation: "Negative: did not + BASE verb. The past is shown by 'did', not the main verb."
+        },
+        {
+            question: "She _____ to school yesterday because she was sick.",
+            options: ["didn't go", "didn't went", "doesn't go", "didn't goes"],
+            correct: 0,
+            explanation: "After 'didn't', always use the base verb: didn't go (NOT 'didn't went')."
+        },
+        {
+            question: "They _____ the bus this morning.",
+            options: ["did not catch", "did not caught", "do not catch", "not catch"],
+            correct: 0,
+            explanation: "Did not + base verb: did not catch. 'Did' already shows past time."
+        },
+        {
+            question: "Which sentence is CORRECT?",
+            options: ["He didn't eat breakfast.", "He didn't ate breakfast.", "He don't ate breakfast.", "He not eat breakfast."],
+            correct: 0,
+            explanation: "Negative past = didn't + base verb: didn't eat."
+        },
+        {
+            question: "We _____ anything at the mall — everything was too expensive.",
+            options: ["didn't buy", "didn't bought", "don't buy", "didn't buying"],
+            correct: 0,
+            explanation: "Didn't + base verb: didn't buy."
+        },
+        {
+            question: "_____ you _____ the football match last night?",
+            options: ["Did / watch", "Did / watched", "Do / watched", "Were / watch"],
+            correct: 0,
+            explanation: "Question: Did + subject + BASE verb. 'Did' carries the past tense."
+        },
+        {
+            question: "_____ she _____ her keys again?",
+            options: ["Did / lose", "Did / lost", "Does / lost", "Was / lose"],
+            correct: 0,
+            explanation: "Did + subject + base verb: Did she lose…?"
+        },
+        {
+            question: "Which question is CORRECT?",
+            options: ["Did they win the game?", "Did they won the game?", "Do they won the game?", "They did win the game?"],
+            correct: 0,
+            explanation: "Did + subject + base verb: Did they win…? (NOT 'Did they won')."
+        },
+        {
+            question: "Where _____ you _____ your summer holiday?",
+            options: ["did / spend", "did / spent", "do / spent", "were / spend"],
+            correct: 0,
+            explanation: "Wh-question: Where + did + subject + base verb."
+        },
+        {
+            question: "Which sentence is INCORRECT?",
+            options: ["He goed to work by minibus.", "She studied hard for the DSE.", "They played tennis on Saturday.", "I left my umbrella on the MTR."],
+            correct: 0,
+            explanation: "'Go' is irregular — the past is 'went', never 'goed'."
         }
     ];
 </script>

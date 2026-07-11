@@ -8,3 +8,6 @@ node_modules/
 Gemfile.lock
 jekyll.log
 .claude/
+# local planning notes, not for the public repo
+REFINEMENT-PLAN.md
+CONTENT-AUDIT.md

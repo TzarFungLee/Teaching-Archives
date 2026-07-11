@@ -60,6 +60,7 @@ When implementing or modifying interactive teaching songs with synchronized lyri
 
 ## 🗺️ Content Roadmap (owner's plan)
 * **Grammar**: up to ~20 more lessons (max ~40 total). Single-level by design — no `level:` field for grammar. Slot new lessons into existing units in `_data/curriculum.yml`, or add a unit when a topic cluster reaches 3+ lessons.
+* **Unit structure principle (owner's explicit preference): uniformity across categories beats minimal chrome.** Skill categories mirror the same unit pattern (e.g. "Core Techniques/Strategies" + "Vocabulary Bank"), even when a unit holds a single lesson. Keep unit names and icons parallel between categories.
 * **Writing**: will become **multi-level** (e.g. P4/P5/DSE). When that work starts, add a `level:` field to writing lesson entries in `curriculum.yml` and a level filter in the portal overlay — the data structure already anticipates this.
 
 ## 📝 Persistent Session Notes

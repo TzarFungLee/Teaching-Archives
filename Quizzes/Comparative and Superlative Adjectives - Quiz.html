@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Comparative and Superlative Adjectives - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: -er/-est, doubling, y->ier, more/most, irregulars,
+    // than/the usage, as...as, and the "more taller" trap.
     const questionBank = [
         {
             question: "This car is _____ than that one.",
-            options: ["faster", "fastest", "more fast"],
+            options: ["faster", "fastest", "more fast", "more faster"],
             correct: 0,
-            explanation: "Use comparative form (-er) to compare two things. 'Fast' becomes 'faster'."
+            explanation: "One syllable: add -er. Comparatives pair with 'than'."
         },
         {
             question: "She is the _____ student in the class.",
-            options: ["smartest", "smarter", "most smart"],
+            options: ["smartest", "smarter", "most smart", "more smart"],
             correct: 0,
-            explanation: "Use superlative form (-est) with 'the' to show the highest degree. 'Smart' becomes 'smartest'."
+            explanation: "Superlative of a short adjective: the + -est."
         },
         {
-            question: "This book is _____ interesting than the other one.",
-            options: ["more", "most", "much"],
+            question: "This book is _____ interesting than that one.",
+            options: ["more", "most", "much", "very"],
             correct: 0,
-            explanation: "Use 'more' + adjective for comparative with longer adjectives."
+            explanation: "Long adjectives use more + adjective for the comparative."
         },
         {
-            question: "Mount Everest is the _____ mountain in the world.",
-            options: ["highest", "higher", "high"],
+            question: "Summer in Hong Kong is getting _____ every year.",
+            options: ["hotter", "hoter", "more hot", "hottest"],
             correct: 0,
-            explanation: "Use superlative (-est) with 'the' for the highest degree."
+            explanation: "Short vowel + consonant: double the consonant (hot becomes hotter)."
+        },
+        {
+            question: "My little sister is much _____ than me.",
+            options: ["happier", "happyer", "more happy", "happiest"],
+            correct: 0,
+            explanation: "Two syllables ending in -y: change y to i and add -er (happier)."
+        },
+        {
+            question: "This is the _____ street in Mong Kok.",
+            options: ["busiest", "busyest", "most busy", "busier"],
+            correct: 0,
+            explanation: "Busy becomes busiest (y to iest) for the superlative."
         },
         {
             question: "My house is _____ than yours.",
-            options: ["bigger", "biggest", "more big"],
+            options: ["bigger", "biger", "more big", "biggest"],
             correct: 0,
-            explanation: "Use comparative (-er) for one-syllable adjectives. 'Big' becomes 'bigger' (double the consonant)."
+            explanation: "Big becomes bigger: double the final consonant."
         },
         {
-            question: "This is the _____ beautiful painting I've ever seen.",
-            options: ["most", "more", "very"],
+            question: "This is the _____ beautiful painting in the gallery.",
+            options: ["most", "more", "very", "much"],
             correct: 0,
-            explanation: "Use 'the most' + adjective for superlative with longer adjectives."
+            explanation: "Long adjectives use the most + adjective for the superlative."
         },
         {
             question: "Which sentence is CORRECT?",
-            options: ["He is more tall than his brother.", "He is taller than his brother.", "He is tallest than his brother."],
-            correct: 1,
-            explanation: "Short adjectives use -er for comparison. 'Tall' becomes 'taller'."
-        },
-        {
-            question: "Today is _____ than yesterday.",
-            options: ["colder", "coldest", "more cold"],
+            options: ["He is taller than his brother.", "He is more tall than his brother.", "He is more taller than his brother.", "He is tallest than his brother."],
             correct: 0,
-            explanation: "Use comparative (-er) for one-syllable adjectives."
-        },
-        {
-            question: "She is the _____ person I know.",
-            options: ["kindest", "kinder", "most kind"],
-            correct: 0,
-            explanation: "Use superlative (-est) with 'the' for the highest degree."
-        },
-        {
-            question: "This exercise is _____ difficult than the last one.",
-            options: ["more", "most", "much"],
-            correct: 0,
-            explanation: "Use 'more' for comparative with adjectives of two or more syllables."
-        },
-        {
-            question: "What is the _____ city in your country?",
-            options: ["largest", "larger", "large"],
-            correct: 0,
-            explanation: "Use superlative (-est) with 'the' when comparing more than two things."
-        },
-        {
-            question: "Gold is _____ than silver.",
-            options: ["more expensive", "most expensive", "expensiver"],
-            correct: 0,
-            explanation: "Use 'more' + adjective for comparative with longer adjectives."
-        },
-        {
-            question: "This is the _____ day of my life!",
-            options: ["best", "better", "good"],
-            correct: 0,
-            explanation: "'Good' has an irregular superlative form: 'best'."
-        },
-        {
-            question: "Which is INCORRECT?",
-            options: ["more beautiful", "beautifuler", "most beautiful"],
-            correct: 1,
-            explanation: "Don't add -er to long adjectives. Use 'more beautiful' instead."
+            explanation: "Short adjective takes -er, and never mix 'more' with '-er'."
         },
         {
             question: "His performance was _____ than mine.",
-            options: ["worse", "worst", "bad"],
+            options: ["worse", "worst", "badder", "more bad"],
             correct: 0,
-            explanation: "'Bad' has an irregular comparative form: 'worse'."
+            explanation: "Irregular: bad, worse, worst."
         },
         {
-            question: "She ran _____ than all the other runners.",
-            options: ["faster", "fastest", "fast"],
+            question: "This is the _____ movie I have ever watched.",
+            options: ["worst", "worse", "baddest", "most bad"],
             correct: 0,
-            explanation: "Use comparative when comparing with others (than)."
+            explanation: "Irregular superlative: the worst."
         },
         {
-            question: "This is the _____ movie I've ever watched.",
-            options: ["worst", "worse", "bad"],
+            question: "Sha Tin is _____ from Central than Kowloon Tong.",
+            options: ["further", "farrer", "more far", "furthest"],
             correct: 0,
-            explanation: "'Bad' has an irregular superlative form: 'worst'."
+            explanation: "Irregular: far, further (or farther), furthest."
+        },
+        {
+            question: "Gold is _____ than silver.",
+            options: ["more expensive", "expensiver", "most expensive", "much expensive"],
+            correct: 0,
+            explanation: "Three syllables: more expensive."
         },
         {
             question: "The weather is getting _____ and _____.",
-            options: ["colder and colder", "more cold and more cold", "coldest and coldest"],
+            options: ["colder and colder", "more cold and more cold", "coldest and coldest", "cold and colder"],
             correct: 0,
-            explanation: "Use 'comparative + and + comparative' to show continuous change."
+            explanation: "Growing change: comparative + and + comparative."
         },
         {
             question: "She is _____ her sister.",
-            options: ["younger than", "youngest than", "young than"],
+            options: ["younger than", "younger then", "youngest than", "young than"],
             correct: 0,
-            explanation: "Use comparative + 'than' when comparing two things."
+            explanation: "Comparative + THAN (careful: 'then' is about time!)."
         },
         {
-            question: "This is _____ than I expected.",
-            options: ["easier", "easiest", "more easy"],
+            question: "Mount Everest is _____ mountain in the world.",
+            options: ["the highest", "the higher", "highest", "a highest"],
             correct: 0,
-            explanation: "Adjectives ending in -y change to -ier for comparative."
+            explanation: "Superlatives need 'the': the highest."
+        },
+        {
+            question: "Which is INCORRECT?",
+            options: ["beautifuler", "more beautiful", "most beautiful", "as beautiful as"],
+            correct: 0,
+            explanation: "Long adjectives never take -er: use 'more beautiful'."
+        },
+        {
+            question: "The exam was easier _____ I expected.",
+            options: ["than", "then", "as", "that"],
+            correct: 0,
+            explanation: "Comparisons use 'than' (not 'then')."
+        },
+        {
+            question: "My flat is _____ big _____ yours — exactly the same size!",
+            options: ["as / as", "more / than", "so / as", "as / than"],
+            correct: 0,
+            explanation: "Equal comparison: as + adjective + as."
+        },
+        {
+            question: "Which sentence is CORRECT?",
+            options: ["This is the easiest question.", "This is the most easy question.", "This is the easiest most question.", "This is more easiest question."],
+            correct: 0,
+            explanation: "Easy becomes easiest (y to iest); do not use 'most' with short adjectives."
         }
     ];
 </script>

@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Prepositions of Movement - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson movement map: into/out of, through/across/past,
+    // over, up/down, along, around.
     const questionBank = [
         {
             question: "She walked _____ the street to the other side.",
-            options: ["across", "through", "into"],
+            options: ["across", "through", "into", "along"],
             correct: 0,
-            explanation: "Use 'across' for movement from one side to the other of a surface."
+            explanation: "Across = from one side of a surface to the other."
         },
         {
             question: "The train went _____ the tunnel.",
-            options: ["through", "across", "over"],
+            options: ["through", "across", "over", "past"],
             correct: 0,
-            explanation: "Use 'through' for movement from one end to the other inside something."
+            explanation: "Through = inside something with an entrance and an exit."
         },
         {
             question: "He jumped _____ the fence.",
-            options: ["over", "across", "through"],
+            options: ["over", "across", "through", "along"],
             correct: 0,
-            explanation: "Use 'over' for movement above and across something."
+            explanation: "Over = above something and to the other side."
         },
         {
-            question: "We drove _____ the bridge.",
-            options: ["over", "through", "into"],
+            question: "The cat climbed _____ the tree to reach the nest.",
+            options: ["up", "down", "across", "past"],
             correct: 0,
-            explanation: "Use 'over' when crossing on top of something like a bridge."
+            explanation: "Up = movement to a higher place."
         },
         {
-            question: "The cat climbed _____ the tree.",
-            options: ["up", "down", "across"],
+            question: "She walked _____ the stairs to the ground floor.",
+            options: ["down", "up", "into", "over"],
             correct: 0,
-            explanation: "Use 'up' for upward movement."
+            explanation: "Down = movement to a lower place."
         },
         {
-            question: "She walked _____ the stairs carefully.",
-            options: ["down", "up", "into"],
+            question: "They ran _____ the classroom when the bell rang.",
+            options: ["out of", "into of", "off", "under"],
             correct: 0,
-            explanation: "Use 'down' for downward movement."
-        },
-        {
-            question: "They ran _____ the room when the bell rang.",
-            options: ["out of", "into", "along"],
-            correct: 0,
-            explanation: "Use 'out of' for movement from inside to outside."
+            explanation: "Out of = from inside to outside."
         },
         {
             question: "He walked _____ the shop to buy milk.",
-            options: ["into", "out of", "along"],
+            options: ["into", "out of", "past under", "off"],
             correct: 0,
-            explanation: "Use 'into' for movement from outside to inside."
+            explanation: "Into = from outside to inside."
         },
         {
             question: "Which is CORRECT?",
-            options: ["Walk through the bridge.", "Walk over the bridge.", "Walk into the bridge."],
-            correct: 1,
-            explanation: "Use 'over' when crossing on top of a bridge."
+            options: ["Walk over the bridge.", "Walk through the bridge.", "Walk into the bridge.", "Walk out of the bridge."],
+            correct: 0,
+            explanation: "You go over (or across) a bridge — through is for tunnels."
         },
         {
-            question: "The children ran _____ the park.",
-            options: ["around", "into", "up"],
+            question: "The children ran _____ the playground in a big circle.",
+            options: ["around", "into", "up", "across"],
             correct: 0,
-            explanation: "Use 'around' for circular movement or moving in the area."
+            explanation: "Around = in a circle."
         },
         {
-            question: "She swam _____ the river.",
-            options: ["across", "through", "over"],
+            question: "She swam _____ the river to the opposite bank.",
+            options: ["across", "through", "over", "around"],
             correct: 0,
-            explanation: "Use 'across' when moving from one side to the other of a surface (water)."
+            explanation: "Across = from one side to the other."
         },
         {
-            question: "We walked _____ the beach.",
-            options: ["along", "through", "into"],
+            question: "We walked _____ the beach, following the shoreline.",
+            options: ["along", "through", "into", "over"],
             correct: 0,
-            explanation: "Use 'along' for movement in a line beside or following something."
+            explanation: "Along = following a line or path."
         },
         {
             question: "The ball rolled _____ the hill.",
-            options: ["down", "up", "across"],
+            options: ["down", "up", "across", "out of"],
             correct: 0,
-            explanation: "Use 'down' for downward movement from high to low."
+            explanation: "Down = to a lower place."
         },
         {
             question: "Which is INCORRECT?",
-            options: ["Go up the mountain.", "Go through the door.", "Go across the tunnel."],
-            correct: 2,
-            explanation: "Use 'through' (not 'across') for movement inside a tunnel."
+            options: ["Go across the tunnel.", "Go through the door.", "Go up the mountain.", "Go past the bank."],
+            correct: 0,
+            explanation: "Tunnels are enclosed — go THROUGH a tunnel, not across."
         },
         {
-            question: "The plane flew _____ the clouds.",
-            options: ["through", "across", "into"],
+            question: "The plane flew _____ the clouds and disappeared.",
+            options: ["through", "across", "onto", "against"],
             correct: 0,
-            explanation: "Use 'through' for movement inside or among something (like clouds)."
+            explanation: "Through = inside or among the clouds."
         },
         {
-            question: "He drove _____ the city center.",
-            options: ["through", "over", "across"],
+            question: "He drove _____ the city centre without stopping.",
+            options: ["through", "onto", "out", "up"],
             correct: 0,
-            explanation: "Use 'through' for movement within an area from one end to another."
+            explanation: "Through = in one side and out the other."
         },
         {
-            question: "The snake slithered _____ the grass.",
-            options: ["through", "over", "into"],
+            question: "I walked _____ the 7-Eleven — I did not go in.",
+            options: ["past", "through", "into", "across"],
             correct: 0,
-            explanation: "Use 'through' for movement among/within things like grass."
+            explanation: "Past = beside and beyond something, without entering."
         },
         {
-            question: "She climbed _____ the ladder.",
-            options: ["up", "down", "across"],
+            question: "She climbed _____ the ladder to change the light bulb.",
+            options: ["up", "down", "along", "past"],
             correct: 0,
-            explanation: "Use 'up' for upward climbing movement."
+            explanation: "Up = to a higher place."
         },
         {
-            question: "They walked _____ the river bank.",
-            options: ["along", "through", "into"],
+            question: "They strolled _____ the Tsim Sha Tsui promenade at sunset.",
+            options: ["along", "through", "into", "over"],
             correct: 0,
-            explanation: "Use 'along' when following a path beside something."
+            explanation: "Along = following the path of the promenade."
         },
         {
             question: "The bird flew _____ the window _____ the room.",
-            options: ["through, into", "into, through", "across, into"],
+            options: ["through / into", "into / through", "across / into", "through / across"],
             correct: 0,
-            explanation: "Use 'through' for the window opening, then 'into' for entering the room."
+            explanation: "Through the window (an opening), into the room (outside to inside)."
+        },
+        {
+            question: "The dog ran _____ the tree three times, chasing its tail.",
+            options: ["around", "along", "up", "through"],
+            correct: 0,
+            explanation: "Around = in circles."
         }
     ];
 </script>

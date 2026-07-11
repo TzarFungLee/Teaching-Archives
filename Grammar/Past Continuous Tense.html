@@ -45,6 +45,7 @@ order: 5
         <th>Situation</th>
         <th>Past Continuous Sentence</th>
     </tr>
+    <!-- (lab UI restored below the table; see 🧪 ING Transformer Lab) -->
 
     <tr>
         <td colspan="2"><strong>Complete Sentences (Example)</strong></td>
@@ -106,7 +107,94 @@ order: 5
             <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
         </td>
     </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">watch</span> /
+            <span onclick="togglePart(event, this, 2)">went out</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">We __________ (were / watch)</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">We</span> <span class="v-bubble v-orange">were</span> <span class="v-bubble v-red">watching</span>
+                </span>
+            </span>
+            <span class="part part-2">
+                <span class="placeholder">a film when the lights went out.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-yellow">a film</span> <span class="grammar-bubble bubble-green">when the lights went out</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Two Actions Together (with 'while')</strong></td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">read / listen</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">While I __________ (was / read), my sister __________ (was / listen) to music.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-green">While</span> <span class="grammar-bubble bubble-cyan">I</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">reading</span>, <span class="grammar-bubble bubble-cyan">my sister</span> <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red">listening</span> <span class="grammar-bubble bubble-yellow">to music</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><strong>Negatives & Questions</strong></td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">not / pay attention</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">He __________ (was / not / pay) attention during the lesson.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">He</span> <span class="v-bubble v-orange">was not</span> <span class="v-bubble v-red">paying</span> <span class="grammar-bubble bubble-yellow">attention</span> <span class="grammar-bubble bubble-green">during the lesson</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">you / do</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">What __________ you (do) at 10 pm last night?</span>
+                <span class="answer">
+                    What <span class="v-bubble v-orange">were</span> <span class="grammar-bubble bubble-cyan">you</span> <span class="v-bubble v-red">doing</span> <span class="grammar-bubble bubble-green">at 10 pm last night</span>?
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
 </table>
+
+<!-- ING Transformer Lab (UI for the transformVerbINGPast script below) -->
+<div class="interactive-lab card" style="margin-top: 30px; padding: 25px; border-left: 5px solid var(--primary); background: rgba(255,255,255,0.02); border-radius: 12px;">
+    <h4 style="margin-top: 0;">🧪 ING Transformer Lab</h4>
+    <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px;">Type a base verb (e.g., 'run', 'write', 'lie') to see its -ing form for was/were + verb-ing!</p>
+
+    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <input type="text" id="verbInputINGPast" class="verb-lab-input" placeholder="Enter base verb..." onkeyup="if(event.key === 'Enter') transformVerbINGPast()">
+        <button onclick="transformVerbINGPast()" class="btn" style="padding: 12px 24px; border-radius: 8px;">Transform ✨</button>
+    </div>
+
+    <div id="transformResultINGPast" style="margin-top: 25px; display: none; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 10px; animation: fadeIn 0.3s ease;">
+        <span style="font-size: 0.85rem; display: block; margin-bottom: 8px; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Past Continuous Form:</span>
+        <span class="grammar-bubble bubble-cyan" style="font-size: 1.1rem;">She <span class="v-bubble v-orange">was</span> <span class="v-bubble v-red" id="ingVerbResultPast" style="font-weight: bold;">---</span> ...</span>
+    </div>
+</div>
 
 <hr>
 
@@ -126,9 +214,13 @@ order: 5
 
 <h4>When to Use</h4>
 <ul>
-    <li><strong>Action in progress:</strong> I was sleeping at 10 PM.</li>
-    <li><strong>Interrupted action:</strong> She was cooking when the phone rang.</li>
+    <li><strong>Action in progress at a past moment:</strong> I was sleeping at 10 PM.</li>
+    <li><strong>Interrupted action (long action + <em>when</em> + short action):</strong> She was cooking <em>when</em> the phone rang.</li>
+    <li><strong>Two actions at the same time (<em>while</em>):</strong> <em>While</em> I was reading, my sister was listening to music.</li>
 </ul>
+
+<h4>Time Markers</h4>
+<p><em>at 8 pm yesterday, at that moment, when (+ simple past), while, all morning/afternoon/night, during the lesson</em></p>
 
 <script>
     function transformVerbINGPast() {
