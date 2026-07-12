@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Argumentative Essay — LTF Teaching Archives</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           THEME — LTF "Stealth & Ice", matched to the site
+           =========================================== */
+        :root {
+            --stage-bg: #000;
+            --slide-bg: #09090b;
+            --bg-panel: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --cyan: #22d3ee;      /* structure / points   */
+            --yellow: #fbbf24;    /* evidence             */
+            --green: #4ade80;     /* explanation / good   */
+            --red: #f87171;       /* warnings / link-back */
+            --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ===========================================
+           FIXED 16:9 STAGE (frontend-slides base)
+           =========================================== */
+        html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg); }
+        .deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg); }
+        .deck-stage {
+            position: absolute; left: 0; top: 0;
+            width: 1920px; height: 1080px;
+            overflow: hidden; transform-origin: 0 0;
+            background: var(--slide-bg);
+            font-family: var(--font);
+            color: var(--text);
+        }
+        .slide {
+            position: absolute; inset: 0; width: 1920px; height: 1080px;
+            overflow: hidden; visibility: hidden; opacity: 0; pointer-events: none;
+            background:
+                radial-gradient(circle at 12% 8%, rgba(6, 182, 212, 0.10), transparent 32%),
+                radial-gradient(circle at 88% 92%, rgba(34, 211, 238, 0.06), transparent 30%),
+                linear-gradient(165deg, #09090b 0%, #18181b 60%, #0a0a0c 100%);
+            padding: 90px 110px;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .slide.active, .slide.visible {
+            visibility: visible; opacity: 1; pointer-events: auto; z-index: 1;
+            transition: opacity 0.45s ease;
+        }
+        img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+
+        /* ===========================================
+           REVEAL ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0; transform: translateY(34px);
+            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+        }
+        .slide.visible .reveal { opacity: 1; transform: translateY(0); }
+        .reveal:nth-child(1) { transition-delay: 0.05s; }
+        .reveal:nth-child(2) { transition-delay: 0.15s; }
+        .reveal:nth-child(3) { transition-delay: 0.25s; }
+        .reveal:nth-child(4) { transition-delay: 0.35s; }
+        .reveal:nth-child(5) { transition-delay: 0.45s; }
+        .reveal:nth-child(6) { transition-delay: 0.55s; }
+        .reveal:nth-child(7) { transition-delay: 0.65s; }
+
+        /* ===========================================
+           TYPOGRAPHY & COMPONENTS (authored at 1920×1080)
+           =========================================== */
+        .kicker {
+            font-size: 26px; font-weight: 800; letter-spacing: 0.22em;
+            text-transform: uppercase; color: var(--cyan); margin-bottom: 24px;
+        }
+        h1 { font-size: 108px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.04; }
+        h2 { font-size: 64px;  font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 42px; }
+        .sub { font-size: 34px; color: var(--muted); line-height: 1.5; }
+
+        .panel {
+            background: var(--bg-panel); border: 1px solid var(--border);
+            border-radius: 26px; padding: 38px 44px;
+        }
+        .cols { display: flex; gap: 36px; }
+        .cols > * { flex: 1; }
+
+        .tag {
+            display: inline-block; font-size: 24px; font-weight: 800;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 8px 22px; border-radius: 999px; margin-bottom: 18px;
+        }
+        .tag.cyan   { color: var(--cyan);   background: rgba(34, 211, 238, 0.12); border: 1.5px solid rgba(34, 211, 238, 0.4); }
+        .tag.yellow { color: var(--yellow); background: rgba(251, 191, 36, 0.12); border: 1.5px solid rgba(251, 191, 36, 0.4); }
+        .tag.green  { color: var(--green);  background: rgba(74, 222, 128, 0.12); border: 1.5px solid rgba(74, 222, 128, 0.4); }
+        .tag.red    { color: var(--red);    background: rgba(248, 113, 113, 0.12); border: 1.5px solid rgba(248, 113, 113, 0.4); }
+
+        ul.big { list-style: none; font-size: 32px; line-height: 1.55; }
+        ul.big li { margin-bottom: 22px; padding-left: 46px; position: relative; }
+        ul.big li::before { content: "▸"; position: absolute; left: 6px; color: var(--cyan); }
+
+        .example { font-size: 28px; line-height: 1.6; color: var(--text); }
+        .example em { color: var(--muted); font-style: normal; }
+        .hl-cyan   { color: var(--cyan);   font-weight: 700; }
+        .hl-yellow { color: var(--yellow); font-weight: 700; }
+        .hl-green  { color: var(--green);  font-weight: 700; }
+        .hl-red    { color: var(--red);    font-weight: 700; }
+
+        .good, .bad { font-size: 29px; line-height: 1.6; padding: 10px 0; }
+        .good::before { content: "✓  "; color: var(--green); font-weight: 800; }
+        .bad::before  { content: "✗  "; color: var(--red);   font-weight: 800; }
+
+        /* blueprint (structure map) rows */
+        .bp-row {
+            display: flex; align-items: center; gap: 28px;
+            background: var(--bg-panel); border: 1px solid var(--border);
+            border-left: 8px solid var(--cyan);
+            border-radius: 18px; padding: 20px 34px; margin-bottom: 18px;
+            font-size: 30px;
+        }
+        .bp-row .n {
+            font-size: 26px; font-weight: 800; color: var(--cyan);
+            min-width: 130px; text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .bp-row strong { font-weight: 800; }
+        .bp-row.gold  { border-left-color: var(--yellow); }
+        .bp-row.gold .n { color: var(--yellow); }
+
+        /* score cards */
+        .score { text-align: center; }
+        .score .pts { font-size: 96px; font-weight: 800; color: var(--cyan); line-height: 1; }
+        .score h3 { font-size: 36px; font-weight: 800; margin: 14px 0 16px; }
+        .score p { font-size: 26px; color: var(--muted); line-height: 1.5; }
+
+        /* phrase-bank columns */
+        .bank h3 { font-size: 30px; font-weight: 800; margin-bottom: 16px; }
+        .bank p { font-size: 27px; line-height: 1.75; color: var(--text); }
+
+        /* ===========================================
+           DECK CHROME (outside the stage design)
+           =========================================== */
+        .deck-controls {
+            position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+            z-index: 1000; display: flex; align-items: center; gap: 14px;
+            font-family: var(--font); color: var(--muted); font-size: 14px;
+            background: rgba(24, 24, 27, 0.85); border: 1px solid var(--border);
+            padding: 8px 18px; border-radius: 999px; backdrop-filter: blur(10px);
+            user-select: none;
+        }
+        .deck-controls button {
+            background: none; border: none; color: var(--cyan);
+            font-size: 18px; cursor: pointer; padding: 2px 8px; font-family: inherit;
+        }
+        .deck-controls button:hover { color: #fff; }
+
+        /* ===========================================
+           PRINT — one slide per page
+           =========================================== */
+        @media print {
+            html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+            .deck-viewport { position: static; overflow: visible; background: #fff; }
+            .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+            .slide {
+                position: relative; display: flex !important;
+                visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+                width: 1920px; height: 1080px; break-after: page; page-break-after: always;
+            }
+            .slide:last-child { break-after: auto; page-break-after: auto; }
+            .deck-controls { display: none !important; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+    <!-- 1 · TITLE -->
+    <section class="slide active" style="align-items: center; text-align: center;">
+        <p class="kicker reveal">LTF Teaching Archives · HKDSE Paper 2</p>
+        <h1 class="reveal">The Argumentative<br>Essay <span style="color: var(--cyan);">⚖️</span></h1>
+        <p class="sub reveal" style="margin-top: 34px;">Writing to <strong style="color: var(--text);">convince</strong> — with logic, evidence and structure.</p>
+        <p class="reveal" style="margin-top: 60px; font-size: 24px; color: var(--muted);">→ arrow keys / swipe to move · P to print</p>
+    </section>
+
+    <!-- 2 · YOUR MISSION -->
+    <section class="slide">
+        <p class="kicker reveal">Your mission</p>
+        <h2 class="reveal">Make the reader <span style="color: var(--cyan);">agree with you</span></h2>
+        <div class="cols">
+            <div class="panel reveal">
+                <span class="tag cyan">Say it</span>
+                <p class="example">State <strong>exactly what you believe</strong> about the topic — your <span class="hl-cyan">stance</span>.</p>
+            </div>
+            <div class="panel reveal">
+                <span class="tag yellow">Prove it</span>
+                <p class="example">Support every claim with <span class="hl-yellow">facts, examples and evidence</span> — not feelings.</p>
+            </div>
+            <div class="panel reveal">
+                <span class="tag green">Sound right</span>
+                <p class="example">Stay <span class="hl-green">formal and logical</span>. Calm arguments convince; emotional ones don't.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3 · KNOW THE SCORE -->
+    <section class="slide">
+        <p class="kicker reveal">Know the score</p>
+        <h2 class="reveal">The examiner marks three things — <span style="color: var(--cyan);">7 marks each</span></h2>
+        <div class="cols">
+            <div class="panel score reveal">
+                <div class="pts">C</div>
+                <h3>Content</h3>
+                <p>Relevant, well-developed ideas that fully answer the question and engage the reader.</p>
+            </div>
+            <div class="panel score reveal">
+                <div class="pts">L</div>
+                <h3>Language</h3>
+                <p>Accurate grammar, varied sentences, well-chosen vocabulary — and the right formal register.</p>
+            </div>
+            <div class="panel score reveal">
+                <div class="pts">O</div>
+                <h3>Organisation</h3>
+                <p>Logical paragraphs, clear development, cohesive ties linking every idea to the next.</p>
+            </div>
+        </div>
+        <p class="sub reveal" style="margin-top: 40px; text-align: center;">Everything in this deck feeds one of these three letters.</p>
+    </section>
+
+    <!-- 4 · PICK A STANCE -->
+    <section class="slide">
+        <p class="kicker reveal">Golden rule</p>
+        <h2 class="reveal">Pick a clear stance — <span style="color: var(--red);">never sit on the fence</span></h2>
+        <div class="cols">
+            <div class="panel reveal">
+                <span class="tag green">One-sided essay</span>
+                <p class="example">You argue <strong>for</strong> or <strong>against</strong>, all the way through. Simpler, safer, and perfect when you feel strongly.</p>
+            </div>
+            <div class="panel reveal">
+                <span class="tag cyan">Two-sided essay</span>
+                <p class="example">You examine both sides <em>— but your own position must still be crystal clear by the end.</em></p>
+            </div>
+        </div>
+        <div class="panel reveal" style="margin-top: 36px; border-left: 8px solid var(--red);">
+            <p class="example"><span class="hl-red">The fence costs marks.</span> "Both sides have good points, it depends" — with no stance of your own — weakens Content <em>and</em> Organisation. Decide, declare, defend.</p>
+        </div>
+    </section>
+
+    <!-- 5 · THE BLUEPRINT -->
+    <section class="slide">
+        <p class="kicker reveal">The blueprint</p>
+        <h2 class="reveal">Six paragraphs, one job each</h2>
+        <div>
+            <div class="bp-row reveal"><span class="n">Para 1</span><span><strong>Introduction</strong> — hook · background · <span class="hl-cyan">thesis</span></span></div>
+            <div class="bp-row reveal"><span class="n">Para 2–4</span><span><strong>Arguments</strong> — one idea per paragraph, built with <span class="hl-yellow">P.E.E.L.</span></span></div>
+            <div class="bp-row gold reveal"><span class="n">Para 5</span><span><strong>Counterargument + Rebuttal</strong> — the other side… and why you still win 🏆</span></div>
+            <div class="bp-row reveal"><span class="n">Para 6</span><span><strong>Conclusion</strong> — restate · summarise · <span class="hl-green">end with power</span></span></div>
+        </div>
+        <p class="sub reveal" style="margin-top: 30px;">This map alone earns Organisation marks — the examiner can see your logic at a glance.</p>
+    </section>
+
+    <!-- 6 · INTRODUCTION -->
+    <section class="slide">
+        <p class="kicker reveal">Paragraph 1</p>
+        <h2 class="reveal">Introduction: <span style="color: var(--cyan);">Hook → Background → Thesis</span></h2>
+        <div class="panel reveal">
+            <p class="example" style="font-size: 31px;">
+                <span class="hl-cyan">Did you know the average teenager checks their phone over 100 times a day?</span>
+                <em> ← hook: surprising fact or question</em><br><br>
+                <span class="hl-yellow">In Hong Kong, schools are now debating whether smartphones belong in the classroom at all.</span>
+                <em> ← background: set up the issue</em><br><br>
+                <span class="hl-green">This essay argues that smartphones should be banned during school hours.</span>
+                <em> ← thesis: your stance in ONE clear sentence</em>
+            </p>
+        </div>
+        <p class="sub reveal" style="margin-top: 34px;">The thesis is a promise to the reader. Every paragraph after it must keep that promise.</p>
+    </section>
+
+    <!-- 7 · PEEL -->
+    <section class="slide">
+        <p class="kicker reveal">Paragraphs 2–4</p>
+        <h2 class="reveal">Build every argument with <span style="color: var(--cyan);">P.E.E.L.</span></h2>
+        <div class="cols">
+            <div class="panel reveal" style="text-align:center;">
+                <span class="tag cyan">P · Point</span>
+                <p class="example">Topic sentence: state ONE argument.</p>
+            </div>
+            <div class="panel reveal" style="text-align:center;">
+                <span class="tag yellow">E · Evidence</span>
+                <p class="example">Facts, numbers, examples, expert views.</p>
+            </div>
+            <div class="panel reveal" style="text-align:center;">
+                <span class="tag green">E · Explain</span>
+                <p class="example">HOW does the evidence prove your point?</p>
+            </div>
+            <div class="panel reveal" style="text-align:center;">
+                <span class="tag red">L · Link</span>
+                <p class="example">Tie it back to your thesis.</p>
+            </div>
+        </div>
+        <div class="panel reveal" style="margin-top: 34px;">
+            <p class="example">
+                <span class="hl-cyan">Firstly, smartphones destroy concentration.</span>
+                <span class="hl-yellow"> A 2024 study found students take twenty minutes to refocus after a single notification.</span>
+                <span class="hl-green"> With lessons only forty minutes long, half of every class can be lost to one buzz.</span>
+                <span class="hl-red"> Banning phones therefore directly protects learning time.</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- 8 · EVIDENCE -->
+    <section class="slide">
+        <p class="kicker reveal">The E in PEEL</p>
+        <h2 class="reveal">Facts convince. <span style="color: var(--red);">Feelings don't.</span></h2>
+        <div class="cols">
+            <div class="panel reveal">
+                <span class="tag yellow">Four kinds of evidence</span>
+                <ul class="big" style="font-size: 29px;">
+                    <li><strong>Statistics</strong> — "Over 60% of students admit…"</li>
+                    <li><strong>Expert views</strong> — "Educational psychologists warn…"</li>
+                    <li><strong>Real examples</strong> — "When one Sha Tin school trialled a ban…"</li>
+                    <li><strong>Logical reasoning</strong> — "If X is true, then Y must follow…"</li>
+                </ul>
+            </div>
+            <div class="panel reveal">
+                <span class="tag red">Upgrade your claims</span>
+                <p class="bad">I feel phones are really bad for students.</p>
+                <p class="good">Research consistently shows phones reduce focus.</p>
+                <p class="bad">Everyone knows social media is terrible.</p>
+                <p class="good">A 2025 survey of HK teens linked heavy use to poorer sleep.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9 · COUNTERARGUMENT + REBUTTAL -->
+    <section class="slide">
+        <p class="kicker reveal">Paragraph 5 · the top-band move</p>
+        <h2 class="reveal">Concede… <span style="color: var(--yellow);">then defeat</span></h2>
+        <div class="panel reveal" style="border-left: 8px solid var(--yellow);">
+            <span class="tag yellow">1 · State the other side fairly</span>
+            <p class="example">"<strong>Admittedly, some argue that</strong> smartphones are useful learning tools, allowing instant research during lessons."</p>
+        </div>
+        <div class="panel reveal" style="margin-top: 26px; border-left: 8px solid var(--green);">
+            <span class="tag green">2 · Rebut it — show why your side still wins</span>
+            <p class="example">"<strong>However, this benefit is easily replaced</strong> by school tablets with managed access, <strong>whereas the distraction phones cause cannot be switched off.</strong> The costs clearly outweigh the convenience."</p>
+        </div>
+        <p class="sub reveal" style="margin-top: 32px;">Answering the opposition makes you look fair <em>and</em> makes your stance stronger — examiners reward both.</p>
+    </section>
+
+    <!-- 10 · LANGUAGE BANK -->
+    <section class="slide">
+        <p class="kicker reveal">Language bank</p>
+        <h2 class="reveal">Transitions that hold the essay together</h2>
+        <div class="cols">
+            <div class="panel bank reveal">
+                <h3 style="color: var(--cyan);">Adding arguments</h3>
+                <p>Firstly, · Secondly, · Furthermore, · Moreover, · In addition, · More importantly,</p>
+                <h3 style="color: var(--yellow); margin-top: 26px;">Introducing evidence</h3>
+                <p>Research shows… · According to… · For instance, · In fact, · A recent survey found…</p>
+            </div>
+            <div class="panel bank reveal">
+                <h3 style="color: var(--red);">Counterargument</h3>
+                <p>Admittedly, · Some argue that… · Opponents claim… · It could be argued that…</p>
+                <h3 style="color: var(--green); margin-top: 26px;">Rebuttal &amp; conclusion</h3>
+                <p>However, · Nevertheless, · Despite this, · The real issue is… · In conclusion, · Therefore,</p>
+            </div>
+        </div>
+        <p class="sub reveal" style="margin-top: 32px;">These cohesive ties are exactly what the <strong style="color:var(--text);">Organisation</strong> domain is looking for.</p>
+    </section>
+
+    <!-- 11 · FORMAL REGISTER -->
+    <section class="slide">
+        <p class="kicker reveal">Register check</p>
+        <h2 class="reveal">Sound like an essay, <span style="color: var(--red);">not a chat</span></h2>
+        <div class="cols">
+            <div class="panel reveal">
+                <span class="tag red">Never</span>
+                <p class="bad">Contractions — don't, can't, it's</p>
+                <p class="bad">Slang &amp; chat — "super bad", "guys", "lol"</p>
+                <p class="bad">"I think… I feel…" everywhere</p>
+                <p class="bad">Because… so… in one sentence <em style="color:var(--muted);">(因為…所以 trap!)</em></p>
+            </div>
+            <div class="panel reveal">
+                <span class="tag green">Instead</span>
+                <p class="good">Full forms — do not, cannot, it is</p>
+                <p class="good">Precise words — "severely harmful"</p>
+                <p class="good">"It is clear that… Evidence suggests…"</p>
+                <p class="good">ONE connective: "Because X, Y." <em style="color:var(--muted);">or</em> "X, so Y."</p>
+            </div>
+        </div>
+        <p class="sub reveal" style="margin-top: 32px;">Register is marked inside <strong style="color:var(--text);">Language</strong> — free marks for discipline, no big vocabulary required.</p>
+    </section>
+
+    <!-- 12 · CONCLUSION -->
+    <section class="slide">
+        <p class="kicker reveal">Paragraph 6</p>
+        <h2 class="reveal">Conclusion: <span style="color: var(--green);">land the plane</span></h2>
+        <div class="panel reveal">
+            <p class="example" style="font-size: 31px;">
+                <span class="hl-cyan">In conclusion, the classroom is no place for smartphones.</span>
+                <em> ← restate the thesis in NEW words</em><br><br>
+                <span class="hl-yellow">They fracture concentration, fuel cyberbullying, and deepen inequality between students.</span>
+                <em> ← summarise your 2–3 arguments in one sweep</em><br><br>
+                <span class="hl-green">If we are serious about education, the phones must stay in the lockers.</span>
+                <em> ← the power ending: short, confident, memorable</em>
+            </p>
+        </div>
+        <p class="sub reveal" style="margin-top: 32px;">No new arguments here — the conclusion closes doors, it doesn't open them.</p>
+    </section>
+
+    <!-- 13 · COMMON MISTAKES -->
+    <section class="slide">
+        <p class="kicker reveal">Danger zone</p>
+        <h2 class="reveal">Five ways students lose marks</h2>
+        <ul class="big">
+            <li class="reveal"><strong>Fence-sitting</strong> — no clear stance from start to finish</li>
+            <li class="reveal"><strong>Feelings instead of facts</strong> — claims with zero evidence behind them</li>
+            <li class="reveal"><strong>The wall of text</strong> — no paragraphs, no PEEL, no cohesive ties</li>
+            <li class="reveal"><strong>Ignoring the other side</strong> — one-sided <em>and</em> blind is not persuasive</li>
+            <li class="reveal"><strong>Casual register</strong> — contractions, slang, and the <span class="hl-red">because…so</span> double-marker</li>
+        </ul>
+    </section>
+
+    <!-- 14 · PRACTICE -->
+    <section class="slide" style="align-items: center; text-align: center;">
+        <p class="kicker reveal">Your turn</p>
+        <h2 class="reveal" style="max-width: 1500px;">"Should Hong Kong secondary schools ban smartphones during school hours?"</h2>
+        <div class="panel reveal" style="margin-top: 20px; max-width: 1300px; text-align: left;">
+            <p class="example">
+                ✅ Clear stance in the introduction &nbsp;·&nbsp; ✅ 3 PEEL paragraphs &nbsp;·&nbsp; ✅ counterargument + rebuttal<br>
+                ✅ formal register throughout &nbsp;·&nbsp; ✅ power ending &nbsp;·&nbsp; 🎯 about 400 words
+            </p>
+        </div>
+        <p class="sub reveal" style="margin-top: 44px;">Full notes: <strong style="color: var(--cyan);">archives.tzarfunglee.com → Writing → Text Types → Argumentative</strong></p>
+    </section>
+
+</main>
+</div>
+
+<!-- Deck chrome: lives outside the scaled stage -->
+<nav class="deck-controls" aria-label="Slide navigation">
+    <button id="prevBtn" aria-label="Previous slide">‹</button>
+    <span id="pageInfo">1 / 14</span>
+    <button id="nextBtn" aria-label="Next slide">›</button>
+</nav>
+
+<script>
+    /* ===========================================
+       SLIDE PRESENTATION CONTROLLER
+       (frontend-slides architecture: fixed 16:9 stage,
+        keyboard + touch + wheel navigation)
+       =========================================== */
+    class SlidePresentation {
+        constructor() {
+            this.slides = document.querySelectorAll('.slide');
+            this.current = 0;
+            this.stage = document.getElementById('deckStage');
+            this.pageInfo = document.getElementById('pageInfo');
+            this.setupStageScale();
+            this.setupKeyboardNav();
+            this.setupTouchNav();
+            this.setupWheelNav();
+            document.getElementById('prevBtn').addEventListener('click', () => this.show(this.current - 1));
+            document.getElementById('nextBtn').addEventListener('click', () => this.show(this.current + 1));
+            this.show(0);
+        }
+
+        setupStageScale() {
+            const scale = () => {
+                const f = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+                // Embedded contexts can report a 0-sized window before first
+                // layout and never fire resize — retry until we get a real size
+                if (!isFinite(f) || f <= 0) { requestAnimationFrame(scale); return; }
+                const x = (window.innerWidth - 1920 * f) / 2;
+                const y = (window.innerHeight - 1080 * f) / 2;
+                this.stage.style.transform = `translate(${x}px, ${y}px) scale(${f})`;
+            };
+            scale();
+            window.addEventListener('resize', scale);
+            window.addEventListener('load', scale);
+        }
+
+        setupKeyboardNav() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); this.show(this.current + 1); }
+                else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); this.show(this.current - 1); }
+                else if (e.key === 'Home') { this.show(0); }
+                else if (e.key === 'End') { this.show(this.slides.length - 1); }
+                else if (e.key === 'p' || e.key === 'P') { window.print(); }
+            });
+        }
+
+        setupTouchNav() {
+            let startX = null;
+            document.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+            document.addEventListener('touchend', (e) => {
+                if (startX === null) return;
+                const dx = e.changedTouches[0].clientX - startX;
+                if (Math.abs(dx) > 60) this.show(this.current + (dx < 0 ? 1 : -1));
+                startX = null;
+            }, { passive: true });
+        }
+
+        setupWheelNav() {
+            let lock = false;
+            document.addEventListener('wheel', (e) => {
+                if (lock) return;
+                if (Math.abs(e.deltaY) < 25) return;
+                lock = true;
+                this.show(this.current + (e.deltaY > 0 ? 1 : -1));
+                setTimeout(() => { lock = false; }, 550);
+            }, { passive: true });
+        }
+
+        show(index) {
+            this.current = Math.max(0, Math.min(index, this.slides.length - 1));
+            this.slides.forEach((s, i) => {
+                s.classList.toggle('active', i === this.current);
+                s.classList.toggle('visible', i === this.current);
+            });
+            this.pageInfo.textContent = `${this.current + 1} / ${this.slides.length}`;
+        }
+    }
+
+    new SlidePresentation();
+</script>
+</body>
+</html>
