@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Defining Non-Defining Relative Clauses - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: defining vs non-defining, comma rules, the that-ban
+    // in non-defining clauses, whose/where/when, and pronoun omission.
     const questionBank = [
         {
-            question: "The book _____ I bought yesterday is very interesting.",
-            options: ["that", ", which,", ", that,"],
+            question: "The book _____ I borrowed from the library is overdue.",
+            options: ["that", "who", "whose", "where"],
             correct: 0,
-            explanation: "Defining relative clause (essential information) - no commas needed, use 'that' or 'which'."
+            explanation: "A thing, defining clause: that (or which)."
         },
         {
             question: "My brother, _____ lives in London, is a doctor.",
-            options: ["who", "that", "which"],
+            options: ["who", "that", "which", "whose"],
             correct: 0,
-            explanation: "Non-defining relative clause (extra information) - use commas and 'who' for people."
+            explanation: "Non-defining clause about a person: who. (Never 'that' between commas!)"
         },
         {
             question: "Which sentence needs commas?",
-            options: ["My sister who lives in Paris called me.", "My sister, who lives in Paris, called me.", "The car that I bought is red."],
-            correct: 1,
-            explanation: "If the information is extra (not essential), use commas for non-defining relative clauses."
+            options: ["My mother who loves gardening grew these flowers.", "The girl who sits beside me is friendly.", "The bag that I lost was blue.", "People who exercise are healthier."],
+            correct: 0,
+            explanation: "You have only one mother — the clause is EXTRA info, so it needs commas."
         },
         {
-            question: "The house _____ we visited was beautiful.",
-            options: ["that", ", which,", "what"],
+            question: "The flat _____ we visited last weekend was tiny.",
+            options: ["that", "who", "whose", "what"],
             correct: 0,
-            explanation: "Defining relative clause - essential information to identify which house."
+            explanation: "A thing, defining: that/which. ('What' is never a relative pronoun.)"
         },
         {
-            question: "Paris, _____ is the capital of France, is beautiful.",
-            options: ["which", "that", "what"],
+            question: "Hong Kong Park, _____ is in Admiralty, has a big aviary.",
+            options: ["which", "that", "who", "where"],
             correct: 0,
-            explanation: "Non-defining relative clause - use 'which' with commas for extra information about places."
+            explanation: "Non-defining clause about a thing/place used as subject: which."
         },
         {
-            question: "People _____ exercise regularly are healthier.",
-            options: ["who", ", who,", "which"],
+            question: "People _____ exercise regularly tend to sleep better.",
+            options: ["who", "which", "whose", "when"],
             correct: 0,
-            explanation: "Defining relative clause - specifies which people (no commas)."
-        },
-        {
-            question: "The Eiffel Tower, _____ attracts millions of tourists, is in Paris.",
-            options: ["which", "that", "what"],
-            correct: 0,
-            explanation: "Non-defining relative clause - adds extra information about the Eiffel Tower."
+            explanation: "People = who (or that) in a defining clause."
         },
         {
             question: "Which is CORRECT?",
-            options: ["The man, that I met, was kind.", "The man who I met was kind.", "The man, what I met, was kind."],
-            correct: 1,
-            explanation: "Defining relative clause doesn't need commas. Use 'who' or 'that' for people."
+            options: ["The man who I met was kind.", "The man, that I met, was kind.", "The man what I met was kind.", "The man, whose I met, was kind."],
+            correct: 0,
+            explanation: "Defining clause, no commas; 'that' can never sit between commas."
         },
         {
-            question: "The students _____ passed the exam celebrated.",
-            options: ["who", ", who,", "which"],
+            question: "The students _____ passed the mock exam celebrated with bubble tea.",
+            options: ["who", "which", "whose", "where"],
             correct: 0,
-            explanation: "Defining relative clause - identifies which specific students."
+            explanation: "People as subject of a defining clause: who/that."
         },
         {
-            question: "My car, _____ I bought last year, broke down.",
-            options: ["which", "that", "what"],
+            question: "My bicycle, _____ I bought only last year, has already rusted.",
+            options: ["which", "that", "who", "whose"],
             correct: 0,
-            explanation: "Non-defining relative clause - extra information with commas."
+            explanation: "Non-defining clause about a thing: which (that is banned here)."
         },
         {
             question: "Which is INCORRECT?",
-            options: ["The book which I read was good.", "The book, that I read, was good.", "The book that I read was good."],
-            correct: 1,
-            explanation: "Don't use 'that' in non-defining relative clauses (with commas)."
+            options: ["The book, that I read, was good.", "The book that I read was good.", "The book which I read was good.", "The book I read was good."],
+            correct: 0,
+            explanation: "'That' cannot be used in a non-defining (comma) clause — and this clause shouldn't have commas anyway."
         },
         {
-            question: "The woman _____ works here is my aunt.",
-            options: ["who", ", who,", "which"],
+            question: "The woman _____ works at the tuck shop is my aunt.",
+            options: ["who", "which", "whose", "whom she"],
             correct: 0,
-            explanation: "Defining relative clause - essential to identify which woman."
+            explanation: "Person as subject: who."
         },
         {
-            question: "Shakespeare, _____ wrote Hamlet, was English.",
-            options: ["who", "that", "which"],
+            question: "Shakespeare, _____ wrote Hamlet, lived 400 years ago.",
+            options: ["who", "that", "which", "whose"],
             correct: 0,
-            explanation: "Non-defining relative clause - extra information about Shakespeare."
+            explanation: "Non-defining, person: who."
         },
         {
-            question: "The restaurant _____ we ate at was expensive.",
-            options: ["that", ", which,", "what"],
+            question: "My teacher, _____ name is Miss Chan, is very patient.",
+            options: ["whose", "who's", "which", "who"],
             correct: 0,
-            explanation: "Defining relative clause - specifies which restaurant (no commas)."
+            explanation: "Possession: whose. (who's = who is!)"
         },
         {
-            question: "My teacher, _____ name is Sarah, is very kind.",
-            options: ["whose", "who's", "which"],
+            question: "This is the boy _____ bag was stolen on the MTR.",
+            options: ["whose", "who's", "that", "which"],
             correct: 0,
-            explanation: "Use 'whose' to show possession in relative clauses."
+            explanation: "The bag belongs to the boy: whose."
+        },
+        {
+            question: "The village _____ my grandparents live has no supermarket.",
+            options: ["where", "which", "that", "who"],
+            correct: 0,
+            explanation: "A place + a full clause after it: where (= in which)."
+        },
+        {
+            question: "I still remember the day _____ we first met.",
+            options: ["when", "where", "who", "whose"],
+            correct: 0,
+            explanation: "A time: when."
         },
         {
             question: "Which needs NO commas?",
-            options: ["The dog that barks loudly lives next door.", "My dog, which barks loudly, lives next door.", "London, which is crowded, is exciting."],
+            options: ["The dog that barks all night lives next door.", "My dog which barks all night is old.", "Kowloon which is very crowded is exciting.", "Mr. Lee who teaches maths is retiring."],
             correct: 0,
-            explanation: "Defining relative clauses don't use commas - information is essential."
+            explanation: "Defining clause — it tells us WHICH dog — so no commas."
         },
         {
-            question: "The movie _____ we watched was boring.",
-            options: ["that", ", which,", "what"],
+            question: "In which sentence can the pronoun be LEFT OUT?",
+            options: ["The film that we watched was great.", "The man that helped us was kind.", "The bus that goes to Stanley is late.", "The girl that called you is here."],
             correct: 0,
-            explanation: "Defining relative clause - identifies which movie (essential information)."
+            explanation: "Drop the pronoun only when it is the OBJECT (we watched [the film]). In the others it is the subject."
         },
         {
-            question: "Mr. Smith, _____ is our neighbor, is 80 years old.",
-            options: ["who", "that", "which"],
+            question: "Mr. Smith, _____ is our neighbour, turned 80 yesterday.",
+            options: ["who", "that", "which", "whose"],
             correct: 0,
-            explanation: "Non-defining relative clause with commas - extra information about Mr. Smith."
+            explanation: "Non-defining, person: who."
         },
         {
-            question: "The city _____ I was born is very small.",
-            options: ["where", ", where,", "which"],
+            question: "What does the comma pair signal in: 'My car, which is red, broke down'?",
+            options: ["The clause is extra information", "The clause is essential to identify the car", "The sentence is a question", "The clause is in the past"],
             correct: 0,
-            explanation: "Defining relative clause - use 'where' for places (essential information)."
-        },
-        {
-            question: "This is the man _____ car was stolen.",
-            options: ["whose", "who's", "which"],
-            correct: 0,
-            explanation: "Use 'whose' to show possession (the car belongs to the man)."
+            explanation: "Commas = non-defining = extra, removable information (you have one car)."
         }
     ];
 </script>

@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/First Conditional - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: if + present simple, will/modal + base verb,
+    // clause order, negatives, and the will-in-if-clause trap.
     const questionBank = [
         {
             question: "If it _____ tomorrow, we will cancel the picnic.",
-            options: ["rains", "will rain", "rained"],
+            options: ["rains", "will rain", "rained", "is rain"],
             correct: 0,
-            explanation: "In first conditional, use simple present in the if-clause: If + present simple, will + verb."
+            explanation: "If-clause takes the PRESENT SIMPLE, never 'will'."
         },
         {
             question: "She _____ pass the exam if she studies hard.",
-            options: ["will", "would", "can"],
+            options: ["will", "would", "did", "does"],
             correct: 0,
-            explanation: "Use 'will' in the main clause of first conditional sentences."
+            explanation: "Main clause: will + base verb for the likely result."
         },
         {
-            question: "If you _____ late, you will miss the bus.",
-            options: ["are", "will be", "were"],
+            question: "If you _____ late, you will miss the school bus.",
+            options: ["are", "will be", "were", "would be"],
             correct: 0,
-            explanation: "Use simple present tense in the if-clause of first conditional."
+            explanation: "If-clause: present simple (are), not future."
         },
         {
             question: "They will come to the party if they _____ time.",
-            options: ["have", "will have", "had"],
+            options: ["have", "will have", "had", "would have"],
             correct: 0,
-            explanation: "In the if-clause of first conditional, use simple present, not 'will'."
+            explanation: "The if-clause can come second — it still takes the present simple."
         },
         {
             question: "If he _____ me, I will help him.",
-            options: ["asks", "will ask", "asked"],
+            options: ["asks", "will ask", "asked", "ask"],
             correct: 0,
-            explanation: "Use simple present in the if-clause: If + present simple."
+            explanation: "Third person present simple in the if-clause: asks."
         },
         {
-            question: "We _____ go to the beach if the weather is nice.",
-            options: ["will", "would", "can"],
+            question: "We _____ go hiking if the weather is nice on Sunday.",
+            options: ["will", "would", "did", "were"],
             correct: 0,
-            explanation: "Use 'will' in the main clause of first conditional."
+            explanation: "Result clause: will + base verb."
         },
         {
             question: "If you _____ your homework, you can watch TV.",
-            options: ["finish", "will finish", "finished"],
+            options: ["finish", "will finish", "finished", "would finish"],
             correct: 0,
-            explanation: "Use simple present in the if-clause of first conditional."
+            explanation: "If + present simple; the main clause can use other modals like can."
         },
         {
             question: "Which sentence is CORRECT?",
-            options: ["If she will come, I will be happy.", "If she comes, I will be happy.", "If she come, I will be happy."],
-            correct: 1,
-            explanation: "First conditional: If + present simple, will + verb. 'If she comes' is correct."
+            options: ["If she comes, I will be happy.", "If she will come, I will be happy.", "If she come, I will be happy.", "If she came, I will be happy."],
+            correct: 0,
+            explanation: "If + present simple (comes) + will in the main clause."
         },
         {
             question: "You will get wet if it _____.",
-            options: ["rains", "will rain", "rained"],
+            options: ["rains", "will rain", "rained", "would rain"],
             correct: 0,
-            explanation: "Use simple present in the if-clause, not 'will'."
+            explanation: "Present simple in the if-clause, wherever it appears in the sentence."
         },
         {
-            question: "If I _____ enough money, I will buy a new car.",
-            options: ["have", "will have", "had"],
+            question: "If I _____ enough money, I will buy the new trainers.",
+            options: ["save", "will save", "saved", "would save"],
             correct: 0,
-            explanation: "Use simple present in the if-clause of first conditional."
+            explanation: "If-clause: present simple."
         },
         {
-            question: "She _____ be angry if you don't call her.",
-            options: ["will", "would", "can"],
+            question: "She _____ be angry if you don't reply to her message.",
+            options: ["will", "would", "did", "is"],
             correct: 0,
-            explanation: "Use 'will' in the main clause for future results in first conditional."
+            explanation: "Result: will + base verb. The if-clause can be negative (don't reply)."
         },
         {
-            question: "If they _____ the train, they will arrive on time.",
-            options: ["catch", "will catch", "caught"],
+            question: "If they _____ the 8:15 train, they will arrive on time.",
+            options: ["catch", "will catch", "caught", "would catch"],
             correct: 0,
-            explanation: "Use simple present in the if-clause of first conditional."
-        },
-        {
-            question: "I will lend you my book if you _____ it carefully.",
-            options: ["use", "will use", "used"],
-            correct: 0,
-            explanation: "Use simple present in the if-clause, not future tense."
+            explanation: "If-clause: present simple."
         },
         {
             question: "Which is INCORRECT?",
-            options: ["If you will study, you will pass.", "If you study, you will pass.", "You will pass if you study."],
+            options: ["If you will study, you will pass.", "If you study, you will pass.", "You will pass if you study.", "If you study hard, you can pass."],
             correct: 0,
-            explanation: "Don't use 'will' in the if-clause. Use simple present instead."
+            explanation: "Never put 'will' inside the if-clause."
         },
         {
-            question: "If she _____ early, we can go shopping.",
-            options: ["arrives", "will arrive", "arrived"],
+            question: "If she _____ early, we can go shopping in Causeway Bay.",
+            options: ["arrives", "will arrive", "arrived", "arrive"],
             correct: 0,
-            explanation: "Use simple present in the if-clause of first conditional."
+            explanation: "If + present simple (arrives); main clause with can."
         },
         {
             question: "They _____ miss the flight if they don't hurry.",
-            options: ["will", "would", "can"],
+            options: ["will", "would", "did", "do"],
             correct: 0,
-            explanation: "Use 'will' in the main clause to express future consequence."
-        },
-        {
-            question: "If you _____ water, it boils.",
-            options: ["heat", "will heat", "heated"],
-            correct: 0,
-            explanation: "Use simple present in the if-clause for general truths and habits."
+            explanation: "Result: will + base verb; negative if-clause with don't."
         },
         {
             question: "He will be late if he _____ now.",
-            options: ["doesn't leave", "won't leave", "didn't leave"],
+            options: ["doesn't leave", "won't leave", "didn't leave", "not leave"],
             correct: 0,
-            explanation: "Use simple present negative in the if-clause of first conditional."
+            explanation: "Negative if-clause: present simple with doesn't."
         },
         {
-            question: "If it _____ cold, we will turn on the heater.",
-            options: ["gets", "will get", "got"],
+            question: "If it _____ cold tonight, we will turn on the heater.",
+            options: ["gets", "will get", "got", "would get"],
             correct: 0,
-            explanation: "Use simple present in the if-clause of first conditional."
+            explanation: "If-clause: present simple (gets)."
         },
         {
-            question: "You _____ feel better if you take this medicine.",
-            options: ["will", "would", "can"],
+            question: "When the if-clause comes FIRST, what separates the two clauses?",
+            options: ["a comma", "the word 'so'", "a full stop", "nothing ever"],
             correct: 0,
-            explanation: "Use 'will' in the main clause for future predictions in first conditional."
+            explanation: "If it rains, we will stay in. (comma) — no comma needed when 'if' comes second."
+        },
+        {
+            question: "Which sentence means the same as 'If you don't study, you will fail'?",
+            options: ["Unless you study, you will fail.", "Unless you don't study, you will fail.", "If you study, you will fail.", "Unless you fail, you will study."],
+            correct: 0,
+            explanation: "Unless = if…not. (See the Unless lesson!)"
+        },
+        {
+            question: "If you _____ red and blue, you get purple.",
+            options: ["mix", "will mix", "mixed", "would mix"],
+            correct: 0,
+            explanation: "Facts that are always true use present simple in BOTH clauses (zero conditional)."
         }
     ];
 </script>

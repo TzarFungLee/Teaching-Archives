@@ -85,6 +85,49 @@ order: 19
     </tr>
 
     <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">boy / bag</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">That is the boy __________ (whose) bag was stolen.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">That is the boy</span> <span class="v-bubble v-green">whose</span> <span class="grammar-bubble bubble-yellow">bag was stolen</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">shop / grew up</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">This is the estate __________ (where) I grew up.</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">This is the estate</span> <span class="v-bubble v-green">where</span> <span class="grammar-bubble bubble-yellow">I grew up</span>.
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="clickable-situation">
+            <span onclick="togglePart(event, this, 1)">drop the pronoun</span>
+        </td>
+        <td class="clickable-sentence" onclick="toggleFullRow(this)">
+            <span class="part part-1">
+                <span class="placeholder">The film (that) we watched was great — can you drop "that"?</span>
+                <span class="answer">
+                    <span class="grammar-bubble bubble-cyan">The film</span> <span class="grammar-bubble bubble-yellow">we watched</span> was great. ✓ (the pronoun can vanish when it is the OBJECT)
+                </span>
+            </span>
+            <span class="audio-icon" onclick="speakSentence(this)">🔊</span>
+        </td>
+    </tr>
+
+    <tr>
         <td colspan="2"><strong>Non-Defining Relative Clauses (Extra Info)</strong></td>
     </tr>
     <tr>
@@ -145,9 +188,45 @@ order: 19
     </tr>
 </table>
 
+<h4>Choosing the Right Word</h4>
+<table>
+    <tr>
+        <th>Talking about…</th>
+        <th>Use</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>a person</td>
+        <td><span class="v-bubble v-green">who</span> / that</td>
+        <td>the student <strong>who</strong> won</td>
+    </tr>
+    <tr>
+        <td>a thing</td>
+        <td><span class="v-bubble v-green">which</span> / that</td>
+        <td>the bus <strong>which</strong> goes to Stanley</td>
+    </tr>
+    <tr>
+        <td>possession</td>
+        <td><span class="v-bubble v-green">whose</span></td>
+        <td>the boy <strong>whose</strong> bag was stolen</td>
+    </tr>
+    <tr>
+        <td>a place</td>
+        <td><span class="v-bubble v-green">where</span></td>
+        <td>the estate <strong>where</strong> I grew up</td>
+    </tr>
+    <tr>
+        <td>a time</td>
+        <td><span class="v-bubble v-green">when</span></td>
+        <td>the day <strong>when</strong> we met</td>
+    </tr>
+</table>
+
 <h4>Important Rules</h4>
 <ul>
     <li><strong>No commas in defining clauses:</strong> The man who lives there...</li>
     <li><strong>Commas in non-defining clauses:</strong> My uncle, who lives there, ...</li>
     <li><strong>That:</strong> Never use <em>that</em> in a non-defining clause.</li>
+    <li><strong>Dropping the pronoun:</strong> allowed only in defining clauses when it is the object — "the film (that) we watched" ✓, but never when it is the subject: "the man who lives there" (who must stay).</li>
+    <li><strong>Whose vs who's:</strong> <em>whose</em> = possession; <em>who's</em> = who is. Only <em>whose</em> belongs in relative clauses.</li>
 </ul>

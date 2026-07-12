@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Passive Voice - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: be + past participle across tenses, active/passive
+    // discrimination, by-agent, and irregular participles.
     const questionBank = [
         {
             question: "The book _____ by the author last year.",
-            options: ["was written", "is written", "writes"],
+            options: ["was written", "is written", "wrote", "was wrote"],
             correct: 0,
-            explanation: "Use 'was/were + past participle' for passive voice in past tense."
+            explanation: "'Last year' = past passive: was + written (irregular participle)."
         },
         {
             question: "English _____ all over the world.",
-            options: ["is spoken", "speaks", "is speaking"],
+            options: ["is spoken", "speaks", "is speaking", "spoke"],
             correct: 0,
-            explanation: "Use 'is/are + past participle' for passive voice in present tense."
+            explanation: "Present passive fact: is + spoken."
         },
         {
-            question: "The house _____ built in 1990.",
-            options: ["was", "is", "has"],
+            question: "The Tsing Ma Bridge _____ completed in 1997.",
+            options: ["was", "is", "has", "were"],
             correct: 0,
-            explanation: "Use 'was' for passive voice with singular subjects in past tense."
+            explanation: "A finished past event: was completed."
         },
         {
-            question: "The letters _____ delivered every morning.",
-            options: ["are", "is", "were"],
+            question: "The classroom _____ cleaned every afternoon after lessons.",
+            options: ["is", "was", "will", "has"],
             correct: 0,
-            explanation: "Use 'are' with plural subjects in passive voice present tense."
+            explanation: "A present routine ('every afternoon' + present context): is cleaned."
         },
         {
             question: "The cake _____ by my mother yesterday.",
-            options: ["was made", "is made", "makes"],
+            options: ["was made", "is made", "made", "was make"],
             correct: 0,
-            explanation: "Use 'was + past participle' for passive voice in past tense."
+            explanation: "Past passive: was + made."
         },
         {
-            question: "This bridge _____ in 2010.",
-            options: ["was completed", "is completed", "completes"],
+            question: "Which sentence is in the PASSIVE VOICE?",
+            options: ["The lesson is taught by the teacher.", "The teacher teaches the lesson.", "The teacher is teaching now.", "The teacher taught well."],
             correct: 0,
-            explanation: "Use past passive (was completed) for actions completed in the past."
+            explanation: "Passive = the subject RECEIVES the action: be + past participle."
         },
         {
-            question: "The windows _____ cleaned once a week.",
-            options: ["are", "is", "was"],
+            question: "The car _____ repaired at the moment, so we're taking the bus.",
+            options: ["is being", "is", "was", "has"],
             correct: 0,
-            explanation: "Use 'are' with plural subjects in present passive voice."
+            explanation: "Happening right now: present continuous passive = is being + participle."
         },
         {
-            question: "Which sentence is in PASSIVE VOICE?",
-            options: ["The teacher teaches the lesson.", "The lesson is taught by the teacher.", "The teacher is teaching."],
-            correct: 1,
-            explanation: "Passive voice: subject + be + past participle (+ by agent)."
+            question: "The painting _____ stolen from the gallery last night.",
+            options: ["was", "is", "has", "is being"],
+            correct: 0,
+            explanation: "Past event: was stolen. (Note: the thief is unknown — perfect for passive!)"
         },
         {
-            question: "The car _____ repaired at the moment.",
-            options: ["is being", "is", "was"],
+            question: "A lot of tea _____ grown in China.",
+            options: ["is", "are", "was being", "have been"],
             correct: 0,
-            explanation: "Use 'is/are being + past participle' for passive continuous tense."
+            explanation: "General present fact; 'a lot of tea' is uncountable → is grown."
         },
         {
-            question: "The painting _____ stolen last night.",
-            options: ["was", "is", "has"],
+            question: "The exam results _____ announced next Friday.",
+            options: ["will be", "are being", "were", "have"],
             correct: 0,
-            explanation: "Use 'was/were' for passive voice in past simple tense."
+            explanation: "'Next Friday' = future passive: will be + announced."
         },
         {
-            question: "Coffee _____ grown in Brazil.",
-            options: ["is", "was", "are"],
+            question: "The students _____ given extra homework every day.",
+            options: ["are", "is", "was", "be"],
             correct: 0,
-            explanation: "Use 'is' with singular uncountable nouns in present passive."
-        },
-        {
-            question: "The documents _____ sent tomorrow.",
-            options: ["will be", "are", "were"],
-            correct: 0,
-            explanation: "Use 'will be + past participle' for future passive voice."
-        },
-        {
-            question: "The students _____ given homework every day.",
-            options: ["are", "is", "was"],
-            correct: 0,
-            explanation: "Use 'are' with plural subjects in present passive voice."
+            explanation: "Plural subject, present routine: are given."
         },
         {
             question: "Which is INCORRECT?",
-            options: ["The movie was watched by millions.", "The movie is watch by millions.", "The movie is watched by millions."],
-            correct: 1,
-            explanation: "Must use past participle 'watched', not base form 'watch'."
+            options: ["The movie is watch by millions.", "The movie is watched by millions.", "The movie was watched by millions.", "The movie will be watched by millions."],
+            correct: 0,
+            explanation: "Passive needs the PAST PARTICIPLE: is watchED."
         },
         {
-            question: "This song _____ written by a famous composer.",
-            options: ["was", "is", "has"],
+            question: "This song _____ written by a famous local composer.",
+            options: ["was", "is being", "has", "wrote"],
             correct: 0,
-            explanation: "Use 'was' for completed actions in past passive voice."
+            explanation: "Completed past: was written."
         },
         {
-            question: "The email _____ already sent.",
-            options: ["has been", "is", "was"],
+            question: "The email _____ already been sent — you can't unsend it.",
+            options: ["has", "is", "was", "have"],
             correct: 0,
-            explanation: "Use 'has/have been + past participle' for present perfect passive."
+            explanation: "Present perfect passive: has been + sent."
         },
         {
-            question: "The problem _____ solved by the engineer.",
-            options: ["was", "is", "has"],
+            question: "The maths problem _____ solved by the whole class working together.",
+            options: ["was", "is being always", "has being", "were"],
             correct: 0,
-            explanation: "Use 'was' for passive voice describing past completed actions."
+            explanation: "Past passive with an agent: was solved by…"
         },
         {
-            question: "New computers _____ installed next week.",
-            options: ["will be", "are", "were"],
+            question: "New computers _____ installed in the library next week.",
+            options: ["will be", "are being now", "were", "have"],
             correct: 0,
-            explanation: "Use 'will be' for future passive voice."
+            explanation: "'Next week' → will be installed."
         },
         {
-            question: "The flowers _____ watered every morning.",
-            options: ["are", "is", "was"],
+            question: "Change to passive: 'The chef cooks the meal.'",
+            options: ["The meal is cooked by the chef.", "The meal cooked the chef.", "The chef is cooked by the meal.", "The meal was cooking the chef."],
             correct: 0,
-            explanation: "Use 'are' with plural subjects in present passive for habitual actions."
+            explanation: "Object moves to the front + is + cooked + by-agent."
         },
         {
-            question: "The report _____ finished yet.",
-            options: ["hasn't been", "isn't", "wasn't"],
+            question: "When do we usually LEAVE OUT 'by + agent'?",
+            options: ["When the doer is unknown or obvious", "Always — it is never allowed", "Only in questions", "When the verb is irregular"],
             correct: 0,
-            explanation: "Use 'hasn't/haven't been' for negative present perfect passive with 'yet'."
+            explanation: "'My phone was stolen' — we don't know who; 'The thief was arrested' — obviously by police."
+        },
+        {
+            question: "The report _____ finished yet, so please wait.",
+            options: ["hasn't been", "isn't being never", "wasn't be", "hasn't"],
+            correct: 0,
+            explanation: "'Yet' signals present perfect passive negative: hasn't been finished."
+        },
+        {
+            question: "Which verb form completes: 'The window was _____ by the strong wind'?",
+            options: ["broken", "breaked", "broke", "breaking"],
+            correct: 0,
+            explanation: "Irregular participle: break, broke, BROKEN."
         }
     ];
 </script>

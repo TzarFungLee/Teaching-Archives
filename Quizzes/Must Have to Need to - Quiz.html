@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Must Have to Need to - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: must / have to / need to forms, questions with do/does,
+    // and the critical meaning split: must not (forbidden) vs don't have to (optional).
     const questionBank = [
         {
             question: "You _____ wear a seatbelt. It's the law.",
-            options: ["must", "need", "should"],
+            options: ["must", "don't have to", "needn't", "would"],
             correct: 0,
-            explanation: "Use 'must' for strong obligation or rules/laws."
+            explanation: "A law is a strong obligation: must (or have to)."
         },
         {
-            question: "She _____ to finish her homework before going out.",
-            options: ["has", "must", "needs"],
+            question: "She _____ finish her homework before going out.",
+            options: ["has to", "have to", "must to", "needs"],
             correct: 0,
-            explanation: "Use 'has to' for external obligations."
+            explanation: "Third person: has to + base verb. (Must never takes 'to'.)"
         },
         {
-            question: "Do I _____ to bring my passport?",
-            options: ["need", "must", "have"],
+            question: "_____ I have to bring my passport?",
+            options: ["Do", "Must", "Does", "Am"],
             correct: 0,
-            explanation: "Use 'need to' in questions about necessity."
+            explanation: "Questions with have to use do/does: Do I have to…?"
         },
         {
-            question: "You _____ be quiet in the library.",
-            options: ["must", "need", "have"],
+            question: "You _____ be quiet in the library — it's the rule.",
+            options: ["must", "don't have to", "needn't", "could"],
             correct: 0,
-            explanation: "Use 'must' for rules and strong obligations."
+            explanation: "A rule: must."
         },
         {
-            question: "He _____ to see a doctor about his cough.",
-            options: ["needs", "musts", "has"],
+            question: "He _____ see a doctor about that cough.",
+            options: ["needs to", "needs", "need to", "must to"],
             correct: 0,
-            explanation: "Use 'needs to' for advice or recommendations."
+            explanation: "Needs to + base verb for third person necessity."
         },
         {
-            question: "We _____ hurry or we'll be late.",
-            options: ["must", "need", "have"],
+            question: "Entry to the museum is free, so you _____ pay.",
+            options: ["don't have to", "must not", "must", "have to"],
             correct: 0,
-            explanation: "Use 'must' for urgent necessity from the speaker's perspective."
+            explanation: "No payment is REQUIRED (your choice) — don't have to. 'Must not pay' would mean paying is forbidden!"
         },
         {
-            question: "Students _____ to attend all classes.",
-            options: ["have", "must", "need"],
+            question: "You _____ cheat in the exam — it's strictly forbidden.",
+            options: ["must not", "don't have to", "don't need to", "needn't"],
             correct: 0,
-            explanation: "Use 'have to' for external rules or requirements."
+            explanation: "Forbidden = must not. 'Don't have to' would mean cheating is optional!"
+        },
+        {
+            question: "The dress code is casual, so you _____ wear a tie.",
+            options: ["don't need to", "must not", "must", "have to"],
+            correct: 0,
+            explanation: "A tie is not required (optional): don't need to = don't have to."
+        },
+        {
+            question: "You _____ feed the animals at the zoo. It's dangerous and against the rules.",
+            options: ["mustn't", "don't have to", "needn't", "don't need to"],
+            correct: 0,
+            explanation: "Prohibition: mustn't. The other three all mean 'it's optional'."
+        },
+        {
+            question: "Tomorrow is a holiday, so I _____ wake up early.",
+            options: ["don't have to", "mustn't", "must", "have to"],
+            correct: 0,
+            explanation: "Waking early is unnecessary (a choice): don't have to."
         },
         {
             question: "Which sentence expresses the STRONGEST obligation?",
-            options: ["You should study.", "You must study.", "You need to study."],
-            correct: 1,
-            explanation: "'Must' expresses the strongest obligation or necessity."
-        },
-        {
-            question: "You don't _____ to wear a uniform.",
-            options: ["have", "must", "need"],
+            options: ["You must study tonight.", "You should study tonight.", "You could study tonight.", "You might study tonight."],
             correct: 0,
-            explanation: "Use 'don't have to' or 'don't need to' to say something is not necessary."
-        },
-        {
-            question: "I _____ remember to call my mother.",
-            options: ["must", "have", "need"],
-            correct: 0,
-            explanation: "Use 'must' for personal obligations or reminders to oneself."
-        },
-        {
-            question: "_____ she have to work on weekends?",
-            options: ["Does", "Must", "Needs"],
-            correct: 0,
-            explanation: "Use 'Does... have to' for questions about external obligations."
-        },
-        {
-            question: "You _____ not smoke in this building.",
-            options: ["must", "have", "need"],
-            correct: 0,
-            explanation: "Use 'must not' for prohibition (it's forbidden)."
-        },
-        {
-            question: "They _____ to leave early tomorrow.",
-            options: ["need", "must", "have"],
-            correct: 0,
-            explanation: "Use 'need to' to express necessity."
+            explanation: "Must = obligation; should = advice; could/might = possibility."
         },
         {
             question: "Which is INCORRECT?",
-            options: ["He musts go now.", "He must go now.", "He has to go now."],
+            options: ["He musts go now.", "He must go now.", "He has to go now.", "He needs to go now."],
             correct: 0,
-            explanation: "'Must' doesn't add 's' in third person. 'He must go' is correct."
+            explanation: "Modals never take -s: he must (NOT he musts)."
         },
         {
-            question: "Children _____ respect their elders.",
-            options: ["must", "have", "need"],
+            question: "_____ she have to work on Saturdays?",
+            options: ["Does", "Do", "Must", "Has"],
             correct: 0,
-            explanation: "Use 'must' for moral obligations or strong advice."
+            explanation: "Third person question with have to: Does she have to…?"
         },
         {
-            question: "Do we _____ to bring anything to the party?",
-            options: ["need", "must", "have"],
+            question: "Students _____ switch off their phones during the exam.",
+            options: ["must", "don't have to", "needn't", "may"],
             correct: 0,
-            explanation: "Use 'need to' in questions about what is necessary."
+            explanation: "An exam rule: must."
         },
         {
-            question: "She _____ to lose weight for health reasons.",
-            options: ["needs", "musts", "has"],
+            question: "Which is CORRECT?",
+            options: ["I must remember to call my mother.", "I must to remember to call my mother.", "I have remember to call my mother.", "I need remember to call my mother."],
             correct: 0,
-            explanation: "Use 'needs to' for recommendations or advice."
+            explanation: "must + base verb (no 'to'); have/need would require 'to'."
         },
         {
-            question: "You _____ not tell anyone about this.",
-            options: ["must", "have", "need"],
+            question: "We _____ hurry — the show doesn't start for two hours.",
+            options: ["don't need to", "must", "mustn't", "have to"],
             correct: 0,
-            explanation: "Use 'must not' (mustn't) for strong prohibition."
+            explanation: "There's plenty of time, so hurrying is unnecessary: don't need to."
         },
         {
-            question: "I _____ to buy some milk on the way home.",
-            options: ["need", "must", "have"],
+            question: "Drivers _____ stop when the light is red.",
+            options: ["must", "don't have to", "needn't", "might"],
             correct: 0,
-            explanation: "Use 'need to' to express something that is necessary."
+            explanation: "Traffic law: must stop."
         },
         {
-            question: "Drivers _____ stop at red lights.",
-            options: ["must", "need", "have"],
+            question: "'You mustn't tell anyone' means:",
+            options: ["Telling anyone is forbidden.", "Telling anyone is optional.", "You forgot to tell someone.", "You are unable to tell anyone."],
             correct: 0,
-            explanation: "Use 'must' for traffic laws and regulations."
+            explanation: "Mustn't = prohibition: do NOT do it."
+        },
+        {
+            question: "'You don't have to come to the meeting' means:",
+            options: ["Coming is optional — your choice.", "Coming is forbidden.", "You must stay away.", "The meeting is cancelled."],
+            correct: 0,
+            explanation: "Don't have to = not necessary; you may still come if you like."
+        },
+        {
+            question: "I _____ buy a gift — it's my best friend's birthday and I promised.",
+            options: ["have to", "don't have to", "mustn't", "needn't"],
+            correct: 0,
+            explanation: "A promise creates an obligation: have to (or must)."
         }
     ];
 </script>

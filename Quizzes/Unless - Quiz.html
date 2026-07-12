@@ -23,126 +23,128 @@ redirect_from: "/Quizzes/Unless - Quiz.html"
 
 <script>
     // Question bank for the shared quiz engine (assets/js/quiz-engine.js)
+    // Mirrors the lesson: unless = if...not, transformations both ways,
+    // and the double-negative trap (never "unless...not").
     const questionBank = [
         {
             question: "You will fail _____ you study harder.",
-            options: ["unless", "if", "when"],
+            options: ["unless", "if", "when", "because"],
             correct: 0,
-            explanation: "'Unless' means 'if not'. 'You will fail unless you study' = 'You will fail if you don't study'."
+            explanation: "You fail only in the case that you do NOT study: unless."
         },
         {
             question: "Which has the SAME meaning as: 'Unless it rains, we'll go out'?",
-            options: ["If it doesn't rain, we'll go out.", "If it rains, we'll go out.", "When it rains, we'll go out."],
+            options: ["If it doesn't rain, we'll go out.", "If it rains, we'll go out.", "When it rains, we'll go out.", "Because it rains, we'll go out."],
             correct: 0,
-            explanation: "'Unless' = 'if not'. So 'unless it rains' = 'if it doesn't rain'."
+            explanation: "Unless = if…not."
         },
         {
-            question: "She won't come _____ you invite her.",
-            options: ["unless", "if", "when"],
+            question: "She won't come _____ you invite her personally.",
+            options: ["unless", "if", "when", "so"],
             correct: 0,
-            explanation: "Use 'unless' to mean 'if not'. She won't come if you don't invite her."
+            explanation: "She comes only in the case that you DO invite her: unless."
         },
         {
-            question: "_____ you hurry, you'll miss the bus.",
-            options: ["Unless", "If", "When"],
+            question: "_____ you hurry, you'll miss the last MTR.",
+            options: ["Unless", "If", "When", "Because"],
             correct: 0,
-            explanation: "'Unless you hurry' = 'If you don't hurry'."
+            explanation: "Unless you hurry = if you don't hurry."
         },
         {
             question: "Which is INCORRECT?",
-            options: ["Unless you don't study, you'll fail.", "Unless you study, you'll fail.", "If you don't study, you'll fail."],
+            options: ["Unless you don't study, you'll fail.", "Unless you study, you'll fail.", "If you don't study, you'll fail.", "You'll fail unless you study."],
             correct: 0,
-            explanation: "Don't use 'unless' with negative. Say 'unless you study' NOT 'unless you don't study'."
+            explanation: "Never use NOT after unless — unless already contains the negative."
         },
         {
-            question: "I won't go _____ you come with me.",
-            options: ["unless", "if", "when"],
+            question: "I won't go to the concert _____ you come with me.",
+            options: ["unless", "if", "when", "so that"],
             correct: 0,
-            explanation: "'Unless' means 'if not'. I won't go if you don't come with me."
+            explanation: "I go only in the case that you DO come: unless."
         },
         {
-            question: "_____ we leave now, we'll be late.",
-            options: ["Unless", "If", "When"],
+            question: "_____ we leave now, we'll be stuck in traffic.",
+            options: ["Unless", "If", "When", "So"],
             correct: 0,
-            explanation: "'Unless we leave now' = 'If we don't leave now'."
+            explanation: "Unless we leave = if we don't leave."
         },
         {
-            question: "Rewrite: 'If you don't water plants, they die.' Using 'unless':",
-            options: ["Unless you water plants, they die.", "Unless you don't water plants, they die.", "When you water plants, they die."],
+            question: "Rewrite with 'unless': 'If you don't water plants, they die.'",
+            options: ["Unless you water plants, they die.", "Unless you don't water plants, they die.", "When you water plants, they die.", "Unless plants die, you water them."],
             correct: 0,
-            explanation: "'Unless' replaces 'if not', so remove 'don't' when converting."
+            explanation: "Drop the 'not' when converting: unless you water…"
         },
         {
-            question: "They won't succeed _____ they work together.",
-            options: ["unless", "if", "when"],
+            question: "They won't win _____ they play as a team.",
+            options: ["unless", "if", "when", "although"],
             correct: 0,
-            explanation: "'Unless they work together' = 'If they don't work together'."
+            explanation: "Winning happens only if they DO play as a team: unless."
         },
         {
-            question: "_____ you have a ticket, you can't enter.",
-            options: ["Unless", "If", "When"],
+            question: "_____ you have a ticket, you can't enter the concert.",
+            options: ["Unless", "If", "When", "Because"],
             correct: 0,
-            explanation: "'Unless you have a ticket' = 'If you don't have a ticket'."
+            explanation: "Unless you have a ticket = if you don't have one."
         },
         {
-            question: "Which means the SAME as: 'If you don't apologize, she'll be angry'?",
-            options: ["Unless you apologize, she'll be angry.", "Unless you don't apologize, she'll be angry.", "When you apologize, she'll be angry."],
+            question: "Which means the SAME as: 'If you don't apologise, she'll be angry'?",
+            options: ["Unless you apologise, she'll be angry.", "Unless you don't apologise, she'll be angry.", "When you apologise, she'll be angry.", "Unless she's angry, you'll apologise."],
             correct: 0,
-            explanation: "Convert 'if not' to 'unless' by removing the negative."
+            explanation: "if…not → unless (and the 'not' disappears)."
         },
         {
-            question: "You won't improve _____ you practice.",
-            options: ["unless", "if", "when"],
+            question: "You won't improve _____ you practise every day.",
+            options: ["unless", "if", "when", "so"],
             correct: 0,
-            explanation: "'Unless' = 'if not'. You won't improve if you don't practice."
+            explanation: "Improvement needs practice: unless you practise."
         },
         {
-            question: "_____ the weather improves, we'll cancel the trip.",
-            options: ["Unless", "If", "When"],
+            question: "_____ the weather improves, we'll cancel the hike.",
+            options: ["Unless", "If", "When", "Because"],
             correct: 0,
-            explanation: "'Unless the weather improves' = 'If the weather doesn't improve'."
+            explanation: "We cancel in the case that the weather does NOT improve: unless."
         },
         {
             question: "Which is CORRECT?",
-            options: ["I'll stay home unless it's sunny.", "I'll stay home unless it won't be sunny.", "I'll stay home unless not sunny."],
+            options: ["I'll stay home unless it's sunny.", "I'll stay home unless it won't be sunny.", "I'll stay home unless not sunny.", "I'll stay home unless it doesn't be sunny."],
             correct: 0,
-            explanation: "Use positive verb after 'unless'. Don't add another negative."
+            explanation: "Unless + present simple, no 'not', no 'will'."
         },
         {
-            question: "She can't drive _____ she gets a license.",
-            options: ["unless", "if", "when"],
+            question: "She can't sit the driving test _____ she turns 18.",
+            options: ["unless", "if", "when", "because"],
             correct: 0,
-            explanation: "'Unless' means 'if not'. She can't drive if she doesn't get a license."
+            explanation: "Only possible in the case that she DOES turn 18: unless."
         },
         {
-            question: "_____ you tell me the truth, I won't help you.",
-            options: ["Unless", "If", "When"],
+            question: "_____ you tell me the truth, I can't help you.",
+            options: ["Unless", "If", "When", "So"],
             correct: 0,
-            explanation: "'Unless you tell me' = 'If you don't tell me'."
+            explanation: "Help is possible only if you DO tell the truth: unless."
         },
         {
             question: "The plants will die _____ you water them.",
-            options: ["unless", "if", "when"],
+            options: ["unless", "if", "when", "after"],
             correct: 0,
-            explanation: "'Unless you water them' = 'If you don't water them'."
+            explanation: "They die in the case that you do NOT water them: unless."
         },
         {
             question: "Rewrite using 'unless': 'If he doesn't call, I'll be worried.'",
-            options: ["Unless he calls, I'll be worried.", "Unless he doesn't call, I'll be worried.", "When he calls, I'll be worried."],
+            options: ["Unless he calls, I'll be worried.", "Unless he doesn't call, I'll be worried.", "When he calls, I'll be worried.", "Unless I'm worried, he'll call."],
             correct: 0,
-            explanation: "Replace 'if not' with 'unless' and use positive verb."
+            explanation: "if he doesn't call → unless he calls."
         },
         {
-            question: "You'll get sick _____ you eat properly.",
-            options: ["unless", "if", "when"],
+            question: "What tense follows 'unless' in first-conditional sentences?",
+            options: ["present simple", "will + verb", "past simple", "would + verb"],
             correct: 0,
-            explanation: "'Unless' = 'if not'. You'll get sick if you don't eat properly."
+            explanation: "Same rule as the if-clause: Unless it RAINS (present simple), we'll go."
         },
         {
             question: "_____ it stops raining, the match will be cancelled.",
-            options: ["Unless", "If", "When"],
+            options: ["Unless", "If", "When", "Although"],
             correct: 0,
-            explanation: "'Unless it stops raining' = 'If it doesn't stop raining'."
+            explanation: "Cancelled in the case that it does NOT stop: unless."
         }
     ];
 </script>
