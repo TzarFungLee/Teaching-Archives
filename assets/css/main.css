@@ -901,6 +901,100 @@ body.category-Speaking .container {
     color: #fff;
 }
 
+/* --- Click-to-compare writing widget (informal vs formal, paired highlights)
+       Markup: .compare-block > .compare-grid > .compare-col.informal/.formal
+       Twins share data-pair="N"; the formal twin carries data-note.
+       Behaviour lives in main.js (delegated click handler). --- */
+.compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.compare-col {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 26px;
+    font-size: 1.05rem;
+    line-height: 2.1;
+}
+
+.compare-col h5 {
+    margin: 0 0 14px 0;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.compare-col.informal h5 { color: #ffb4b4; }
+.compare-col.formal h5 { color: #b8f2d5; }
+
+.cmp {
+    cursor: pointer;
+    padding: 2px 7px;
+    border-radius: 8px;
+    border-bottom: 2px dashed transparent;
+    transition: all 0.2s ease;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.compare-col.informal .cmp {
+    background: rgba(244, 63, 94, 0.14);
+    border-bottom-color: rgba(244, 63, 94, 0.45);
+}
+
+.compare-col.formal .cmp {
+    background: rgba(34, 197, 129, 0.14);
+    border-bottom-color: rgba(34, 197, 129, 0.45);
+}
+
+.cmp:hover {
+    filter: brightness(1.35);
+}
+
+.cmp:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.compare-block.has-active .cmp:not(.active) {
+    opacity: 0.4;
+}
+
+.compare-block .cmp.active {
+    opacity: 1;
+}
+
+.compare-col.informal .cmp.active {
+    background: rgba(244, 63, 94, 0.32);
+    box-shadow: 0 0 14px rgba(244, 63, 94, 0.35);
+}
+
+.compare-col.formal .cmp.active {
+    background: rgba(34, 197, 129, 0.32);
+    box-shadow: 0 0 14px rgba(34, 197, 129, 0.35);
+}
+
+.compare-note {
+    margin-top: 16px;
+    padding: 16px 22px;
+    background: rgba(110, 193, 228, 0.08);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    color: #d7e4f4;
+    font-size: 1.02rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 720px) {
+    .compare-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* --- Prev/next lesson navigation (built by main.js from curriculum.json) --- */
 .lesson-nav {
     display: flex;

@@ -345,6 +345,42 @@ document.addEventListener('DOMContentLoaded', function() {
         if (firstTab) firstTab.click();
     }
 
+    // Click-to-compare writing widget: clicking a highlight lights up its
+    // twin (same data-pair) in the other column and shows the explanation
+    // carried in the formal twin's data-note. Fully data-driven — any page
+    // can add a .compare-block with no extra JS.
+    const activateCmp = function(cmp) {
+        const block = cmp.closest('.compare-block');
+        if (!block) return;
+        const pair = cmp.dataset.pair;
+        block.classList.add('has-active');
+        block.querySelectorAll('.cmp').forEach(el => {
+            el.classList.toggle('active', el.dataset.pair === pair);
+        });
+        const note = block.querySelector('.compare-note');
+        const src = block.querySelector(`.cmp[data-pair="${pair}"][data-note]`);
+        if (note && src) note.innerHTML = '💡 ' + src.dataset.note;
+    };
+
+    // Keyboard access: highlights behave like buttons (Tab + Enter/Space)
+    document.querySelectorAll('.compare-block .cmp').forEach(el => {
+        el.tabIndex = 0;
+        el.setAttribute('role', 'button');
+    });
+
+    document.addEventListener('click', function(event) {
+        const cmp = event.target.closest('.cmp');
+        if (cmp) activateCmp(cmp);
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        const cmp = event.target.closest ? event.target.closest('.cmp') : null;
+        if (!cmp) return;
+        event.preventDefault();
+        activateCmp(cmp);
+    });
+
     // --- AUTO-TOGGLE INJECTOR --- //
     // 1. Transform "A / B" situations into clickable triggers
     document.querySelectorAll('tr').forEach(row => {
