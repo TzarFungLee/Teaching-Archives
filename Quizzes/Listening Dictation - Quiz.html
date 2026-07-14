@@ -1,0 +1,249 @@
+---
+layout: default
+title: "Quiz: Listening Dictation"
+category: "Quizzes"
+icon: "📝"
+permalink: "/quizzes/listening-dictation-quiz/"
+---
+
+<div class="visual-anchor" style="padding: 30px;">
+    <div class="anchor-title">🎧 Listening Dictation</div>
+    <p style="margin-top: -15px; color: var(--muted); font-size: 1.1rem; margin-bottom: 10px;">
+        Press play, listen carefully, and <strong>type the sentence you hear</strong>.
+    </p>
+    <p style="color: var(--muted); font-size: 0.95rem;">
+        Numbers can be typed as words or digits. Spelling counts! Too fast? Use the <strong>AUDIO Slower</strong> button on the right edge of the page.
+    </p>
+</div>
+
+<div style="text-align: center; margin-bottom: 20px;">
+    <a href="/listening/listening-vocabulary/" style="color: var(--accent); font-weight: 600; text-decoration: none; border: 1px solid rgba(34, 211, 238, 0.35); border-radius: 999px; padding: 10px 22px; display: inline-block;">📖 Review the Vocabulary</a>
+</div>
+
+<div class="quiz-container">
+    <div class="progress-container" id="progressContainer">
+        <span class="progress-text" id="progressText">Press ▶ Play to begin</span>
+        <button class="reset-btn" onclick="resetDictation()">New Round</button>
+    </div>
+
+    <div class="question" id="dictationRound">
+        <div class="question-text" id="roundLabel">Sentence 1 of 10</div>
+
+        <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 22px;">
+            <button type="button" class="check-btn" style="margin-top: 0;" onclick="playSentence()">▶ Play</button>
+            <button type="button" class="reset-btn" style="margin-left: 0;" onclick="playSentence()">🔁 Replay</button>
+        </div>
+
+        <input type="text" id="dictationInput" class="dictation-input" style="text-align: left; max-width: 100%;"
+               placeholder="Type the sentence you hear..."
+               autocomplete="off" autocapitalize="off" spellcheck="false"
+               onkeyup="if (event.key === 'Enter') checkSentence()">
+
+        <div class="feedback" id="dictationFeedback"></div>
+        <div class="explanation" id="dictationAnswer"></div>
+
+        <button type="button" class="check-btn" id="checkBtn" onclick="checkSentence()">Check Answer</button>
+        <button type="button" class="check-btn" id="nextBtn" onclick="nextSentence()" style="display: none;">Next Sentence →</button>
+    </div>
+</div>
+
+<script>
+    // ---- Listening dictation engine (this page only) ----
+    // Speaks exam-style sentences via the site's TTS voice (main.js) and
+    // scores typed answers. Saves best scores in the same localStorage
+    // schema as quiz-engine.js so portal score chips work unchanged.
+
+    const ROUND_SIZE = 10;
+    const DICTATION_KEY = 'ltf-quiz:' + window.location.pathname;
+
+    const sentenceBank = [
+        "The meeting starts at half past three.",
+        "Please take the MTR to Kowloon Tong station.",
+        "The tickets cost forty-five dollars each.",
+        "School will be cancelled if the typhoon signal is raised.",
+        "Hand in your homework by Friday morning.",
+        "The library closes at nine o'clock tonight.",
+        "Turn left at the second traffic light.",
+        "The concert has been moved to the fifteenth of May.",
+        "Don't forget to bring your student card.",
+        "The bus leaves in twenty minutes.",
+        "Our classroom is on the fourth floor.",
+        "It will be cloudy with heavy showers tomorrow.",
+        "The school picnic is postponed until next Wednesday.",
+        "You need to fill in the form before the interview.",
+        "The swimming pool is closed for maintenance.",
+        "Please speak to the teacher during lunch break."
+    ];
+
+    let roundSentences = [];
+    let roundIndex = 0;
+    let roundCorrect = 0;
+    let answered = false;
+
+    // words -> digits so "forty-five" and "45" both count as correct
+    const NUM_WORDS = {
+        one: '1', two: '2', three: '3', four: '4', five: '5', six: '6',
+        seven: '7', eight: '8', nine: '9', ten: '10', eleven: '11',
+        twelve: '12', thirteen: '13', fourteen: '14', fifteen: '15',
+        sixteen: '16', seventeen: '17', eighteen: '18', nineteen: '19',
+        twenty: '20', thirty: '30', forty: '40', fifty: '50',
+        sixty: '60', seventy: '70', eighty: '80', ninety: '90',
+        second: '2nd', fourth: '4th', fifteenth: '15th'
+    };
+
+    function normalize(text) {
+        const words = text.toLowerCase()
+            .replace(/-/g, ' ')
+            .replace(/[^a-z0-9\s]/g, '')
+            .split(/\s+/).filter(Boolean)
+            .map(w => NUM_WORDS[w] || w);
+        // merge tens + units: "40 5" -> "45"
+        const merged = [];
+        for (let i = 0; i < words.length; i++) {
+            const a = words[i], b = words[i + 1];
+            if (/^[2-9]0$/.test(a) && /^[1-9]$/.test(b)) {
+                merged.push(String(parseInt(a) + parseInt(b)));
+                i++;
+            } else {
+                merged.push(a);
+            }
+        }
+        return merged;
+    }
+
+    function shuffleArr(a) {
+        const c = [...a];
+        for (let i = c.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [c[i], c[j]] = [c[j], c[i]];
+        }
+        return c;
+    }
+
+    function playSentence() {
+        const s = roundSentences[roundIndex];
+        if (!s || !window.speechSynthesis) return;
+        if (typeof loadBestVoice === 'function') loadBestVoice();
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(s);
+        if (typeof cachedBestVoice !== 'undefined' && cachedBestVoice) {
+            u.voice = cachedBestVoice;
+            u.lang = cachedBestVoice.lang;
+        } else {
+            u.lang = 'en-GB';
+        }
+        u.rate = (window.audioSpeed === 'slow') ? 0.55 : 0.85;
+        window.speechSynthesis.speak(u);
+        document.getElementById('progressText').textContent =
+            `Listening… (sentence ${roundIndex + 1} of ${ROUND_SIZE})`;
+    }
+
+    function checkSentence() {
+        if (answered) return;
+        const typedRaw = document.getElementById('dictationInput').value.trim();
+        if (!typedRaw) {
+            const fb = document.getElementById('dictationFeedback');
+            fb.className = 'feedback nudge';
+            fb.innerHTML = '<span>👆 Play the sentence, then type what you hear.</span>';
+            return;
+        }
+        answered = true;
+        const target = roundSentences[roundIndex];
+        const typed = normalize(typedRaw);
+        const correct = normalize(target);
+        const isCorrect = typed.join(' ') === correct.join(' ');
+
+        const fb = document.getElementById('dictationFeedback');
+        const ans = document.getElementById('dictationAnswer');
+        const typedSet = new Set(typed);
+        // show the correct sentence, marking words the student missed
+        const markedAnswer = target.split(/\s+/).map(word => {
+            const key = normalize(word).join(' ');
+            return (key === '' || typedSet.has(key))
+                ? word
+                : `<span style="color: #ffd9de; font-weight: 800; border-bottom: 2px solid rgba(244,63,94,0.6);">${word}</span>`;
+        }).join(' ');
+
+        if (isCorrect) {
+            roundCorrect++;
+            fb.className = 'feedback correct';
+            fb.innerHTML = '<span>✓ Correct — well heard!</span>';
+        } else {
+            fb.className = 'feedback incorrect';
+            const hits = typed.filter(w => normalize(target).join(' ').split(' ').includes(w)).length;
+            fb.innerHTML = (hits >= correct.length * 0.7)
+                ? '<span>✗ So close — check the marked words.</span>'
+                : '<span>✗ Not quite. Compare with the answer below.</span>';
+        }
+        ans.classList.add('show');
+        ans.innerHTML = '🎧 ' + markedAnswer;
+
+        document.getElementById('checkBtn').style.display = 'none';
+        document.getElementById('nextBtn').style.display = 'inline-block';
+        updateDictationProgress();
+    }
+
+    function nextSentence() {
+        roundIndex++;
+        if (roundIndex >= ROUND_SIZE) {
+            finishRound();
+            return;
+        }
+        answered = false;
+        document.getElementById('roundLabel').textContent = `Sentence ${roundIndex + 1} of ${ROUND_SIZE}`;
+        document.getElementById('dictationInput').value = '';
+        document.getElementById('dictationFeedback').className = 'feedback';
+        document.getElementById('dictationFeedback').innerHTML = '';
+        const ans = document.getElementById('dictationAnswer');
+        ans.classList.remove('show');
+        ans.innerHTML = '';
+        document.getElementById('checkBtn').style.display = 'inline-block';
+        document.getElementById('nextBtn').style.display = 'none';
+        updateDictationProgress();
+        playSentence();
+    }
+
+    function updateDictationProgress() {
+        const done = Math.min(roundIndex + (answered ? 1 : 0), ROUND_SIZE);
+        document.getElementById('progressText').textContent =
+            `Progress: ${done}/${ROUND_SIZE} · Correct so far: ${roundCorrect}`;
+    }
+
+    function finishRound() {
+        document.getElementById('progressText').textContent =
+            `Round complete! Score: ${roundCorrect}/${ROUND_SIZE}`;
+        document.getElementById('roundLabel').textContent = 'Round finished 🎉';
+        document.getElementById('checkBtn').style.display = 'none';
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('dictationInput').style.display = 'none';
+        try {
+            let prev = {};
+            try { prev = JSON.parse(localStorage.getItem(DICTATION_KEY)) || {}; } catch (e) { }
+            const best = (prev.best && prev.best.score >= roundCorrect)
+                ? prev.best : { score: roundCorrect, total: ROUND_SIZE };
+            localStorage.setItem(DICTATION_KEY, JSON.stringify({
+                score: roundCorrect, total: ROUND_SIZE, when: Date.now(), best
+            }));
+        } catch (e) { /* private mode */ }
+    }
+
+    function resetDictation() {
+        roundSentences = shuffleArr(sentenceBank).slice(0, ROUND_SIZE);
+        roundIndex = 0;
+        roundCorrect = 0;
+        answered = false;
+        document.getElementById('roundLabel').textContent = `Sentence 1 of ${ROUND_SIZE}`;
+        document.getElementById('dictationInput').style.display = '';
+        document.getElementById('dictationInput').value = '';
+        document.getElementById('dictationFeedback').className = 'feedback';
+        document.getElementById('dictationFeedback').innerHTML = '';
+        const ans = document.getElementById('dictationAnswer');
+        ans.classList.remove('show');
+        ans.innerHTML = '';
+        document.getElementById('checkBtn').style.display = 'inline-block';
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('progressText').textContent = 'Press ▶ Play to begin';
+    }
+
+    window.addEventListener('DOMContentLoaded', resetDictation);
+</script>

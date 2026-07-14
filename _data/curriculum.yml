@@ -101,6 +101,7 @@ listening:
     icon: "📚"
     lessons:
       - slug: /listening/listening-vocabulary/
+        quiz: /quizzes/listening-dictation-quiz/
 
 speaking:
   - unit: "Speaking Formats"
