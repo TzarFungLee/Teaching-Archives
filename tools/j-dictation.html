@@ -1,0 +1,394 @@
+---
+layout: default
+title: "J Dictation"
+icon: "🎙️"
+permalink: /tools/j-dictation/
+---
+
+<style>
+    /* J Dictation — teacher-only conductor. Page-local styles. */
+    .jd-screen { display: none; }
+    .jd-screen.show { display: block; }
+
+    .jd-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin: 14px 0; }
+    .jd-row label { min-width: 220px; color: var(--muted); font-size: 1rem; }
+    .jd-row input[type="number"], .jd-row select {
+        background: #1a1a1a; color: #fff; border: 2px solid #444;
+        border-radius: 8px; padding: 10px 14px; font-size: 1rem; font-family: inherit;
+    }
+    .jd-row input[type="number"] { width: 90px; }
+
+    .jd-sheet { margin-top: 20px; }
+    .jd-sheet h4 { margin-top: 26px; }
+    .jd-sheet ol { line-height: 1.9; padding-left: 34px; margin: 10px 0; }
+    .jd-sheet li { margin-bottom: 4px; font-size: 1.05rem; }
+
+    .jd-status {
+        text-align: center; padding: 40px 20px;
+        background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border);
+        border-radius: 24px; margin: 20px 0;
+    }
+    .jd-part { font-size: 1rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+    .jd-item { font-size: 2rem; font-weight: 800; margin: 14px 0; }
+    .jd-text { font-size: 1.2rem; color: var(--muted); min-height: 2.2em; }
+    .jd-count {
+        font-size: 4.5rem; font-weight: 800; color: var(--accent);
+        font-variant-numeric: tabular-nums; line-height: 1; margin: 10px 0; display: none;
+    }
+    .jd-count.show { display: block; }
+
+    .jd-controls { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+
+    @media print {
+        /* print only the marking key */
+        header, .jd-controls, .jd-settings, .floating-side-btn, .btn, .jd-noprint { display: none !important; }
+    }
+</style>
+
+<!-- ============ SCREEN 1 · SELECT ============ -->
+<div class="jd-screen show" id="jdSelect">
+    <div class="visual-anchor" style="padding: 30px;">
+        <div class="anchor-title">🎙️ J Dictation</div>
+        <p style="margin-top: -15px; color: var(--muted); font-size: 1.05rem;">
+            Pick a paper, check the run sheet, press start — the machine reads the whole
+            dictation with repeats and tidy-up timers while you supervise.
+        </p>
+    </div>
+
+    <div class="jd-row">
+        <label for="jdPaper"><strong>Dictation paper</strong></label>
+        <select id="jdPaper"></select>
+    </div>
+
+    <div class="jd-settings">
+        <h4>Settings</h4>
+        <div class="jd-row"><label>Readings per item</label><input type="number" id="setRepeats" min="1" max="5" value="3"></div>
+        <div class="jd-row"><label>Gap between sentence readings (s)</label><input type="number" id="setSentGap" min="1" max="30" value="8"></div>
+        <div class="jd-row"><label>Gap between word readings (s)</label><input type="number" id="setWordGap" min="1" max="15" value="3"></div>
+        <div class="jd-row"><label>Tidy-up time between parts (s)</label><input type="number" id="setTidy" min="5" max="120" value="30"></div>
+        <div class="jd-row"><label>Speech speed (0.5–1.2)</label><input type="number" id="setRate" min="0.5" max="1.2" step="0.05" value="0.85"></div>
+        <div class="jd-row"><label>Presenter mode (hide answers on screen)</label><input type="checkbox" id="setPresenter" style="transform: scale(1.5);"></div>
+    </div>
+
+    <div style="text-align: center; margin: 30px 0;">
+        <button class="btn" onclick="jdPrepare()">📋 Prepare Run Sheet</button>
+    </div>
+</div>
+
+<!-- ============ SCREEN 2 · PREPARE ============ -->
+<div class="jd-screen" id="jdPrep">
+    <h3 class="jd-noprint">📋 Run Sheet / Marking Key</h3>
+    <p class="jd-noprint" style="color: var(--muted);">Part B is shown in the randomised reading order — copy or print this as your marking key. Estimated running time: <strong id="jdEta" style="color: var(--accent);">–</strong></p>
+    <div class="jd-sheet" id="jdSheet"></div>
+    <div class="jd-controls jd-noprint">
+        <button class="check-btn" onclick="jdShuffleB()">🎲 Re-shuffle Part B</button>
+        <button class="check-btn" onclick="window.print()">🖨 Print marking key</button>
+        <button class="btn" style="margin: 0;" onclick="jdStart()">▶ Start Dictation</button>
+        <button class="reset-btn" onclick="jdShow('jdSelect')">← Back</button>
+    </div>
+</div>
+
+<!-- ============ SCREEN 3 · RUN ============ -->
+<div class="jd-screen" id="jdRun">
+    <div class="jd-status">
+        <div class="jd-part" id="jdPart">—</div>
+        <div class="jd-item" id="jdItem">—</div>
+        <div class="jd-count" id="jdCount">30</div>
+        <div class="jd-text" id="jdText"></div>
+    </div>
+    <div class="jd-controls">
+        <button class="check-btn" id="jdPauseBtn" onclick="jdTogglePause()">⏸ Pause</button>
+        <button class="check-btn" onclick="jdNav(-1)">⏮ Back one item</button>
+        <button class="check-btn" onclick="jdNav(1)">⏭ Skip item</button>
+        <button class="reset-btn" onclick="jdAbort()">✕ End dictation</button>
+    </div>
+</div>
+
+<script>
+    /* =====================================================================
+       J DICTATION CONDUCTOR
+       Data comes from /assets/js/dictations.json (_data/dictations.yml).
+       The whole test is compiled into a flat list of steps:
+         { say: "...", gapAfter: s }            spoken line
+         { tidy: s, label: "Part A" }           countdown break
+         { status: {part,item,text} }           screen update
+         { boundary: true }                     skip/back target
+       A single async loop executes them; pause/skip/back manipulate the
+       loop index. TTS uses the site voice (main.js) — items may later carry
+       an audio URL to play files instead (v2 slot).
+       ===================================================================== */
+
+    let jdData = [];
+    let jdOrderB = [];          // randomised index order for part B
+    let steps = [];
+    let stepIdx = 0;
+    let running = false, paused = false, abortFlag = false;
+
+    const $ = id => document.getElementById(id);
+
+    const cfg = () => ({
+        repeats: +$('setRepeats').value || 3,
+        sentGap: +$('setSentGap').value || 8,
+        wordGap: +$('setWordGap').value || 3,
+        tidy: +$('setTidy').value || 30,
+        rate: +$('setRate').value || 0.85,
+        presenter: $('setPresenter').checked
+    });
+
+    function saveSettings() { try { localStorage.setItem('jdict-settings', JSON.stringify(cfg())); } catch (e) { } }
+    function loadSettings() {
+        try {
+            const s = JSON.parse(localStorage.getItem('jdict-settings'));
+            if (!s) return;
+            $('setRepeats').value = s.repeats; $('setSentGap').value = s.sentGap;
+            $('setWordGap').value = s.wordGap; $('setTidy').value = s.tidy;
+            $('setRate').value = s.rate; $('setPresenter').checked = !!s.presenter;
+        } catch (e) { }
+    }
+
+    async function jdInit() {
+        loadSettings();
+        try {
+            const resp = await fetch('/assets/js/dictations.json');
+            jdData = await resp.json() || [];
+        } catch (e) { jdData = []; }
+        const sel = $('jdPaper');
+        sel.innerHTML = '';
+        jdData.forEach((d, i) => {
+            const o = document.createElement('option');
+            o.value = i; o.textContent = d.label;
+            sel.appendChild(o);
+        });
+    }
+    window.addEventListener('DOMContentLoaded', jdInit);
+
+    function jdShow(id) {
+        document.querySelectorAll('.jd-screen').forEach(s => s.classList.remove('show'));
+        $(id).classList.add('show');
+    }
+
+    const paper = () => jdData[+$('jdPaper').value];
+
+    /* ---------- prepare ---------- */
+    function jdShuffleB() {
+        const n = (paper().partB || []).length;
+        jdOrderB = [...Array(n).keys()];
+        for (let i = n - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [jdOrderB[i], jdOrderB[j]] = [jdOrderB[j], jdOrderB[i]];
+        }
+        jdRenderSheet();
+    }
+
+    function jdPrepare() {
+        if (!paper()) return;
+        saveSettings();
+        // reuse the last locked order for this paper if one exists (absentee re-runs)
+        try {
+            const saved = JSON.parse(localStorage.getItem('jdict-order:' + paper().id));
+            const n = (paper().partB || []).length;
+            jdOrderB = (Array.isArray(saved) && saved.length === n) ? saved : null;
+        } catch (e) { jdOrderB = null; }
+        if (!jdOrderB) jdShuffleB(); else jdRenderSheet();
+        jdShow('jdPrep');
+    }
+
+    function itemText(x) { return (typeof x === 'object') ? x.text : x; }
+
+    function jdRenderSheet() {
+        const p = paper();
+        const parts = [
+            ['Part A — Memorised Sentences', (p.partA || []).map(itemText)],
+            ['Part B — Vocabulary (reading order!)', jdOrderB.map(i => itemText(p.partB[i]))],
+            ['Part C — Infinitives', (p.partC || []).map(itemText)],
+            ['Part D — Unseen Sentences', (p.partD || []).map(itemText)]
+        ];
+        $('jdSheet').innerHTML = '<h3 style="margin-top:0;">' + p.label + '</h3>' + parts.map(([t, items]) =>
+            items.length
+                ? `<h4>${t}</h4><ol>${items.map(s => `<li>${s}</li>`).join('')}</ol>`
+                : `<h4>${t}</h4><p style="color: var(--muted); font-style: italic;">— not set for this paper (add it in _data/dictations.yml) — this part will be skipped</p>`
+        ).join('');
+        jdBuildSteps();
+        $('jdEta').textContent = jdEstimate();
+    }
+
+    /* ---------- compile the test into steps ---------- */
+    function say(text, gapAfter = 0.8) { steps.push({ say: text, gapAfter }); }
+    function status(part, item, text) { steps.push({ status: { part, item, text } }); }
+    function boundary() { steps.push({ boundary: true }); }
+    function tidy(label) { steps.push({ tidy: cfg().tidy, label }); }
+
+    function readItems(partLabel, prefixFn, items, gap, withListReread) {
+        items.forEach((it, i) => {
+            boundary();
+            status(partLabel, `${prefixFn(i)} — item ${i + 1} of ${items.length}`, itemText(it));
+            say(prefixFn(i) + '.', 1.2);
+            for (let r = 0; r < cfg().repeats; r++) {
+                say(itemText(it), (r < cfg().repeats - 1) ? gap : Math.min(gap, 4));
+            }
+        });
+        if (withListReread) {
+            boundary();
+            status(partLabel, 'Whole list, from the top', '');
+            say('Now the whole list, from the top.', 1.5);
+            items.forEach(it => say(itemText(it), cfg().wordGap));
+        }
+    }
+
+    function jdBuildSteps() {
+        const p = paper();
+        const dictNum = (p.label.match(/Dictation (\d+)/) || [])[1] || '';
+        steps = [];
+
+        // only parts that actually have items; empty ones are skipped entirely
+        const partDefs = [
+            { name: 'Part A', spoken: 'Part A. Memorised sentences.', items: p.partA || [], prefix: i => 'A' + (i + 1), gap: () => cfg().sentGap, reread: false },
+            { name: 'Part B', spoken: 'Part B. Vocabulary.', items: jdOrderB.map(i => (p.partB || [])[i]), prefix: i => 'Number ' + (i + 1), gap: () => cfg().wordGap, reread: true },
+            { name: 'Part C', spoken: 'Part C. Infinitives.', items: p.partC || [], prefix: i => 'Number ' + (i + 1), gap: () => cfg().wordGap, reread: true },
+            { name: 'Part D', spoken: 'Part D. Unseen sentences.', items: p.partD || [], prefix: i => 'D' + (i + 1), gap: () => cfg().sentGap, reread: false }
+        ].filter(d => d.items.length > 0);
+
+        partDefs.forEach((d, pi) => {
+            status(d.name, d.spoken.replace(/^Part [A-D]\. /, '').replace(/\.$/, ''), '');
+            const intro = (pi === 0) ? `Dictation ${dictNum}. ${d.spoken}` : d.spoken;
+            say(intro, 2);
+            readItems(d.name, d.prefix, d.items, d.gap(), d.reread);
+            // tidy-up break between parts, not after the last one
+            if (pi < partDefs.length - 1) tidy(d.name);
+        });
+
+        boundary();
+        status('Finished', 'End of dictation', '');
+        say('This is the end of the dictation. Please put your pens down.', 0);
+    }
+
+    function jdEstimate() {
+        let secs = 0;
+        steps.forEach(s => {
+            if (s.say) secs += (s.say.split(/\s+/).length * 0.45) / cfg().rate + s.gapAfter;
+            if (s.tidy) secs += s.tidy + 4;
+        });
+        const m = Math.round(secs / 60);
+        return `~${m} minute${m === 1 ? '' : 's'}`;
+    }
+
+    /* ---------- the runner ---------- */
+    function speak(text) {
+        return new Promise(resolve => {
+            if (!window.speechSynthesis) { resolve(); return; }
+            if (typeof loadBestVoice === 'function') loadBestVoice();
+            const u = new SpeechSynthesisUtterance(text);
+            if (typeof cachedBestVoice !== 'undefined' && cachedBestVoice) {
+                u.voice = cachedBestVoice; u.lang = cachedBestVoice.lang;
+            } else { u.lang = 'en-GB'; }
+            u.rate = cfg().rate;
+            u.onend = resolve; u.onerror = resolve;
+            window.speechSynthesis.speak(u);
+            // safety net: never hang forever on a lost onend
+            setTimeout(resolve, 1000 + text.length * 350);
+        });
+    }
+
+    function chime() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const o = ctx.createOscillator(), g = ctx.createGain();
+            o.connect(g); g.connect(ctx.destination);
+            o.frequency.value = 880; g.gain.value = 0.15;
+            o.start(); o.stop(ctx.currentTime + 0.5);
+        } catch (e) { }
+    }
+
+    function wait(secs, showCountdown) {
+        return new Promise(resolve => {
+            let remain = secs;
+            const tick = () => {
+                if (abortFlag || navRequest !== 0) { $('jdCount').classList.remove('show'); resolve(); return; }
+                if (paused) { setTimeout(tick, 200); return; }
+                if (showCountdown) { $('jdCount').textContent = Math.ceil(remain); $('jdCount').classList.add('show'); }
+                if (remain <= 0) { $('jdCount').classList.remove('show'); resolve(); return; }
+                remain -= 0.2;
+                setTimeout(tick, 200);
+            };
+            tick();
+        });
+    }
+
+    let navRequest = 0; // -1 back, +1 skip
+
+    function boundaries() {
+        return steps.map((s, i) => s.boundary ? i : -1).filter(i => i >= 0);
+    }
+
+    async function jdStart() {
+        saveSettings();
+        try { localStorage.setItem('jdict-order:' + paper().id, JSON.stringify(jdOrderB)); } catch (e) { }
+        jdBuildSteps();
+        stepIdx = 0; running = true; paused = false; abortFlag = false; navRequest = 0;
+        jdShow('jdRun');
+        runLoop();
+    }
+
+    async function runLoop() {
+        while (running && stepIdx < steps.length) {
+            if (abortFlag) break;
+            if (paused) { await new Promise(r => setTimeout(r, 200)); continue; }
+            if (navRequest !== 0) {
+                const bs = boundaries();
+                const cur = bs.filter(b => b <= stepIdx).pop() ?? 0;
+                if (navRequest > 0) {
+                    stepIdx = bs.find(b => b > stepIdx) ?? steps.length;
+                } else {
+                    const prev = bs.filter(b => b < cur);
+                    stepIdx = prev.length ? prev[prev.length - 1] : 0;
+                }
+                navRequest = 0;
+                window.speechSynthesis && window.speechSynthesis.cancel();
+                continue;
+            }
+            const s = steps[stepIdx];
+            if (s.status) {
+                $('jdPart').textContent = s.status.part;
+                $('jdItem').textContent = s.status.item;
+                $('jdText').textContent = cfg().presenter ? '' : s.status.text;
+            } else if (s.say) {
+                pauseHit = false;
+                await speak(s.say);
+                if (pauseHit) { pauseHit = false; continue; } // re-read this line on resume
+                if (s.gapAfter > 0) await wait(s.gapAfter, false);
+            } else if (s.tidy) {
+                $('jdPart').textContent = 'Break';
+                $('jdItem').textContent = `Tidy up ${s.label}`;
+                $('jdText').textContent = '';
+                await speak(`You now have ${s.tidy} seconds to tidy up ${s.label}.`);
+                await wait(s.tidy, true);
+                chime();
+            }
+            stepIdx++;
+        }
+        if (!abortFlag && running) {
+            $('jdPart').textContent = 'Finished';
+            $('jdItem').textContent = 'End of dictation ✓';
+        }
+        running = false;
+    }
+
+    let pauseHit = false;
+
+    function jdTogglePause() {
+        paused = !paused;
+        $('jdPauseBtn').textContent = paused ? '▶ Resume' : '⏸ Pause';
+        if (paused) {
+            pauseHit = true;
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+        }
+    }
+
+    function jdNav(dir) { navRequest = dir; }
+
+    function jdAbort() {
+        abortFlag = true; running = false;
+        window.speechSynthesis && window.speechSynthesis.cancel();
+        jdShow('jdPrep');
+    }
+</script>

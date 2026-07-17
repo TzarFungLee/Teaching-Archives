@@ -70,3 +70,6 @@ When implementing or modifying interactive teaching songs with synchronized lyri
 * **Preferences**: 
   - Excluded `gemini.md`, `scratch/`, `README.md` from Jekyll builds in `_config.yml`.
   - One-off migration scripts live in `/scratch` and must never be re-run against converted pages.
+
+## 🎙️ Teacher Tools (not linked from the student portal)
+* **J Dictation** — classroom dictation conductor at `/tools/j-dictation/` (hidden URL, no category). Papers live in `_data/dictations.yml` (one block per paper: partA–D). Settings and Part B shuffle order persist in localStorage; v2 slot: items may carry `audio:` MP3 URLs to override TTS.

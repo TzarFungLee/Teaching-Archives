@@ -1,0 +1,53 @@
+# J Dictation — preset papers.
+# Adding a paper = one block here. No code changes needed.
+# Parts you leave out (or leave empty) are skipped by the runner automatically.
+#
+# Optional later (v2): any item can become { text: "...", audio: "/assets/audio/dictations/xxx.mp3" }
+# and the runner will play the MP3 instead of TTS.
+
+- id: s2bc-e1-d1
+  label: "S2BC(E1) Dictation 1"
+  partA:
+    - "If you're into unique finds, you won't miss our weekend pop-up market."
+    - "Our shop will give you 5% off your purchase if you show your membership card."
+    - "I prefer shopping in the morning rather than in the afternoon."
+  partB:
+    - bakery
+    - boutique
+    - convenience store
+    - department store
+    - sports shop
+    - supermarket
+    - florist
+    - drugstore
+    - promotion
+    - discount
+    - jewellery store
+    - electronics store
+  # partC: the paper says "TB. A13" — paste the infinitives from the textbook here, e.g.
+  #   - "to buy"
+  #   - "to sell"
+  # partD: unseen sentences are not on the student paper — add yours before test day, e.g.
+  #   - "The department store near the MTR station is having a big promotion."
+
+- id: s3a-d1
+  label: "S3A(A) Dictation 1"
+  partA:
+    - "It's easy to root for these brothers."
+    - "The film is about teenage elf brothers whose father was missing."
+    - "I recommend this film to anyone who enjoys heartwarming family stories."
+  partB:
+    - action
+    - musical
+    - romance
+    - realistic
+    - comedy
+    - original
+    - unoriginal
+    - heartwarming
+    - animation
+    - hilarious
+    - disappointing
+    - boring
+  # partC: "TB. A13" — paste the infinitives from the textbook here
+  # partD: unseen sentences — add yours before test day
