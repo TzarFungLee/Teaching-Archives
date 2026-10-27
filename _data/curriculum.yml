@@ -91,6 +91,11 @@ reading:
     lessons:
       - slug: /reading/reading-vocabulary/
 
+  - unit: "Practice"
+    icon: "✏️"
+    lessons:
+      - slug: /reading/01-easy/
+
 listening:
   - unit: "Core Strategies"
     icon: "🧭"

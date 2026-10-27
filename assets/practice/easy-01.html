@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RC Practice — Short-form Video (V1.6.2) | LTF Teaching Archives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #f3eee4; --surface: #fffcf7; --surface-soft: #f7f1e8;
+  --text: #1c1917; --muted: #78716c; --subtitle: #57534e;
+  --border: rgba(28, 25, 23, 0.12);
+  --primary: #e07a5f; --accent: #e07a5f;
+  --ok: #15803d; --warn: #ca8a04; --danger: #dc2626;
+  --shadow: 0 14px 32px -14px rgba(28, 25, 23, 0.16);
+  --gradient-bg:
+    radial-gradient(circle at top left, rgba(224, 122, 95, 0.08), transparent 36%),
+    radial-gradient(circle at 88% 12%, rgba(202, 138, 4, 0.05), transparent 30%),
+    linear-gradient(180deg, #f7f2ea 0%, #f3eee4 48%, #ebe4d8 100%);
+  --ok-a10: rgba(21, 128, 61, 0.10); --ok-a35: rgba(21, 128, 61, 0.35);
+  --danger-a10: rgba(220, 38, 38, 0.10); --danger-a22: rgba(220, 38, 38, 0.22);
+  --warn-a18: rgba(202, 138, 4, 0.18); --correct-fg: #14532d; --incorrect-fg: #7f1d1d;
+  --nudge-fg: #9a3412; --primary-a08: rgba(224,122,95,0.08); --primary-a20: rgba(224,122,95,0.20);
+  --radius-sm: 10px; --radius-md: 14px; --radius-lg: 18px; --radius-pill: 999px;
+  --tap: 44px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: 120%; }
+html, body { margin: 0; }
+body {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--gradient-bg); background-attachment: fixed; color: var(--text);
+  line-height: 1.7; font-size: clamp(19.2px, 0.42vw + 18px, 21.6px);
+  padding: 6px max(4px, env(safe-area-inset-right)) 8px max(4px, env(safe-area-inset-left));
+}
+.page-head { width: 100%; margin: 0 0 2px; padding: 0 4px; flex: 0 0 auto; }
+.page-head h1 { margin: 0 0 2px; font-size: clamp(1.2rem, 1.4vw + 0.95rem, 1.55rem); font-weight: 800; color: var(--primary); }
+.page-head .sub { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.rc-toolbar {
+  width: 100%; margin: 0 0 4px; padding: 0 4px;
+  display: flex; flex-wrap: nowrap; gap: 10px; align-items: center; justify-content: space-between;
+  flex: 0 0 auto;
+}
+#rc-progress { flex: 1 1 auto; min-width: 0; text-align: center; }
+#rc-progress .rc-progress-bar { max-width: 420px; margin: 0 auto; }
+.rc-progress-bar { height: 10px; background: var(--surface-soft); border: 1px solid var(--border); border-radius: var(--radius-pill); overflow: hidden; }
+.rc-progress-bar > span { display: block; height: 100%; background: var(--primary); border-radius: var(--radius-pill); transition: width .2s ease; }
+.rc-progress-text { margin: 4px 0 0; font-size: 0.88rem; color: var(--subtitle); text-align: center; white-space: nowrap; }
+.rc-ok-count { color: var(--ok); font-weight: 700; }
+#rc-reset {
+  min-height: var(--tap); padding: 8px 14px; border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border); background: var(--surface); color: var(--subtitle);
+  font-family: inherit; font-weight: 700; cursor: pointer;
+}
+.rc-practice { width: 100%; margin: 0; max-width: none; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.rc-hint { display: none !important; }
+.rc-shell {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 6px;
+  width: 100%;
+  flex: 1 1 auto; min-height: 0; height: 100%;
+}
+.rc-pane {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+}
+.rc-pane-header {
+  flex: 0 0 auto; padding: 10px 12px; border-bottom: 1px solid var(--border);
+  background: var(--surface-soft); font-weight: 700; font-size: 0.92rem; color: var(--subtitle);
+}
+.rc-pane-body { flex: 1 1 auto; overflow: auto; padding: 8px 10px; -webkit-overflow-scrolling: touch; }
+.rc-pane--passage .rc-pane-body { padding: 10px 14px; }
+.rc-pane--questions .rc-pane-body { padding: 8px 10px; }
+#rc-passage { font-size: 1.05rem; line-height: 1.5; padding-left: 1.75rem; padding-right: 1.75rem; text-align: justify; text-justify: inter-word; hyphens: none; -webkit-hyphens: none; -ms-hyphens: none; word-break: normal; overflow-wrap: normal; }
+#rc-passage .rc-passage-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 6px; text-align: left; }
+#rc-passage .rc-passage-dek { font-size: 1.02rem; font-weight: 600; color: var(--subtitle); margin: 0 0 10px; text-align: left; }
+#rc-passage .rc-passage-source { font-size: 0.86rem; color: var(--muted); font-style: italic; margin: 0 0 18px; text-align: left; }
+#rc-passage .rc-para { margin: 0 0 0.7em; }
+#rc-passage .rc-para-num { font-weight: 700; color: var(--accent); margin-right: 0.35em; }
+#rc-passage [data-evidence-id].rc-evidence-on {
+  background: var(--warn-a18); text-decoration: underline; text-decoration-color: var(--warn);
+  text-decoration-thickness: 2.5px; text-underline-offset: 3px; border-radius: 3px;
+  box-shadow: 0 0 0 3px var(--warn-a18);
+}
+.rc-q { border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-soft); padding: 12px; margin-bottom: 10px; }
+.rc-q:last-child { margin-bottom: 0; }
+.rc-q-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.rc-q-stem { flex: 1 1 auto; margin: 0; font-weight: 600; line-height: 1.45; }
+.rc-q-num { color: var(--accent); font-weight: 800; }
+.rc-q-actions { display: flex; flex-wrap: wrap; gap: 6px; flex: 0 0 auto; }
+.rc-check-btn, .rc-key-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  min-height: var(--tap); min-width: var(--tap); padding: 8px 12px;
+  border-radius: var(--radius-pill); font-family: inherit; font-weight: 700; font-size: 0.82rem;
+  cursor: pointer; line-height: 1;
+}
+.rc-check-btn { border: 1.5px solid var(--ok); background: var(--ok-a10); color: var(--ok); }
+.rc-check-btn:hover, .rc-check-btn:focus-visible { background: var(--ok); color: #fff; outline: none; box-shadow: 0 0 0 3px var(--ok-a35); }
+.rc-key-btn { border: 1.5px solid var(--danger); background: var(--danger-a10); color: var(--danger); }
+.rc-key-btn:hover:not(:disabled), .rc-key-btn:focus-visible:not(:disabled), .rc-key-btn[aria-expanded="true"] { background: var(--danger); color: #fff; outline: none; box-shadow: 0 0 0 3px var(--danger-a22); }
+.rc-key-btn:disabled, .rc-key-btn.is-gated, .rc-key-btn[aria-disabled="true"] {
+  opacity: 0.45; cursor: not-allowed; filter: grayscale(0.35);
+  background: var(--danger-a10); color: var(--danger);
+}
+.rc-key-btn.is-gated:hover, .rc-key-btn[aria-disabled="true"]:hover {
+  background: var(--danger-a10); color: var(--danger); box-shadow: none;
+}
+.rc-help-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #d4cfc4;
+  background: #fff;
+  color: #5c564c;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.rc-help-btn:hover,
+.rc-help-btn:focus-visible,
+.rc-help-btn[aria-expanded="true"] {
+  border-color: #c45c26;
+  color: #c45c26;
+  outline: none;
+}
+.rc-help-body .rc-help-en { margin: 0 0 6px; color: var(--subtitle); font-size: 0.95rem; line-height: 1.5; }
+.rc-help-body .rc-help-zh { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+.rc-help-body {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(196, 92, 38, 0.08);
+  color: #5c564c;
+  font-size: 0.92rem;
+  border-left: 3px solid #c45c26;
+}
+.rc-options { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.rc-option {
+  display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border-radius: var(--radius-sm);
+  background: var(--surface); border: 1.5px solid transparent; cursor: pointer; font-size: 0.96rem; line-height: 1.45;
+}
+.rc-option:hover, .rc-option:focus-visible { border-color: var(--accent); outline: none; }
+.rc-option.is-selected { border-color: var(--accent); box-shadow: 0 0 0 2px var(--primary-a20); }
+.rc-option-letter { flex: 0 0 auto; font-weight: 800; color: var(--muted); min-width: 1.4em; }
+.rc-q.is-checked .rc-option.is-show-correct { border-color: var(--ok-a35); background: var(--ok-a10); color: var(--correct-fg); }
+.rc-q.is-checked .rc-option.is-picked-wrong { border-color: var(--danger-a22); background: var(--danger-a10); color: var(--incorrect-fg); }
+.rc-open { margin-top: 2px; }
+.rc-cloze-line { margin: 0; line-height: 1.8; }
+.rc-open-input { font: inherit; padding: 8px 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface); min-width: 7em; max-width: 100%; }
+.rc-open-input--full { width: 100%; }
+.rc-open-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--primary-a20); }
+.rc-open-input.is-correct { border-color: var(--ok); background: var(--ok-a10); }
+.rc-open-input.is-wrong { border-color: var(--danger); background: var(--danger-a10); }
+.rc-wordbank { display: none !important; }
+.rc-wordbank-label { font-size: 0.82rem; color: var(--muted); font-weight: 700; }
+.rc-wordchip { display: none !important; }
+.rc-check-feedback {
+  margin: 8px 0 0; font-weight: 700; font-size: 0.9rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+}
+.rc-check-feedback[hidden] { display: none !important; }
+.rc-check-feedback.is-ok { color: var(--ok); }
+.rc-check-feedback.is-bad { color: var(--danger); }
+.rc-check-feedback.is-nudge { color: var(--nudge-fg); }
+.rc-find-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 36px; padding: 6px 12px; border-radius: var(--radius-pill);
+  border: 1.5px solid var(--warn); background: var(--warn-a18); color: #854d0e;
+  font-family: inherit; font-weight: 700; font-size: 0.82rem; cursor: pointer; line-height: 1;
+}
+.rc-find-btn:hover, .rc-find-btn:focus-visible {
+  background: var(--warn); color: #fff; outline: none; box-shadow: 0 0 0 3px var(--warn-a18);
+}
+@keyframes rc-evidence-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px var(--warn-a18); }
+  50% { box-shadow: 0 0 0 7px rgba(202, 138, 4, 0.42); }
+}
+#rc-passage .rc-evidence-on.rc-evidence-pulse {
+  animation: rc-evidence-pulse 0.55s ease-in-out 2;
+}
+.rc-reveal { display: none; margin-top: 10px; padding: 10px 12px; border-radius: var(--radius-sm); border-left: 4px solid var(--ok); background: var(--ok-a10); }
+.rc-q.is-key-open .rc-reveal { display: block; }
+.rc-reveal-answer { font-weight: 700; color: var(--correct-fg); margin: 0 0 8px; }
+.rc-accept-note { margin: 0 0 8px; font-size: 0.86rem; color: var(--subtitle); font-style: italic; }
+.rc-steps { display: flex; flex-direction: column; gap: 8px; }
+.rc-step { display: flex; gap: 8px; align-items: flex-start; }
+.rc-step-num {
+  flex: 0 0 auto; width: 1.55em; height: 1.55em; border-radius: 50%;
+  background: var(--accent); color: #fff; font-size: 0.78rem; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.rc-step-body { flex: 1 1 auto; min-width: 0; }
+.rc-reveal-explain-en { margin: 0 0 2px; color: var(--text); font-size: 0.93rem; white-space: pre-line; }
+.rc-reveal-explain-zh { margin: 0; color: var(--subtitle); font-size: 0.9rem; line-height: 1.55; white-space: pre-line; }
+@media (max-width: 900px) {
+  body { overflow: auto; height: auto; min-height: 100dvh; }
+  .rc-shell { grid-template-columns: 1fr; height: auto; min-height: 70vh; }
+  .rc-pane { max-height: min(50vh, 480px); }
+  .rc-pane--questions { max-height: min(60vh, 560px); }
+  .rc-pane--questions .rc-pane-body { overflow: auto; }
+}
+@media (max-width: 640px) {
+  .rc-q-head { flex-wrap: wrap; }
+  .rc-q-actions { margin-left: auto; }
+}
+
+
+
+#rc-passage .rc-vocab {
+  background: rgba(59, 130, 246, 0.22);
+  border-bottom: 2px solid #3b82f6;
+  border-radius: 3px;
+  cursor: help;
+  padding: 0 2px;
+}
+#rc-passage .rc-vocab:hover,
+#rc-passage .rc-vocab:focus {
+  background: rgba(59, 130, 246, 0.38);
+  outline: none;
+}
+.rc-vocab-tip {
+  position: fixed;
+  z-index: 9999;
+  max-width: min(280px, 80vw);
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #1e293b;
+  color: #f8fafc;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+  pointer-events: none;
+}
+.rc-vocab-head { font-weight: 700; margin: 0 0 4px; color: #f8fafc; }
+.rc-vocab-pos { font-weight: 600; font-size: 0.82rem; color: #93c5fd; margin: 0 0 4px; }
+.rc-vocab-zh { font-weight: 700; margin: 0 0 4px; }
+.rc-vocab-forms { font-size: 0.82rem; color: #94a3b8; margin: 0 0 4px; line-height: 1.4; }
+.rc-vocab-forms-label { opacity: 0.75; font-weight: 600; text-transform: lowercase; }
+.rc-vocab-forms-label::after { content: ":"; }
+.rc-vocab-syn { font-size: 0.85rem; color: #cbd5e1; }
+.rc-vocab-syn-label { opacity: 0.7; }
+#rc-passage .rc-para {
+  margin: 0 0 0.55em;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  line-height: 1.5;
+}
+/* Each soft-line = one exam line: block + justify (last line left). Stable ticks. */
+#rc-passage .rc-line {
+  display: block;
+  position: relative;
+  line-height: 1.5;
+  text-align: justify;
+  text-align-last: justify;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+#rc-passage .rc-line:last-child {
+  text-align-last: left;
+}
+#rc-passage .rc-line[data-line-tick]::before {
+  content: attr(data-line);
+  position: absolute;
+  left: -1.65rem;
+  top: 0;
+  width: 1.4rem;
+  text-align: right;
+  font-size: 0.78em;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #8a8478;
+  user-select: none;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+  <header class="page-head">
+    <h1 id="rc-practice-title">RC Practice — Short-form Video (V1.6.2)</h1>
+    </header>
+  <div class="rc-toolbar">
+    <div id="rc-progress"></div>
+    <button type="button" id="rc-reset">Reset · 重設</button>
+  </div>
+  <div class="rc-practice">
+    <div class="rc-shell" role="region" aria-label="Interactive reading practice">
+      <section class="rc-pane rc-pane--passage" aria-label="Reading passage">
+        <div class="rc-pane-header">Passage — Text 1</div>
+        <div class="rc-pane-body" id="rc-passage-scroll">
+<article id="rc-passage">
+          <h2 class="rc-passage-title">Between the Bell and the Ring Light</h2>
+          <p class="rc-passage-dek">How short-form video is reshaping hobbies for Hong Kong teens</p>
+          <p class="rc-passage-source">[Adapted magazine feature — Youth Link Weekly]</p>
+
+          <p class="rc-para" data-para="1">
+            <span class="rc-line" data-line="1"><span class="rc-para-num">[1]</span> When the last school bell rings at Buddhist Wong Wan Tin College, Form 5 </span>
+            <span class="rc-line" data-line="2">student Mei Ling Tang does not rush straight home for a nap. She checks her </span>
+            <span class="rc-line" data-line="3">backpack for a small phone tripod, a clean apron, and leftover ingredients </span>
+            <span class="rc-line" data-line="4">from home economics. Within an hour she is <span data-evidence-id="p1-dumpling">filming a sixty-second dumpling </span></span>
+            <span class="rc-line" data-line="5" data-line-tick><span data-evidence-id="p1-dumpling">tutorial for Cliply</span>, a short-video app popular with local teens. “I cook what </span>
+            <span class="rc-line" data-line="6">my grandmother taught me,” she says, “<span data-evidence-id="p1-mtr">but I edit it so friends on the MTR can </span></span>
+            <span class="rc-line" data-line="7"><span data-evidence-id="p1-mtr">watch between stations</span>.”</span>
+          </p>
+
+          <p class="rc-para" data-para="2">
+            <span class="rc-line" data-line="8"><span class="rc-para-num">[2]</span> Mei Ling is one of thousands of Hong Kong secondary students who treat </span>
+            <span class="rc-line" data-line="9">short-form video as both hobby and side project. <span data-evidence-id="p2-survey">A recent Youth Link survey </span></span>
+            <span class="rc-line" data-line="10" data-line-tick><span data-evidence-id="p2-survey">of 800 S4–S6 students found that 67% watch short clips every day, while 22% </span></span>
+            <span class="rc-line" data-line="11"><span data-evidence-id="p2-survey">have posted at least one video of their own. Most creators film after dinner </span></span>
+            <span class="rc-line" data-line="12"><span data-evidence-id="p2-survey">or on Saturday mornings. Few expect to become full-time influencers; they </span></span>
+            <span class="rc-line" data-line="13"><span data-evidence-id="p2-survey">want likes, language practice, and a creative break from drills.</span></span>
+          </p>
+
+          <p class="rc-para" data-para="3">
+            <span class="rc-line" data-line="14"><span class="rc-para-num">[3]</span> Balancing homework and filming is the hardest part. Mei Ling’s mother once </span>
+            <span class="rc-line" data-line="15" data-line-tick>found her filming at midnight and set a firm rule: <span data-evidence-id="p3-core">finish core subjects first</span></span>
+            <span class="rc-line" data-line="16">, then record for a maximum of forty minutes. Mei Ling keeps a simple </span>
+            <span class="rc-line" data-line="17">timetable stuck on her desk. “If I skip revision for views, my English quiz </span>
+            <span class="rc-line" data-line="18">scores drop,” she admits. <span data-evidence-id="p3-jason">Her classmate Jason Ho tried daily posting for a </span></span>
+            <span class="rc-line" data-line="19"><span data-evidence-id="p3-jason">month, then </span><span data-evidence-id="p3-jason"><span data-evidence-id="p3-paused">paused</span></span><span data-evidence-id="p3-jason"> when mock exams approached. He now uploads only on Sundays.</span></span>
+          </p>
+
+          <p class="rc-para" data-para="4">
+            <span class="rc-line" data-line="20" data-line-tick><span class="rc-para-num">[4]</span> Teachers notice both risks and rewards. <span data-evidence-id="p4-chan">Mr Chan, Mei Ling’s English teacher, </span></span>
+            <span class="rc-line" data-line="21"><span data-evidence-id="p4-chan">encourages students to subtitle their clips in English.</span> “Short scripts force </span>
+            <span class="rc-line" data-line="22">them to choose <span data-evidence-id="p4-precise">precise</span> words,” he explains. “That is useful practice.” He </span>
+            <span class="rc-line" data-line="23">worries, however, about students comparing themselves to polished accounts </span>
+            <span class="rc-line" data-line="24">with professional lighting. “A ring light cannot replace sleep,” he warns.</span>
+          </p>
+
+          <p class="rc-para" data-para="5">
+            <span class="rc-line" data-line="25" data-line-tick><span class="rc-para-num">[5]</span> Parents are divided. Mrs Wong, whose son posts basketball tips filmed near a </span>
+            <span class="rc-line" data-line="26">Kowloon mall, allows filming only outdoors in daylight and bans face filters </span>
+            <span class="rc-line" data-line="27">that hide age. “I want him safe and honest,” she says. Other parents </span>
+            <span class="rc-line" data-line="28">confiscate phones during the week. Mei Ling’s grandmother is her most loyal </span>
+            <span class="rc-line" data-line="29">viewer and sometimes appears stirring soup.</span>
+          </p>
+
+          <p class="rc-para" data-para="6">
+            <span class="rc-line" data-line="30" data-line-tick><span class="rc-para-num">[6]</span> Safety advice travels slowly. <span data-evidence-id="p6-steps">Cliply’s teen guide recommends turning off </span></span>
+            <span class="rc-line" data-line="31"><span data-evidence-id="p6-steps">location tags, avoiding school uniform in public clips, and never meeting </span></span>
+            <span class="rc-line" data-line="32"><span data-evidence-id="p6-steps">strangers from comments alone.</span> Mei Ling follows these steps and also saves </span>
+            <span class="rc-line" data-line="33">drafts overnight so she can check captions when she is calmer. “One angry </span>
+            <span class="rc-line" data-line="34">reply used to ruin my evening,” she recalls. “Now I wait before I answer.”</span>
+          </p>
+
+          <p class="rc-para" data-para="7">
+            <span class="rc-line" data-line="35" data-line-tick><span class="rc-para-num">[7]</span> Short video has also changed weekend hobbies. Instead of only shopping in </span>
+            <span class="rc-line" data-line="36">malls, friends film mini challenges: timed library dances, MTR exit scavenger </span>
+            <span class="rc-line" data-line="37">hunts within station rules, and bilingual joke sketches. Jason Ho jokes that </span>
+            <span class="rc-line" data-line="38">his football team warms up twice—once on the pitch and once for the camera. </span>
+            <span class="rc-line" data-line="39">Not every experiment works. A cooking clip that failed spectacularly still </span>
+            <span class="rc-line" data-line="40" data-line-tick>earned Mei Ling her highest comment count, mostly from classmates offering </span>
+            <span class="rc-line" data-line="41">better recipes.</span>
+          </p>
+
+          <p class="rc-para" data-para="8">
+            <span class="rc-line" data-line="42"><span class="rc-para-num">[8]</span> Looking ahead, Mei Ling hopes to keep creating through S6, but only if grades </span>
+            <span class="rc-line" data-line="43">stay stable. She has already <span data-evidence-id="p8-refuse">turned down a paid product mention from an </span></span>
+            <span class="rc-line" data-line="44"><span data-evidence-id="p8-refuse">unknown online shop. “If I do not use it myself, I will not promote it,” she </span></span>
+            <span class="rc-line" data-line="45" data-line-tick><span data-evidence-id="p8-refuse">says.</span> For her, the ring light is a tool, not a career plan—yet. Between the </span>
+            <span class="rc-line" data-line="46">school bell and bedtime, sixty seconds of honest cooking may be enough.</span>
+          </p>
+
+        </article>
+        </div>
+      </section>
+      <section class="rc-pane rc-pane--questions" aria-label="Practice questions">
+        <div class="rc-pane-header">Questions (12)</div>
+        <div class="rc-pane-body" id="rc-questions"></div>
+      </section>
+    </div>
+  </div>
+<script>
+window.RC_PRACTICE = {
+  "title": "RC Practice — Short-form Video (V1.6.2)",
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "According to paragraph 1, what does Mei Ling mainly film?",
+      "options": [
+        "dance challenges on the MTR",
+        "short cooking tutorials",
+        "English grammar lessons",
+        "product advertisements for Cliply"
+      ],
+      "answer": 1,
+      "evidenceIds": [
+        "p1-dumpling"
+      ],
+      "explainEn": "① Ask: What does Mei Ling mainly film?\n② Look: paragraph 1 (the Cliply filming sentence).\n③ Quote: “filming a sixty-second dumpling tutorial for Cliply”.\n④ Why B: that is a short cooking tutorial — not dance on the MTR, grammar lessons, or Cliply ads.\n⑤ So: she mainly films short cooking tutorials.",
+      "explainZh": "① 題目問：Mei Ling 主要拍甚麼？\n② 去第1段搵（拍 Cliply 那句）。\n③ 關鍵句：filming a sixty-second dumpling tutorial。\n④ 點解選 B：那是短烹飪教學，不是港鐵跳舞、文法課或廣告。\n⑤ 總結：答案是 short cooking tutorials。",
+      "type": "mc",
+      "scaffoldEn": "Ask: What does Mei Ling mainly film? Look: paragraph 1 — the sentence about filming for Cliply.",
+      "scaffoldZh": "問：Mei Ling 主要拍甚麼？搵：第1段——拍 Cliply 那句。",
+      "scaffold": "Ask: What does Mei Ling mainly film? Look: paragraph 1 — the sentence about filming for Cliply. / 問：Mei Ling 主要拍甚麼？搵：第1段——拍 Cliply 那句。"
+    },
+    {
+      "id": "q2",
+      "stem": "What is the main idea of paragraph 2?",
+      "options": [
+        "Most Hong Kong teens plan to become full-time influencers.",
+        "Short-form video is common among local secondary students as a hobby.",
+        "Youth Link Weekly invented the Cliply app for schools.",
+        "Only S6 students are allowed to post short videos."
+      ],
+      "answer": 1,
+      "evidenceIds": [
+        "p2-survey"
+      ],
+      "explainEn": "① Ask: What is the main idea of paragraph 2?\n② Look: the whole of paragraph 2 (survey + purpose).\n③ Quote: 67% watch daily / 22% have posted; “Few expect to become full-time influencers; they want likes, language practice, and a creative break”.\n④ Why B: the paragraph shows short video is a common hobby — not that most plan influencer careers, or that Youth Link invented Cliply, or that only S6 may post.\n⑤ So: short-form video is a common hobby for local secondary students.",
+      "explainZh": "① 題目問：第2段主旨是甚麼？\n② 讀完整第2段（調查＋目的）。\n③ 關鍵：多數人每日睇／有人發佈；很少人想做全職網紅，只想 likes、練語言、休息。\n④ 點解選 B：段意是「本地中學生常見興趣」，不是「多數人要做網紅／Youth Link 發明 App／只准中六發佈」。\n⑤ 總結：主旨＝短片當興趣很普遍。",
+      "type": "mc",
+      "scaffoldEn": "Ask: What is the main idea of paragraph 2? Look: the survey figures and why students post (hobby / practice), not career plans.",
+      "scaffoldZh": "問：第2段主旨是甚麼？搵：調查數字＋學生發佈原因（興趣／練習），不是全職網紅計劃。",
+      "scaffold": "Ask: What is the main idea of paragraph 2? Look: the survey figures and why students post (hobby / practice), not career plans. / 問：第2段主旨是甚麼？搵：調查數字＋學生發佈原因（興趣／練習），不是全職網紅計劃。"
+    },
+    {
+      "id": "q3",
+      "stem": "In paragraph 3, why did Jason Ho reduce how often he posts?",
+      "options": [
+        "Cliply banned his account.",
+        "His mother confiscated his phone permanently.",
+        "Mock exams were approaching.",
+        "He lost interest in football videos."
+      ],
+      "answer": 2,
+      "evidenceIds": [
+        "p3-jason"
+      ],
+      "explainEn": "① Ask: Why did Jason reduce how often he posts?\n② Look: paragraph 3, Jason’s sentences.\n③ Quote: “paused when mock exams approached. He now uploads only on Sundays.”\n④ Why C: mocks coming is the reason — not a ban, permanent phone confiscation, or losing interest in football.\n⑤ So: Jason posts less because mock exams were approaching.",
+      "explainZh": "① 題目問：Jason 為甚麼減少發佈？\n② 去第3段 Jason 那幾句。\n③ 關鍵句：paused when mock exams approached；現在只星期日上載。\n④ 點解選 C：因為模擬試臨近——不是帳號被禁、永久沒收手機或對足球片沒興趣。\n⑤ 總結：減發佈＝應付模擬試。",
+      "type": "mc",
+      "scaffoldEn": "Ask: Why did Jason reduce how often he posts? Look: paragraph 3 — Jason’s sentences about exams and uploading.",
+      "scaffoldZh": "問：Jason 為甚麼減少發佈？搵：第3段 Jason 關於考試與上載的句子。",
+      "scaffold": "Ask: Why did Jason reduce how often he posts? Look: paragraph 3 — Jason’s sentences about exams and uploading. / 問：Jason 為甚麼減少發佈？搵：第3段 Jason 關於考試與上載的句子。"
+    },
+    {
+      "id": "q4",
+      "stem": "Mei Ling edits her dumpling tutorials so friends on the MTR can watch between stations.",
+      "options": [
+        "True (T)",
+        "False (F)",
+        "Not Given (NG)"
+      ],
+      "answer": 0,
+      "evidenceIds": [
+        "p1-mtr"
+      ],
+      "explainEn": "① Ask: T/F/NG — Does she edit her tutorials so friends on the MTR can watch?\n② Look: paragraph 1, her quoted reason for editing.\n③ Quote: “but I edit it so friends on the MTR can watch between stations”.\n④ Why True: the text directly supports that purpose — not False, and not missing.\n⑤ So: True — she edits for friends watching on the MTR.",
+      "explainZh": "① 題目問：她是否為港鐵上的朋友剪片方便觀看？\n② 去第1段她解釋剪輯的那句。\n③ 關鍵句：edit it so friends on the MTR can watch between stations。\n④ 點解選 T：原文直接支持，不是錯，也不是沒寫。\n⑤ 總結：正確（T）。",
+      "type": "tfng",
+      "scaffoldEn": "Ask: Does the text say she edits her tutorials so friends on the MTR can watch? Look: paragraph 1 — her reason for editing.",
+      "scaffoldZh": "問：原文有沒有說她為港鐵上的朋友剪片方便觀看？搵：第1段——她解釋剪輯的原因。",
+      "scaffold": "Ask: Does the text say she edits her tutorials so friends on the MTR can watch? Look: paragraph 1 — her reason for editing. / 問：原文有沒有說她為港鐵上的朋友剪片方便觀看？搵：第1段——她解釋剪輯的原因。",
+      "options_note": "True (T)",
+      "explainEn_line1": "① Ask: T/F/NG — Does she edit her tutorials so friends on the MTR can watch?",
+      "explainZh_line1": "① 題目問：她是否為港鐵上的朋友剪片方便觀看？"
+    },
+    {
+      "id": "q5",
+      "stem": "The Youth Link survey proves that short video improves students’ exam results.",
+      "options": [
+        "True (T)",
+        "False (F)",
+        "Not Given (NG)"
+      ],
+      "answer": 2,
+      "evidenceIds": [
+        "p2-survey"
+      ],
+      "explainEn": "① Ask: T/F/NG — Does the survey prove short video improves exam results?\n② Look: paragraph 2 survey lines only.\n③ Quote: percentages for watching/posting and hobby reasons — no sentence about exam scores rising.\n④ Why NG: the text never claims improvement of results (so not True); it also does not say the opposite (so not False).\n⑤ So: Not Given — the survey never mentions exam results.",
+      "explainZh": "① 題目問：調查有沒有證明短片能提升考試成績？\n② 只讀第2段調查句。\n③ 關鍵：只有觀看／發佈比例與興趣原因，沒有「成績進步」一句。\n④ 點解選 NG：沒寫「有提升」（不是 T），也沒寫「一定無提升」（不是 F）。\n⑤ 總結：未提及（NG）。",
+      "type": "tfng",
+      "scaffoldEn": "Ask: Does the survey prove exam results improve? Look: paragraph 2 survey lines only — what is claimed, what is not.",
+      "scaffoldZh": "問：調查有沒有證明考試成績進步？搵：只讀第2段調查句——寫了甚麼、沒寫甚麼。",
+      "scaffold": "Ask: Does the survey prove exam results improve? Look: paragraph 2 survey lines only — what is claimed, what is not. / 問：調查有沒有證明考試成績進步？搵：只讀第2段調查句——寫了甚麼、沒寫甚麼。"
+    },
+    {
+      "id": "q6",
+      "stem": "Mr Chan asks students to add English subtitles to their clips.",
+      "options": [
+        "True (T)",
+        "False (F)",
+        "Not Given (NG)"
+      ],
+      "answer": 0,
+      "evidenceIds": [
+        "p4-chan"
+      ],
+      "explainEn": "① Ask: T/F/NG — Does Mr Chan ask students to add English subtitles?\n② Look: paragraph 4, Mr Chan.\n③ Quote: “encourages students to subtitle their clips in English.”\n④ Why True: encourage = he wants English subtitles; the text says it clearly.\n⑤ So: True — Mr Chan encourages English subtitles.",
+      "explainZh": "① 題目問：陳老師有沒有叫學生加英文字幕？\n② 去第4段 Mr Chan。\n③ 關鍵句：encourages students to subtitle their clips in English。\n④ 點解選 T：encourage＝鼓勵加英文字幕，原文寫明。\n⑤ 總結：正確（T）。",
+      "type": "tfng",
+      "scaffoldEn": "Ask: Does Mr Chan ask for English subtitles? Look: paragraph 4 — what he encourages students to do.",
+      "scaffoldZh": "問：陳老師有沒有叫學生加英文字幕？搵：第4段——他鼓勵學生做甚麼。",
+      "scaffold": "Ask: Does Mr Chan ask for English subtitles? Look: paragraph 4 — what he encourages students to do. / 問：陳老師有沒有叫學生加英文字幕？搵：第4段——他鼓勵學生做甚麼。"
+    },
+    {
+      "id": "q7",
+      "type": "short",
+      "stem": "What does “these steps” (paragraph 6) refer to?",
+      "answers": [
+        "Cliply's teen safety advice",
+        "Cliply teen guide",
+        "recommended safety steps",
+        "the safety steps",
+        "safety advice",
+        "turning off location tags avoiding school uniform never meeting strangers",
+        "teen guide recommendations"
+      ],
+      "modelAnswer": "Cliply’s teen safety advice / the recommended safety steps (location tags off; no school uniform in public clips; never meet strangers from comments alone)",
+      "acceptNote": "Accept clear paraphrases of the safety advice in paragraph 6.",
+      "evidenceIds": [
+        "p6-steps"
+      ],
+      "scaffold": "Ask: What does “these steps” refer to? Look: paragraph 6 — the sentence just before “Mei Ling follows these steps”. / 問：“these steps” 指甚麼？搵：第6段——“Mei Ling follows these steps” 前面那句。",
+      "placeholder": "Write what “these steps” refers to",
+      "match": "loose",
+      "explainEn": "① Ask: What does “these steps” refer to?\n② Look: paragraph 6, the sentence before “Mei Ling follows these steps”.\n③ Quote: Cliply’s teen guide recommends turning off location tags, avoiding school uniform in public clips, and never meeting strangers from comments alone.\n④ Why: “these steps” points back to that safety list.\n⑤ So: “these steps” means Cliply’s teen safety advice.",
+      "explainZh": "① 題目問：“these steps” 指甚麼？\n② 去第6段，“Mei Ling follows these steps” 前面那句。\n③ 關鍵：Cliply 青少年指引——關定位、公眾短片不要穿校服、不要單獨約見留言陌生人。\n④ 點解：these steps＝那些安全建議。\n⑤ 總結：安全指引／建議步驟。",
+      "scaffoldEn": "Ask: What does “these steps” refer to? Look: paragraph 6 — the sentence just before “Mei Ling follows these steps”.",
+      "scaffoldZh": "問：“these steps” 指甚麼？搵：第6段——“Mei Ling follows these steps” 前面那句。"
+    },
+    {
+      "id": "q8",
+      "type": "short",
+      "stem": "What does “it” refer to in “If I do not use it myself, I will not promote it” (paragraph 8)?",
+      "answers": [
+        "the product",
+        "product from the unknown online shop",
+        "the product she was asked to mention",
+        "paid product",
+        "unknown shop's product",
+        "what she would promote"
+      ],
+      "modelAnswer": "the product (from the unknown online shop) / the product she was asked to mention",
+      "acceptNote": "Accept “the product” or a clear paraphrase of the paid product mention.",
+      "evidenceIds": [
+        "p8-refuse"
+      ],
+      "scaffold": "Ask: What does “it” refer to? Look: paragraph 8 — what she turned down just before “If I do not use it myself…”. / 問：“it” 指甚麼？搵：第8段——“If I do not use it myself…” 前面她拒絕了甚麼。",
+      "placeholder": "What does “it” = ?",
+      "match": "loose",
+      "explainEn": "① Ask: What does “it” refer to?\n② Look: paragraph 8, the paid product mention sentence.\n③ Quote: she turned down a paid product mention from an unknown online shop; then “If I do not use it myself…”.\n④ Why: “it” = that product.\n⑤ So: “it” means the product she was asked to promote.",
+      "explainZh": "① 題目問：“it” 指甚麼？\n② 去第8段付費產品推廣那句。\n③ 關鍵：她拒絕了不知名網店的付費產品推廣，然後說 If I do not use it…。\n④ 點解：it＝那個產品。\n⑤ 總結：the product。",
+      "scaffoldEn": "Ask: What does “it” refer to? Look: paragraph 8 — what she turned down just before “If I do not use it myself…”.",
+      "scaffoldZh": "問：“it” 指甚麼？搵：第8段——“If I do not use it myself…” 前面她拒絕了甚麼。"
+    },
+    {
+      "id": "q9",
+      "type": "cloze",
+      "stem": "Find a word in paragraph 3 which means “stopped temporarily”.",
+      "answers": [
+        "paused"
+      ],
+      "modelAnswer": "paused",
+      "evidenceIds": [
+        "p3-paused"
+      ],
+      "scaffold": "Ask: Which ONE word means “stopped temporarily”? Look: paragraph 3 — Jason Ho’s sentence about exams. / 問：哪個字＝暫時停下？搵：第3段——Jason 關於考試那句。",
+      "clozePrefix": "Word:",
+      "maxWords": 1,
+      "explainEn": "① Ask: Which word means “stopped temporarily”?\n② Look: paragraph 3, Jason Ho.\n③ Quote: “paused when mock exams approached”.\n④ Why: paused = stopped for a while. Cloze spelling must match the text.\n⑤ So: the word from the text is paused.",
+      "explainZh": "① 題目問：哪個字＝暫時停下？\n② 去第3段 Jason。\n③ 關鍵句：paused when mock exams approached。\n④ 點解：paused＝暫時停下。\n⑤ 總結：填 paused（拼寫跟原文）。",
+      "scaffoldEn": "Ask: Which ONE word means “stopped temporarily”? Look: paragraph 3 — Jason Ho’s sentence about exams.",
+      "scaffoldZh": "問：哪個字＝暫時停下？搵：第3段——Jason 關於考試那句。",
+      "match": "exact"
+    },
+    {
+      "id": "q10",
+      "type": "cloze",
+      "stem": "Find a word or phrase in paragraph 4 which means “carefully chosen / exact”.",
+      "answers": [
+        "precise",
+        "precise words"
+      ],
+      "modelAnswer": "precise",
+      "evidenceIds": [
+        "p4-precise"
+      ],
+      "scaffold": "Ask: Which word/phrase means “carefully chosen / exact”? Look: paragraph 4 — Mr Chan on short scripts and word choice. / 問：哪個字／詞＝仔細揀選／精確？搵：第4段——陳老師談短 scripts 與用字。",
+      "clozePrefix": "Word:",
+      "maxWords": 1,
+      "explainEn": "① Ask: Which word means “carefully chosen / exact”?\n② Look: paragraph 4, Mr Chan on scripts.\n③ Quote: “choose precise words”.\n④ Why: precise = carefully chosen / exact.\n⑤ So: the word from the text is precise.",
+      "explainZh": "① 題目問：哪個字＝仔細揀選／精確？\n② 去第4段陳老師談 scripts。\n③ 關鍵：choose precise words。\n④ 點解：precise＝精確。\n⑤ 總結：填 precise。",
+      "scaffoldEn": "Ask: Which word/phrase means “carefully chosen / exact”? Look: paragraph 4 — Mr Chan on short scripts and word choice.",
+      "scaffoldZh": "問：哪個字／詞＝仔細揀選／精確？搵：第4段——陳老師談短 scripts 與用字。",
+      "match": "exact"
+    },
+    {
+      "id": "q11",
+      "type": "cloze",
+      "stem": "Mei Ling must finish her ______ subjects before recording.",
+      "answers": [
+        "core"
+      ],
+      "modelAnswer": "core",
+      "evidenceIds": [
+        "p3-core"
+      ],
+      "scaffold": "Ask: Which ONE text word fills the blank? Look: paragraph 3 — mother’s rule before she may record. / 問：空格填哪個原文單字？搵：第3段——媽媽准許拍攝前的家規。",
+      "clozePrefix": "Mei Ling must finish her",
+      "clozeSuffix": "subjects before recording.",
+      "maxWords": 1,
+      "explainEn": "① Ask: Which ONE text word fills the blank?\n② Look: paragraph 3, mother’s rule.\n③ Quote: “finish core subjects first”.\n④ Why: blank = core.\n⑤ So: the missing word is core.",
+      "explainZh": "① 題目問：填哪個原文單字？\n② 去第3段媽媽家規。\n③ 關鍵：finish core subjects first。\n④ 點解：空格＝core。\n⑤ 總結：填 core。",
+      "scaffoldEn": "Ask: Which ONE text word fills the blank? Look: paragraph 3 — mother’s rule before she may record.",
+      "scaffoldZh": "問：空格填哪個原文單字？搵：第3段——媽媽准許拍攝前的家規。",
+      "match": "exact"
+    },
+    {
+      "id": "q12",
+      "type": "short",
+      "stem": "Why did Mei Ling refuse the paid product mention? (1 mark)",
+      "answers": [
+        "she does not use the product herself",
+        "she does not use it herself",
+        "she will not promote what she does not use",
+        "only promotes what she uses",
+        "if she does not use it she will not promote it"
+      ],
+      "modelAnswer": "She does not use the product herself, so she will not promote it.",
+      "acceptNote": "Accept close paraphrases of “If I do not use it myself, I will not promote it.”",
+      "evidenceIds": [
+        "p8-refuse"
+      ],
+      "scaffold": "Ask: Why did she refuse the paid product mention? Look: paragraph 8 — her own reason in her words. / 問：為甚麼拒絕付費產品推廣？搵：第8段——她自己說的理由。",
+      "placeholder": "Give ONE reason from the text",
+      "match": "loose",
+      "explainEn": "① Ask: Why refuse the paid product mention?\n② Look: paragraph 8.\n③ Quote: “If I do not use it myself, I will not promote it.”\n④ Why: she only promotes what she uses herself.\n⑤ So: she refuses because she does not use the product herself.",
+      "explainZh": "① 題目問：為甚麼拒絕付費推廣？\n② 去第8段。\n③ 關鍵句：If I do not use it myself, I will not promote it。\n④ 點解：自己不用就不推廣。\n⑤ 總結：不用該產品／只推自己用的東西。",
+      "scaffoldEn": "Ask: Why did she refuse the paid product mention? Look: paragraph 8 — her own reason in her words.",
+      "scaffoldZh": "問：為甚麼拒絕付費產品推廣？搵：第8段——她自己說的理由。"
+    }
+  ],
+  "vocab": {
+    "core": {
+      "pos": "adj.",
+      "zh": "核心的；主要的",
+      "synonyms": [
+        "main",
+        "essential",
+        "central"
+      ],
+      "forms": "core n."
+    },
+    "precise": {
+      "pos": "adj.",
+      "zh": "精確的；用字精準的",
+      "synonyms": [
+        "exact",
+        "accurate",
+        "carefully chosen"
+      ],
+      "forms": "precision n. · precisely adv."
+    },
+    "paused": {
+      "pos": "v.",
+      "zh": "暫停；暫時停下",
+      "synonyms": [
+        "stopped briefly",
+        "halted",
+        "took a break"
+      ],
+      "forms": "pause n."
+    },
+    "subtitle": {
+      "pos": "v.",
+      "zh": "為……加字幕",
+      "synonyms": [
+        "caption",
+        "add captions"
+      ],
+      "forms": "subtitle n. · subtitles n."
+    },
+    "subtitles": {
+      "pos": "n.",
+      "zh": "字幕",
+      "synonyms": [
+        "captions",
+        "on-screen text"
+      ]
+    },
+    "influencer": {
+      "pos": "n.",
+      "zh": "網紅；網上意見領袖",
+      "synonyms": [
+        "online creator",
+        "content creator"
+      ],
+      "forms": "influence v. · influential adj."
+    },
+    "influencers": {
+      "pos": "n.",
+      "zh": "網紅；網上意見領袖",
+      "synonyms": [
+        "online creators",
+        "content creators"
+      ],
+      "forms": "influence v. · influential adj."
+    },
+    "tutorial": {
+      "pos": "n.",
+      "zh": "教學短片；教程",
+      "synonyms": [
+        "how-to video",
+        "lesson clip",
+        "guide video"
+      ],
+      "forms": "tutor v."
+    },
+    "tripod": {
+      "pos": "n.",
+      "zh": "三腳架",
+      "synonyms": [
+        "phone stand",
+        "camera stand"
+      ]
+    },
+    "confiscate": {
+      "pos": "v.",
+      "zh": "沒收（拿走）",
+      "synonyms": [
+        "take away",
+        "seize"
+      ],
+      "forms": "confiscation n."
+    },
+    "confiscates": {
+      "pos": "v.",
+      "zh": "沒收（拿走）",
+      "synonyms": [
+        "takes away",
+        "seizes"
+      ],
+      "forms": "confiscation n."
+    },
+    "polished": {
+      "pos": "adj.",
+      "zh": "精緻的；修飾得很專業的",
+      "synonyms": [
+        "highly edited",
+        "professional-looking",
+        "slick"
+      ],
+      "forms": "polish v. · polish n."
+    },
+    "spectacularly": {
+      "pos": "adv.",
+      "zh": "非常戲劇性地；很誇張地",
+      "synonyms": [
+        "dramatically",
+        "badly (in a big way)",
+        "amazingly"
+      ],
+      "forms": "spectacular adj."
+    },
+    "creative": {
+      "pos": "adj.",
+      "zh": "有創意的",
+      "synonyms": [
+        "imaginative",
+        "artistic",
+        "original"
+      ],
+      "forms": "creativity n. · creatively adv."
+    },
+    "revision": {
+      "pos": "n.",
+      "zh": "溫習；複習",
+      "synonyms": [
+        "studying",
+        "review",
+        "exam prep"
+      ],
+      "forms": "revise v."
+    },
+    "mock": {
+      "pos": "adj.",
+      "zh": "模擬的（如 mock exam）",
+      "synonyms": [
+        "practice (exam)",
+        "trial"
+      ]
+    },
+    "location": {
+      "pos": "n.",
+      "zh": "位置；定位資訊",
+      "synonyms": [
+        "place",
+        "GPS position",
+        "where you are"
+      ],
+      "forms": "locate v."
+    },
+    "tags": {
+      "pos": "n.",
+      "zh": "標籤（例如定位標籤）",
+      "synonyms": [
+        "labels",
+        "markers"
+      ]
+    },
+    "uniform": {
+      "pos": "n.",
+      "zh": "校服；制服",
+      "synonyms": [
+        "school clothes",
+        "school outfit"
+      ]
+    },
+    "promote": {
+      "pos": "v.",
+      "zh": "推廣；宣傳",
+      "synonyms": [
+        "advertise",
+        "endorse",
+        "push"
+      ],
+      "forms": "promotion n. · promotional adj."
+    },
+    "mention": {
+      "pos": "n.",
+      "zh": "提及；（產品）置入宣傳",
+      "synonyms": [
+        "shout-out",
+        "product plug",
+        "paid shout-out"
+      ],
+      "forms": "mention v."
+    },
+    "scavenger": {
+      "pos": "n.",
+      "zh": "尋寶式的（scavenger hunt＝尋寶遊戲）",
+      "synonyms": [
+        "treasure-hunt",
+        "search-and-find"
+      ]
+    },
+    "bilingual": {
+      "pos": "adj.",
+      "zh": "雙語的（兩種語言）",
+      "synonyms": [
+        "in two languages",
+        "using both languages"
+      ],
+      "forms": "bilingualism n."
+    },
+    "captions": {
+      "pos": "n.",
+      "zh": "字幕；說明文字",
+      "synonyms": [
+        "subtitles",
+        "on-screen text"
+      ],
+      "forms": "caption v."
+    },
+    "drafts": {
+      "pos": "n.",
+      "zh": "草稿；未發佈版本",
+      "synonyms": [
+        "unfinished posts",
+        "saved versions",
+        "rough copies"
+      ],
+      "forms": "draft v."
+    },
+    "nap": {
+      "pos": "n.",
+      "zh": "小睡",
+      "synonyms": [
+        "short sleep",
+        "rest",
+        "doze"
+      ]
+    },
+    "encourages": {
+      "pos": "v.",
+      "zh": "鼓勵",
+      "synonyms": [
+        "urges",
+        "supports",
+        "pushes"
+      ],
+      "forms": "encouragement n. · encouraging adj."
+    },
+    "survey": {
+      "pos": "n.",
+      "zh": "調查；問卷研究",
+      "synonyms": [
+        "poll",
+        "study",
+        "questionnaire"
+      ],
+      "forms": "survey v."
+    },
+    "balancing": {
+      "pos": "v.",
+      "zh": "平衡；兼顧",
+      "synonyms": [
+        "juggling",
+        "managing both",
+        "weighing"
+      ],
+      "forms": "balance n. · balanced adj."
+    },
+    "comparing": {
+      "pos": "v.",
+      "zh": "比較",
+      "synonyms": [
+        "measuring against",
+        "contrasting",
+        "matching yourself to"
+      ],
+      "forms": "comparison n. · comparative adj."
+    }
+  }
+};
+</script>
+<script>
+(function () {
+  'use strict';
+
+  var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var activeKeyId = null;
+  var state = {}; // qid -> { selected, checked, correct, input }
+
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+  function normalize(s) {
+    return String(s || '')
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}\s']/gu, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function matchOpen(user, answers, mode) {
+    var n = normalize(user);
+    if (!n) return false;
+    var list = answers || [];
+    for (var i = 0; i < list.length; i++) {
+      var a = normalize(list[i]);
+      if (!a) continue;
+      if (mode === 'exact') {
+        if (n === a) return true;
+        continue;
+      }
+      // loose: equal, or user contains the accepted answer (never answer-contains-user)
+      if (n === a || n.indexOf(a) !== -1) return true;
+    }
+    return false;
+  }
+
+  function clearVocabMarks() {
+    $all('#rc-passage .rc-vocab').forEach(function (el) {
+      var parent = el.parentNode;
+      if (!parent) return;
+      parent.replaceChild(document.createTextNode(el.textContent), el);
+      parent.normalize();
+    });
+    var tip = $('#rc-vocab-tip');
+    if (tip) tip.hidden = true;
+  }
+
+  function clearEvidence() {
+    clearVocabMarks();
+    $all('#rc-passage .rc-evidence-on').forEach(function (el) {
+      el.classList.remove('rc-evidence-on');
+    });
+  }
+
+  function hideAllKeys() {
+    $all('.rc-q.is-key-open').forEach(function (q) {
+      q.classList.remove('is-key-open');
+      var btn = $('.rc-key-btn', q);
+      if (btn) {
+        btn.setAttribute('aria-expanded', 'false');
+        var label = $('.rc-key-label', btn);
+        if (label) label.textContent = 'ANS · 答案';
+      }
+    });
+    clearEvidence();
+    activeKeyId = null;
+  }
+
+  function escapeRe(s) {
+    return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function markVocabInEvidence(cfg) {
+    var vocab = (cfg && cfg.vocab) || {};
+    var keys = Object.keys(vocab);
+    if (!keys.length) return;
+    // longest first so multi-word phrases win
+    keys.sort(function (a, b) { return b.length - a.length; });
+    var re = new RegExp('\\b(' + keys.map(escapeRe).join('|') + ')\\b', 'gi');
+
+    $all('#rc-passage .rc-evidence-on').forEach(function (el) {
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(function (textNode) {
+        var text = textNode.nodeValue;
+        if (!text || !re.test(text)) return;
+        re.lastIndex = 0;
+        var frag = document.createDocumentFragment();
+        var last = 0;
+        var m;
+        while ((m = re.exec(text)) !== null) {
+          if (m.index > last) {
+            frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+          }
+          var word = m[1];
+          var meta = vocab[word] || vocab[word.toLowerCase()];
+          // case-insensitive lookup
+          if (!meta) {
+            var lower = word.toLowerCase();
+            for (var k in vocab) {
+              if (k.toLowerCase() === lower) { meta = vocab[k]; break; }
+            }
+          }
+          var span = document.createElement('span');
+          span.className = 'rc-vocab';
+          span.textContent = word;
+          if (meta) {
+            span.dataset.zh = meta.zh || '';
+            span.dataset.pos = meta.pos || '';
+            span.dataset.syn = (meta.synonyms || []).join(', ');
+            span.dataset.forms = formsText(meta.forms);
+            span.tabIndex = 0;
+          }
+          frag.appendChild(span);
+          last = m.index + word.length;
+        }
+        if (last < text.length) {
+          frag.appendChild(document.createTextNode(text.slice(last)));
+        }
+        textNode.parentNode.replaceChild(frag, textNode);
+      });
+    });
+  }
+
+  function ensureVocabTip() {
+    var tip = $('#rc-vocab-tip');
+    if (tip) return tip;
+    tip = document.createElement('div');
+    tip.id = 'rc-vocab-tip';
+    tip.className = 'rc-vocab-tip';
+    tip.hidden = true;
+    tip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tip);
+    return tip;
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+
+  var POS_ZH = {
+    'n': '名詞', 'n.': '名詞', 'noun': '名詞',
+    'v': '動詞', 'v.': '動詞', 'verb': '動詞',
+    'adj': '形容詞', 'adj.': '形容詞', 'adjective': '形容詞',
+    'adv': '副詞', 'adv.': '副詞', 'adverb': '副詞',
+    'prep': '介詞', 'prep.': '介詞',
+    'conj': '連接詞', 'conj.': '連接詞',
+    'pron': '代詞', 'pron.': '代詞',
+    'det': '限定詞', 'det.': '限定詞',
+    'phr': '片語', 'phrase': '片語'
+  };
+
+  function normalizePosKey(pos) {
+    return String(pos || '').trim().toLowerCase();
+  }
+
+  function posZh(pos) {
+    var key = normalizePosKey(pos);
+    if (!key) return '';
+    if (POS_ZH[key]) return POS_ZH[key];
+    var bare = key.replace(/\.$/, '');
+    return POS_ZH[bare] || POS_ZH[bare + '.'] || '';
+  }
+
+  function formatPosLine(pos) {
+    var p = String(pos || '').trim();
+    if (!p) return '';
+    var zh = posZh(p);
+    return zh ? (p + ' · ' + zh) : p;
+  }
+
+  function formsText(forms) {
+    if (forms == null) return '';
+    if (typeof forms === 'string') return forms.trim();
+    if (Array.isArray(forms) && forms.length) {
+      return forms.map(function (f) {
+        if (typeof f === 'string') return f;
+        if (!f || typeof f !== 'object') return '';
+        var w = f.word || '';
+        var p = f.pos || '';
+        return p ? (w + ' (' + p + ')') : w;
+      }).filter(Boolean).join(' · ');
+    }
+    return '';
+  }
+
+  function showVocabTip(el) {
+    var tip = ensureVocabTip();
+    var word = (el.textContent || '').trim();
+    var pos = el.dataset.pos || '';
+    var zh = el.dataset.zh || '';
+    var syn = el.dataset.syn || '';
+    var forms = el.dataset.forms || '';
+    if (!zh && !syn && !pos && !forms) { tip.hidden = true; return; }
+    var posLine = formatPosLine(pos);
+    tip.innerHTML =
+      '<div class="rc-vocab-head">' + escapeHtml(word) + '</div>' +
+      (posLine ? '<div class="rc-vocab-pos">' + escapeHtml(posLine) + '</div>' : '') +
+      (zh ? '<div class="rc-vocab-zh">' + escapeHtml(zh) + '</div>' : '') +
+      (forms ? '<div class="rc-vocab-forms"><span class="rc-vocab-forms-label">forms</span> ' + escapeHtml(forms) + '</div>' : '') +
+      (syn ? '<div class="rc-vocab-syn"><span class="rc-vocab-syn-label">≈</span> ' + escapeHtml(syn) + '</div>' : '');
+    tip.hidden = false;
+    var r = el.getBoundingClientRect();
+    var tw = tip.offsetWidth || 180;
+    var th = tip.offsetHeight || 48;
+    var left = Math.min(window.innerWidth - tw - 8, Math.max(8, r.left + r.width / 2 - tw / 2));
+    var top = r.top - th - 8;
+    if (top < 8) top = r.bottom + 8;
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+  }
+
+  function hideVocabTip() {
+    var tip = $('#rc-vocab-tip');
+    if (tip) tip.hidden = true;
+  }
+
+  function bindVocabTipOnce() {
+    if (document.documentElement.dataset.rcVocabBound) return;
+    document.documentElement.dataset.rcVocabBound = '1';
+    document.addEventListener('mouseover', function (e) {
+      var el = e.target.closest && e.target.closest('.rc-vocab');
+      if (el) showVocabTip(el);
+    });
+    document.addEventListener('mouseout', function (e) {
+      var el = e.target.closest && e.target.closest('.rc-vocab');
+      if (!el) return;
+      var to = e.relatedTarget;
+      if (to && el.contains(to)) return;
+      hideVocabTip();
+    });
+    document.addEventListener('focusin', function (e) {
+      if (e.target.classList && e.target.classList.contains('rc-vocab')) showVocabTip(e.target);
+    });
+    document.addEventListener('focusout', function (e) {
+      if (e.target.classList && e.target.classList.contains('rc-vocab')) hideVocabTip();
+    });
+    document.addEventListener('scroll', hideVocabTip, true);
+  }
+
+  function pulseEvidence(el) {
+    if (!el) return;
+    el.classList.remove('rc-evidence-pulse');
+    // reflow so animation can restart
+    void el.offsetWidth;
+    el.classList.add('rc-evidence-pulse');
+    window.setTimeout(function () {
+      el.classList.remove('rc-evidence-pulse');
+    }, 1200);
+  }
+
+  function scrollEvidenceIntoView(ids, cfg, opts) {
+    opts = opts || {};
+    if (!ids || !ids.length) return;
+    var withVocab = opts.vocab !== false;
+    var first = null;
+    ids.forEach(function (id) {
+      $all('#rc-passage [data-evidence-id="' + id + '"]').forEach(function (el) {
+        el.classList.add('rc-evidence-on');
+        if (!first) first = el;
+      });
+    });
+    if (withVocab) markVocabInEvidence(cfg);
+    if (first && typeof first.scrollIntoView === 'function') {
+      first.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+      pulseEvidence(first);
+    }
+  }
+
+  function findEvidenceInPassage(ids, cfg) {
+    clearVocabMarks();
+    $all('#rc-passage .rc-evidence-on').forEach(function (el) {
+      el.classList.remove('rc-evidence-on');
+      el.classList.remove('rc-evidence-pulse');
+    });
+    scrollEvidenceIntoView(ids, cfg, { vocab: false });
+  }
+
+  function letterFor(i) { return LETTERS.charAt(i) || String(i + 1); }
+
+  function qType(q) {
+    if (q.type) return q.type;
+    if (q.options && q.options.length === 3 && /True|False|Not Given/i.test(q.options.join(' '))) return 'tfng';
+    if (q.options && q.options.length) return 'mc';
+    if (q.clozePrefix != null || q.clozeSuffix != null) return 'cloze';
+    return 'short';
+  }
+
+  function updateProgress(cfg) {
+    var total = cfg.questions.length;
+    var answered = 0;
+    var correct = 0;
+    cfg.questions.forEach(function (q) {
+      var st = state[q.id];
+      if (st && st.checked) {
+        answered++;
+        if (st.correct) correct++;
+      }
+    });
+    var el = $('#rc-progress');
+    if (!el) return;
+    var pct = total ? Math.round((answered / total) * 100) : 0;
+    el.innerHTML =
+      '<div class="rc-progress-bar" role="progressbar" aria-valuenow="' + answered + '" aria-valuemin="0" aria-valuemax="' + total + '">' +
+      '<span style="width:' + pct + '%"></span></div>' +
+      '<p class="rc-progress-text"><strong>' + answered + '</strong> / ' + total + ' checked · 已核對 · ' +
+      '<span class="rc-ok-count">' + correct + ' correct · 正確</span> · ' +
+      (total - answered) + ' left · 未做</p>';
+  }
+
+  function splitLadder(text) {
+    if (!text) return [];
+    var raw = String(text).split(/(?=①|②|③|④|⑤)/).map(function (s) { return s.trim(); }).filter(Boolean);
+    if (raw.length === 1) raw = String(text).split(/\n+/).map(function (s) { return s.trim(); }).filter(Boolean);
+    return raw.map(function (p) {
+      var m = p.match(/^(?:①|②|③|④|⑤|\d+[\.\)])\s*(.+)$/);
+      return m ? m[1] : p;
+    });
+  }
+
+  function ladderSteps(q) {
+    if (q.steps && q.steps.length) return q.steps;
+    var en = splitLadder(q.explainEn || q.explain || '');
+    var zh = splitLadder(q.explainZh || '');
+    var n = Math.max(en.length, zh.length);
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      out.push({ en: en[i] || '', zh: zh[i] || '' });
+    }
+    return out;
+  }
+
+  function renderSteps(q) {
+    var wrap = document.createElement('div');
+    wrap.className = 'rc-steps';
+    var steps = ladderSteps(q);
+    steps.forEach(function (step, i) {
+      var row = document.createElement('div');
+      row.className = 'rc-step';
+      var num = document.createElement('span');
+      num.className = 'rc-step-num';
+      num.textContent = String(i + 1);
+      var body = document.createElement('div');
+      body.className = 'rc-step-body';
+      if (typeof step === 'string') {
+        var p = document.createElement('p');
+        p.className = 'rc-reveal-explain-en';
+        p.textContent = step;
+        body.appendChild(p);
+      } else {
+        if (step.en) {
+          var pe = document.createElement('p');
+          pe.className = 'rc-reveal-explain-en';
+          pe.textContent = step.en;
+          body.appendChild(pe);
+        }
+        if (step.zh) {
+          var pz = document.createElement('p');
+          pz.className = 'rc-reveal-explain-zh';
+          pz.textContent = step.zh;
+          body.appendChild(pz);
+        }
+      }
+      row.appendChild(num);
+      row.appendChild(body);
+      wrap.appendChild(row);
+    });
+    return wrap;
+  }
+
+  function lookupVocabMeta(cfg, word) {
+    if (!cfg || !cfg.vocab || word == null) return null;
+    var vocab = cfg.vocab;
+    var w = String(word).trim();
+    if (!w) return null;
+    if (vocab[w]) return vocab[w];
+    var lower = w.toLowerCase();
+    if (vocab[lower]) return vocab[lower];
+    for (var k in vocab) {
+      if (k.toLowerCase() === lower) return vocab[k];
+    }
+    return null;
+  }
+
+  function modelAnswerText(q, cfg) {
+    var t = qType(q);
+    if (t === 'mc' || t === 'tfng') {
+      return (q.options && q.options[q.answer] != null) ? q.options[q.answer] : String(q.answer);
+    }
+    var text = '';
+    if (q.answers && q.answers.length) text = String(q.answers[0]);
+    else if (q.answer != null) text = String(q.answer);
+    if (!text) return '';
+    if (t === 'cloze' || t === 'short') {
+      var pos = q.pos || '';
+      if (!pos) {
+        var meta = lookupVocabMeta(cfg, text);
+        if (meta && meta.pos) pos = meta.pos;
+      }
+      if (pos) return text + ' · ' + pos;
+    }
+    return text;
+  }
+
+  function unlockAnsButton(qEl) {
+    var keyBtn = $('.rc-key-btn', qEl);
+    if (!keyBtn) return;
+    keyBtn.disabled = false;
+    keyBtn.removeAttribute('disabled');
+    keyBtn.classList.remove('is-gated');
+    keyBtn.setAttribute('aria-disabled', 'false');
+    keyBtn.title = 'Show answer';
+  }
+
+  function lockAnsButton(qEl) {
+    var keyBtn = $('.rc-key-btn', qEl);
+    if (!keyBtn) return;
+    keyBtn.classList.add('is-gated');
+    keyBtn.setAttribute('aria-disabled', 'true');
+    keyBtn.setAttribute('aria-expanded', 'false');
+    keyBtn.title = 'Check first · 請先核對';
+    var label = $('.rc-key-label', keyBtn);
+    if (label) label.textContent = 'ANS · 答案';
+  }
+
+  /** Re-pick / edit after Check: re-gate ANS, close reveal, clear feedback. */
+  function onAnswerEdit(q, qEl, cfg) {
+    var st = state[q.id] || (state[q.id] = {});
+    var keyBtn = $('.rc-key-btn', qEl);
+    var unlocked = keyBtn && keyBtn.getAttribute('aria-disabled') === 'false';
+    var keyOpen = qEl.classList.contains('is-key-open') || activeKeyId === q.id;
+    if (!st.checked && !unlocked && !keyOpen) return;
+    st.checked = false;
+    st.correct = false;
+    qEl.classList.remove('is-checked', 'is-correct', 'is-wrong');
+    $all('.rc-option', qEl).forEach(function (x) {
+      x.classList.remove('is-picked-wrong', 'is-show-correct');
+    });
+    $all('.rc-open-input', qEl).forEach(function (inp) {
+      inp.classList.remove('is-correct', 'is-wrong');
+    });
+    var fb = $('.rc-check-feedback', qEl);
+    if (fb) {
+      fb.hidden = true;
+      fb.textContent = '';
+      fb.className = 'rc-check-feedback';
+    }
+    lockAnsButton(qEl);
+    if (keyOpen) hideAllKeys();
+  }
+
+  function nudgeCheckFirst(qEl) {
+    var fb = $('.rc-check-feedback', qEl);
+    if (!fb) return;
+    fb.hidden = false;
+    fb.className = 'rc-check-feedback is-nudge';
+    fb.textContent = 'Check first · 請先核對';
+  }
+
+  function gradeQuestion(q, qEl, cfg) {
+    var t = qType(q);
+    var st = state[q.id] || (state[q.id] = {});
+    var ok = false;
+    if (t === 'mc' || t === 'tfng') {
+      ok = st.selected === q.answer;
+      $all('.rc-option', qEl).forEach(function (li, i) {
+        li.classList.remove('is-picked-wrong', 'is-show-correct');
+        if (i === q.answer) li.classList.add('is-show-correct');
+        if (i === st.selected && i !== q.answer) li.classList.add('is-picked-wrong');
+      });
+    } else {
+      var inp = $('.rc-open-input', qEl);
+      var val = inp ? inp.value : '';
+      ok = matchOpen(val, q.answers || [q.answer], q.match || (t === 'cloze' ? 'exact' : 'loose'));
+      if (inp) {
+        inp.classList.toggle('is-correct', ok);
+        inp.classList.toggle('is-wrong', !ok);
+      }
+    }
+    st.checked = true;
+    st.correct = ok;
+    qEl.classList.add('is-checked');
+    qEl.classList.toggle('is-correct', ok);
+    qEl.classList.toggle('is-wrong', !ok);
+    unlockAnsButton(qEl);
+    var fb = $('.rc-check-feedback', qEl);
+    if (fb) {
+      fb.hidden = false;
+      fb.className = 'rc-check-feedback ' + (ok ? 'is-ok' : 'is-bad');
+      fb.textContent = '';
+      var msg = document.createElement('span');
+      msg.className = 'rc-check-feedback-text';
+      msg.textContent = ok ? '✓ Correct' : '✗ Not yet — try again or tap ANS';
+      fb.appendChild(msg);
+      if (!ok && q.evidenceIds && q.evidenceIds.length) {
+        var findBtn = document.createElement('button');
+        findBtn.type = 'button';
+        findBtn.className = 'rc-find-btn';
+        findBtn.textContent = 'Find in passage';
+        findBtn.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          findEvidenceInPassage(q.evidenceIds, cfg);
+        });
+        fb.appendChild(findBtn);
+      }
+    }
+    return true;
+  }
+
+  function buildQuestionCard(q, index, cfg) {
+    var t = qType(q);
+    var card = document.createElement('article');
+    card.className = 'rc-q rc-q--' + t;
+    card.id = 'rc-' + q.id;
+    card.dataset.qid = q.id;
+
+    var head = document.createElement('div');
+    head.className = 'rc-q-head';
+
+    var stem = document.createElement('p');
+    stem.className = 'rc-q-stem';
+    var num = document.createElement('span');
+    num.className = 'rc-q-num';
+    num.textContent = (index + 1) + '. ';
+    stem.appendChild(num);
+    stem.appendChild(document.createTextNode(q.stem));
+    head.appendChild(stem);
+
+    var actions = document.createElement('div');
+    actions.className = 'rc-q-actions';
+
+    var checkBtn = document.createElement('button');
+    checkBtn.type = 'button';
+    checkBtn.className = 'rc-check-btn';
+    checkBtn.textContent = 'Check · 核對';
+    checkBtn.addEventListener('click', function () {
+      var st = state[q.id] || {};
+      if ((t === 'mc' || t === 'tfng') && st.selected == null) {
+        var fb0 = $('.rc-check-feedback', card);
+        if (fb0) {
+          fb0.hidden = false;
+          fb0.textContent = 'Pick an option first.';
+          fb0.className = 'rc-check-feedback is-nudge';
+        }
+        return;
+      }
+      if ((t === 'short' || t === 'cloze')) {
+        var inp = $('.rc-open-input', card);
+        if (!inp || !normalize(inp.value)) {
+          var fb1 = $('.rc-check-feedback', card);
+          if (fb1) {
+            fb1.hidden = false;
+            fb1.textContent = 'Type an answer first. · 請先作答。';
+            fb1.className = 'rc-check-feedback is-nudge';
+          }
+          return;
+        }
+      }
+      gradeQuestion(q, card, cfg);
+      updateProgress(cfg);
+    });
+    actions.appendChild(checkBtn);
+
+    var keyBtn = document.createElement('button');
+    keyBtn.type = 'button';
+    keyBtn.className = 'rc-key-btn is-gated';
+    keyBtn.setAttribute('aria-expanded', 'false');
+    keyBtn.setAttribute('aria-disabled', 'true');
+    keyBtn.setAttribute('aria-controls', 'rc-reveal-' + q.id);
+    keyBtn.title = 'Check first · 請先核對';
+    keyBtn.innerHTML = '<span class="rc-key-label">ANS · 答案</span>';
+    keyBtn.addEventListener('click', function () {
+      var st = state[q.id] || {};
+      if (!st.checked || keyBtn.classList.contains('is-gated') || keyBtn.getAttribute('aria-disabled') === 'true') {
+        nudgeCheckFirst(card);
+        return;
+      }
+      if (activeKeyId === q.id) {
+        hideAllKeys();
+        return;
+      }
+      hideAllKeys();
+      card.classList.add('is-key-open');
+      keyBtn.setAttribute('aria-expanded', 'true');
+      var label = $('.rc-key-label', keyBtn);
+      if (label) label.textContent = 'Hide';
+      activeKeyId = q.id;
+      scrollEvidenceIntoView(q.evidenceIds || [], cfg);
+    });
+    actions.appendChild(keyBtn);
+
+    var helpBody = null;
+    if (q.scaffoldEn || q.scaffold || q.scaffoldZh) {
+      var helpBtn = document.createElement('button');
+      helpBtn.type = 'button';
+      helpBtn.className = 'rc-help-btn';
+      helpBtn.setAttribute('aria-expanded', 'false');
+      helpBtn.textContent = 'Help';
+      helpBody = document.createElement('div');
+      helpBody.className = 'rc-help-body';
+      helpBody.hidden = true;
+      var enHelp = String(q.scaffoldEn || q.scaffold || '')
+        .replace(/^Support:\s*/i, '')
+        .replace(/^Help:\s*/i, '')
+        .trim();
+      if (!q.scaffoldEn && q.scaffoldZh && enHelp.indexOf(' / ') !== -1) {
+        enHelp = enHelp.split(' / ')[0].trim();
+      }
+      if (enHelp) {
+        var enP = document.createElement('p');
+        enP.className = 'rc-help-en';
+        enP.textContent = enHelp;
+        helpBody.appendChild(enP);
+      }
+      if (q.scaffoldZh) {
+        var zhP = document.createElement('p');
+        zhP.className = 'rc-help-zh';
+        zhP.textContent = String(q.scaffoldZh);
+        helpBody.appendChild(zhP);
+      }
+      helpBtn.addEventListener('click', function () {
+        var openH = helpBtn.getAttribute('aria-expanded') === 'true';
+        helpBtn.setAttribute('aria-expanded', openH ? 'false' : 'true');
+        helpBody.hidden = openH;
+        helpBtn.textContent = openH ? 'Help · 提示' : 'Hide · 收起';
+      });
+      actions.appendChild(helpBtn);
+    }
+
+    head.appendChild(actions);
+    card.appendChild(head);
+    if (helpBody) card.appendChild(helpBody);
+
+    if (t === 'mc' || t === 'tfng') {
+      var opts = document.createElement('ul');
+      opts.className = 'rc-options';
+      opts.setAttribute('role', 'listbox');
+      (q.options || []).forEach(function (text, i) {
+        var li = document.createElement('li');
+        li.className = 'rc-option';
+        li.setAttribute('role', 'option');
+        li.tabIndex = 0;
+        if (i === q.answer) li.dataset.correct = '1';
+        var letter = document.createElement('span');
+        letter.className = 'rc-option-letter';
+        letter.textContent = letterFor(i) + '.';
+        li.appendChild(letter);
+        li.appendChild(document.createTextNode(' ' + text));
+        function pick() {
+          var st = state[q.id] || (state[q.id] = {});
+          st.selected = i;
+          $all('.rc-option', opts).forEach(function (x) { x.classList.remove('is-selected', 'is-picked-wrong', 'is-show-correct'); });
+          li.classList.add('is-selected');
+          onAnswerEdit(q, card, cfg);
+          updateProgress(cfg);
+        }
+        li.addEventListener('click', pick);
+        li.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); }
+        });
+        opts.appendChild(li);
+      });
+      card.appendChild(opts);
+    } else {
+      var open = document.createElement('div');
+      open.className = 'rc-open';
+      if (t === 'cloze' && (q.clozePrefix || q.clozeSuffix)) {
+        var line = document.createElement('p');
+        line.className = 'rc-cloze-line';
+        if (q.clozePrefix) line.appendChild(document.createTextNode(q.clozePrefix + ' '));
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'rc-open-input';
+        input.autocomplete = 'off';
+        input.spellcheck = false;
+        input.setAttribute('aria-label', 'Answer for question ' + (index + 1));
+        if (q.maxWords) input.placeholder = '≤' + q.maxWords + ' word(s)';
+        line.appendChild(input);
+        if (q.clozeSuffix) line.appendChild(document.createTextNode(' ' + q.clozeSuffix));
+        open.appendChild(line);
+      } else {
+        var input2 = document.createElement('input');
+        input2.type = 'text';
+        input2.className = 'rc-open-input rc-open-input--full';
+        input2.autocomplete = 'off';
+        input2.setAttribute('aria-label', 'Answer for question ' + (index + 1));
+        input2.placeholder = q.placeholder || 'Type your answer';
+        open.appendChild(input2);
+      }
+      card.appendChild(open);
+      $all('.rc-open-input', open).forEach(function (inp) {
+        inp.addEventListener('input', function () {
+          onAnswerEdit(q, card, cfg);
+          updateProgress(cfg);
+        });
+      });
+    }
+
+    var fb = document.createElement('p');
+    fb.className = 'rc-check-feedback';
+    fb.hidden = true;
+    card.appendChild(fb);
+
+    var reveal = document.createElement('div');
+    reveal.className = 'rc-reveal';
+    reveal.id = 'rc-reveal-' + q.id;
+    reveal.setAttribute('role', 'region');
+    reveal.setAttribute('aria-label', 'Answer and explanation');
+
+    var ansLine = document.createElement('p');
+    ansLine.className = 'rc-reveal-answer';
+    ansLine.textContent = '✓ Correct: ' + modelAnswerText(q, cfg);
+    reveal.appendChild(ansLine);
+
+    if (q.acceptNote) {
+      var note = document.createElement('p');
+      note.className = 'rc-accept-note';
+      note.textContent = q.acceptNote;
+      reveal.appendChild(note);
+    }
+
+    reveal.appendChild(renderSteps(q));
+    card.appendChild(reveal);
+    return card;
+  }
+
+  function init() {
+    var cfg = window.RC_PRACTICE;
+    if (!cfg || !cfg.questions) {
+      console.warn('[rc-practice] window.RC_PRACTICE missing or empty');
+      return;
+    }
+    var host = $('#rc-questions');
+    if (!host) {
+      console.warn('[rc-practice] #rc-questions not found');
+      return;
+    }
+    bindVocabTipOnce();
+    host.innerHTML = '';
+    cfg.questions.forEach(function (q, i) {
+      host.appendChild(buildQuestionCard(q, i, cfg));
+    });
+    if (cfg.title) {
+      var titleEl = $('#rc-practice-title');
+      if (titleEl) titleEl.textContent = cfg.title;
+    }
+    updateProgress(cfg);
+
+    var reset = $('#rc-reset');
+    if (reset) {
+      reset.addEventListener('click', function () {
+        state = {};
+        hideAllKeys();
+        host.innerHTML = '';
+        cfg.questions.forEach(function (q, i) {
+          host.appendChild(buildQuestionCard(q, i, cfg));
+        });
+        updateProgress(cfg);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+</script>
+</body>
+</html>
