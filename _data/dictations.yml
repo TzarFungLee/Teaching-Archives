@@ -1,11 +1,12 @@
 # J Dictation — preset papers.
 # Adding a paper = one block here. No code changes needed.
-# Parts you leave out (or leave empty) are skipped by the runner automatically.
-#
-# Optional later (v2): any item can become { text: "...", audio: "/assets/audio/dictations/xxx.mp3" }
-# and the runner will play the MP3 instead of TTS.
+# `form:` groups papers in the S1/S2/S3 selector.
+# Parts left out (or empty) are skipped by the runner automatically.
+#   partC: papers say "TB. A13" — paste the textbook infinitives when ready.
+#   partD: unseen sentences are never on the student paper — add before test day.
 
 - id: s2bc-e1-d1
+  form: S2
   label: "S2BC(E1) Dictation 1"
   partA:
     - "If you're into unique finds, you won't miss our weekend pop-up market."
@@ -24,13 +25,133 @@
     - discount
     - jewellery store
     - electronics store
-  # partC: the paper says "TB. A13" — paste the infinitives from the textbook here, e.g.
-  #   - "to buy"
-  #   - "to sell"
-  # partD: unseen sentences are not on the student paper — add yours before test day, e.g.
-  #   - "The department store near the MTR station is having a big promotion."
+
+- id: s2bc-e1-d3
+  form: S2
+  label: "S2BC(E1) Dictation 3"
+  partA:
+    - "When I was setting up for today's Zoom meeting, my cat walked across my keyboard."
+    - "While I was doing a video interview with a friend, my brother came into the room."
+  partB:
+    - social network
+    - magazine
+    - podcast
+    - vlog
+    - subscribe
+    - post
+    - share
+    - comment
+    - influencer
+    - newspaper
+    - discussion forum
+    - emoji
+
+- id: s2bc-e1-d4
+  form: S2
+  label: "S2BC(E1) Dictation 4"
+  partA:
+    - "When I was looking at IG, I was comparing myself to others."
+    - "I spent a lot of time online. As a result, I wasn't spending enough time on healthy activities."
+  partB:
+    - social network
+    - magazine
+    - podcast
+    - vlog
+    - subscribe
+    - post
+    - share
+    - comment
+    - influencer
+    - newspaper
+    - discussion forum
+    - emoji
+
+- id: s2bc-e1-d5
+  form: S2
+  label: "S2BC(E1) Dictation 5"
+  partA:
+    - "First, the tour group meets in front of a busy market popular with locals."
+    - "Next, we're heading to the Lake which is famous for its views."
+    - "Our tour finally ends with a ride on a cable car to the top of the mountain."
+  partB:
+    - accommodation
+    - jet lag
+    - guided tour
+    - motion sickness
+    - attractions
+    - check in
+    - check-in desk
+    - time zone
+    - sightseeing
+    - take off
+    - stopover
+    - travel agency
+
+- id: s2bc-e1-d6
+  form: S2
+  label: "S2BC(E1) Dictation 6"
+  partA:
+    - "First, our guide picks us up at the hotel at 8 am."
+    - "After that, we're visiting the temple."
+    - "Finally, we'll take a ride on a longtail boat."
+  partB:
+    - accommodation
+    - jet lag
+    - guided tour
+    - motion sickness
+    - attractions
+    - check in
+    - check-in desk
+    - time zone
+    - sightseeing
+    - take off
+    - stopover
+    - travel agency
+
+- id: s2bc-e1-d7
+  form: S2
+  label: "S2BC(E1) Dictation 7"
+  partA:
+    - "Today, I'd like to talk about one of the most wonderful animals in the world."
+    - "Many are killed by poachers."
+    - "It is necessary for us to protect red pandas."
+  partB:
+    - climate change
+    - deforestation
+    - poaching
+    - pollution
+    - extinction
+    - ecosystem
+    - wildfires
+    - polar bears
+    - artificial
+    - preserve
+    - overfishing
+    - blue whale
+
+- id: s2bc-e1-d8
+  form: S2
+  label: "S2BC(E1) Dictation 8"
+  partA:
+    - "One big problem for me is pollution, which has no easy solution."
+    - "These days, it's so hard to see the moon at night."
+    - "It is easy for turtles to get trapped in a net."
+  partB:
+    - climate change
+    - deforestation
+    - poaching
+    - pollution
+    - extinction
+    - ecosystem
+    - wildfires
+    - polar bears
+    - artificial
+    - preserve
+    - overfishing
+    - blue whale
 
 - id: s3a-d1
+  form: S3
   label: "S3A(A) Dictation 1"
   partA:
     - "It's easy to root for these brothers."
@@ -49,5 +170,92 @@
     - hilarious
     - disappointing
     - boring
-  # partC: "TB. A13" — paste the infinitives from the textbook here
-  # partD: unseen sentences — add yours before test day
+
+- id: s3a-d3
+  form: S3
+  label: "S3A(A) Dictation 3"
+  partA:
+    - "We suggest having the event from 9:30 to 12:30 because students do not need to attend any class."
+    # ^ the bracketed part of the printed sentence is read out as normal speech
+    - "We sincerely hope that you will approval this proposal."
+    # ^ transcribed as printed — the paper says "approval"; should this be "approve"?
+    - "We are going to live stream the event so that students and families can follow it at home."
+    - "We expect many students will participate in the event, so we will need to have a large venue."
+  partB:
+    - flag day
+    - raffle
+    - funfair
+    - scavenger hunt
+    - surplus
+    - donation
+    - volunteer
+    - walkathon
+    - benefit
+    - surplus
+    # ^ "surplus" appears TWICE on the printed paper — kept as printed; delete one if it's a typo
+    - sponsor
+    - charity sale
+
+- id: s3a-d4
+  form: S3
+  label: "S3A(A) Dictation 4"
+  partA:
+    - "Research shows that students who volunteer do better at school."
+    - "Why not volunteer for a good cause?"
+    - "To make a difference in our communities, we must all start with ourselves."
+  partB:
+    - flag day
+    - raffle
+    - funfair
+    - scavenger hunt
+    - surplus
+    - donation
+    - volunteer
+    - walkathon
+    - benefit
+    - surplus
+    # ^ duplicate as printed (same note as Dictation 3)
+    - sponsor
+    - charity sale
+
+- id: s3a-d5
+  form: S3
+  label: "S3A(A) Dictation 5"
+  partA:
+    - "Critics say that Hong Kong's art scene is growing."
+    - "We asked a few young people what types of live performance they like."
+  partB:
+    - actors
+    - band
+    - ballet
+    - drama
+    - magician
+    - stand-up comedy
+    - flawless
+    - concert
+    - magnificent
+    - inspiring
+    - world-class
+    - talent show
+
+- id: s3a-d6
+  form: S3
+  label: "S3A(A) Dictation 6"
+  partA:
+    - "We asked students if they prefer online or theatre performances."
+    - "We also asked students how often they go to the theatre."
+    - "Tom Woo commented that theatre tickets are too expensive."
+    - "Alfie said that he likes being able to watch in his own time."
+  partB:
+    - actors
+    - band
+    - ballet
+    - drama
+    - magician
+    - stand-up comedy
+    - flawless
+    - concert
+    - magnificent
+    - inspiring
+    - world-class
+    - talent show

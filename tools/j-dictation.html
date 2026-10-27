@@ -56,6 +56,15 @@ permalink: /tools/j-dictation/
     </div>
 
     <div class="jd-row">
+        <label for="jdForm"><strong>Form</strong></label>
+        <select id="jdForm" onchange="populatePapers()">
+            <option value="">All forms</option>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+            <option value="S3">S3</option>
+        </select>
+    </div>
+    <div class="jd-row">
         <label for="jdPaper"><strong>Dictation paper</strong></label>
         <select id="jdPaper"></select>
     </div>
@@ -67,7 +76,13 @@ permalink: /tools/j-dictation/
         <div class="jd-row"><label>Gap between word readings (s)</label><input type="number" id="setWordGap" min="1" max="15" value="3"></div>
         <div class="jd-row"><label>Tidy-up time between parts (s)</label><input type="number" id="setTidy" min="5" max="120" value="30"></div>
         <div class="jd-row"><label>Speech speed (0.5–1.2)</label><input type="number" id="setRate" min="0.5" max="1.2" step="0.05" value="0.85"></div>
+        <div class="jd-row">
+            <label>Voice (this browser's voices)</label>
+            <select id="setVoice"><option value="">Auto (best available)</option></select>
+            <button type="button" class="reset-btn" style="margin-left: 0;" onclick="jdTestVoice()">🔊 Test</button>
+        </div>
         <div class="jd-row"><label>Presenter mode (hide answers on screen)</label><input type="checkbox" id="setPresenter" style="transform: scale(1.5);"></div>
+        <p style="color: var(--muted); font-size: 0.9rem;">Voices differ per browser: Chrome offers Google voices, Edge offers Microsoft Natural voices (often the best), Brave only basic Windows ones. Pick once per machine — it's remembered.</p>
     </div>
 
     <div style="text-align: center; margin: 30px 0;">
@@ -81,7 +96,7 @@ permalink: /tools/j-dictation/
     <p class="jd-noprint" style="color: var(--muted);">Part B is shown in the randomised reading order — copy or print this as your marking key. Estimated running time: <strong id="jdEta" style="color: var(--accent);">–</strong></p>
     <div class="jd-sheet" id="jdSheet"></div>
     <div class="jd-controls jd-noprint">
-        <button class="check-btn" onclick="jdShuffleB()">🎲 Re-shuffle Part B</button>
+        <button class="check-btn" onclick="jdShuffleOrders()">🎲 Re-shuffle reading order</button>
         <button class="check-btn" onclick="window.print()">🖨 Print marking key</button>
         <button class="btn" style="margin: 0;" onclick="jdStart()">▶ Start Dictation</button>
         <button class="reset-btn" onclick="jdShow('jdSelect')">← Back</button>
@@ -119,10 +134,12 @@ permalink: /tools/j-dictation/
        ===================================================================== */
 
     let jdData = [];
-    let jdOrderB = [];          // randomised index order for part B
+    let jdOrders = { A: [], B: [], C: [] };   // randomised reading order per part (D stays sequential)
     let steps = [];
     let stepIdx = 0;
     let running = false, paused = false, abortFlag = false;
+    let jdAudioManifest = {};   // spoken text -> pre-generated audio URL (optional)
+    let jdPlayer = null;        // current HTMLAudio element
 
     const $ = id => document.getElementById(id);
 
@@ -132,6 +149,7 @@ permalink: /tools/j-dictation/
         wordGap: +$('setWordGap').value || 3,
         tidy: +$('setTidy').value || 30,
         rate: +$('setRate').value || 0.85,
+        voiceName: $('setVoice').value,
         presenter: $('setPresenter').checked
     });
 
@@ -143,24 +161,70 @@ permalink: /tools/j-dictation/
             $('setRepeats').value = s.repeats; $('setSentGap').value = s.sentGap;
             $('setWordGap').value = s.wordGap; $('setTidy').value = s.tidy;
             $('setRate').value = s.rate; $('setPresenter').checked = !!s.presenter;
+            if (s.voiceName) pendingVoiceName = s.voiceName;
         } catch (e) { }
+    }
+
+    let pendingVoiceName = '';
+
+    // list this browser's voices, English first; restore the saved choice
+    function populateVoices() {
+        if (!window.speechSynthesis) return;
+        const voices = window.speechSynthesis.getVoices();
+        if (!voices.length) return;
+        const sel = $('setVoice');
+        const keep = sel.value || pendingVoiceName;
+        sel.innerHTML = '<option value="">Auto (best available)</option>';
+        voices
+            .slice()
+            .sort((a, b) => (b.lang.startsWith('en') - a.lang.startsWith('en')) || a.name.localeCompare(b.name))
+            .forEach(v => {
+                const o = document.createElement('option');
+                o.value = v.name;
+                o.textContent = `${v.name} (${v.lang})${v.localService ? '' : ' · online'}`;
+                sel.appendChild(o);
+            });
+        if (keep && [...sel.options].some(o => o.value === keep)) sel.value = keep;
+    }
+
+    function jdTestVoice() {
+        saveSettings();
+        speakTTS('A2. Our shop will give you 5% off your purchase if you show your membership card.');
     }
 
     async function jdInit() {
         loadSettings();
+        populateVoices();
+        if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = populateVoices;
         try {
             const resp = await fetch('/assets/js/dictations.json');
             jdData = await resp.json() || [];
         } catch (e) { jdData = []; }
+        // optional pre-generated audio pack (created by scratch/generate-dictation-audio.ps1)
+        try {
+            const m = await fetch('/assets/audio/dictations/manifest.json');
+            if (m.ok) jdAudioManifest = await m.json() || {};
+        } catch (e) { jdAudioManifest = {}; }
+        populatePapers();
+    }
+    window.addEventListener('DOMContentLoaded', jdInit);
+
+    function populatePapers() {
+        const form = $('jdForm').value;
         const sel = $('jdPaper');
         sel.innerHTML = '';
         jdData.forEach((d, i) => {
+            if (form && d.form !== form) return;
             const o = document.createElement('option');
             o.value = i; o.textContent = d.label;
             sel.appendChild(o);
         });
+        if (!sel.options.length) {
+            const o = document.createElement('option');
+            o.value = ''; o.textContent = '— no papers for this form yet —';
+            sel.appendChild(o);
+        }
     }
-    window.addEventListener('DOMContentLoaded', jdInit);
 
     function jdShow(id) {
         document.querySelectorAll('.jd-screen').forEach(s => s.classList.remove('show'));
@@ -170,37 +234,52 @@ permalink: /tools/j-dictation/
     const paper = () => jdData[+$('jdPaper').value];
 
     /* ---------- prepare ---------- */
-    function jdShuffleB() {
-        const n = (paper().partB || []).length;
-        jdOrderB = [...Array(n).keys()];
+    function shuffledIndices(n) {
+        const a = [...Array(n).keys()];
         for (let i = n - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [jdOrderB[i], jdOrderB[j]] = [jdOrderB[j], jdOrderB[i]];
+            [a[i], a[j]] = [a[j], a[i]];
         }
+        return a;
+    }
+
+    function jdShuffleOrders() {
+        const p = paper();
+        jdOrders = {
+            A: shuffledIndices((p.partA || []).length),
+            B: shuffledIndices((p.partB || []).length),
+            C: shuffledIndices((p.partC || []).length)
+        };
         jdRenderSheet();
     }
 
     function jdPrepare() {
         if (!paper()) return;
         saveSettings();
-        // reuse the last locked order for this paper if one exists (absentee re-runs)
+        // reuse the last locked orders for this paper if valid (absentee re-runs)
+        let ok = false;
         try {
             const saved = JSON.parse(localStorage.getItem('jdict-order:' + paper().id));
-            const n = (paper().partB || []).length;
-            jdOrderB = (Array.isArray(saved) && saved.length === n) ? saved : null;
-        } catch (e) { jdOrderB = null; }
-        if (!jdOrderB) jdShuffleB(); else jdRenderSheet();
+            const p = paper();
+            if (saved && ['A', 'B', 'C'].every(k =>
+                Array.isArray(saved[k]) && saved[k].length === (p['part' + k] || []).length)) {
+                jdOrders = saved; ok = true;
+            }
+        } catch (e) { }
+        if (!ok) jdShuffleOrders(); else jdRenderSheet();
         jdShow('jdPrep');
     }
+
+    const orderedPart = (p, k) => (jdOrders[k] || []).map(i => (p['part' + k] || [])[i]);
 
     function itemText(x) { return (typeof x === 'object') ? x.text : x; }
 
     function jdRenderSheet() {
         const p = paper();
         const parts = [
-            ['Part A — Memorised Sentences', (p.partA || []).map(itemText)],
-            ['Part B — Vocabulary (reading order!)', jdOrderB.map(i => itemText(p.partB[i]))],
-            ['Part C — Infinitives', (p.partC || []).map(itemText)],
+            ['Part A — Memorised Sentences (reading order!)', orderedPart(p, 'A').map(itemText)],
+            ['Part B — Vocabulary (reading order!)', orderedPart(p, 'B').map(itemText)],
+            ['Part C — Infinitives (reading order!)', orderedPart(p, 'C').map(itemText)],
             ['Part D — Unseen Sentences', (p.partD || []).map(itemText)]
         ];
         $('jdSheet').innerHTML = '<h3 style="margin-top:0;">' + p.label + '</h3>' + parts.map(([t, items]) =>
@@ -242,9 +321,9 @@ permalink: /tools/j-dictation/
 
         // only parts that actually have items; empty ones are skipped entirely
         const partDefs = [
-            { name: 'Part A', spoken: 'Part A. Memorised sentences.', items: p.partA || [], prefix: i => 'A' + (i + 1), gap: () => cfg().sentGap, reread: false },
-            { name: 'Part B', spoken: 'Part B. Vocabulary.', items: jdOrderB.map(i => (p.partB || [])[i]), prefix: i => 'Number ' + (i + 1), gap: () => cfg().wordGap, reread: true },
-            { name: 'Part C', spoken: 'Part C. Infinitives.', items: p.partC || [], prefix: i => 'Number ' + (i + 1), gap: () => cfg().wordGap, reread: true },
+            { name: 'Part A', spoken: 'Part A. Memorised sentences.', items: orderedPart(p, 'A'), prefix: i => 'A' + (i + 1), gap: () => cfg().sentGap, reread: false },
+            { name: 'Part B', spoken: 'Part B. Vocabulary.', items: orderedPart(p, 'B'), prefix: i => 'Number ' + (i + 1), gap: () => cfg().wordGap, reread: true },
+            { name: 'Part C', spoken: 'Part C. Infinitives.', items: orderedPart(p, 'C'), prefix: i => 'Number ' + (i + 1), gap: () => cfg().wordGap, reread: true },
             { name: 'Part D', spoken: 'Part D. Unseen sentences.', items: p.partD || [], prefix: i => 'D' + (i + 1), gap: () => cfg().sentGap, reread: false }
         ].filter(d => d.items.length > 0);
 
@@ -273,20 +352,48 @@ permalink: /tools/j-dictation/
     }
 
     /* ---------- the runner ---------- */
+    // Prefers a pre-generated audio clip (Google TTS pack) when the manifest
+    // has one for this exact line; falls back to browser TTS otherwise.
     function speak(text) {
+        const url = jdAudioManifest[text];
+        if (url) {
+            return new Promise(resolve => {
+                jdPlayer = new Audio(url);
+                jdPlayer.playbackRate = Math.min(Math.max(cfg().rate + 0.15, 0.6), 1.2);
+                jdPlayer.onended = resolve;
+                jdPlayer.onerror = () => { jdPlayer = null; speakTTS(text).then(resolve); };
+                jdPlayer.play().catch(() => { jdPlayer = null; speakTTS(text).then(resolve); });
+            });
+        }
+        return speakTTS(text);
+    }
+
+    function speakTTS(text) {
         return new Promise(resolve => {
             if (!window.speechSynthesis) { resolve(); return; }
-            if (typeof loadBestVoice === 'function') loadBestVoice();
             const u = new SpeechSynthesisUtterance(text);
-            if (typeof cachedBestVoice !== 'undefined' && cachedBestVoice) {
-                u.voice = cachedBestVoice; u.lang = cachedBestVoice.lang;
-            } else { u.lang = 'en-GB'; }
+            // teacher-chosen voice wins; otherwise the site's best-available cascade
+            const chosen = cfg().voiceName &&
+                window.speechSynthesis.getVoices().find(v => v.name === cfg().voiceName);
+            if (chosen) {
+                u.voice = chosen; u.lang = chosen.lang;
+            } else {
+                if (typeof loadBestVoice === 'function') loadBestVoice();
+                if (typeof cachedBestVoice !== 'undefined' && cachedBestVoice) {
+                    u.voice = cachedBestVoice; u.lang = cachedBestVoice.lang;
+                } else { u.lang = 'en-GB'; }
+            }
             u.rate = cfg().rate;
             u.onend = resolve; u.onerror = resolve;
             window.speechSynthesis.speak(u);
             // safety net: never hang forever on a lost onend
             setTimeout(resolve, 1000 + text.length * 350);
         });
+    }
+
+    function stopAudio() {
+        if (jdPlayer) { try { jdPlayer.pause(); } catch (e) { } jdPlayer = null; }
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
     }
 
     function chime() {
@@ -322,7 +429,7 @@ permalink: /tools/j-dictation/
 
     async function jdStart() {
         saveSettings();
-        try { localStorage.setItem('jdict-order:' + paper().id, JSON.stringify(jdOrderB)); } catch (e) { }
+        try { localStorage.setItem('jdict-order:' + paper().id, JSON.stringify(jdOrders)); } catch (e) { }
         jdBuildSteps();
         stepIdx = 0; running = true; paused = false; abortFlag = false; navRequest = 0;
         jdShow('jdRun');
@@ -343,7 +450,7 @@ permalink: /tools/j-dictation/
                     stepIdx = prev.length ? prev[prev.length - 1] : 0;
                 }
                 navRequest = 0;
-                window.speechSynthesis && window.speechSynthesis.cancel();
+                stopAudio();
                 continue;
             }
             const s = steps[stepIdx];
@@ -380,7 +487,7 @@ permalink: /tools/j-dictation/
         $('jdPauseBtn').textContent = paused ? '▶ Resume' : '⏸ Pause';
         if (paused) {
             pauseHit = true;
-            if (window.speechSynthesis) window.speechSynthesis.cancel();
+            stopAudio();
         }
     }
 
@@ -388,7 +495,7 @@ permalink: /tools/j-dictation/
 
     function jdAbort() {
         abortFlag = true; running = false;
-        window.speechSynthesis && window.speechSynthesis.cancel();
+        stopAudio();
         jdShow('jdPrep');
     }
 </script>
