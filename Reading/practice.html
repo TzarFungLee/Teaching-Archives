@@ -13,10 +13,7 @@ order: 1
 {% assign level_labels = "Easy,Intermediate,Hard" | split: "," %}
 
 <div class="visual-anchor practice-hub-hero" style="padding: 40px 40px 28px; margin-bottom: 28px;">
-    <div class="anchor-title" style="font-size: 2rem; margin-bottom: 12px;">✏️ Practice</div>
-    <p style="margin: 0 auto; color: var(--muted); font-size: 1.1rem; max-width: 36rem; line-height: 1.55;">
-        Open a set. Read on the left. Answer on the right.
-    </p>
+    <div class="anchor-title" style="font-size: 2rem; margin-bottom: 0;">✏️ Practice</div>
 </div>
 
 {% for level_key in level_order %}
@@ -36,7 +33,6 @@ order: 1
     <div class="practice-level-header">
         <h2 id="practice-level-{{ level_key }}" class="practice-level-title">{{ level_label }}</h2>
         <span class="practice-level-rule" aria-hidden="true"></span>
-        <span class="practice-level-count">{{ live_count }} set{% if live_count != 1 %}s{% endif %}</span>
     </div>
 
     <div class="practice-set-grid">
@@ -44,7 +40,7 @@ order: 1
         {% if set.status == "live" %}
         <a class="practice-set-card" href="{{ set.href | relative_url }}">
             <span class="practice-set-badge">{{ level_label }}</span>
-            <span class="practice-set-title">{{ set.id }} · {{ set.title }}</span>
+            <span class="practice-set-title">{{ set.id }}</span>
             <span class="practice-set-cta btn">Start practice</span>
         </a>
         {% endif %}
