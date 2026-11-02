@@ -1,6 +1,6 @@
-# Reading Practice packs (open-ended).
-# Add a pack = one YAML entry under its level. Numbering is free-form (01, 02, …).
-# Landing only renders levels that have ≥1 pack with status: live.
+# Reading Practice sets (open-ended).
+# Add a set = one YAML entry under its level. Numbering is free-form (01, 02, …).
+# Landing only renders levels that have ≥1 set with status: live.
 # status: live | soon  — "soon" is ignored on the student landing (no empty shelves).
 
 easy:

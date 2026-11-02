@@ -94,7 +94,7 @@ reading:
   - unit: "Practice"
     icon: "✏️"
     lessons:
-      - slug: /reading/practice/   # hub: Easy / Intermediate / Hard packs
+      - slug: /reading/practice/   # hub: Easy / Intermediate / Hard sets
 
 listening:
   - unit: "Core Strategies"

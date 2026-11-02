@@ -15,17 +15,17 @@ order: 1
 <div class="visual-anchor practice-hub-hero" style="padding: 40px 40px 28px; margin-bottom: 28px;">
     <div class="anchor-title" style="font-size: 2rem; margin-bottom: 12px;">✏️ Practice</div>
     <p style="margin: 0 auto; color: var(--muted); font-size: 1.1rem; max-width: 36rem; line-height: 1.55;">
-        Open a pack. Read on the left. Answer on the right.
+        Open a set. Read on the left. Answer on the right.
     </p>
 </div>
 
 {% for level_key in level_order %}
 {% assign level_label = level_labels[forloop.index0] %}
-{% assign raw_packs = site.data.practice-packs[level_key] %}
+{% assign raw_sets = site.data.practice-sets[level_key] %}
 {% assign live_count = 0 %}
-{% if raw_packs %}
-  {% for pack in raw_packs %}
-    {% if pack.status == "live" %}
+{% if raw_sets %}
+  {% for set in raw_sets %}
+    {% if set.status == "live" %}
       {% assign live_count = live_count | plus: 1 %}
     {% endif %}
   {% endfor %}
@@ -36,16 +36,16 @@ order: 1
     <div class="practice-level-header">
         <h2 id="practice-level-{{ level_key }}" class="practice-level-title">{{ level_label }}</h2>
         <span class="practice-level-rule" aria-hidden="true"></span>
-        <span class="practice-level-count">{{ live_count }} pack{% if live_count != 1 %}s{% endif %}</span>
+        <span class="practice-level-count">{{ live_count }} set{% if live_count != 1 %}s{% endif %}</span>
     </div>
 
-    <div class="practice-pack-grid">
-        {% for pack in raw_packs %}
-        {% if pack.status == "live" %}
-        <a class="practice-pack-card" href="{{ pack.href | relative_url }}">
-            <span class="practice-pack-badge">{{ level_label }}</span>
-            <span class="practice-pack-title">{{ pack.id }} · {{ pack.title }}</span>
-            <span class="practice-pack-cta btn">Start practice</span>
+    <div class="practice-set-grid">
+        {% for set in raw_sets %}
+        {% if set.status == "live" %}
+        <a class="practice-set-card" href="{{ set.href | relative_url }}">
+            <span class="practice-set-badge">{{ level_label }}</span>
+            <span class="practice-set-title">{{ set.id }} · {{ set.title }}</span>
+            <span class="practice-set-cta btn">Start practice</span>
         </a>
         {% endif %}
         {% endfor %}
