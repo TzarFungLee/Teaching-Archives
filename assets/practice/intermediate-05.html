@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RC Practice — Light sticks behind the curtain (V1.6.2) | LTF Teaching Archives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg: #f3eee4; --surface: #fffcf7; --surface-soft: #f7f1e8;
+  --text: #1c1917; --muted: #78716c; --subtitle: #57534e;
+  --border: rgba(28, 25, 23, 0.12);
+  --primary: #e07a5f; --accent: #e07a5f;
+  --ok: #15803d; --warn: #ca8a04; --danger: #dc2626;
+  --shadow: 0 14px 32px -14px rgba(28, 25, 23, 0.16);
+  --gradient-bg:
+    radial-gradient(circle at top left, rgba(224, 122, 95, 0.08), transparent 36%),
+    radial-gradient(circle at 88% 12%, rgba(202, 138, 4, 0.05), transparent 30%),
+    linear-gradient(180deg, #f7f2ea 0%, #f3eee4 48%, #ebe4d8 100%);
+  --ok-a10: rgba(21, 128, 61, 0.10); --ok-a35: rgba(21, 128, 61, 0.35);
+  --danger-a10: rgba(220, 38, 38, 0.10); --danger-a22: rgba(220, 38, 38, 0.22);
+  --warn-a18: rgba(202, 138, 4, 0.18); --correct-fg: #14532d; --incorrect-fg: #7f1d1d;
+  --nudge-fg: #9a3412; --primary-a08: rgba(224,122,95,0.08); --primary-a20: rgba(224,122,95,0.20);
+  --radius-sm: 10px; --radius-md: 14px; --radius-lg: 18px; --radius-pill: 999px;
+  --tap: 44px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: 120%; }
+html, body { margin: 0; }
+body {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--gradient-bg); background-attachment: fixed; color: var(--text);
+  line-height: 1.7; font-size: clamp(19.2px, 0.42vw + 18px, 21.6px);
+  padding: 6px max(4px, env(safe-area-inset-right)) 8px max(4px, env(safe-area-inset-left));
+}
+.page-head { width: 100%; margin: 0 0 2px; padding: 0 4px; flex: 0 0 auto; }
+.page-head h1 { margin: 0 0 2px; font-size: clamp(1.2rem, 1.4vw + 0.95rem, 1.55rem); font-weight: 800; color: var(--primary); }
+.page-head .sub { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.rc-toolbar {
+  width: 100%; margin: 0 0 4px; padding: 0 4px;
+  display: flex; flex-wrap: nowrap; gap: 10px; align-items: center; justify-content: space-between;
+  flex: 0 0 auto;
+}
+#rc-progress { flex: 1 1 auto; min-width: 0; text-align: center; }
+#rc-progress .rc-progress-bar { max-width: 420px; margin: 0 auto; }
+.rc-progress-bar { height: 10px; background: var(--surface-soft); border: 1px solid var(--border); border-radius: var(--radius-pill); overflow: hidden; }
+.rc-progress-bar > span { display: block; height: 100%; background: var(--primary); border-radius: var(--radius-pill); transition: width .2s ease; }
+.rc-progress-text { margin: 4px 0 0; font-size: 0.88rem; color: var(--subtitle); text-align: center; white-space: nowrap; }
+.rc-ok-count { color: var(--ok); font-weight: 700; }
+#rc-reset {
+  min-height: var(--tap); padding: 8px 14px; border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border); background: var(--surface); color: var(--subtitle);
+  font-family: inherit; font-weight: 700; cursor: pointer;
+}
+.rc-practice { width: 100%; margin: 0; max-width: none; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.rc-hint { display: none !important; }
+.rc-shell {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 6px;
+  width: 100%;
+  flex: 1 1 auto; min-height: 0; height: 100%;
+}
+.rc-pane {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow); display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+}
+.rc-pane-header {
+  flex: 0 0 auto; padding: 10px 12px; border-bottom: 1px solid var(--border);
+  background: var(--surface-soft); font-weight: 700; font-size: 0.92rem; color: var(--subtitle);
+}
+.rc-pane-body { flex: 1 1 auto; overflow: auto; padding: 8px 10px; -webkit-overflow-scrolling: touch; }
+.rc-pane--passage .rc-pane-body { padding: 10px 14px; }
+.rc-pane--questions .rc-pane-body { padding: 8px 10px; }
+#rc-passage { font-size: 1.05rem; line-height: 1.5; padding-left: 1.75rem; padding-right: 1.75rem; text-align: justify; text-justify: inter-word; hyphens: none; -webkit-hyphens: none; -ms-hyphens: none; word-break: normal; overflow-wrap: normal; }
+#rc-passage .rc-passage-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 6px; text-align: left; }
+#rc-passage .rc-passage-dek { font-size: 1.02rem; font-weight: 600; color: var(--subtitle); margin: 0 0 10px; text-align: left; }
+#rc-passage .rc-passage-source { font-size: 0.86rem; color: var(--muted); font-style: italic; margin: 0 0 18px; text-align: left; }
+#rc-passage .rc-para { margin: 0 0 0.7em; }
+#rc-passage .rc-para-num { font-weight: 700; color: var(--accent); margin-right: 0.35em; }
+#rc-passage [data-evidence-id].rc-evidence-on {
+  background: var(--warn-a18); text-decoration: underline; text-decoration-color: var(--warn);
+  text-decoration-thickness: 2.5px; text-underline-offset: 3px; border-radius: 3px;
+  box-shadow: 0 0 0 3px var(--warn-a18);
+}
+.rc-q { border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-soft); padding: 12px; margin-bottom: 10px; }
+.rc-q:last-child { margin-bottom: 0; }
+.rc-q-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.rc-q-stem { flex: 1 1 auto; margin: 0; font-weight: 600; line-height: 1.45; }
+.rc-q-num { color: var(--accent); font-weight: 800; }
+.rc-q-actions { display: flex; flex-wrap: wrap; gap: 6px; flex: 0 0 auto; }
+.rc-check-btn, .rc-key-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  min-height: var(--tap); min-width: var(--tap); padding: 8px 12px;
+  border-radius: var(--radius-pill); font-family: inherit; font-weight: 700; font-size: 0.82rem;
+  cursor: pointer; line-height: 1;
+}
+.rc-check-btn { border: 1.5px solid var(--ok); background: var(--ok-a10); color: var(--ok); }
+.rc-check-btn:hover, .rc-check-btn:focus-visible { background: var(--ok); color: #fff; outline: none; box-shadow: 0 0 0 3px var(--ok-a35); }
+.rc-key-btn { border: 1.5px solid var(--danger); background: var(--danger-a10); color: var(--danger); }
+.rc-key-btn:hover:not(:disabled), .rc-key-btn:focus-visible:not(:disabled), .rc-key-btn[aria-expanded="true"] { background: var(--danger); color: #fff; outline: none; box-shadow: 0 0 0 3px var(--danger-a22); }
+.rc-key-btn:disabled, .rc-key-btn.is-gated, .rc-key-btn[aria-disabled="true"] {
+  opacity: 0.45; cursor: not-allowed; filter: grayscale(0.35);
+  background: var(--danger-a10); color: var(--danger);
+}
+.rc-key-btn.is-gated:hover, .rc-key-btn[aria-disabled="true"]:hover {
+  background: var(--danger-a10); color: var(--danger); box-shadow: none;
+}
+.rc-help-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #d4cfc4;
+  background: #fff;
+  color: #5c564c;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.rc-help-btn:hover,
+.rc-help-btn:focus-visible,
+.rc-help-btn[aria-expanded="true"] {
+  border-color: #c45c26;
+  color: #c45c26;
+  outline: none;
+}
+.rc-help-body .rc-help-en { margin: 0 0 6px; color: var(--subtitle); font-size: 0.95rem; line-height: 1.5; }
+.rc-help-body .rc-help-zh { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+.rc-help-body {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(196, 92, 38, 0.08);
+  color: #5c564c;
+  font-size: 0.92rem;
+  border-left: 3px solid #c45c26;
+}
+.rc-options { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.rc-option {
+  display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border-radius: var(--radius-sm);
+  background: var(--surface); border: 1.5px solid transparent; cursor: pointer; font-size: 0.96rem; line-height: 1.45;
+}
+.rc-option:hover, .rc-option:focus-visible { border-color: var(--accent); outline: none; }
+.rc-option.is-selected { border-color: var(--accent); box-shadow: 0 0 0 2px var(--primary-a20); }
+.rc-option-letter { flex: 0 0 auto; font-weight: 800; color: var(--muted); min-width: 1.4em; }
+.rc-q.is-checked .rc-option.is-show-correct { border-color: var(--ok-a35); background: var(--ok-a10); color: var(--correct-fg); }
+.rc-q.is-checked .rc-option.is-picked-wrong { border-color: var(--danger-a22); background: var(--danger-a10); color: var(--incorrect-fg); }
+.rc-open { margin-top: 2px; }
+.rc-cloze-line { margin: 0; line-height: 1.8; }
+.rc-open-input { font: inherit; padding: 8px 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface); min-width: 7em; max-width: 100%; }
+.rc-open-input--full { width: 100%; }
+.rc-open-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--primary-a20); }
+.rc-open-input.is-correct { border-color: var(--ok); background: var(--ok-a10); }
+.rc-open-input.is-wrong { border-color: var(--danger); background: var(--danger-a10); }
+.rc-wordbank { display: none !important; }
+.rc-wordbank-label { font-size: 0.82rem; color: var(--muted); font-weight: 700; }
+.rc-wordchip { display: none !important; }
+.rc-check-feedback {
+  margin: 8px 0 0; font-weight: 700; font-size: 0.9rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+}
+.rc-check-feedback[hidden] { display: none !important; }
+.rc-check-feedback.is-ok { color: var(--ok); }
+.rc-check-feedback.is-bad { color: var(--danger); }
+.rc-check-feedback.is-nudge { color: var(--nudge-fg); }
+.rc-find-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 36px; padding: 6px 12px; border-radius: var(--radius-pill);
+  border: 1.5px solid var(--warn); background: var(--warn-a18); color: #854d0e;
+  font-family: inherit; font-weight: 700; font-size: 0.82rem; cursor: pointer; line-height: 1;
+}
+.rc-find-btn:hover, .rc-find-btn:focus-visible {
+  background: var(--warn); color: #fff; outline: none; box-shadow: 0 0 0 3px var(--warn-a18);
+}
+@keyframes rc-evidence-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px var(--warn-a18); }
+  50% { box-shadow: 0 0 0 7px rgba(202, 138, 4, 0.42); }
+}
+#rc-passage .rc-evidence-on.rc-evidence-pulse {
+  animation: rc-evidence-pulse 0.55s ease-in-out 2;
+}
+.rc-reveal { display: none; margin-top: 10px; padding: 10px 12px; border-radius: var(--radius-sm); border-left: 4px solid var(--ok); background: var(--ok-a10); }
+.rc-q.is-key-open .rc-reveal { display: block; }
+.rc-reveal-answer { font-weight: 700; color: var(--correct-fg); margin: 0 0 8px; }
+.rc-accept-note { margin: 0 0 8px; font-size: 0.86rem; color: var(--subtitle); font-style: italic; }
+.rc-steps { display: flex; flex-direction: column; gap: 8px; }
+.rc-step { display: flex; gap: 8px; align-items: flex-start; }
+.rc-step-num {
+  flex: 0 0 auto; width: 1.55em; height: 1.55em; border-radius: 50%;
+  background: var(--accent); color: #fff; font-size: 0.78rem; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.rc-step-body { flex: 1 1 auto; min-width: 0; }
+.rc-reveal-explain-en { margin: 0 0 2px; color: var(--text); font-size: 0.93rem; white-space: pre-line; }
+.rc-reveal-explain-zh { margin: 0; color: var(--subtitle); font-size: 0.9rem; line-height: 1.55; white-space: pre-line; }
+@media (max-width: 900px) {
+  body { overflow: auto; height: auto; min-height: 100dvh; }
+  .rc-shell { grid-template-columns: 1fr; height: auto; min-height: 70vh; }
+  .rc-pane { max-height: min(50vh, 480px); }
+  .rc-pane--questions { max-height: min(60vh, 560px); }
+  .rc-pane--questions .rc-pane-body { overflow: auto; }
+}
+@media (max-width: 640px) {
+  .rc-q-head { flex-wrap: wrap; }
+  .rc-q-actions { margin-left: auto; }
+}
+
+
+
+#rc-passage .rc-vocab {
+  background: rgba(59, 130, 246, 0.22);
+  border-bottom: 2px solid #3b82f6;
+  border-radius: 3px;
+  cursor: help;
+  padding: 0 2px;
+}
+#rc-passage .rc-vocab:hover,
+#rc-passage .rc-vocab:focus {
+  background: rgba(59, 130, 246, 0.38);
+  outline: none;
+}
+.rc-vocab-tip {
+  position: fixed;
+  z-index: 9999;
+  max-width: min(280px, 80vw);
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #1e293b;
+  color: #f8fafc;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28);
+  pointer-events: none;
+}
+.rc-vocab-head { font-weight: 700; margin: 0 0 4px; color: #f8fafc; }
+.rc-vocab-pos { font-weight: 600; font-size: 0.82rem; color: #93c5fd; margin: 0 0 4px; }
+.rc-vocab-zh { font-weight: 700; margin: 0 0 4px; }
+.rc-vocab-forms { font-size: 0.82rem; color: #94a3b8; margin: 0 0 4px; line-height: 1.4; }
+.rc-vocab-forms-label { opacity: 0.75; font-weight: 600; text-transform: lowercase; }
+.rc-vocab-forms-label::after { content: ":"; }
+.rc-vocab-syn { font-size: 0.85rem; color: #cbd5e1; }
+.rc-vocab-syn-label { opacity: 0.7; }
+#rc-passage .rc-para {
+  margin: 0 0 0.55em;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  line-height: 1.5;
+}
+/* Each soft-line = one exam line: block + justify (last line left). Stable ticks. */
+#rc-passage .rc-line {
+  display: block;
+  position: relative;
+  line-height: 1.5;
+  text-align: justify;
+  text-align-last: justify;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+#rc-passage .rc-line:last-child {
+  text-align-last: left;
+}
+#rc-passage .rc-line[data-line-tick]::before {
+  content: attr(data-line);
+  position: absolute;
+  left: -1.65rem;
+  top: 0;
+  width: 1.4rem;
+  text-align: right;
+  font-size: 0.78em;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #8a8478;
+  user-select: none;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+  <header class="page-head">
+    <h1 id="rc-practice-title">RC Practice — Light sticks behind the curtain (V1.6.2)</h1>
+    </header>
+  <div class="rc-toolbar">
+    <div id="rc-progress"></div>
+    <button type="button" id="rc-reset">Reset · 重設</button>
+  </div>
+  <div class="rc-practice">
+    <div class="rc-shell" role="region" aria-label="Interactive reading practice">
+      <section class="rc-pane rc-pane--passage" aria-label="Reading passage">
+        <div class="rc-pane-header">Passage — Texts 2–3</div>
+        <div class="rc-pane-body" id="rc-passage-scroll">
+<article id="rc-passage">
+          <h2 class="rc-passage-title">Light sticks behind the curtain</h2>
+          <p class="rc-passage-dek">CityBeat weekly chat + a fan’s Coliseum night</p>
+          <p class="rc-passage-source">[Adapted Part B1 practice — Soft chalk RC]</p>
+
+          <h3 class="rc-passage-dek" style="margin-top:1.2em;color:var(--accent,#b45309)">Text 2 — Lights, cues, and cheers</h3>
+          <p class="rc-para" data-para="t2-1">
+            <span class="rc-line" data-line="1"><span class="rc-para-num">[1]</span> <span data-evidence-id="a2-citybeat">Welcome to <em>CityBeat</em>’s weekly chat with people who shape Hong Kong</span></span>
+            <span class="rc-line" data-line="2">pop nights. Today our guest is <strong>Maya Cheung</strong>, a stage show producer</span>
+            <span class="rc-line" data-line="3">for idol concerts at the Hong Kong Coliseum. Maya, how did you fall</span>
+            <span class="rc-line" data-line="4">into live concerts?</span>
+          </p>
+          <p class="rc-para" data-para="t2-2">
+            <span class="rc-line" data-line="5" data-line-tick><span class="rc-para-num">[2]</span> <strong>I grew up on Cantopop.</strong> My mum played old Leslie Cheung records</span>
+            <span class="rc-line" data-line="6">while she cooked, and later my classmates pulled me into J-pop dance</span>
+            <span class="rc-line" data-line="7">covers. <span data-evidence-id="a2-polished">I was never a polished dancer myself</span>, but I was <strong><span data-evidence-id="a2-blown">blown away</span></strong></span>
+            <span class="rc-line" data-line="8">by how <span data-evidence-id="a2-lightcue">one good light cue could make a crowd scream together.</span></span>
+          </p>
+          <p class="rc-para" data-para="t2-3">
+            <span class="rc-line" data-line="9"><span class="rc-para-num">[3]</span> <strong>What hooked you on producing rather than performing?</strong></span>
+            <span class="rc-line" data-line="10" data-line-tick>Funny enough, <span data-evidence-id="a2-muted">a <strong>muted</strong> phone clip</span>. I was on the MTR with the</span>
+            <span class="rc-line" data-line="11">volume off and watched a local boy group hit every step in perfect</span>
+            <span class="rc-line" data-line="12">sync. The glamorous moves looked effortless. <span data-evidence-id="a2-played">Later I played it and</span></span>
+            <span class="rc-line" data-line="13">realised the music was only half the magic — timing and</span>
+            <span class="rc-line" data-line="14">safety on stage mattered just as much.</span>
+          </p>
+          <p class="rc-para" data-para="t2-4">
+            <span class="rc-line" data-line="15" data-line-tick><span class="rc-para-num">[4]</span> <strong>How is a Coliseum show different from filming a music video?</strong></span>
+            <span class="rc-line" data-line="16">On stage every second is live. If a dancer slips, you cannot edit it</span>
+            <span class="rc-line" data-line="17">out. We rehearse safety moves for two weeks. The dancers find the</span>
+            <span class="rc-line" data-line="18">timing <strong>demanding</strong>, but they enjoy the cheers. Budgets in Hong Kong</span>
+            <span class="rc-line" data-line="19">are often tighter than big overseas tours, so we reuse stage pieces</span>
+            <span class="rc-line" data-line="20" data-line-tick>and keep lighting simple but bright.</span>
+          </p>
+          <p class="rc-para" data-para="t2-5">
+            <span class="rc-line" data-line="21"><span class="rc-para-num">[5]</span> <strong>Fans wave light sticks and film everything. Does that change your</span>
+            <span class="rc-line" data-line="22">plans?</strong></span>
+            <span class="rc-line" data-line="23">Yes. Many teens watch short clips before they buy tickets, so we</span>
+            <span class="rc-line" data-line="24">design a few clear “wow” moments for small screens. Still, a phone</span>
+            <span class="rc-line" data-line="25" data-line-tick><span data-evidence-id="a2-phone">cannot replace standing with friends in the hall.</span> <span data-evidence-id="a2-warmth">That warmth is not</span></span>
+            <span class="rc-line" data-line="26"><span data-evidence-id="a2-warmth">just about loud music.</span> Live crowds feel wholesome: <span data-evidence-id="a2-decent">decent people</span></span>
+            <span class="rc-line" data-line="27">sharing one song, not a <span data-evidence-id="a2-moody">moody night</span> alone on the bus.</span>
+          </p>
+          <p class="rc-para" data-para="t2-6">
+            <span class="rc-line" data-line="28"><span class="rc-para-num">[6]</span> <strong>Some people say idol concerts are only good marketing. Fair?</strong></span>
+            <span class="rc-line" data-line="29"><span data-evidence-id="a2-uh">Uh… hmm. That’s a fair challenge. I suppose…</span> <span data-evidence-id="a2-marketing">marketing fills seats,</span></span>
+            <span class="rc-line" data-line="30" data-line-tick><span data-evidence-id="a2-marketing">but it cannot hold a three-hour show alone.</span></span>
+          </p>
+          <p class="rc-para" data-para="t2-7">
+            <span class="rc-line" data-line="31"><span class="rc-para-num">[7]</span> <strong>So are the performers genuinely talented?</strong></span>
+            <span class="rc-line" data-line="32">Absolutely. Hard work beats a pretty poster. My mentor once said,</span>
+            <span class="rc-line" data-line="33">“<span data-evidence-id="a2-mentor">Talent without rehearsal is just hope.</span>” My brother used to joke</span>
+            <span class="rc-line" data-line="34">that idols are “<strong><span data-evidence-id="a2-factory">all made in a factory</span></strong>,” but <span data-evidence-id="a2-brother">he changed his mind</span></span>
+            <span class="rc-line" data-line="35" data-line-tick><span data-evidence-id="a2-brother">after he saw how long the dancers train</span> for one chorus.</span>
+          </p>
+          <p class="rc-para" data-para="t2-8">
+            <span class="rc-line" data-line="36"><span class="rc-para-num">[8]</span> <strong>Can you recommend acts students might enjoy?</strong></span>
+            <span class="rc-line" data-line="37">Try <strong>LUNA WAVE</strong> — they write many of their own hooks and feel like</span>
+            <span class="rc-line" data-line="38"><span data-evidence-id="a2-kings">the kings of local ballads</span>. <strong>StarKit</strong> is the hottest girl group</span>
+            <span class="rc-line" data-line="39">right now: their set is <strong><span data-evidence-id="a2-upbeat">upbeat and charming</span></strong>. <strong>Echo Yard</strong> is a</span>
+            <span class="rc-line" data-line="40" data-line-tick><span data-evidence-id="a2-rock">small rock band</span> that plays its own instruments with <strong><span data-evidence-id="a2-meaningful">meaningful</span></strong></span>
+            <span class="rc-line" data-line="41">lyrics about school stress. And <strong>NovaLee</strong> talks about loneliness</span>
+            <span class="rc-line" data-line="42">in a way teens understand.</span>
+          </p>
+          <p class="rc-para" data-para="t2-9">
+            <span class="rc-line" data-line="43"><span class="rc-para-num">[9]</span> <strong>What would you change about the concert industry if you could?</strong></span>
+            <span class="rc-line" data-line="44">Big companies control most venues, so it is hard for independent</span>
+            <span class="rc-line" data-line="45" data-line-tick>acts to compete. <span data-evidence-id="a2-fortune">Some music videos cost a fortune.</span> Live shows can</span>
+            <span class="rc-line" data-line="46">feel addictive and exhausting for both fans and crews. Newcomers</span>
+            <span class="rc-line" data-line="47"><span data-evidence-id="a2-newcomers">rarely find it easy to enter.</span></span>
+          </p>
+          <p class="rc-para" data-para="t2-10">
+            <span class="rc-line" data-line="48"><span class="rc-para-num">[10]</span> <em>Next week: <span data-evidence-id="a2-kenji">Kenji Mori, a J-pop vinyl collector</span> from Causeway Bay.</em></span>
+          </p>
+
+          <h3 class="rc-passage-dek" style="margin-top:1.6em;color:var(--accent,#b45309)">Text 3 — Never meet the encore</h3>
+          <p class="rc-passage-source">Posted by MayaFan_88 at 9:14 p.m.</p>
+          <p class="rc-para" data-para="t3-1">
+            <span class="rc-line" data-line="1"><span class="rc-para-num">[1]</span> After my <em>CityBeat</em> interview went live, <span data-evidence-id="a3-passes">the magazine sent me two</span></span>
+            <span class="rc-line" data-line="2"><span data-evidence-id="a3-passes">VIP passes</span> for NovaLee’s Coliseum night. I took my friend <strong>Rita</strong>, who</span>
+            <span class="rc-line" data-line="3">had never seen a full idol show. We bought light sticks on the MTR and</span>
+            <span class="rc-line" data-line="4">thought the whole evening would be a dream from start to finish.</span>
+          </p>
+          <p class="rc-para" data-para="t3-2">
+            <span class="rc-line" data-line="5" data-line-tick><span class="rc-para-num">[2]</span> <strong>Echo Yard</strong> <span data-evidence-id="a3-echo">opened with a quiet song about exam stress</span>; Rita was</span>
+            <span class="rc-line" data-line="6" data-line-tick>truly <strong><span data-evidence-id="a3-touched">touched</span></strong> and wiped her eyes. Then <strong>StarKit</strong> bounced on in</span>
+            <span class="rc-line" data-line="7"><strong><span data-evidence-id="a3-funky">funky</span></strong> silver jackets and made the whole floor jump. NovaLee closed</span>
+            <span class="rc-line" data-line="8">the set with a slow ballad. <span data-evidence-id="a3-near">We sat so near the stage that we could see</span></span>
+            <span class="rc-line" data-line="9"><span data-evidence-id="a3-near">sweat on the dancers’ faces</span> — eww, but also cool. Their new album,</span>
+            <span class="rc-line" data-line="10"><em>Harbour Glow</em>, <span data-evidence-id="a3-album">will be a chart-topper for sure</span>.</span>
+          </p>
+          <p class="rc-para" data-para="t3-3">
+            <span class="rc-line" data-line="11" data-line-tick><span class="rc-para-num">[3]</span> Backstage I finally met NovaLee. <span data-evidence-id="a3-heart">My heart pounded and my mouth went</span></span>
+            <span class="rc-line" data-line="12">dry. I wanted to say thank you for the song that helped me through mock</span>
+            <span class="rc-line" data-line="13">exams, but only a tiny “hi” came out. NovaLee looked past me, said a</span>
+            <span class="rc-line" data-line="14"><span data-evidence-id="a3-flat">flat “Hi” with no smile</span>, and told her assistant, “The meet-and-greet is</span>
+            <span class="rc-line" data-line="15">over.” <span data-evidence-id="a3-assistant">The assistant gave us a soft, sorry look.</span> <span data-evidence-id="a3-rita-joke">Rita tried to joke</span>,</span>
+            <span class="rc-line" data-line="16" data-line-tick>but I felt smaller than my light stick. <span data-evidence-id="a3-never">Ouch. Never again!</span></span>
+          </p>
+
+        </article>
+        </div>
+      </section>
+      <section class="rc-pane rc-pane--questions" aria-label="Practice questions">
+        <div class="rc-pane-header">Questions (37)</div>
+        <div class="rc-pane-body" id="rc-questions"></div>
+      </section>
+    </div>
+  </div>
+<script>
+window.RC_PRACTICE = {
+  "title": "RC Practice — Light sticks behind the curtain (V1.6.2)",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "mc",
+      "stem": "What type of publication is CityBeat?",
+      "options": [
+        "a daily newspaper",
+        "a school newsletter",
+        "a sports yearbook",
+        "an entertainment magazine"
+      ],
+      "answer": 3,
+      "evidenceIds": [
+        "a2-citybeat"
+      ],
+      "explainEn": "① Ask: What type of publication is CityBeat?\n② Look: paragraph 1 — opening of the chat\n③ Quote: “CityBeat’s weekly chat with people who shape Hong Kong pop nights”\n④ Why: Pop nights + weekly chat → entertainment magazine, not newspaper/newsletter/yearbook.\n⑤ So: D — an entertainment magazine",
+      "explainZh": "① 題目問：CityBeat 是哪類刊物？\n② 去第1段開頭\n③ 關鍵：“CityBeat’s weekly chat with people who shape Hong Kong pop nights”\n④ 點解：談流行夜晚＝娛樂雜誌。\n⑤ 總結：選 D",
+      "scaffoldEn": "Ask: What type of publication is CityBeat? Look: paragraph 1 — opening of the chat.",
+      "scaffoldZh": "問：CityBeat 是哪類刊物？ 搵：第1段開頭。",
+      "scaffold": "Ask: What type of publication is CityBeat? Look: paragraph 1 — opening of the chat. / 問：CityBeat 是哪類刊物？ 搵：第1段開頭。"
+    },
+    {
+      "id": "q2",
+      "type": "mc",
+      "stem": "Which word is closest in meaning to “polished” (line 7)?",
+      "options": [
+        "flashy",
+        "polite",
+        "skilful",
+        "enthusiastic"
+      ],
+      "answer": 2,
+      "evidenceIds": [
+        "a2-polished"
+      ],
+      "explainEn": "① Ask: Closest meaning of “polished” here?\n② Look: line 7 — “never a polished dancer”\n③ Quote: “I was never a polished dancer myself”\n④ Why: Here polished = skilful / well-trained, not polite or flashy.\n⑤ So: C — skilful",
+      "explainZh": "① 題目問：polished 最接近哪個意思？\n② 去第7行\n③ 關鍵：“I was never a polished dancer myself”\n④ 點解：這裡＝技巧純熟，不是有禮貌／花巧。\n⑤ 總結：選 C",
+      "scaffoldEn": "Ask: Closest meaning of “polished” here? Look: line 7 — “never a polished dancer”.",
+      "scaffoldZh": "問：polished 最接近哪個意思？ 搵：第7行。",
+      "scaffold": "Ask: Closest meaning of “polished” here? Look: line 7 — “never a polished dancer”. / 問：polished 最接近哪個意思？ 搵：第7行。"
+    },
+    {
+      "id": "q3",
+      "type": "cloze",
+      "stem": "Find a word or phrase in paragraph 2 that means “impressed”.",
+      "answers": [
+        "blown away",
+        "blown-away"
+      ],
+      "modelAnswer": "blown away",
+      "evidenceIds": [
+        "a2-blown"
+      ],
+      "clozePrefix": "Word / phrase:",
+      "match": "loose",
+      "explainEn": "① Ask: Which word/phrase means “impressed”?\n② Look: paragraph 2\n③ Quote: “I was blown away by how one good light cue…”\n④ Why: blown away = very impressed.\n⑤ So: blown away",
+      "explainZh": "① 題目問：哪一個詞＝impressed？\n② 去第2段\n③ 關鍵：“I was blown away by how one good light cue…”\n④ 點解：blown away＝大為驚嘆／印象深刻。\n⑤ 總結：blown away",
+      "scaffoldEn": "Ask: Which word/phrase means “impressed”? Look: paragraph 2.",
+      "scaffoldZh": "問：哪一個詞＝impressed？ 搵：第2段。",
+      "scaffold": "Ask: Which word/phrase means “impressed”? Look: paragraph 2. / 問：哪一個詞＝impressed？ 搵：第2段。",
+      "maxWords": 4
+    },
+    {
+      "id": "q4",
+      "type": "short",
+      "stem": "Explain the irony in paragraph 3.",
+      "answers": [
+        "hooked by a muted video",
+        "muted phone clip volume off",
+        "music person hooked by silent clip",
+        "got hooked by a video without sound",
+        "talking about music but muted clip",
+        "producer hooked by silent clip not by sound"
+      ],
+      "modelAnswer": "She is talking about music / live shows, but she got hooked by a muted video (volume off), not by the sound.",
+      "evidenceIds": [
+        "a2-muted"
+      ],
+      "placeholder": "Explain the irony",
+      "match": "loose",
+      "explainEn": "① Ask: What is ironic in paragraph 3?\n② Look: paragraph 3\n③ Quote: “a muted phone clip… volume off” then later she played it\n④ Why: Irony: a music/live-show person first hooked by a silent clip.\n⑤ So: Hooked by a muted clip, not by hearing the music.",
+      "explainZh": "① 題目問：第3段的 irony 是甚麼？\n② 去第3段\n③ 關鍵：“a muted phone clip… volume off” then later she played it\n④ 點解：做音樂／演唱會的人，卻先被「無聲」短片吸引。\n⑤ 總結：被靜音短片吸引（不是先聽到音樂）。",
+      "scaffoldEn": "Ask: What is ironic in paragraph 3? Look: paragraph 3.",
+      "scaffoldZh": "問：第3段的 irony 是甚麼？ 搵：第3段。",
+      "scaffold": "Ask: What is ironic in paragraph 3? Look: paragraph 3. / 問：第3段的 irony 是甚麼？ 搵：第3段。"
+    },
+    {
+      "id": "q5",
+      "type": "short",
+      "stem": "What does the word “it” (line 13) refer to?",
+      "answers": [
+        "the muted phone clip",
+        "the phone clip",
+        "the clip",
+        "the video",
+        "the muted clip",
+        "phone clip"
+      ],
+      "modelAnswer": "the (muted) phone clip / video",
+      "evidenceIds": [
+        "a2-played",
+        "a2-muted"
+      ],
+      "placeholder": "What does the pronoun refer to?",
+      "match": "loose",
+      "explainEn": "① Ask: What does “it” refer to?\n② Look: line 13 — “Later I played it”\n③ Quote: Earlier: muted phone clip → “Later I played it”\n④ Why: “it” = the muted phone clip / video.\n⑤ So: the muted phone clip",
+      "explainZh": "① 題目問：“it” 指甚麼？\n② 去第13行 played it\n③ 關鍵：Earlier: muted phone clip → “Later I played it”\n④ 點解：指前面的靜音手機短片。\n⑤ 總結：the muted phone clip",
+      "scaffoldEn": "Ask: What does “it” refer to? Look: line 13 — “Later I played it”.",
+      "scaffoldZh": "問：“it” 指甚麼？ 搵：第13行 played it。",
+      "scaffold": "Ask: What does “it” refer to? Look: line 13 — “Later I played it”. / 問：“it” 指甚麼？ 搵：第13行 played it。"
+    },
+    {
+      "id": "q6",
+      "type": "cloze",
+      "stem": "With reference to paragraph 5, complete the following sentence with a phrase.",
+      "answers": [
+        "just about loud music",
+        "only about loud music",
+        "just about the loud music"
+      ],
+      "modelAnswer": "just about loud music",
+      "evidenceIds": [
+        "a2-warmth"
+      ],
+      "clozePrefix": "That warmth is not",
+      "match": "loose",
+      "explainEn": "① Ask: Complete: That warmth is not ______.\n② Look: paragraph 5\n③ Quote: “That warmth is not just about loud music.”\n④ Why: Copy the phrase after “not”.\n⑤ So: just about loud music",
+      "explainZh": "① 題目問：完成句子\n② 去第5段\n③ 關鍵：“That warmth is not just about loud music.”\n④ 點解：照抄 not 後短語。\n⑤ 總結：just about loud music",
+      "scaffoldEn": "Ask: Complete: That warmth is not ______. Look: paragraph 5.",
+      "scaffoldZh": "問：完成句子 搵：第5段。",
+      "scaffold": "Ask: Complete: That warmth is not ______. Look: paragraph 5. / 問：完成句子 搵：第5段。",
+      "maxWords": 12,
+      "clozeSuffix": "."
+    },
+    {
+      "id": "q7",
+      "type": "short",
+      "stem": "In paragraph 5, what does Maya imply about watching concerts only on a phone?",
+      "answers": [
+        "a phone cannot replace standing with friends in the hall",
+        "watching only on a phone is not enough",
+        "the real warmth is being there together",
+        "cannot replace live sharing",
+        "phone cannot replace live concert with friends"
+      ],
+      "modelAnswer": "A phone cannot replace standing with friends in the hall / live sharing of the song.",
+      "evidenceIds": [
+        "a2-phone",
+        "a2-warmth"
+      ],
+      "placeholder": "Type your answer",
+      "match": "loose",
+      "explainEn": "① Ask: What does she imply about phone-only watching?\n② Look: paragraph 5\n③ Quote: “a phone cannot replace standing with friends in the hall”\n④ Why: Live togetherness > phone screen.\n⑤ So: Phone cannot replace being there with friends.",
+      "explainZh": "① 題目問：她暗示只在手機上看怎樣？\n② 去第5段\n③ 關鍵：“a phone cannot replace standing with friends in the hall”\n④ 點解：手機不能取代現場與朋友一起。\n⑤ 總結：不能取代現場。",
+      "scaffoldEn": "Ask: What does she imply about phone-only watching? Look: paragraph 5.",
+      "scaffoldZh": "問：她暗示只在手機上看怎樣？ 搵：第5段。",
+      "scaffold": "Ask: What does she imply about phone-only watching? Look: paragraph 5. / 問：她暗示只在手機上看怎樣？ 搵：第5段。"
+    },
+    {
+      "id": "q8i",
+      "type": "cloze",
+      "stem": "Find a word in paragraph 5 that means “honest and fair”.",
+      "answers": [
+        "decent"
+      ],
+      "modelAnswer": "decent",
+      "evidenceIds": [
+        "a2-decent"
+      ],
+      "clozePrefix": "i) Word:",
+      "match": "exact",
+      "explainEn": "① Ask: Word = honest and fair?\n② Look: paragraph 5 — wholesome crowds\n③ Quote: “decent people sharing one song”\n④ Why: decent ≈ honest and fair.\n⑤ So: decent",
+      "explainZh": "① 題目問：哪個字＝honest and fair？\n② 去第5段\n③ 關鍵：“decent people sharing one song”\n④ 點解：decent。\n⑤ 總結：decent",
+      "scaffoldEn": "Ask: Word = honest and fair? Look: paragraph 5 — wholesome crowds.",
+      "scaffoldZh": "問：哪個字＝honest and fair？ 搵：第5段。",
+      "scaffold": "Ask: Word = honest and fair? Look: paragraph 5 — wholesome crowds. / 問：哪個字＝honest and fair？ 搵：第5段。",
+      "maxWords": 2
+    },
+    {
+      "id": "q8ii",
+      "type": "cloze",
+      "stem": "Find a word in paragraph 5 that means the opposite of “cheerful”.",
+      "answers": [
+        "moody"
+      ],
+      "modelAnswer": "moody",
+      "evidenceIds": [
+        "a2-moody"
+      ],
+      "clozePrefix": "ii) Word:",
+      "match": "exact",
+      "explainEn": "① Ask: Opposite of cheerful?\n② Look: paragraph 5\n③ Quote: “not a moody night alone on the bus”\n④ Why: moody ≠ cheerful.\n⑤ So: moody",
+      "explainZh": "① 題目問：cheerful 的相反？\n② 去第5段\n③ 關鍵：“not a moody night alone on the bus”\n④ 點解：moody。\n⑤ 總結：moody",
+      "scaffoldEn": "Ask: Opposite of cheerful? Look: paragraph 5.",
+      "scaffoldZh": "問：cheerful 的相反？ 搵：第5段。",
+      "scaffold": "Ask: Opposite of cheerful? Look: paragraph 5. / 問：cheerful 的相反？ 搵：第5段。",
+      "maxWords": 2
+    },
+    {
+      "id": "q9",
+      "type": "mc",
+      "stem": "Maya says “marketing fills seats, but it cannot hold a three-hour show alone” (paragraph 6). She uses this idea to",
+      "options": [
+        "emphasise that marketing is not enough without live skill",
+        "prove that tickets are too expensive",
+        "argue that phones should be banned",
+        "show that outdoor festivals are safer"
+      ],
+      "answer": 0,
+      "evidenceIds": [
+        "a2-marketing"
+      ],
+      "explainEn": "① Ask: Why does she say marketing cannot hold a show alone?\n② Look: paragraph 6\n③ Quote: “marketing fills seats, but it cannot hold a three-hour show alone”\n④ Why: A: marketing ≠ enough without live skill. Others unrelated.\n⑤ So: A",
+      "explainZh": "① 題目問：她用這句想表達甚麼？\n② 去第6段\n③ 關鍵：“marketing fills seats, but it cannot hold a three-hour show alone”\n④ 點解：宣傳不夠，還要現場實力。\n⑤ 總結：選 A",
+      "scaffoldEn": "Ask: Why does she say marketing cannot hold a show alone? Look: paragraph 6.",
+      "scaffoldZh": "問：她用這句想表達甚麼？ 搵：第6段。",
+      "scaffold": "Ask: Why does she say marketing cannot hold a show alone? Look: paragraph 6. / 問：她用這句想表達甚麼？ 搵：第6段。"
+    },
+    {
+      "id": "q10",
+      "type": "mc",
+      "stem": "What is the tone of Maya’s response in paragraph 6?",
+      "options": [
+        "afraid",
+        "calm",
+        "confident",
+        "uncertain"
+      ],
+      "answer": 3,
+      "evidenceIds": [
+        "a2-uh"
+      ],
+      "explainEn": "① Ask: Tone in paragraph 6?\n② Look: Uh… hmm… I suppose…\n③ Quote: “Uh… hmm. That’s a fair challenge. I suppose…”\n④ Why: Hesitation markers → uncertain, not confident/calm/afraid.\n⑤ So: D — uncertain",
+      "explainZh": "① 題目問：第6段語氣？\n② 去Uh… hmm… I suppose…\n③ 關鍵：“Uh… hmm. That’s a fair challenge. I suppose…”\n④ 點解：猶豫＝uncertain。\n⑤ 總結：選 D",
+      "scaffoldEn": "Ask: Tone in paragraph 6? Look: Uh… hmm… I suppose….",
+      "scaffoldZh": "問：第6段語氣？ 搵：Uh… hmm… I suppose…。",
+      "scaffold": "Ask: Tone in paragraph 6? Look: Uh… hmm… I suppose…. / 問：第6段語氣？ 搵：Uh… hmm… I suppose…。"
+    },
+    {
+      "id": "q11",
+      "type": "short",
+      "stem": "Why does Maya quote her mentor in paragraph 7?",
+      "answers": [
+        "to show performers need hard work rehearsal",
+        "talent without rehearsal is just hope",
+        "to prove they are genuinely talented",
+        "hard work matters",
+        "to show hard work beats a pretty poster"
+      ],
+      "modelAnswer": "To show / prove that performers need hard work / rehearsal / are genuinely talented (not only marketing).",
+      "evidenceIds": [
+        "a2-mentor"
+      ],
+      "placeholder": "Type your answer",
+      "match": "loose",
+      "explainEn": "① Ask: Why quote the mentor?\n② Look: paragraph 7\n③ Quote: “Talent without rehearsal is just hope.”\n④ Why: Supports hard work / real talent, not only image.\n⑤ So: To emphasise rehearsal / hard work.",
+      "explainZh": "① 題目問：為何引述 mentor？\n② 去第7段\n③ 關鍵：“Talent without rehearsal is just hope.”\n④ 點解：證明要勤力排練，不只靠形象。\n⑤ 總結：強調 rehearsal／hard work。",
+      "scaffoldEn": "Ask: Why quote the mentor? Look: paragraph 7.",
+      "scaffoldZh": "問：為何引述 mentor？ 搵：第7段。",
+      "scaffold": "Ask: Why quote the mentor? Look: paragraph 7. / 問：為何引述 mentor？ 搵：第7段。"
+    },
+    {
+      "id": "q12",
+      "type": "short",
+      "stem": "Why does Maya’s brother say idols are “all made in a factory” (paragraph 7)?",
+      "answers": [
+        "he thinks idols are all similar",
+        "all the same",
+        "mass-produced",
+        "they look act alike",
+        "not individual",
+        "very similar the same"
+      ],
+      "modelAnswer": "Because he thinks idols are all (very) similar / the same / mass-produced.",
+      "evidenceIds": [
+        "a2-factory",
+        "a2-brother"
+      ],
+      "placeholder": "Type your answer",
+      "match": "loose",
+      "explainEn": "① Ask: Why “all made in a factory”?\n② Look: paragraph 7\n③ Quote: “all made in a factory” … changed his mind after seeing long training\n④ Why: Factory joke = look mass-produced / all the same.\n⑤ So: He thought idols were all similar / mass-produced.",
+      "explainZh": "① 題目問：為何說工場大量生產？\n② 去第7段\n③ 關鍵：“all made in a factory” … changed his mind after seeing long training\n④ 點解：覺得偶像都一樣／量產。\n⑤ 總結：以為偶像千篇一律。",
+      "scaffoldEn": "Ask: Why “all made in a factory”? Look: paragraph 7.",
+      "scaffoldZh": "問：為何說工場大量生產？ 搵：第7段。",
+      "scaffold": "Ask: Why “all made in a factory”? Look: paragraph 7. / 問：為何說工場大量生產？ 搵：第7段。"
+    },
+    {
+      "id": "q13i",
+      "type": "cloze",
+      "stem": "Summary blank (i): Maya recommends LUNA WAVE, who feel like the ______ of local ballads.",
+      "answers": [
+        "kings",
+        "the kings"
+      ],
+      "modelAnswer": "kings",
+      "evidenceIds": [
+        "a2-kings"
+      ],
+      "clozePrefix": "(i)",
+      "match": "loose",
+      "explainEn": "① Ask: Blank (i)?\n② Look: paragraph 8 — LUNA WAVE\n③ Quote: “the kings of local ballads”\n④ Why: Word from text: kings\n⑤ So: kings",
+      "explainZh": "① 題目問：空格 (i)？\n② 去第8段\n③ 關鍵：“the kings of local ballads”\n④ 點解：kings\n⑤ 總結：kings",
+      "scaffoldEn": "Ask: Blank (i)? Look: paragraph 8 — LUNA WAVE.",
+      "scaffoldZh": "問：空格 (i)？ 搵：第8段。",
+      "scaffold": "Ask: Blank (i)? Look: paragraph 8 — LUNA WAVE. / 問：空格 (i)？ 搵：第8段。",
+      "maxWords": 6
+    },
+    {
+      "id": "q13ii",
+      "type": "cloze",
+      "stem": "Summary blank (ii): StarKit’s set is ______.",
+      "answers": [
+        "upbeat and charming"
+      ],
+      "modelAnswer": "upbeat and charming",
+      "evidenceIds": [
+        "a2-upbeat"
+      ],
+      "clozePrefix": "(ii)",
+      "match": "loose",
+      "explainEn": "① Ask: Blank (ii)?\n② Look: paragraph 8 — StarKit\n③ Quote: “their set is upbeat and charming”\n④ Why: Copy the phrase.\n⑤ So: upbeat and charming",
+      "explainZh": "① 題目問：空格 (ii)？\n② 去第8段 StarKit\n③ 關鍵：“their set is upbeat and charming”\n④ 點解：upbeat and charming\n⑤ 總結：upbeat and charming",
+      "scaffoldEn": "Ask: Blank (ii)? Look: paragraph 8 — StarKit.",
+      "scaffoldZh": "問：空格 (ii)？ 搵：第8段 StarKit。",
+      "scaffold": "Ask: Blank (ii)? Look: paragraph 8 — StarKit. / 問：空格 (ii)？ 搵：第8段 StarKit。",
+      "maxWords": 6
+    },
+    {
+      "id": "q13iii",
+      "type": "cloze",
+      "stem": "Summary blank (iii): Echo Yard is a ______ with meaningful lyrics about school stress.",
+      "answers": [
+        "small rock band",
+        "rock band",
+        "a small rock band"
+      ],
+      "modelAnswer": "(small) rock band",
+      "evidenceIds": [
+        "a2-rock"
+      ],
+      "clozePrefix": "(iii)",
+      "match": "loose",
+      "explainEn": "① Ask: Blank (iii)?\n② Look: paragraph 8 — Echo Yard\n③ Quote: “Echo Yard is a small rock band”\n④ Why: small rock band\n⑤ So: small rock band",
+      "explainZh": "① 題目問：空格 (iii)？\n② 去第8段\n③ 關鍵：“Echo Yard is a small rock band”\n④ 點解：small rock band\n⑤ 總結：small rock band",
+      "scaffoldEn": "Ask: Blank (iii)? Look: paragraph 8 — Echo Yard.",
+      "scaffoldZh": "問：空格 (iii)？ 搵：第8段。",
+      "scaffold": "Ask: Blank (iii)? Look: paragraph 8 — Echo Yard. / 問：空格 (iii)？ 搵：第8段。",
+      "maxWords": 6
+    },
+    {
+      "id": "q13iv",
+      "type": "cloze",
+      "stem": "Summary blank (iv): Echo Yard has ______ lyrics about school stress.",
+      "answers": [
+        "meaningful"
+      ],
+      "modelAnswer": "meaningful",
+      "evidenceIds": [
+        "a2-meaningful"
+      ],
+      "clozePrefix": "(iv)",
+      "match": "loose",
+      "explainEn": "① Ask: Blank (iv)?\n② Look: paragraph 8\n③ Quote: “with meaningful lyrics about school stress”\n④ Why: meaningful\n⑤ So: meaningful",
+      "explainZh": "① 題目問：空格 (iv)？\n② 去第8段\n③ 關鍵：“with meaningful lyrics about school stress”\n④ 點解：meaningful\n⑤ 總結：meaningful",
+      "scaffoldEn": "Ask: Blank (iv)? Look: paragraph 8.",
+      "scaffoldZh": "問：空格 (iv)？ 搵：第8段。",
+      "scaffold": "Ask: Blank (iv)? Look: paragraph 8. / 問：空格 (iv)？ 搵：第8段。",
+      "maxWords": 6
+    },
+    {
+      "id": "q14i",
+      "type": "tfng",
+      "stem": "T/F/NG (paragraph 9): It is easy for newcomers to enter the concert market.",
+      "options": [
+        "True (T)",
+        "False (F)",
+        "Not Given (NG)"
+      ],
+      "answer": 1,
+      "evidenceIds": [
+        "a2-newcomers"
+      ],
+      "options_note": "False (F)",
+      "explainEn": "① Ask: Easy for newcomers?\n② Look: paragraph 9\n③ Quote: “Newcomers rarely find it easy to enter.”\n④ Why: Opposite of easy → False\n⑤ So: False",
+      "explainZh": "① 題目問：新人容易入場？\n② 去第9段\n③ 關鍵：“Newcomers rarely find it easy to enter.”\n④ 點解：rarely find it easy＝False\n⑤ 總結：False",
+      "scaffoldEn": "Ask: Easy for newcomers? Look: paragraph 9.",
+      "scaffoldZh": "問：新人容易入場？ 搵：第9段。",
+      "scaffold": "Ask: Easy for newcomers? Look: paragraph 9. / 問：新人容易入場？ 搵：第9段。"
+    },
+    {
+      "id": "q14ii",
+      "type": "tfng",
+      "stem": "T/F/NG (paragraph 9): Some music videos cost a lot of money.",
+      "options": [
+        "True (T)",
+        "False (F)",
+        "Not Given (NG)"
+      ],
+      "answer": 0,
+      "evidenceIds": [
+        "a2-fortune"
+      ],
+      "options_note": "True (T)",
+      "explainEn": "① Ask: Do some MVs cost a lot?\n② Look: paragraph 9\n③ Quote: “Some music videos cost a fortune.”\n④ Why: fortune = a lot of money → True\n⑤ So: True",
+      "explainZh": "① 題目問：有些 MV 很貴？\n② 去第9段\n③ 關鍵：“Some music videos cost a fortune.”\n④ 點解：cost a fortune＝True\n⑤ 總結：True",
+      "scaffoldEn": "Ask: Do some MVs cost a lot? Look: paragraph 9.",
+      "scaffoldZh": "問：有些 MV 很貴？ 搵：第9段。",
+      "scaffold": "Ask: Do some MVs cost a lot? Look: paragraph 9. / 問：有些 MV 很貴？ 搵：第9段。"
+    },
+    {
+      "id": "q14iii",
+      "type": "tfng",
+      "stem": "T/F/NG (paragraph 9): Idol concerts are the most exhausting shows in Asia.",
+      "options": [
+        "True (T)",
+        "False (F)",
+        "Not Given (NG)"
+      ],
+      "answer": 2,
+      "evidenceIds": [],
+      "options_note": "Not Given (NG)",
+      "explainEn": "① Ask: Most exhausting in Asia?\n② Look: paragraph 9 — exhausting mentioned?\n③ Quote: Shows can feel exhausting — but NOT “most in Asia”\n④ Why: Comparison “most… in Asia” not given → NG\n⑤ So: Not Given",
+      "explainZh": "① 題目問：是否亞洲最累？\n② 去第9段\n③ 關鍵：Shows can feel exhausting — but NOT “most in Asia”\n④ 點解：沒有亞洲比較＝NG\n⑤ 總結：Not Given",
+      "scaffoldEn": "Ask: Most exhausting in Asia? Look: paragraph 9 — exhausting mentioned?.",
+      "scaffoldZh": "問：是否亞洲最累？ 搵：第9段。",
+      "scaffold": "Ask: Most exhausting in Asia? Look: paragraph 9 — exhausting mentioned?. / 問：是否亞洲最累？ 搵：第9段。"
+    },
+    {
+      "id": "q15i",
+      "type": "short",
+      "stem": "Q15 (i) Match the person with the statement. Write the letter (A–F). Two statements are unused.\n\nPerson: i) Maya Cheung\n\nStatements:\nA. I collect loud Japanese vinyl and electric-guitar tracks.\nB. Idols can dance, but they are not real musicians.\nC. One strong light cue can unite a whole crowd.\nD. I used to think idols were all the same, but I changed my mind.\nE. Concert tickets should become much cheaper.\nF. Without rehearsal, talent is only hope.",
+      "answers": [
+        "C",
+        "c"
+      ],
+      "modelAnswer": "C",
+      "evidenceIds": [
+        "a2-lightcue"
+      ],
+      "placeholder": "Letter (A–F)",
+      "match": "exact",
+      "acceptNote": "matching-as-short",
+      "explainEn": "① Ask: Which statement matches Maya?\n② Look: paragraph 2 — light cue\n③ Quote: one good light cue could make a crowd scream together\n④ Why: C matches Maya’s light-cue idea. Unused B,E.\n⑤ So: C",
+      "explainZh": "① 題目問：Maya 對哪句？\n② 去第2段\n③ 關鍵：one good light cue could make a crowd scream together\n④ 點解：C＝燈光 cue 凝聚觀眾\n⑤ 總結：C",
+      "scaffoldEn": "Ask: Which statement matches Maya? Look: paragraph 2 — light cue.",
+      "scaffoldZh": "問：Maya 對哪句？ 搵：第2段。",
+      "scaffold": "Ask: Which statement matches Maya? Look: paragraph 2 — light cue. / 問：Maya 對哪句？ 搵：第2段。"
+    },
+    {
+      "id": "q15ii",
+      "type": "short",
+      "stem": "Q15 (ii) Letter for Maya’s mentor (A–F). See bank on Q15 (i). Two statements are unused.",
+      "answers": [
+        "F",
+        "f"
+      ],
+      "modelAnswer": "F",
+      "evidenceIds": [
+        "a2-mentor"
+      ],
+      "placeholder": "Letter (A–F)",
+      "match": "exact",
+      "acceptNote": "matching-as-short",
+      "explainEn": "① Ask: Mentor’s statement?\n② Look: paragraph 7 quote\n③ Quote: Talent without rehearsal is just hope\n④ Why: F restates the mentor quote.\n⑤ So: F",
+      "explainZh": "① 題目問：Mentor？\n② 去第7段\n③ 關鍵：Talent without rehearsal is just hope\n④ 點解：F\n⑤ 總結：F",
+      "scaffoldEn": "Ask: Mentor’s statement? Look: paragraph 7 quote.",
+      "scaffoldZh": "問：Mentor？ 搵：第7段。",
+      "scaffold": "Ask: Mentor’s statement? Look: paragraph 7 quote. / 問：Mentor？ 搵：第7段。"
+    },
+    {
+      "id": "q15iii",
+      "type": "short",
+      "stem": "Q15 (iii) Letter for Maya’s brother (A–F). See bank on Q15 (i). Two statements are unused.",
+      "answers": [
+        "D",
+        "d"
+      ],
+      "modelAnswer": "D",
+      "evidenceIds": [
+        "a2-brother",
+        "a2-factory"
+      ],
+      "placeholder": "Letter (A–F)",
+      "match": "exact",
+      "acceptNote": "matching-as-short",
+      "explainEn": "① Ask: Brother’s statement?\n② Look: paragraph 7 — factory joke + changed mind\n③ Quote: changed his mind after he saw how long the dancers train\n④ Why: D: used to think same, changed mind.\n⑤ So: D",
+      "explainZh": "① 題目問：哥哥？\n② 去第7段\n③ 關鍵：changed his mind after he saw how long the dancers train\n④ 點解：D\n⑤ 總結：D",
+      "scaffoldEn": "Ask: Brother’s statement? Look: paragraph 7 — factory joke + changed mind.",
+      "scaffoldZh": "問：哥哥？ 搵：第7段。",
+      "scaffold": "Ask: Brother’s statement? Look: paragraph 7 — factory joke + changed mind. / 問：哥哥？ 搵：第7段。"
+    },
+    {
+      "id": "q15iv",
+      "type": "short",
+      "stem": "Q15 (iv) Letter for Kenji Mori (A–F). See bank on Q15 (i). Two statements are unused.",
+      "answers": [
+        "A",
+        "a"
+      ],
+      "modelAnswer": "A",
+      "evidenceIds": [
+        "a2-kenji"
+      ],
+      "placeholder": "Letter (A–F)",
+      "match": "exact",
+      "acceptNote": "matching-as-short",
+      "explainEn": "① Ask: Kenji Mori?\n② Look: paragraph 10 teaser\n③ Quote: J-pop vinyl collector\n④ Why: A: collects Japanese vinyl.\n⑤ So: A",
+      "explainZh": "① 題目問：Kenji？\n② 去第10段預告\n③ 關鍵：J-pop vinyl collector\n④ 點解：A\n⑤ 總結：A",
+      "scaffoldEn": "Ask: Kenji Mori? Look: paragraph 10 teaser.",
+      "scaffoldZh": "問：Kenji？ 搵：第10段預告。",
+      "scaffold": "Ask: Kenji Mori? Look: paragraph 10 teaser. / 問：Kenji？ 搵：第10段預告。"
+    },
+    {
+      "id": "q16",
+      "type": "short",
+      "stem": "Text 3 — Who or what gave MayaFan_88 the tickets to the concert?",
+      "answers": [
+        "CityBeat",
+        "the magazine",
+        "CityBeat magazine",
+        "CityBeat’s magazine",
+        "the magazine CityBeat"
+      ],
+      "modelAnswer": "CityBeat / the magazine",
+      "evidenceIds": [
+        "a3-passes"
+      ],
+      "placeholder": "Type your answer",
+      "match": "loose",
+      "explainEn": "① Ask: Who gave the tickets?\n② Look: Text 3 paragraph 1\n③ Quote: “the magazine sent me two VIP passes”\n④ Why: Magazine = CityBeat\n⑤ So: CityBeat / the magazine",
+      "explainZh": "① 題目問：誰給門票？\n② 去Text 3 第1段\n③ 關鍵：“the magazine sent me two VIP passes”\n④ 點解：雜誌 CityBeat\n⑤ 總結：CityBeat / the magazine",
+      "scaffoldEn": "Ask: Who gave the tickets? Look: Text 3 paragraph 1.",
+      "scaffoldZh": "問：誰給門票？ 搵：Text 3 第1段。",
+      "scaffold": "Ask: Who gave the tickets? Look: Text 3 paragraph 1. / 問：誰給門票？ 搵：Text 3 第1段。"
+    },
+    {
+      "id": "q17i",
+      "type": "short",
+      "stem": "Text 3 — i) Which act played first?",
+      "answers": [
+        "Echo Yard",
+        "echo yard"
+      ],
+      "modelAnswer": "Echo Yard",
+      "evidenceIds": [
+        "a3-echo"
+      ],
+      "placeholder": "Type your answer",
+      "match": "loose",
+      "explainEn": "① Ask: Who played first?\n② Look: Text 3 paragraph 2\n③ Quote: Echo Yard opened…\n④ Why: Opened = first\n⑤ So: Echo Yard",
+      "explainZh": "① 題目問：誰先演出？\n② 去Text 3 第2段\n③ 關鍵：Echo Yard opened…\n④ 點解：Echo Yard opened\n⑤ 總結：Echo Yard",
+      "scaffoldEn": "Ask: Who played first? Look: Text 3 paragraph 2.",
+      "scaffoldZh": "問：誰先演出？ 搵：Text 3 第2段。",
+      "scaffold": "Ask: Who played first? Look: Text 3 paragraph 2. / 問：誰先演出？ 搵：Text 3 第2段。"
+    },
+    {
+      "id": "q17ii",
+      "type": "cloze",
+      "stem": "Text 3 — ii) How did Rita feel in lines 5–6?",
+      "answers": [
+        "touched",
+        "moved"
+      ],
+      "modelAnswer": "touched",
+      "evidenceIds": [
+        "a3-touched"
+      ],
+      "clozePrefix": "Feeling word:",
+      "match": "loose",
+      "explainEn": "① Ask: How did Rita feel?\n② Look: Text 3, lines 5–6\n③ Quote: “Rita was truly touched”\n④ Why: touched (accept moved)\n⑤ So: touched",
+      "explainZh": "① 題目問：Rita 感覺？\n② 去 Text 3 第5–6行\n③ 關鍵：“Rita was truly touched”\n④ 點解：touched\n⑤ 總結：touched",
+      "scaffoldEn": "Ask: How did Rita feel? Look: Text 3, lines 5–6.",
+      "scaffoldZh": "問：Rita 感覺？ 搵：Text 3 第5–6行。",
+      "scaffold": "Ask: How did Rita feel? Look: Text 3, lines 5–6. / 問：Rita 感覺？ 搵：第5–6行。",
+      "maxWords": 2
+    },
+    {
+      "id": "q18",
+      "type": "cloze",
+      "stem": "Text 3 — Find a word or phrase in paragraph 2 that can be replaced with “fashionable and unusual”.",
+      "answers": [
+        "funky"
+      ],
+      "modelAnswer": "funky",
+      "evidenceIds": [
+        "a3-funky"
+      ],
+      "clozePrefix": "Word:",
+      "match": "exact",
+      "explainEn": "① Ask: Word ≈ fashionable and unusual?\n② Look: Text 3, paragraph 2 — jackets\n③ Quote: funky silver jackets\n④ Why: funky\n⑤ So: funky",
+      "explainZh": "① 題目問：哪個字＝fashionable and unusual？\n② 去 Text 3 第2段\n③ 關鍵：funky silver jackets\n④ 點解：funky\n⑤ 總結：funky",
+      "scaffoldEn": "Ask: Word ≈ fashionable and unusual? Look: Text 3, paragraph 2 — jackets.",
+      "scaffoldZh": "問：哪個字＝fashionable and unusual？ 搵：Text 3 第2段。",
+      "scaffold": "Ask: Word ≈ fashionable and unusual? Look: Text 3, paragraph 2 — jackets. / 問：哪個字＝fashionable and unusual？ 搵：第2段。",
+      "maxWords": 2
+    },
+    {
+      "id": "q19",
+      "type": "short",
+      "stem": "Text 3 — What is MayaFan_88’s opinion of NovaLee’s upcoming album Harbour Glow?",
+      "answers": [
+        "it will be a chart-topper",
+        "very successful",
+        "very good",
+        "a success",
+        "will top the charts",
+        "chart-topper for sure"
+      ],
+      "modelAnswer": "It will be a chart-topper / very successful / very good.",
+      "evidenceIds": [
+        "a3-album"
+      ],
+      "placeholder": "Type your answer",
+      "match": "loose",
+      "explainEn": "① Ask: Opinion of Harbour Glow?\n② Look: Text 3, paragraph 2 end\n③ Quote: “will be a chart-topper for sure”\n④ Why: Positive: expects big chart success.\n⑤ So: Will be a chart-topper / very successful.",
+      "explainZh": "① 題目問：對專輯看法？\n② 去 Text 3 第2段末\n③ 關鍵：“will be a chart-topper for sure”\n④ 點解：一定會成排行榜冠軍。\n⑤ 總結：會大賣／很成功。",
+      "scaffoldEn": "Ask: Opinion of Harbour Glow? Look: Text 3, paragraph 2 end.",
+      "scaffoldZh": "問：對專輯看法？ 搵：Text 3 第2段末。",
+      "scaffold": "Ask: Opinion of Harbour Glow? Look: Text 3, paragraph 2 end. / 問：對專輯看法？ 搵：第2段末。"
+    },
+    {
+      "id": "q20",
+      "type": "cloze",
+      "stem": "Text 3 — What does MayaFan_88 imply when she says she could see “sweat on the dancers’ faces”? Complete the sentence.",
+      "answers": [
+        "very close to the stage",
+        "near the stage",
+        "close to the stage",
+        "so near the stage",
+        "near to the stage"
+      ],
+      "modelAnswer": "very close to the stage",
+      "evidenceIds": [
+        "a3-near"
+      ],
+      "clozePrefix": "Their seats were",
+      "match": "loose",
+      "explainEn": "① Ask: Complete: Their seats were ______.\n② Look: Text 3, paragraph 2 — sweat on faces\n③ Quote: “We sat so near the stage that we could see sweat…”\n④ Why: Implies seats were very close to the stage.\n⑤ So: very close to the stage",
+      "explainZh": "① 題目問：完成句子\n② 去 Text 3 第2段\n③ 關鍵：“We sat so near the stage that we could see sweat…”\n④ 點解：坐得很近舞台。\n⑤ 總結：very close to the stage",
+      "scaffoldEn": "Ask: Complete: Their seats were ______. Look: Text 3, paragraph 2 — sweat on faces.",
+      "scaffoldZh": "問：完成句子 搵：Text 3 第2段。",
+      "scaffold": "Ask: Complete: Their seats were ______. Look: Text 3, paragraph 2 — sweat on faces. / 問：完成句子 搵：第2段。",
+      "maxWords": 10,
+      "clozeSuffix": "."
+    },
+    {
+      "id": "q21i",
+      "type": "short",
+      "stem": "Text 3 — i) How did MayaFan_88 feel in lines 11–12?",
+      "answers": [
+        "anxious",
+        "nervous",
+        "starstruck",
+        "excited and nervous",
+        "nervous and excited"
+      ],
+      "modelAnswer": "anxious / nervous / starstruck",
+      "evidenceIds": [
+        "a3-heart"
+      ],
+      "placeholder": "Type your answer",
+      "match": "loose",
+      "explainEn": "① Ask: How did she feel?\n② Look: Text 3, lines 11–12\n③ Quote: heart pounded… mouth went dry\n④ Why: Body signs of nerves / starstruck.\n⑤ So: nervous / anxious / starstruck",
+      "explainZh": "① 題目問：她感覺如何？\n② 去 Text 3 第9–10行\n③ 關鍵：heart pounded… mouth went dry\n④ 點解：心跳、口乾＝緊張。\n⑤ 總結：nervous / anxious",
+      "scaffoldEn": "Ask: How did she feel? Look: Text 3, lines 11–12.",
+      "scaffoldZh": "問：她感覺如何？ 搵：Text 3 第9–10行。",
+      "scaffold": "Ask: How did she feel? Look: Text 3, lines 11–12. / 問：她感覺如何？ 搵：第9–10行。"
+    },
+    {
+      "id": "q21ii",
+      "type": "short",
+      "stem": "Text 3 — ii) Why did she feel this way?",
+      "answers": [
+        "meeting NovaLee",
+        "NovaLee is her favourite",
+        "too excited to meet her",
+        "meeting her backstage personally",
+        "excited to meet NovaLee",
+        "favourite idol backstage"
+      ],
+      "modelAnswer": "Because NovaLee is her favourite / she was (too) excited to meet her (backstage / personally).",
+      "evidenceIds": [
+        "a3-heart"
+      ],
+      "placeholder": "Type your answer",
+      "match": "loose",
+      "explainEn": "① Ask: Why nervous?\n② Look: Text 3, paragraph 3 — backstage\n③ Quote: Backstage I finally met NovaLee…\n④ Why: Meeting her idol in person.\n⑤ So: Excited/nervous to meet NovaLee.",
+      "explainZh": "① 題目問：為何這樣？\n② 去 Text 3 第3段\n③ 關鍵：Backstage I finally met NovaLee…\n④ 點解：終於見偶像。\n⑤ 總結：因為要見 NovaLee。",
+      "scaffoldEn": "Ask: Why nervous? Look: Text 3, paragraph 3 — backstage.",
+      "scaffoldZh": "問：為何這樣？ 搵：Text 3 第3段。",
+      "scaffold": "Ask: Why nervous? Look: Text 3, paragraph 3 — backstage. / 問：為何這樣？ 搵：第3段。"
+    },
+    {
+      "id": "q22i",
+      "type": "short",
+      "stem": "Text 3 — Q22 (i) Match the person with the thought. Write the letter (A–F). Two thoughts are unused.\n\nPerson: i) Rita\n\nThoughts:\nA. Meeting fans is the best part of every tour.\nB. Meeting people is the worst part of my job tonight.\nC. I feel sorry for the fans who waited backstage.\nD. Echo Yard’s jackets were the highlight of the night.\nE. My friend’s face looked hilarious when she was nervous.\nF. I’ve learnt a valuable lesson about celebrities.",
+      "answers": [
+        "E",
+        "e"
+      ],
+      "modelAnswer": "E",
+      "evidenceIds": [
+        "a3-rita-joke"
+      ],
+      "placeholder": "Letter (A–F)",
+      "match": "exact",
+      "acceptNote": "matching-as-short",
+      "explainEn": "① Ask: Rita’s thought?\n② Look: Rita tried to joke when friend was crushed\n③ Quote: Rita tried to joke\n④ Why: E: friend’s nervous face looked hilarious — closest match among options.\n⑤ So: E",
+      "explainZh": "① 題目問：Rita？\n② 去Rita tried to joke\n③ 關鍵：Rita tried to joke\n④ 點解：E\n⑤ 總結：E",
+      "scaffoldEn": "Ask: Rita’s thought? Look: Rita tried to joke when friend was crushed.",
+      "scaffoldZh": "問：Rita？ 搵：Rita tried to joke。",
+      "scaffold": "Ask: Rita’s thought? Look: Rita tried to joke when friend was crushed. / 問：Rita？ 搵：Rita tried to joke。"
+    },
+    {
+      "id": "q22ii",
+      "type": "short",
+      "stem": "Text 3 — Q22 (ii) Letter for NovaLee (A–F). See bank on Q22 (i). Two thoughts are unused.",
+      "answers": [
+        "B",
+        "b"
+      ],
+      "modelAnswer": "B",
+      "evidenceIds": [
+        "a3-flat"
+      ],
+      "placeholder": "Letter (A–F)",
+      "match": "exact",
+      "acceptNote": "matching-as-short",
+      "explainEn": "① Ask: NovaLee’s thought?\n② Look: flat Hi + meet-and-greet over\n③ Quote: flat “Hi”… meet-and-greet is over\n④ Why: B: meeting people worst part tonight.\n⑤ So: B",
+      "explainZh": "① 題目問：NovaLee？\n② 去冷淡 Hi\n③ 關鍵：flat “Hi”… meet-and-greet is over\n④ 點解：B\n⑤ 總結：B",
+      "scaffoldEn": "Ask: NovaLee’s thought? Look: flat Hi + meet-and-greet over.",
+      "scaffoldZh": "問：NovaLee？ 搵：冷淡 Hi。",
+      "scaffold": "Ask: NovaLee’s thought? Look: flat Hi + meet-and-greet over. / 問：NovaLee？ 搵：冷淡 Hi。"
+    },
+    {
+      "id": "q22iii",
+      "type": "short",
+      "stem": "Text 3 — Q22 (iii) Letter for MayaFan_88 (A–F). See bank on Q22 (i). Two thoughts are unused.",
+      "answers": [
+        "F",
+        "f"
+      ],
+      "modelAnswer": "F",
+      "evidenceIds": [
+        "a3-never"
+      ],
+      "placeholder": "Letter (A–F)",
+      "match": "exact",
+      "acceptNote": "matching-as-short",
+      "explainEn": "① Ask: MayaFan_88’s thought?\n② Look: Never again!\n③ Quote: Ouch. Never again!\n④ Why: F: learnt a lesson about celebrities.\n⑤ So: F",
+      "explainZh": "① 題目問：博主？\n② 去Never again\n③ 關鍵：Ouch. Never again!\n④ 點解：F\n⑤ 總結：F",
+      "scaffoldEn": "Ask: MayaFan_88’s thought? Look: Never again!.",
+      "scaffoldZh": "問：博主？ 搵：Never again。",
+      "scaffold": "Ask: MayaFan_88’s thought? Look: Never again!. / 問：博主？ 搵：Never again。"
+    },
+    {
+      "id": "q22iv",
+      "type": "short",
+      "stem": "Text 3 — Q22 (iv) Letter for NovaLee’s assistant (A–F). See bank on Q22 (i). Two thoughts are unused.",
+      "answers": [
+        "C",
+        "c"
+      ],
+      "modelAnswer": "C",
+      "evidenceIds": [
+        "a3-assistant"
+      ],
+      "placeholder": "Letter (A–F)",
+      "match": "exact",
+      "acceptNote": "matching-as-short",
+      "explainEn": "① Ask: Assistant’s thought?\n② Look: soft, sorry look\n③ Quote: soft, sorry look\n④ Why: C: feels sorry for fans.\n⑤ So: C",
+      "explainZh": "① 題目問：助理？\n② 去sorry look\n③ 關鍵：soft, sorry look\n④ 點解：C\n⑤ 總結：C",
+      "scaffoldEn": "Ask: Assistant’s thought? Look: soft, sorry look.",
+      "scaffoldZh": "問：助理？ 搵：sorry look。",
+      "scaffold": "Ask: Assistant’s thought? Look: soft, sorry look. / 問：助理？ 搵：sorry look。"
+    },
+    {
+      "id": "q23",
+      "type": "mc",
+      "stem": "Which is the best alternative title for Text 3?",
+      "options": [
+        "The price of fame",
+        "Never meet your heroes",
+        "A dream come true",
+        "StarKit shines on stage"
+      ],
+      "answer": 1,
+      "evidenceIds": [
+        "a3-never"
+      ],
+      "explainEn": "① Ask: Best alternative title?\n② Look: whole Text 3 ending\n③ Quote: Never again! + cold meet-and-greet\n④ Why: B captures the disappointed meet-your-idol lesson. C is opposite.\n⑤ So: B — Never meet your heroes",
+      "explainZh": "① 題目問：最佳另題？\n② 去全文結局\n③ 關鍵：Never again! + cold meet-and-greet\n④ 點解：B＝不要見偶像（失望）。\n⑤ 總結：選 B",
+      "scaffoldEn": "Ask: Best alternative title? Look: whole Text 3 ending.",
+      "scaffoldZh": "問：最佳另題？ 搵：全文結局。",
+      "scaffold": "Ask: Best alternative title? Look: whole Text 3 ending. / 問：最佳另題？ 搵：全文結局。"
+    }
+  ],
+  "vocab": {
+    "polished": {
+      "pos": "adj.",
+      "zh": "技巧純熟的；精緻的",
+      "synonyms": [
+        "skilful",
+        "well-trained"
+      ],
+      "forms": "polish v."
+    },
+    "muted": {
+      "pos": "adj.",
+      "zh": "靜音的；無聲的",
+      "synonyms": [
+        "silent",
+        "with sound off"
+      ],
+      "forms": "mute v."
+    },
+    "demanding": {
+      "pos": "adj.",
+      "zh": "要求高的",
+      "synonyms": [
+        "tough",
+        "challenging"
+      ],
+      "forms": "demand v."
+    },
+    "wholesome": {
+      "pos": "adj.",
+      "zh": "健康正面的",
+      "synonyms": [
+        "healthy",
+        "decent",
+        "positive"
+      ],
+      "forms": "wholesomeness n."
+    },
+    "decent": {
+      "pos": "adj.",
+      "zh": "正派的；像樣的",
+      "synonyms": [
+        "honest",
+        "fair",
+        "respectable"
+      ]
+    },
+    "moody": {
+      "pos": "adj.",
+      "zh": "情緒低落的；陰鬱的",
+      "synonyms": [
+        "gloomy",
+        "sulky"
+      ],
+      "forms": "mood n."
+    },
+    "rehearsal": {
+      "pos": "n.",
+      "zh": "排練",
+      "synonyms": [
+        "practice",
+        "run-through"
+      ],
+      "forms": "rehearse v."
+    },
+    "meaningful": {
+      "pos": "adj.",
+      "zh": "有意義的",
+      "synonyms": [
+        "significant",
+        "thoughtful"
+      ],
+      "forms": "meaning n."
+    },
+    "addictive": {
+      "pos": "adj.",
+      "zh": "令人上癮的",
+      "synonyms": [
+        "habit-forming",
+        "hard to stop"
+      ],
+      "forms": "addict n. · addiction n."
+    },
+    "funky": {
+      "pos": "adj.",
+      "zh": "時髦獨特的",
+      "synonyms": [
+        "stylish",
+        "cool",
+        "unusual"
+      ]
+    }
+  }
+};
+</script>
+<script>
+(function () {
+  'use strict';
+
+  var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var activeKeyId = null;
+  var state = {}; // qid -> { selected, checked, correct, input }
+
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+  function normalize(s) {
+    return String(s || '')
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}\s']/gu, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function matchOpen(user, answers, mode) {
+    var n = normalize(user);
+    if (!n) return false;
+    var list = answers || [];
+    for (var i = 0; i < list.length; i++) {
+      var a = normalize(list[i]);
+      if (!a) continue;
+      if (mode === 'exact') {
+        if (n === a) return true;
+        continue;
+      }
+      // loose: equal, or user contains the accepted answer (never answer-contains-user)
+      if (n === a || n.indexOf(a) !== -1) return true;
+    }
+    return false;
+  }
+
+  function clearVocabMarks() {
+    $all('#rc-passage .rc-vocab').forEach(function (el) {
+      var parent = el.parentNode;
+      if (!parent) return;
+      parent.replaceChild(document.createTextNode(el.textContent), el);
+      parent.normalize();
+    });
+    var tip = $('#rc-vocab-tip');
+    if (tip) tip.hidden = true;
+  }
+
+  function clearEvidence() {
+    clearVocabMarks();
+    $all('#rc-passage .rc-evidence-on').forEach(function (el) {
+      el.classList.remove('rc-evidence-on');
+    });
+  }
+
+  function hideAllKeys() {
+    $all('.rc-q.is-key-open').forEach(function (q) {
+      q.classList.remove('is-key-open');
+      var btn = $('.rc-key-btn', q);
+      if (btn) {
+        btn.setAttribute('aria-expanded', 'false');
+        var label = $('.rc-key-label', btn);
+        if (label) label.textContent = 'ANS · 答案';
+      }
+    });
+    clearEvidence();
+    activeKeyId = null;
+  }
+
+  function escapeRe(s) {
+    return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function markVocabInEvidence(cfg) {
+    var vocab = (cfg && cfg.vocab) || {};
+    var keys = Object.keys(vocab);
+    if (!keys.length) return;
+    // longest first so multi-word phrases win
+    keys.sort(function (a, b) { return b.length - a.length; });
+    var re = new RegExp('\\b(' + keys.map(escapeRe).join('|') + ')\\b', 'gi');
+
+    $all('#rc-passage .rc-evidence-on').forEach(function (el) {
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(function (textNode) {
+        var text = textNode.nodeValue;
+        if (!text || !re.test(text)) return;
+        re.lastIndex = 0;
+        var frag = document.createDocumentFragment();
+        var last = 0;
+        var m;
+        while ((m = re.exec(text)) !== null) {
+          if (m.index > last) {
+            frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+          }
+          var word = m[1];
+          var meta = vocab[word] || vocab[word.toLowerCase()];
+          // case-insensitive lookup
+          if (!meta) {
+            var lower = word.toLowerCase();
+            for (var k in vocab) {
+              if (k.toLowerCase() === lower) { meta = vocab[k]; break; }
+            }
+          }
+          var span = document.createElement('span');
+          span.className = 'rc-vocab';
+          span.textContent = word;
+          if (meta) {
+            span.dataset.zh = meta.zh || '';
+            span.dataset.pos = meta.pos || '';
+            span.dataset.syn = (meta.synonyms || []).join(', ');
+            span.dataset.forms = formsText(meta.forms);
+            span.tabIndex = 0;
+          }
+          frag.appendChild(span);
+          last = m.index + word.length;
+        }
+        if (last < text.length) {
+          frag.appendChild(document.createTextNode(text.slice(last)));
+        }
+        textNode.parentNode.replaceChild(frag, textNode);
+      });
+    });
+  }
+
+  function ensureVocabTip() {
+    var tip = $('#rc-vocab-tip');
+    if (tip) return tip;
+    tip = document.createElement('div');
+    tip.id = 'rc-vocab-tip';
+    tip.className = 'rc-vocab-tip';
+    tip.hidden = true;
+    tip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tip);
+    return tip;
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+
+  var POS_ZH = {
+    'n': '名詞', 'n.': '名詞', 'noun': '名詞',
+    'v': '動詞', 'v.': '動詞', 'verb': '動詞',
+    'adj': '形容詞', 'adj.': '形容詞', 'adjective': '形容詞',
+    'adv': '副詞', 'adv.': '副詞', 'adverb': '副詞',
+    'prep': '介詞', 'prep.': '介詞',
+    'conj': '連接詞', 'conj.': '連接詞',
+    'pron': '代詞', 'pron.': '代詞',
+    'det': '限定詞', 'det.': '限定詞',
+    'phr': '片語', 'phrase': '片語'
+  };
+
+  function normalizePosKey(pos) {
+    return String(pos || '').trim().toLowerCase();
+  }
+
+  function posZh(pos) {
+    var key = normalizePosKey(pos);
+    if (!key) return '';
+    if (POS_ZH[key]) return POS_ZH[key];
+    var bare = key.replace(/\.$/, '');
+    return POS_ZH[bare] || POS_ZH[bare + '.'] || '';
+  }
+
+  function formatPosLine(pos) {
+    var p = String(pos || '').trim();
+    if (!p) return '';
+    var zh = posZh(p);
+    return zh ? (p + ' · ' + zh) : p;
+  }
+
+  function formsText(forms) {
+    if (forms == null) return '';
+    if (typeof forms === 'string') return forms.trim();
+    if (Array.isArray(forms) && forms.length) {
+      return forms.map(function (f) {
+        if (typeof f === 'string') return f;
+        if (!f || typeof f !== 'object') return '';
+        var w = f.word || '';
+        var p = f.pos || '';
+        return p ? (w + ' (' + p + ')') : w;
+      }).filter(Boolean).join(' · ');
+    }
+    return '';
+  }
+
+  function showVocabTip(el) {
+    var tip = ensureVocabTip();
+    var word = (el.textContent || '').trim();
+    var pos = el.dataset.pos || '';
+    var zh = el.dataset.zh || '';
+    var syn = el.dataset.syn || '';
+    var forms = el.dataset.forms || '';
+    if (!zh && !syn && !pos && !forms) { tip.hidden = true; return; }
+    var posLine = formatPosLine(pos);
+    tip.innerHTML =
+      '<div class="rc-vocab-head">' + escapeHtml(word) + '</div>' +
+      (posLine ? '<div class="rc-vocab-pos">' + escapeHtml(posLine) + '</div>' : '') +
+      (zh ? '<div class="rc-vocab-zh">' + escapeHtml(zh) + '</div>' : '') +
+      (forms ? '<div class="rc-vocab-forms"><span class="rc-vocab-forms-label">forms</span> ' + escapeHtml(forms) + '</div>' : '') +
+      (syn ? '<div class="rc-vocab-syn"><span class="rc-vocab-syn-label">≈</span> ' + escapeHtml(syn) + '</div>' : '');
+    tip.hidden = false;
+    var r = el.getBoundingClientRect();
+    var tw = tip.offsetWidth || 180;
+    var th = tip.offsetHeight || 48;
+    var left = Math.min(window.innerWidth - tw - 8, Math.max(8, r.left + r.width / 2 - tw / 2));
+    var top = r.top - th - 8;
+    if (top < 8) top = r.bottom + 8;
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+  }
+
+  function hideVocabTip() {
+    var tip = $('#rc-vocab-tip');
+    if (tip) tip.hidden = true;
+  }
+
+  function bindVocabTipOnce() {
+    if (document.documentElement.dataset.rcVocabBound) return;
+    document.documentElement.dataset.rcVocabBound = '1';
+    document.addEventListener('mouseover', function (e) {
+      var el = e.target.closest && e.target.closest('.rc-vocab');
+      if (el) showVocabTip(el);
+    });
+    document.addEventListener('mouseout', function (e) {
+      var el = e.target.closest && e.target.closest('.rc-vocab');
+      if (!el) return;
+      var to = e.relatedTarget;
+      if (to && el.contains(to)) return;
+      hideVocabTip();
+    });
+    document.addEventListener('focusin', function (e) {
+      if (e.target.classList && e.target.classList.contains('rc-vocab')) showVocabTip(e.target);
+    });
+    document.addEventListener('focusout', function (e) {
+      if (e.target.classList && e.target.classList.contains('rc-vocab')) hideVocabTip();
+    });
+    document.addEventListener('scroll', hideVocabTip, true);
+  }
+
+  function pulseEvidence(el) {
+    if (!el) return;
+    el.classList.remove('rc-evidence-pulse');
+    // reflow so animation can restart
+    void el.offsetWidth;
+    el.classList.add('rc-evidence-pulse');
+    window.setTimeout(function () {
+      el.classList.remove('rc-evidence-pulse');
+    }, 1200);
+  }
+
+  function scrollEvidenceIntoView(ids, cfg, opts) {
+    opts = opts || {};
+    if (!ids || !ids.length) return;
+    var withVocab = opts.vocab !== false;
+    var first = null;
+    ids.forEach(function (id) {
+      $all('#rc-passage [data-evidence-id="' + id + '"]').forEach(function (el) {
+        el.classList.add('rc-evidence-on');
+        if (!first) first = el;
+      });
+    });
+    if (withVocab) markVocabInEvidence(cfg);
+    if (first && typeof first.scrollIntoView === 'function') {
+      first.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+      pulseEvidence(first);
+    }
+  }
+
+  function findEvidenceInPassage(ids, cfg) {
+    clearVocabMarks();
+    $all('#rc-passage .rc-evidence-on').forEach(function (el) {
+      el.classList.remove('rc-evidence-on');
+      el.classList.remove('rc-evidence-pulse');
+    });
+    scrollEvidenceIntoView(ids, cfg, { vocab: false });
+  }
+
+  function letterFor(i) { return LETTERS.charAt(i) || String(i + 1); }
+
+  function qType(q) {
+    if (q.type) return q.type;
+    if (q.options && q.options.length === 3 && /True|False|Not Given/i.test(q.options.join(' '))) return 'tfng';
+    if (q.options && q.options.length) return 'mc';
+    if (q.clozePrefix != null || q.clozeSuffix != null) return 'cloze';
+    return 'short';
+  }
+
+  function updateProgress(cfg) {
+    var total = cfg.questions.length;
+    var answered = 0;
+    var correct = 0;
+    cfg.questions.forEach(function (q) {
+      var st = state[q.id];
+      if (st && st.checked) {
+        answered++;
+        if (st.correct) correct++;
+      }
+    });
+    var el = $('#rc-progress');
+    if (!el) return;
+    var pct = total ? Math.round((answered / total) * 100) : 0;
+    el.innerHTML =
+      '<div class="rc-progress-bar" role="progressbar" aria-valuenow="' + answered + '" aria-valuemin="0" aria-valuemax="' + total + '">' +
+      '<span style="width:' + pct + '%"></span></div>' +
+      '<p class="rc-progress-text"><strong>' + answered + '</strong> / ' + total + ' checked · 已核對 · ' +
+      '<span class="rc-ok-count">' + correct + ' correct · 正確</span> · ' +
+      (total - answered) + ' left · 未做</p>';
+  }
+
+  function splitLadder(text) {
+    if (!text) return [];
+    var raw = String(text).split(/(?=①|②|③|④|⑤)/).map(function (s) { return s.trim(); }).filter(Boolean);
+    if (raw.length === 1) raw = String(text).split(/\n+/).map(function (s) { return s.trim(); }).filter(Boolean);
+    return raw.map(function (p) {
+      var m = p.match(/^(?:①|②|③|④|⑤|\d+[\.\)])\s*(.+)$/);
+      return m ? m[1] : p;
+    });
+  }
+
+  function ladderSteps(q) {
+    if (q.steps && q.steps.length) return q.steps;
+    var en = splitLadder(q.explainEn || q.explain || '');
+    var zh = splitLadder(q.explainZh || '');
+    var n = Math.max(en.length, zh.length);
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      out.push({ en: en[i] || '', zh: zh[i] || '' });
+    }
+    return out;
+  }
+
+  function renderSteps(q) {
+    var wrap = document.createElement('div');
+    wrap.className = 'rc-steps';
+    var steps = ladderSteps(q);
+    steps.forEach(function (step, i) {
+      var row = document.createElement('div');
+      row.className = 'rc-step';
+      var num = document.createElement('span');
+      num.className = 'rc-step-num';
+      num.textContent = String(i + 1);
+      var body = document.createElement('div');
+      body.className = 'rc-step-body';
+      if (typeof step === 'string') {
+        var p = document.createElement('p');
+        p.className = 'rc-reveal-explain-en';
+        p.textContent = step;
+        body.appendChild(p);
+      } else {
+        if (step.en) {
+          var pe = document.createElement('p');
+          pe.className = 'rc-reveal-explain-en';
+          pe.textContent = step.en;
+          body.appendChild(pe);
+        }
+        if (step.zh) {
+          var pz = document.createElement('p');
+          pz.className = 'rc-reveal-explain-zh';
+          pz.textContent = step.zh;
+          body.appendChild(pz);
+        }
+      }
+      row.appendChild(num);
+      row.appendChild(body);
+      wrap.appendChild(row);
+    });
+    return wrap;
+  }
+
+  function lookupVocabMeta(cfg, word) {
+    if (!cfg || !cfg.vocab || word == null) return null;
+    var vocab = cfg.vocab;
+    var w = String(word).trim();
+    if (!w) return null;
+    if (vocab[w]) return vocab[w];
+    var lower = w.toLowerCase();
+    if (vocab[lower]) return vocab[lower];
+    for (var k in vocab) {
+      if (k.toLowerCase() === lower) return vocab[k];
+    }
+    return null;
+  }
+
+  function modelAnswerText(q, cfg) {
+    var t = qType(q);
+    if (t === 'mc' || t === 'tfng') {
+      return (q.options && q.options[q.answer] != null) ? q.options[q.answer] : String(q.answer);
+    }
+    var text = '';
+    if (q.answers && q.answers.length) text = String(q.answers[0]);
+    else if (q.answer != null) text = String(q.answer);
+    if (!text) return '';
+    if (t === 'cloze' || t === 'short') {
+      var pos = q.pos || '';
+      if (!pos) {
+        var meta = lookupVocabMeta(cfg, text);
+        if (meta && meta.pos) pos = meta.pos;
+      }
+      if (pos) return text + ' · ' + pos;
+    }
+    return text;
+  }
+
+  function unlockAnsButton(qEl) {
+    var keyBtn = $('.rc-key-btn', qEl);
+    if (!keyBtn) return;
+    keyBtn.disabled = false;
+    keyBtn.removeAttribute('disabled');
+    keyBtn.classList.remove('is-gated');
+    keyBtn.setAttribute('aria-disabled', 'false');
+    keyBtn.title = 'Show answer';
+  }
+
+  function lockAnsButton(qEl) {
+    var keyBtn = $('.rc-key-btn', qEl);
+    if (!keyBtn) return;
+    keyBtn.classList.add('is-gated');
+    keyBtn.setAttribute('aria-disabled', 'true');
+    keyBtn.setAttribute('aria-expanded', 'false');
+    keyBtn.title = 'Check first · 請先核對';
+    var label = $('.rc-key-label', keyBtn);
+    if (label) label.textContent = 'ANS · 答案';
+  }
+
+  /** Re-pick / edit after Check: re-gate ANS, close reveal, clear feedback. */
+  function onAnswerEdit(q, qEl, cfg) {
+    var st = state[q.id] || (state[q.id] = {});
+    var keyBtn = $('.rc-key-btn', qEl);
+    var unlocked = keyBtn && keyBtn.getAttribute('aria-disabled') === 'false';
+    var keyOpen = qEl.classList.contains('is-key-open') || activeKeyId === q.id;
+    if (!st.checked && !unlocked && !keyOpen) return;
+    st.checked = false;
+    st.correct = false;
+    qEl.classList.remove('is-checked', 'is-correct', 'is-wrong');
+    $all('.rc-option', qEl).forEach(function (x) {
+      x.classList.remove('is-picked-wrong', 'is-show-correct');
+    });
+    $all('.rc-open-input', qEl).forEach(function (inp) {
+      inp.classList.remove('is-correct', 'is-wrong');
+    });
+    var fb = $('.rc-check-feedback', qEl);
+    if (fb) {
+      fb.hidden = true;
+      fb.textContent = '';
+      fb.className = 'rc-check-feedback';
+    }
+    lockAnsButton(qEl);
+    if (keyOpen) hideAllKeys();
+  }
+
+  function nudgeCheckFirst(qEl) {
+    var fb = $('.rc-check-feedback', qEl);
+    if (!fb) return;
+    fb.hidden = false;
+    fb.className = 'rc-check-feedback is-nudge';
+    fb.textContent = 'Check first · 請先核對';
+  }
+
+  function gradeQuestion(q, qEl, cfg) {
+    var t = qType(q);
+    var st = state[q.id] || (state[q.id] = {});
+    var ok = false;
+    if (t === 'mc' || t === 'tfng') {
+      ok = st.selected === q.answer;
+      $all('.rc-option', qEl).forEach(function (li, i) {
+        li.classList.remove('is-picked-wrong', 'is-show-correct');
+        if (i === q.answer) li.classList.add('is-show-correct');
+        if (i === st.selected && i !== q.answer) li.classList.add('is-picked-wrong');
+      });
+    } else {
+      var inp = $('.rc-open-input', qEl);
+      var val = inp ? inp.value : '';
+      ok = matchOpen(val, q.answers || [q.answer], q.match || (t === 'cloze' ? 'exact' : 'loose'));
+      if (inp) {
+        inp.classList.toggle('is-correct', ok);
+        inp.classList.toggle('is-wrong', !ok);
+      }
+    }
+    st.checked = true;
+    st.correct = ok;
+    qEl.classList.add('is-checked');
+    qEl.classList.toggle('is-correct', ok);
+    qEl.classList.toggle('is-wrong', !ok);
+    unlockAnsButton(qEl);
+    var fb = $('.rc-check-feedback', qEl);
+    if (fb) {
+      fb.hidden = false;
+      fb.className = 'rc-check-feedback ' + (ok ? 'is-ok' : 'is-bad');
+      fb.textContent = '';
+      var msg = document.createElement('span');
+      msg.className = 'rc-check-feedback-text';
+      msg.textContent = ok ? '✓ Correct' : '✗ Not yet — try again or tap ANS';
+      fb.appendChild(msg);
+      if (!ok && q.evidenceIds && q.evidenceIds.length) {
+        var findBtn = document.createElement('button');
+        findBtn.type = 'button';
+        findBtn.className = 'rc-find-btn';
+        findBtn.textContent = 'Find in passage';
+        findBtn.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          findEvidenceInPassage(q.evidenceIds, cfg);
+        });
+        fb.appendChild(findBtn);
+      }
+    }
+    return true;
+  }
+
+  function buildQuestionCard(q, index, cfg) {
+    var t = qType(q);
+    var card = document.createElement('article');
+    card.className = 'rc-q rc-q--' + t;
+    card.id = 'rc-' + q.id;
+    card.dataset.qid = q.id;
+
+    var head = document.createElement('div');
+    head.className = 'rc-q-head';
+
+    var stem = document.createElement('p');
+    stem.className = 'rc-q-stem';
+    var num = document.createElement('span');
+    num.className = 'rc-q-num';
+    num.textContent = (index + 1) + '. ';
+    stem.appendChild(num);
+    stem.appendChild(document.createTextNode(q.stem));
+    head.appendChild(stem);
+
+    var actions = document.createElement('div');
+    actions.className = 'rc-q-actions';
+
+    var checkBtn = document.createElement('button');
+    checkBtn.type = 'button';
+    checkBtn.className = 'rc-check-btn';
+    checkBtn.textContent = 'Check · 核對';
+    checkBtn.addEventListener('click', function () {
+      var st = state[q.id] || {};
+      if ((t === 'mc' || t === 'tfng') && st.selected == null) {
+        var fb0 = $('.rc-check-feedback', card);
+        if (fb0) {
+          fb0.hidden = false;
+          fb0.textContent = 'Pick an option first.';
+          fb0.className = 'rc-check-feedback is-nudge';
+        }
+        return;
+      }
+      if ((t === 'short' || t === 'cloze')) {
+        var inp = $('.rc-open-input', card);
+        if (!inp || !normalize(inp.value)) {
+          var fb1 = $('.rc-check-feedback', card);
+          if (fb1) {
+            fb1.hidden = false;
+            fb1.textContent = 'Type an answer first. · 請先作答。';
+            fb1.className = 'rc-check-feedback is-nudge';
+          }
+          return;
+        }
+      }
+      gradeQuestion(q, card, cfg);
+      updateProgress(cfg);
+    });
+    actions.appendChild(checkBtn);
+
+    var keyBtn = document.createElement('button');
+    keyBtn.type = 'button';
+    keyBtn.className = 'rc-key-btn is-gated';
+    keyBtn.setAttribute('aria-expanded', 'false');
+    keyBtn.setAttribute('aria-disabled', 'true');
+    keyBtn.setAttribute('aria-controls', 'rc-reveal-' + q.id);
+    keyBtn.title = 'Check first · 請先核對';
+    keyBtn.innerHTML = '<span class="rc-key-label">ANS · 答案</span>';
+    keyBtn.addEventListener('click', function () {
+      var st = state[q.id] || {};
+      if (!st.checked || keyBtn.classList.contains('is-gated') || keyBtn.getAttribute('aria-disabled') === 'true') {
+        nudgeCheckFirst(card);
+        return;
+      }
+      if (activeKeyId === q.id) {
+        hideAllKeys();
+        return;
+      }
+      hideAllKeys();
+      card.classList.add('is-key-open');
+      keyBtn.setAttribute('aria-expanded', 'true');
+      var label = $('.rc-key-label', keyBtn);
+      if (label) label.textContent = 'Hide';
+      activeKeyId = q.id;
+      scrollEvidenceIntoView(q.evidenceIds || [], cfg);
+    });
+    actions.appendChild(keyBtn);
+
+    var helpBody = null;
+    if (q.scaffoldEn || q.scaffold || q.scaffoldZh) {
+      var helpBtn = document.createElement('button');
+      helpBtn.type = 'button';
+      helpBtn.className = 'rc-help-btn';
+      helpBtn.setAttribute('aria-expanded', 'false');
+      helpBtn.textContent = 'Help';
+      helpBody = document.createElement('div');
+      helpBody.className = 'rc-help-body';
+      helpBody.hidden = true;
+      var enHelp = String(q.scaffoldEn || q.scaffold || '')
+        .replace(/^Support:\s*/i, '')
+        .replace(/^Help:\s*/i, '')
+        .trim();
+      if (!q.scaffoldEn && q.scaffoldZh && enHelp.indexOf(' / ') !== -1) {
+        enHelp = enHelp.split(' / ')[0].trim();
+      }
+      if (enHelp) {
+        var enP = document.createElement('p');
+        enP.className = 'rc-help-en';
+        enP.textContent = enHelp;
+        helpBody.appendChild(enP);
+      }
+      if (q.scaffoldZh) {
+        var zhP = document.createElement('p');
+        zhP.className = 'rc-help-zh';
+        zhP.textContent = String(q.scaffoldZh);
+        helpBody.appendChild(zhP);
+      }
+      helpBtn.addEventListener('click', function () {
+        var openH = helpBtn.getAttribute('aria-expanded') === 'true';
+        helpBtn.setAttribute('aria-expanded', openH ? 'false' : 'true');
+        helpBody.hidden = openH;
+        helpBtn.textContent = openH ? 'Help · 提示' : 'Hide · 收起';
+      });
+      actions.appendChild(helpBtn);
+    }
+
+    head.appendChild(actions);
+    card.appendChild(head);
+    if (helpBody) card.appendChild(helpBody);
+
+    if (t === 'mc' || t === 'tfng') {
+      var opts = document.createElement('ul');
+      opts.className = 'rc-options';
+      opts.setAttribute('role', 'listbox');
+      (q.options || []).forEach(function (text, i) {
+        var li = document.createElement('li');
+        li.className = 'rc-option';
+        li.setAttribute('role', 'option');
+        li.tabIndex = 0;
+        if (i === q.answer) li.dataset.correct = '1';
+        var letter = document.createElement('span');
+        letter.className = 'rc-option-letter';
+        letter.textContent = letterFor(i) + '.';
+        li.appendChild(letter);
+        li.appendChild(document.createTextNode(' ' + text));
+        function pick() {
+          var st = state[q.id] || (state[q.id] = {});
+          st.selected = i;
+          $all('.rc-option', opts).forEach(function (x) { x.classList.remove('is-selected', 'is-picked-wrong', 'is-show-correct'); });
+          li.classList.add('is-selected');
+          onAnswerEdit(q, card, cfg);
+          updateProgress(cfg);
+        }
+        li.addEventListener('click', pick);
+        li.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); }
+        });
+        opts.appendChild(li);
+      });
+      card.appendChild(opts);
+    } else {
+      var open = document.createElement('div');
+      open.className = 'rc-open';
+      if (t === 'cloze' && (q.clozePrefix || q.clozeSuffix)) {
+        var line = document.createElement('p');
+        line.className = 'rc-cloze-line';
+        if (q.clozePrefix) line.appendChild(document.createTextNode(q.clozePrefix + ' '));
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'rc-open-input';
+        input.autocomplete = 'off';
+        input.spellcheck = false;
+        input.setAttribute('aria-label', 'Answer for question ' + (index + 1));
+        if (q.maxWords) input.placeholder = '≤' + q.maxWords + ' word(s)';
+        line.appendChild(input);
+        if (q.clozeSuffix) line.appendChild(document.createTextNode(' ' + q.clozeSuffix));
+        open.appendChild(line);
+      } else {
+        var input2 = document.createElement('input');
+        input2.type = 'text';
+        input2.className = 'rc-open-input rc-open-input--full';
+        input2.autocomplete = 'off';
+        input2.setAttribute('aria-label', 'Answer for question ' + (index + 1));
+        input2.placeholder = q.placeholder || 'Type your answer';
+        open.appendChild(input2);
+      }
+      card.appendChild(open);
+      $all('.rc-open-input', open).forEach(function (inp) {
+        inp.addEventListener('input', function () {
+          onAnswerEdit(q, card, cfg);
+          updateProgress(cfg);
+        });
+      });
+    }
+
+    var fb = document.createElement('p');
+    fb.className = 'rc-check-feedback';
+    fb.hidden = true;
+    card.appendChild(fb);
+
+    var reveal = document.createElement('div');
+    reveal.className = 'rc-reveal';
+    reveal.id = 'rc-reveal-' + q.id;
+    reveal.setAttribute('role', 'region');
+    reveal.setAttribute('aria-label', 'Answer and explanation');
+
+    var ansLine = document.createElement('p');
+    ansLine.className = 'rc-reveal-answer';
+    ansLine.textContent = '✓ Correct: ' + modelAnswerText(q, cfg);
+    reveal.appendChild(ansLine);
+
+    if (q.acceptNote) {
+      var note = document.createElement('p');
+      note.className = 'rc-accept-note';
+      note.textContent = q.acceptNote;
+      reveal.appendChild(note);
+    }
+
+    reveal.appendChild(renderSteps(q));
+    card.appendChild(reveal);
+    return card;
+  }
+
+  function init() {
+    var cfg = window.RC_PRACTICE;
+    if (!cfg || !cfg.questions) {
+      console.warn('[rc-practice] window.RC_PRACTICE missing or empty');
+      return;
+    }
+    var host = $('#rc-questions');
+    if (!host) {
+      console.warn('[rc-practice] #rc-questions not found');
+      return;
+    }
+    bindVocabTipOnce();
+    host.innerHTML = '';
+    cfg.questions.forEach(function (q, i) {
+      host.appendChild(buildQuestionCard(q, i, cfg));
+    });
+    if (cfg.title) {
+      var titleEl = $('#rc-practice-title');
+      if (titleEl) titleEl.textContent = cfg.title;
+    }
+    updateProgress(cfg);
+
+    var reset = $('#rc-reset');
+    if (reset) {
+      reset.addEventListener('click', function () {
+        state = {};
+        hideAllKeys();
+        host.innerHTML = '';
+        cfg.questions.forEach(function (q, i) {
+          host.appendChild(buildQuestionCard(q, i, cfg));
+        });
+        updateProgress(cfg);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+</script>
+</body>
+</html>

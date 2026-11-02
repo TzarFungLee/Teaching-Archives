@@ -8,7 +8,31 @@ easy:
     title: "Short-form Video"
     href: "/assets/practice/easy-01.html"
     status: live
+  - id: "02"
+    title: "Light sticks and live stages"
+    href: "/assets/practice/easy-02.html"
+    status: live
+  - id: "03"
+    title: "Harbour Stream and Hong Kong films"
+    href: "/assets/practice/easy-03.html"
+    status: live
+  - id: "04"
+    title: "Pixel Nest: comics, café, and kindness"
+    href: "/assets/practice/easy-04.html"
+    status: live
 
-intermediate: []
+intermediate:
+  - id: "05"
+    title: "Light sticks behind the curtain"
+    href: "/assets/practice/intermediate-05.html"
+    status: live
+  - id: "06"
+    title: "Harbour Stream Part B1"
+    href: "/assets/practice/intermediate-06.html"
+    status: live
+  - id: "07"
+    title: "Pixel Nest Part B1"
+    href: "/assets/practice/intermediate-07.html"
+    status: live
 
 hard: []
