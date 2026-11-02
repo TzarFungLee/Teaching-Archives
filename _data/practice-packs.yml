@@ -1,0 +1,14 @@
+# Reading Practice packs (open-ended).
+# Add a pack = one YAML entry under its level. Numbering is free-form (01, 02, …).
+# Landing only renders levels that have ≥1 pack with status: live.
+# status: live | soon  — "soon" is ignored on the student landing (no empty shelves).
+
+easy:
+  - id: "01"
+    title: "Short-form Video"
+    href: "/assets/practice/easy-01.html"
+    status: live
+
+intermediate: []
+
+hard: []

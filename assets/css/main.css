@@ -1127,3 +1127,114 @@ body.category-Speaking .container {
         color: #000;
     }
 }
+
+/* --- Reading Practice hub (/reading/practice/) --- */
+.practice-level {
+    max-width: 1200px;
+    margin: 0 auto 40px;
+}
+
+.practice-level-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 8px 4px 18px;
+}
+
+.practice-level-title {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+.practice-level-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(6, 182, 212, 0.45), transparent);
+}
+
+.practice-level-count {
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.practice-pack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.practice-pack-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 22px 22px 20px;
+    text-decoration: none;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.practice-pack-card:hover,
+.practice-pack-card:focus-visible {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(6, 182, 212, 0.55);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+    outline: none;
+}
+
+.practice-pack-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #07131f;
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+}
+
+.practice-pack-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--text);
+}
+
+.practice-pack-card .practice-pack-cta {
+    margin: 4px 0 0;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 22px rgba(26, 58, 92, 0.18);
+    pointer-events: none; /* whole card is the hit target */
+}
+
+@media (max-width: 640px) {
+    .practice-pack-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .practice-level-header {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .practice-level-rule {
+        order: 3;
+        flex-basis: 100%;
+    }
+}

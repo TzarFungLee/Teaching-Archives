@@ -48,7 +48,7 @@
     </a>
     {% endif %}
 
-    {% if page.category != 'Writing' and page.url != '/' and page.url != '/index.html' %}
+    {% if page.category != 'Writing' and page.url != '/' and page.url != '/index.html' and page.hide_audio != true %}
     <button type="button" id="speedToggleBtn" class="floating-side-btn floating-right" onclick="toggleAudioSpeed()">
         <span style="font-size: 0.85rem; font-weight: 800; line-height: 1; letter-spacing: 0.05em; margin-bottom: 3px; color: var(--accent);">AUDIO</span>
         <span style="font-size: 0.75rem; line-height: 1; opacity: 0.85;">Slower</span>

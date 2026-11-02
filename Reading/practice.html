@@ -1,0 +1,55 @@
+---
+layout: default
+title: "Practice"
+category: "Reading"
+icon: "✏️"
+permalink: "/reading/practice/"
+redirect_from: "/Reading/practice.html"
+hide_audio: true
+order: 1
+---
+
+{% assign level_order = "easy,intermediate,hard" | split: "," %}
+{% assign level_labels = "Easy,Intermediate,Hard" | split: "," %}
+
+<div class="visual-anchor practice-hub-hero" style="padding: 40px 40px 28px; margin-bottom: 28px;">
+    <div class="anchor-title" style="font-size: 2rem; margin-bottom: 12px;">✏️ Practice</div>
+    <p style="margin: 0 auto; color: var(--muted); font-size: 1.1rem; max-width: 36rem; line-height: 1.55;">
+        Open a pack. Read on the left. Answer on the right.
+    </p>
+</div>
+
+{% for level_key in level_order %}
+{% assign level_label = level_labels[forloop.index0] %}
+{% assign raw_packs = site.data.practice-packs[level_key] %}
+{% assign live_count = 0 %}
+{% if raw_packs %}
+  {% for pack in raw_packs %}
+    {% if pack.status == "live" %}
+      {% assign live_count = live_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if live_count > 0 %}
+<section class="practice-level" aria-labelledby="practice-level-{{ level_key }}">
+    <div class="practice-level-header">
+        <h2 id="practice-level-{{ level_key }}" class="practice-level-title">{{ level_label }}</h2>
+        <span class="practice-level-rule" aria-hidden="true"></span>
+        <span class="practice-level-count">{{ live_count }} pack{% if live_count != 1 %}s{% endif %}</span>
+    </div>
+
+    <div class="practice-pack-grid">
+        {% for pack in raw_packs %}
+        {% if pack.status == "live" %}
+        <a class="practice-pack-card" href="{{ pack.href | relative_url }}">
+            <span class="practice-pack-badge">{{ level_label }}</span>
+            <span class="practice-pack-title">{{ pack.id }} · {{ pack.title }}</span>
+            <span class="practice-pack-cta btn">Start practice</span>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endfor %}
